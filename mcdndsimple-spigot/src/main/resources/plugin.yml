@@ -1,0 +1,6 @@
+name: MCDNDSimple
+version: @version@
+main: io.musician101.mcdndsimple.spigot.SpigotMCDNDSimple
+softdepend: [SpigotMusicianLibrary]
+authors: [Musician101]
+description: test

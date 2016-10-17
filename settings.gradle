@@ -1,0 +1,3 @@
+rootProject.name = 'mcdndsimple'
+
+include 'mcdndsimple-common', 'mcdndsimple-spigot', 'mcdndsimple-sponge', 'mcdndsimple-forge'

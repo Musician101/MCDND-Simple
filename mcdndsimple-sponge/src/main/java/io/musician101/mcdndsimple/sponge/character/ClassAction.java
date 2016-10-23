@@ -1,16 +1,60 @@
 package io.musician101.mcdndsimple.sponge.character;
 
-import com.google.common.collect.ImmutableList;
-
-import java.util.List;
-
 public class ClassAction
 {
-    private final List<String> gainedFrom = ImmutableList.<String>builder()
-            .add("---", "Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", "Paladin", "Ranger", "Rogue",
-                    "Sorcerer", "Warlock", "Wizard", "Feat", "Other").build();
     private int max = 0;
     private int used = 0;
     private Recharge recharge = Recharge.NONE;
+    private String gainedFrom = "---";
     private String name = "";
+
+    public String getGainedFrom()
+    {
+        return gainedFrom;
+    }
+
+    public int getMax()
+    {
+        return max;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public Recharge getRecharge()
+    {
+        return recharge;
+    }
+
+    public int getUsed()
+    {
+        return used;
+    }
+
+    public void setGainedFrom(String gainedFrom)
+    {
+        this.gainedFrom = gainedFrom;
+    }
+
+    public void setMax(int max)
+    {
+        this.max = max;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public void setRecharge(Recharge recharge)
+    {
+        this.recharge = recharge;
+    }
+
+    public void setUsed(int used)
+    {
+        this.used = used;
+    }
 }

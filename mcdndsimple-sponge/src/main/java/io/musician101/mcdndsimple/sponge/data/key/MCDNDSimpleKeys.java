@@ -180,7 +180,7 @@ public class MCDNDSimpleKeys
     public static final Key<Value<Integer>> TO_HIT = makeSingleKey(token(), token(), of("ToHit"), SpongeMCDNDSimple.getPluginContainer().getId() + ":to_hit", "To Hit");
     public static final Key<Value<Boolean>> UNARMORED = makeSingleKey(token(), token(), of("Unarmored"), SpongeMCDNDSimple.getPluginContainer().getId() + ":unarmored", "Unarmored");
     public static final Key<Value<Integer>> UNARMORED_ARMOR_CLASS = makeSingleKey(token(), token(), of("UnarmoredArmorClass"), SpongeMCDNDSimple.getPluginContainer().getId() + ":unarmored_armor_class", "Unarmored Armor Class");
-    public static final Key<Value<UnarmoredBonus>> UNARMORED_BONUS = makeSingleKey(token(), token(), of("UnarmoredBonus"), SpongeMCDNDSimple.getPluginContainer().getId() + ":armor_class", "Unarmored Bonus");
+    public static final Key<Value<DataContainer>> UNARMORED_BONUS = makeSingleKey(token(), token(), of("UnarmoredBonus"), SpongeMCDNDSimple.getPluginContainer().getId() + ":armor_class", "Unarmored Bonus");
     public static final Key<Value<DataContainer>> UNSKILLED_CHA = makeSingleKey(token(), token(), of("UnskilledCHA"), SpongeMCDNDSimple.getPluginContainer().getId() + ":unskilled_cha", "Unskilled CHA");
     public static final Key<Value<DataContainer>> UNSKILLED_CON = makeSingleKey(token(), token(), of("UnskilledCON"), SpongeMCDNDSimple.getPluginContainer().getId() + ":unskilled_con", "Unskilled CON");
     public static final Key<Value<DataContainer>> UNSKILLED_DEX = makeSingleKey(token(), token(), of("UnskilledDEX"), SpongeMCDNDSimple.getPluginContainer().getId() + ":unskilled_dex", "Unskilled DEX");

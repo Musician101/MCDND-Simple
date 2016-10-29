@@ -1,8 +1,14 @@
 package io.musician101.mcdndsimple.sponge.character;
 
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
+
+import javax.annotation.Nonnull;
 import java.util.function.BiFunction;
 
-public enum UnarmoredBonus
+public enum UnarmoredBonus implements DataSerializable
 {
     BARBARIAN("Barbarian"),
     DRACONIC_RESILIENCE("Draconic Resilience (Sorcerer Subclass)", (dexMod, secondMod) -> 13 + dexMod),
@@ -20,6 +26,21 @@ public enum UnarmoredBonus
     {
         this.name = name;
         this.biFunction = biFunction;
+    }
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.NAME, name);
     }
 
     public int getArmorClass(int dexMod, int secondMod)

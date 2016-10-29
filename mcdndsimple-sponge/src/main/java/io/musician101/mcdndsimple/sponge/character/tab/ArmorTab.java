@@ -49,7 +49,7 @@ public class ArmorTab implements DataSerializable
                 .set(MCDNDSimpleKeys.ARMOR_CLASS, armorClass)
                 .set(MCDNDSimpleKeys.UNARMORED_ARMOR_CLASS, unarmoredArmorClass)
                 .set(MCDNDSimpleKeys.ARMOR_LIST, DataUtils.serialize(armorList))
-                .set(MCDNDSimpleKeys.UNARMORED_BONUS, unarmoredBonus);
+                .set(MCDNDSimpleKeys.UNARMORED_BONUS, unarmoredBonus.toContainer());
     }
 
     public void removeArmor(Armor armor)

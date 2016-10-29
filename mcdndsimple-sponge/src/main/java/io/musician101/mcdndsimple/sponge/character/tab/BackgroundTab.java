@@ -1,10 +1,15 @@
 package io.musician101.mcdndsimple.sponge.character.tab;
 
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
+
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO needs dataserializable
-public class BackgroundTab
+public class BackgroundTab implements DataSerializable
 {
     private double weight = 0.0;
     private int age = 0;
@@ -50,6 +55,40 @@ public class BackgroundTab
     public List<String> getBonds()
     {
         return bonds;
+    }
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, 1)
+                .set(MCDNDSimpleKeys.WEIGHT_DOUBLE, weight)
+                .set(MCDNDSimpleKeys.AGE, age)
+                .set(MCDNDSimpleKeys.ARMOR_PROFICIENCIES, armorProficiencies)
+                .set(MCDNDSimpleKeys.BACKGROUND, background)
+                .set(MCDNDSimpleKeys.BONDS, bonds)
+                .set(MCDNDSimpleKeys.FLAWS, flaws)
+                .set(MCDNDSimpleKeys.IDEALS, ideals)
+                .set(MCDNDSimpleKeys.OTHER_NOTES, otherNotes)
+                .set(MCDNDSimpleKeys.PERSONALITY_TRAITS, personalityTraits)
+                .set(MCDNDSimpleKeys.RACIAL_TRAITS, racialTraits)
+                .set(MCDNDSimpleKeys.TOOL_PROFICIENCIES, toolProficiencies)
+                .set(MCDNDSimpleKeys.WEAPON_PROFICIENCIES, weaponProficiencies)
+                .set(MCDNDSimpleKeys.ALIGNMENT, alignment)
+                .set(MCDNDSimpleKeys.EYES, eyes)
+                .set(MCDNDSimpleKeys.GENDER, gender)
+                .set(MCDNDSimpleKeys.HAIR, hair)
+                .set(MCDNDSimpleKeys.HEIGHT, height)
+                .set(MCDNDSimpleKeys.LANGUAGES, languages)
+                .set(MCDNDSimpleKeys.SIZE, size)
+                .set(MCDNDSimpleKeys.VISION, vision);
     }
 
     public String getEyes()

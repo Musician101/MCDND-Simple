@@ -1,6 +1,13 @@
 package io.musician101.mcdndsimple.sponge.character;
 
-public class AbilityScore
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
+
+import javax.annotation.Nonnull;
+
+public class AbilityScore implements DataSerializable
 {
     private boolean proficient = false;
     private int score = 0;
@@ -11,6 +18,24 @@ public class AbilityScore
     {
         this.name = name;
         this.shortName = shortName;
+    }
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.PROFICIENT, proficient)
+                .set(MCDNDSimpleKeys.SCORE, score)
+                .set(MCDNDSimpleKeys.SHORT_NAME, shortName)
+                .set(MCDNDSimpleKeys.NAME, name);
     }
 
     public String getName()

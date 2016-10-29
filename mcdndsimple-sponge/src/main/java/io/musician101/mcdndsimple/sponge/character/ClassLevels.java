@@ -1,6 +1,13 @@
 package io.musician101.mcdndsimple.sponge.character;
 
-public class ClassLevels
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
+
+import javax.annotation.Nonnull;
+
+public class ClassLevels implements DataSerializable
 {
     private int barbarian = 0;
     private int bard = 0;
@@ -28,6 +35,32 @@ public class ClassLevels
     public int getCleric()
     {
         return cleric;
+    }
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.BARBARIAN_LEVEL, barbarian)
+                .set(MCDNDSimpleKeys.BARD_LEVEL, bard)
+                .set(MCDNDSimpleKeys.CLERIC_LEVEL, cleric)
+                .set(MCDNDSimpleKeys.DRUID_LEVEL, druid)
+                .set(MCDNDSimpleKeys.FIGHTER_LEVEL, fighter)
+                .set(MCDNDSimpleKeys.MONK_LEVEL, monk)
+                .set(MCDNDSimpleKeys.PALADIN_LEVEL, paladin)
+                .set(MCDNDSimpleKeys.RANGER_LEVEL, ranger)
+                .set(MCDNDSimpleKeys.ROGUE_LEVEL, rogue)
+                .set(MCDNDSimpleKeys.SORCERER_LEVEL, sorcerer)
+                .set(MCDNDSimpleKeys.WARLOCK_LEVEL, warlock)
+                .set(MCDNDSimpleKeys.WIZARD_LEVEL, wizard);
     }
 
     public int getDruid()

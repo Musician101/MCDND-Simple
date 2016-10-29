@@ -1,12 +1,18 @@
 package io.musician101.mcdndsimple.sponge;
 
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
+
+import javax.annotation.Nonnull;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
-public class Dice
+public class Dice implements DataSerializable
 {
     private final int amount;
     private final int sides;
@@ -30,6 +36,22 @@ public class Dice
     public int getAmount()
     {
         return amount;
+    }
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.AMOUNT, amount)
+                .set(MCDNDSimpleKeys.SIDES, sides);
     }
 
     public int getSides()

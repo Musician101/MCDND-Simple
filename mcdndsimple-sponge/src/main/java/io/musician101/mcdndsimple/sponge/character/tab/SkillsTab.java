@@ -3,8 +3,14 @@ package io.musician101.mcdndsimple.sponge.character.tab;
 import io.musician101.mcdndsimple.sponge.character.AbilityScore;
 import io.musician101.mcdndsimple.sponge.character.CoreStats;
 import io.musician101.mcdndsimple.sponge.character.skill.Skill;
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
 
-public class SkillsTab
+import javax.annotation.Nonnull;
+
+public class SkillsTab implements DataSerializable
 {
     private final Skill acrobatics = new Skill("Acrobatics (Dex)");
     private final Skill animalHandling = new Skill("Animal Handling (Wis)");
@@ -24,12 +30,12 @@ public class SkillsTab
     private final Skill sleightOfHand = new Skill("Sleight of Hand (Dex)");
     private final Skill stealth = new Skill("Stealth (Dex)");
     private final Skill survival = new Skill("Survival (Wis)");
-    private final Skill unskilledCON = new Skill("Unskilled CON");
     private final Skill unskilledCHA = new Skill("Unskilled CHA");
+    private final Skill unskilledCON = new Skill("Unskilled CON");
     private final Skill unskilledDEX = new Skill("Unskilled DEX");
     private final Skill unskilledINT = new Skill("Unskilled INT");
-    private final Skill unskilledWIS = new Skill("Unskilled WIS");
     private final Skill unskilledSTR = new Skill("Unskilled STR");
+    private final Skill unskilledWIS = new Skill("Unskilled WIS");
 
     public Skill getAcrobatics()
     {
@@ -49,6 +55,44 @@ public class SkillsTab
     public Skill getAthletics()
     {
         return athletics;
+    }
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.ACROBATICS, acrobatics.toContainer())
+                .set(MCDNDSimpleKeys.ANIMAL_HANDLING, animalHandling.toContainer())
+                .set(MCDNDSimpleKeys.ARCANA, arcana.toContainer())
+                .set(MCDNDSimpleKeys.ATHLETICS, athletics.toContainer())
+                .set(MCDNDSimpleKeys.DECEPTION, deception.toContainer())
+                .set(MCDNDSimpleKeys.HISTORY, history.toContainer())
+                .set(MCDNDSimpleKeys.INSIGHT, insight.toContainer())
+                .set(MCDNDSimpleKeys.INTIMIDATION, intimidation.toContainer())
+                .set(MCDNDSimpleKeys.INVESTIGATION, investigation.toContainer())
+                .set(MCDNDSimpleKeys.MEDICINE, medicine.toContainer())
+                .set(MCDNDSimpleKeys.NATURE, nature.toContainer())
+                .set(MCDNDSimpleKeys.PERFORMANCE, performance.toContainer())
+                .set(MCDNDSimpleKeys.PERCEPTION, perception.toContainer())
+                .set(MCDNDSimpleKeys.PERSUASION, persuasion.toContainer())
+                .set(MCDNDSimpleKeys.RELIGION, religion.toContainer())
+                .set(MCDNDSimpleKeys.SLEIGHT_OF_HAND, sleightOfHand.toContainer())
+                .set(MCDNDSimpleKeys.STEALTH, stealth.toContainer())
+                .set(MCDNDSimpleKeys.SURVIVAL, survival.toContainer())
+                .set(MCDNDSimpleKeys.UNSKILLED_CHA, unskilledCHA.toContainer())
+                .set(MCDNDSimpleKeys.UNSKILLED_CON, unskilledCON.toContainer())
+                .set(MCDNDSimpleKeys.UNSKILLED_DEX, unskilledDEX.toContainer())
+                .set(MCDNDSimpleKeys.UNSKILLED_INT, unskilledINT.toContainer())
+                .set(MCDNDSimpleKeys.UNSKILLED_STR, unskilledSTR.toContainer())
+                .set(MCDNDSimpleKeys.UNSKILLED_WIS, unskilledWIS.toContainer());
     }
 
     public Skill getDeception()

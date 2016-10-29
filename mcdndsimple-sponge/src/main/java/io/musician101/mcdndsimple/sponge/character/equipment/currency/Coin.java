@@ -1,6 +1,13 @@
 package io.musician101.mcdndsimple.sponge.character.equipment.currency;
 
-public class Coin
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
+
+import javax.annotation.Nonnull;
+
+public class Coin implements DataSerializable
 {
     private final String name;
     private int amount = 0;
@@ -15,6 +22,23 @@ public class Coin
     public int getAmount()
     {
         return amount;
+    }
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.NAME, name)
+                .set(MCDNDSimpleKeys.AMOUNT, amount)
+                .set(MCDNDSimpleKeys.SHORT_NAME, shortName);
     }
 
     public String getName()

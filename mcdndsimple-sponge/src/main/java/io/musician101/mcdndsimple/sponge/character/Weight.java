@@ -1,10 +1,15 @@
 package io.musician101.mcdndsimple.sponge.character;
 
 import io.musician101.mcdndsimple.sponge.character.equipment.currency.Wealth;
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
-public class Weight
+public class Weight implements DataSerializable
 {
     private double inventory = 0.0;
     private double coin = 0.0;
@@ -13,6 +18,27 @@ public class Weight
     private double pushDragLift = 300;
     private double encumbered = 50;
     private double heavilyEncumbered = 100;
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.INVENTORY_WEIGHT, inventory)
+                .set(MCDNDSimpleKeys.COIN_WEIGHT, coin)
+                .set(MCDNDSimpleKeys.OTHER, other)
+                .set(MCDNDSimpleKeys.MAX_CARRY, carryingMax)
+                .set(MCDNDSimpleKeys.MAX_PUSH_DRAG_LIFT, pushDragLift)
+                .set(MCDNDSimpleKeys.ENCUMBERED, encumbered)
+                .set(MCDNDSimpleKeys.HEAVILY_ENCUMBERED, heavilyEncumbered);
+    }
 
     public boolean isEncumbered()
     {

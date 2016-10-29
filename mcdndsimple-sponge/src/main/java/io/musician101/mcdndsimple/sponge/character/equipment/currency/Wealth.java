@@ -1,12 +1,38 @@
 package io.musician101.mcdndsimple.sponge.character.equipment.currency;
 
-public class Wealth
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
+
+import javax.annotation.Nonnull;
+
+public class Wealth implements DataSerializable
 {
     private Coin copper = new Coin("Copper", "CP");
     private Coin electrum = new Coin("Electrum", "EP");
     private Coin gold = new Coin("Gold", "GP");
     private Coin platinum = new Coin("Platinum", "PP");
     private Coin silver = new Coin("Silver", "SP");
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.COPPER, copper.toContainer())
+                .set(MCDNDSimpleKeys.ELECTRUM, electrum.toContainer())
+                .set(MCDNDSimpleKeys.GOLD, gold.toContainer())
+                .set(MCDNDSimpleKeys.PLATINUM, platinum.toContainer())
+                .set(MCDNDSimpleKeys.SILVER, silver.toContainer());
+    }
 
     public Coin getCopper()
     {

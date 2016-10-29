@@ -1,11 +1,33 @@
 package io.musician101.mcdndsimple.sponge.character;
 
 import com.google.common.collect.ImmutableMap;
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
 
-public class Experience
+import javax.annotation.Nonnull;
+
+public class Experience implements DataSerializable
 {
     private int exp = 0;
     private int overallLevel = 0;
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.EXPERIENCE_AMOUNT, exp)
+                .set(MCDNDSimpleKeys.OVERALL_LEVEL, overallLevel);
+    }
 
     public int getExperienceUntilNextLevel()
     {

@@ -1,6 +1,13 @@
 package io.musician101.mcdndsimple.sponge.character.equipment.armor;
 
-public class Armor
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
+
+import javax.annotation.Nonnull;
+
+public class Armor implements DataSerializable
 {
     private boolean speedPenalty = false;
     private boolean stealthPenalty = false;
@@ -24,6 +31,28 @@ public class Armor
     public int getBaseArmorClass()
     {
         return baseArmorClass;
+    }
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.SPEED_PENALTY, speedPenalty)
+                .set(MCDNDSimpleKeys.STEALTH_PENALTY, stealthPenalty)
+                .set(MCDNDSimpleKeys.UNARMORED, unarmored)
+                .set(MCDNDSimpleKeys.WORN, worn)
+                .set(MCDNDSimpleKeys.BASE_ARMOR_CLASS, baseArmorClass)
+                .set(MCDNDSimpleKeys.MAGIC_BONUS, magicBonus)
+                .set(MCDNDSimpleKeys.ARMOR_TYPE, armorType.toContainer())
+                .set(MCDNDSimpleKeys.NAME, name);
     }
 
     public int getMagicBonus()

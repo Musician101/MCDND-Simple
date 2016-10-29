@@ -1,18 +1,42 @@
 package io.musician101.mcdndsimple.sponge.character.tab;
 
+import io.musician101.mcdndsimple.sponge.DataUtils;
 import io.musician101.mcdndsimple.sponge.character.MCDNDItem;
 import io.musician101.mcdndsimple.sponge.character.Weight;
 import io.musician101.mcdndsimple.sponge.character.equipment.currency.Wealth;
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InventoryTab
+public class InventoryTab implements DataSerializable
 {
     private List<MCDNDItem> inventory = new ArrayList<>();
     private List<String> inventoryNotes = new ArrayList<>();
     private Wealth wealth = new Wealth();
     private Weight weight = new Weight();
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.INVENTORY, DataUtils.serialize(inventory))
+                .set(MCDNDSimpleKeys.INVENTORY_NOTES, inventoryNotes)
+                .set(MCDNDSimpleKeys.WEALTH, wealth.toContainer())
+                .set(MCDNDSimpleKeys.WEIGHT_CLASS, weight.toContainer());
+    }
 
 
     public List<MCDNDItem> getInventory()

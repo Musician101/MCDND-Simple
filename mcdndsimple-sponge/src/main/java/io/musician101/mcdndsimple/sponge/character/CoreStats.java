@@ -1,6 +1,13 @@
 package io.musician101.mcdndsimple.sponge.character;
 
-public class CoreStats
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
+
+import javax.annotation.Nonnull;
+
+public class CoreStats implements DataSerializable
 {
     private AbilityScore charisma = new AbilityScore("Charisma", "cha");
     private AbilityScore constitution = new AbilityScore("Constitution", "con");
@@ -17,6 +24,26 @@ public class CoreStats
     public AbilityScore getConstitution()
     {
         return constitution;
+    }
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.CHARISMA_SCORE, charisma.toContainer())
+                .set(MCDNDSimpleKeys.CONSTITUTION_SCORE, constitution.toContainer())
+                .set(MCDNDSimpleKeys.DEXTERITY_SCORE, dexterity.toContainer())
+                .set(MCDNDSimpleKeys.INTELLIGENCE_SCORE, intelligence.toContainer())
+                .set(MCDNDSimpleKeys.STRENGTH_SCORE, strength.toContainer())
+                .set(MCDNDSimpleKeys.WISDOM_SCORE, wisdom.toContainer());
     }
 
     public AbilityScore getDexterity()

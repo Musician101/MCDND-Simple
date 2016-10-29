@@ -5,8 +5,14 @@ import io.musician101.mcdndsimple.sponge.character.Experience;
 import io.musician101.mcdndsimple.sponge.character.HitDice;
 import io.musician101.mcdndsimple.sponge.character.HitPoints;
 import io.musician101.mcdndsimple.sponge.character.bonus.Bonuses;
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
 
-public class CoreStatsTab
+import javax.annotation.Nonnull;
+
+public class CoreStatsTab implements DataSerializable
 {
     private boolean inspiration = false;
     private Bonuses bonuses = new Bonuses();
@@ -20,6 +26,27 @@ public class CoreStatsTab
     public Bonuses getBonuses()
     {
         return bonuses;
+    }
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.BONUSES, bonuses.toContainer())
+                .set(MCDNDSimpleKeys.CORE_STATS, coreStats.toContainer())
+                .set(MCDNDSimpleKeys.EXPERIENCE, experience.toContainer())
+                .set(MCDNDSimpleKeys.HIT_DICE, hitDice.toContainer())
+                .set(MCDNDSimpleKeys.HIT_POINTS, hitpoints.toContainer())
+                .set(MCDNDSimpleKeys.INITIATIVE_BONUS, initiativeBonus)
+                .set(MCDNDSimpleKeys.SPEED, speed);
     }
 
     public CoreStats getCoreStats()

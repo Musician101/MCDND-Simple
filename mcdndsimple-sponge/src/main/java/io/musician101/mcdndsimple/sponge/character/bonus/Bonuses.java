@@ -1,16 +1,42 @@
 package io.musician101.mcdndsimple.sponge.character.bonus;
 
-public class Bonuses
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
+
+import javax.annotation.Nonnull;
+
+public class Bonuses implements DataSerializable
 {
     private MeleeBonus melee = new MeleeBonus();
     private RangedBonus ranged = new RangedBonus();
     private SpellcastingBonus spellcasting = new SpellcastingBonus();
     private int saves = 0;
-    private int abilitiesAndskills = 0;
+    private int abilitiesAndSkills = 0;
 
-    public int getAbilitiesAndskills()
+    public int getAbilitiesAndSkills()
     {
-        return abilitiesAndskills;
+        return abilitiesAndSkills;
+    }
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.MELEE_BONUS, melee.toContainer())
+                .set(MCDNDSimpleKeys.RANGED_BONUS, ranged.toContainer())
+                .set(MCDNDSimpleKeys.SPELLCASTING_BONUS, spellcasting.toContainer())
+                .set(MCDNDSimpleKeys.SAVES, saves)
+                .set(MCDNDSimpleKeys.ABILITIES_AND_SKILLS, abilitiesAndSkills);
     }
 
     public MeleeBonus getMelee()
@@ -33,9 +59,9 @@ public class Bonuses
         return spellcasting;
     }
 
-    public void setAbilitiesAndskills(int abilitiesAndskills)
+    public void setAbilitiesAndSkills(int abilitiesAndSkills)
     {
-        this.abilitiesAndskills = abilitiesAndskills;
+        this.abilitiesAndSkills = abilitiesAndSkills;
     }
 
     public void setMelee(MeleeBonus melee)

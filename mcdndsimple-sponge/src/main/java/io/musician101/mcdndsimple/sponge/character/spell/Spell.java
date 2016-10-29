@@ -1,11 +1,16 @@
 package io.musician101.mcdndsimple.sponge.character.spell;
 
 import io.musician101.mcdndsimple.sponge.character.SpellcasterClass;
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Spell
+public class Spell implements DataSerializable
 {
     private boolean needsConcentration = false;
     private boolean isPrepared = true;
@@ -40,6 +45,35 @@ public class Spell
     public String getComponents()
     {
         return components;
+    }
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.NEEDS_CONCENTRATION, needsConcentration)
+                .set(MCDNDSimpleKeys.IS_PREPARED, isPrepared)
+                .set(MCDNDSimpleKeys.DURATION, duration)
+                .set(MCDNDSimpleKeys.SPELL_LEVEL, level)
+                .set(MCDNDSimpleKeys.RANGE, range)
+                .set(MCDNDSimpleKeys.SPELL_DAMAGE, spellDamage.toContainer())
+                .set(MCDNDSimpleKeys.SPELL_HEALING, spellHealing.toContainer())
+                .set(MCDNDSimpleKeys.SPELL_DESCRIPTION, description)
+                .set(MCDNDSimpleKeys.EFFECTS, effects)
+                .set(MCDNDSimpleKeys.SPELL_SAVE, spellSave.toContainer())
+                .set(MCDNDSimpleKeys.SPELLCASTER_CLASS, gainedFrom.toContainer())
+                .set(MCDNDSimpleKeys.SPELL_TYPE, spellType.toContainer())
+                .set(MCDNDSimpleKeys.ATTACK_STAT, attackStat)
+                .set(MCDNDSimpleKeys.CAST_TIME, castTime)
+                .set(MCDNDSimpleKeys.TARGET_AREA, targetArea);
     }
 
     public List<String> getDescription()

@@ -1,12 +1,19 @@
 package io.musician101.mcdndsimple.sponge.character;
 
-//TODO needs dataserializable and builder for all
-public class CharacterSheet
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
+
+import javax.annotation.Nonnull;
+
+//TODO needs builder for all
+public class CharacterSheet implements DataSerializable
 {
     private final BioAndInfo bioAndInfo;
     private final PlayerSheet playerSheet;
     private String clazz = null;
-    private String name;
+    private String name = "";
     private String race = null;
 
     public CharacterSheet(String name)
@@ -24,6 +31,25 @@ public class CharacterSheet
     public String getClazz()
     {
         return clazz;
+    }
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.BIO_AND_INFO, bioAndInfo.toContainer())
+                .set(MCDNDSimpleKeys.PLAYER_SHEET, playerSheet.toContainer())
+                .set(MCDNDSimpleKeys.CLASS, clazz)
+                .set(MCDNDSimpleKeys.NAME, name)
+                .set(MCDNDSimpleKeys.RACE, race);
     }
 
     public String getName()

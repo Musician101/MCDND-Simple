@@ -2,11 +2,17 @@ package io.musician101.mcdndsimple.sponge.character;
 
 import com.google.common.collect.Table;
 import com.google.common.collect.Tables;
+import io.musician101.mcdndsimple.sponge.DataUtils;
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public enum SpellcasterClass
+public enum SpellcasterClass implements DataSerializable
 {
     ARCANE_TRICKSTER("Arcane Trickster"),
     BARD("Bard"),
@@ -393,6 +399,22 @@ public enum SpellcasterClass
     {
         for (int i = startingLevel; i < maxLevel + 1; i++)
             table.put(i, column, amount);
+    }
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.SPELLCASTER_TABLE, DataUtils.serialize(table))
+                .set(MCDNDSimpleKeys.NAME, name);
     }
 
     public int getTableEntry(int level, String column)//NOSONAR

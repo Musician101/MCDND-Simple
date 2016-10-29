@@ -1,8 +1,14 @@
 package io.musician101.mcdndsimple.sponge.character.weapon;
 
 import io.musician101.mcdndsimple.sponge.Dice;
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
 
-public abstract class AbstractWeapon
+import javax.annotation.Nonnull;
+
+public abstract class AbstractWeapon implements DataSerializable
 {
     private boolean isProficient = true;
     private Dice critDamageDice = new Dice(0);
@@ -13,6 +19,23 @@ public abstract class AbstractWeapon
     private int toHit = 0;
     private String attackStat;
     private String name = "";
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.IS_PROFICIENT, isProficient)
+                .set(MCDNDSimpleKeys.CRIT_DAMAGE_DICE, critDamageDice.toContainer())
+                .set(MCDNDSimpleKeys.DAMAGE_DICE, damageDice.toContainer())
+                .set(MCDNDSimpleKeys.CRIT_MINIMUM, critMin)
+                .set(MCDNDSimpleKeys.DAMAGE_BONUS, damageBonus)
+                .set(MCDNDSimpleKeys.MAGIC_BONUS, magicBonus)
+                .set(MCDNDSimpleKeys.TO_HIT, toHit)
+                .set(MCDNDSimpleKeys.ATTACK_STAT, attackStat)
+                .set(MCDNDSimpleKeys.NAME, name);
+    }
 
     public String getAttackStat()
     {

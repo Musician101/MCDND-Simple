@@ -1,17 +1,41 @@
 package io.musician101.mcdndsimple.sponge.character.tab;
 
+import io.musician101.mcdndsimple.sponge.DataUtils;
 import io.musician101.mcdndsimple.sponge.character.SpellcasterClass;
 import io.musician101.mcdndsimple.sponge.character.spell.Spell;
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpellbookTab
+public class SpellbookTab implements DataSerializable
 {
     private int invocations = 0;
     private int sorceryPoints = 0;
     private List<Spell> spells = new ArrayList<>();
     private SpellcasterClass spellcasterClass = null;
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.INVOCATION_COUNT, invocations)
+                .set(MCDNDSimpleKeys.SORCERY_POINTS, sorceryPoints)
+                .set(MCDNDSimpleKeys.SPELLS, DataUtils.serialize(spells))
+                .set(MCDNDSimpleKeys.SPELLCASTER_CLASS, spellcasterClass.toContainer());
+    }
 
     public int getInvocations()
     {

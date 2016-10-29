@@ -22,7 +22,7 @@ public class SpongeMCDNDSimple extends AbstractSpongePlugin<AbstractConfig>
     @Override
     public void preInit(GamePreInitializationEvent event)
     {
-        
+
     }
 
     @Override

@@ -8,9 +8,14 @@ import io.musician101.mcdndsimple.sponge.character.tab.InventoryTab;
 import io.musician101.mcdndsimple.sponge.character.tab.SkillsTab;
 import io.musician101.mcdndsimple.sponge.character.tab.SpellbookTab;
 import io.musician101.mcdndsimple.sponge.character.tab.WeaponsTab;
+import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
+import org.spongepowered.api.data.MemoryDataContainer;
 
-//TODO needs dataserializable
-public class PlayerSheet
+import javax.annotation.Nonnull;
+
+public class PlayerSheet implements DataSerializable
 {
     private ArmorTab armorTab = new ArmorTab();
     private BackgroundTab backgroundTab = new BackgroundTab();
@@ -34,6 +39,28 @@ public class PlayerSheet
     public ClassTab getClassTab()
     {
         return classTab;
+    }
+
+    @Override
+    public int getContentVersion()
+    {
+        return 1;
+    }
+
+    @Nonnull
+    @Override
+    public DataContainer toContainer()
+    {
+        return new MemoryDataContainer()
+                .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
+                .set(MCDNDSimpleKeys.ARMOR_TAB, armorTab.toContainer())
+                .set(MCDNDSimpleKeys.BACKGROUND_TAB, backgroundTab.toContainer())
+                .set(MCDNDSimpleKeys.CLASS_TAB, classTab.toContainer())
+                .set(MCDNDSimpleKeys.CORE_STATS_TAB, coreStatsTab.toContainer())
+                .set(MCDNDSimpleKeys.INVENTORY_TAB, inventoryTab.toContainer())
+                .set(MCDNDSimpleKeys.SKILLS_TAB, skillsTab.toContainer())
+                .set(MCDNDSimpleKeys.SPELL_BOOK_TAB, spellbookTab.toContainer())
+                .set(MCDNDSimpleKeys.WEAPONS_TAB, weaponsTab.toContainer());
     }
 
     public CoreStatsTab getCoreStatsTab()

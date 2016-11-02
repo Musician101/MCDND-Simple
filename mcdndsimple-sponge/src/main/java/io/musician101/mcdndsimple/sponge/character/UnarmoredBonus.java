@@ -6,13 +6,15 @@ import org.spongepowered.api.data.DataSerializable;
 import org.spongepowered.api.data.MemoryDataContainer;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 import java.util.function.BiFunction;
 
 public enum UnarmoredBonus implements DataSerializable
 {
     BARBARIAN("Barbarian"),
     DRACONIC_RESILIENCE("Draconic Resilience (Sorcerer Subclass)", (dexMod, secondMod) -> 13 + dexMod),
-    MONK("Monk");
+    MONK("Monk"),
+    NONE("None", (dexMod, secondMod) -> 0);
 
     private final BiFunction<Integer, Integer, Integer> biFunction;
     private final String name;
@@ -51,5 +53,16 @@ public enum UnarmoredBonus implements DataSerializable
     public String getName()
     {
         return name;
+    }
+
+    public static Optional<UnarmoredBonus> fromDataContainer(DataContainer dataContainer)
+    {
+        Optional<String> name = dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery());
+        if (name.isPresent())
+            for (UnarmoredBonus unarmoredBonus : values())
+                if (unarmoredBonus.getName().equals(name.get()))
+                    return Optional.of(unarmoredBonus);
+
+        return Optional.empty();
     }
 }

@@ -1,5 +1,6 @@
 package io.musician101.mcdndsimple.sponge.character.tab;
 
+import io.musician101.mcdndsimple.sponge.DataUtils;
 import io.musician101.mcdndsimple.sponge.character.CoreStats;
 import io.musician101.mcdndsimple.sponge.character.Experience;
 import io.musician101.mcdndsimple.sponge.character.HitDice;
@@ -19,7 +20,7 @@ public class CoreStatsTab implements DataSerializable
     private CoreStats coreStats = new CoreStats();
     private Experience experience = new Experience();
     private HitDice hitDice = new HitDice();
-    private HitPoints hitpoints = new HitPoints();
+    private HitPoints hitPoints = new HitPoints();
     private int initiativeBonus = 0;
     private int speed = 30;
 
@@ -44,7 +45,7 @@ public class CoreStatsTab implements DataSerializable
                 .set(MCDNDSimpleKeys.CORE_STATS, coreStats.toContainer())
                 .set(MCDNDSimpleKeys.EXPERIENCE, experience.toContainer())
                 .set(MCDNDSimpleKeys.HIT_DICE, hitDice.toContainer())
-                .set(MCDNDSimpleKeys.HIT_POINTS, hitpoints.toContainer())
+                .set(MCDNDSimpleKeys.HIT_POINTS, hitPoints.toContainer())
                 .set(MCDNDSimpleKeys.INITIATIVE_BONUS, initiativeBonus)
                 .set(MCDNDSimpleKeys.SPEED, speed);
     }
@@ -64,9 +65,9 @@ public class CoreStatsTab implements DataSerializable
         return hitDice;
     }
 
-    public HitPoints getHitpoints()
+    public HitPoints getHitPoints()
     {
-        return hitpoints;
+        return hitPoints;
     }
 
     public int getInitiativeBonus()
@@ -104,9 +105,9 @@ public class CoreStatsTab implements DataSerializable
         this.hitDice = hitDice;
     }
 
-    public void setHitpoints(HitPoints hitpoints)
+    public void setHitPoints(HitPoints hitPoints)
     {
-        this.hitpoints = hitpoints;
+        this.hitPoints = hitPoints;
     }
 
     public void setInitiativeBonus(int initiativeBonus)
@@ -122,5 +123,18 @@ public class CoreStatsTab implements DataSerializable
     public void setSpeed(int speed)
     {
         this.speed = speed;
+    }
+
+    public static CoreStatsTab fromDataContainer(DataContainer dataContainer)
+    {
+        CoreStatsTab coreStatsTab = new CoreStatsTab();
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.BONUSES).ifPresent(data -> coreStatsTab.setBonuses(Bonuses.fromDataContainer(data)));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.CORE_STATS).ifPresent(data -> coreStatsTab.setCoreStats(CoreStats.fromDataContainer(data)));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.EXPERIENCE).ifPresent(data -> coreStatsTab.setExperience(Experience.fromDataContainer(data)));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.HIT_DICE).ifPresent(data -> coreStatsTab.setHitDice(HitDice.fromDataContainer(data)));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.HIT_POINTS).ifPresent(data -> coreStatsTab.setHitPoints(HitPoints.fromDataContainer(data)));
+        dataContainer.getInt(MCDNDSimpleKeys.INITIATIVE_BONUS.getQuery()).ifPresent(coreStatsTab::setInitiativeBonus);
+        dataContainer.getInt(MCDNDSimpleKeys.SPEED.getQuery()).ifPresent(coreStatsTab::setSpeed);
+        return coreStatsTab;
     }
 }

@@ -47,4 +47,12 @@ public class MeleeBonus implements DataSerializable
     {
         this.damage = damage;
     }
+
+    public static MeleeBonus fromDataContainer(DataContainer dataContainer)
+    {
+        MeleeBonus meleeBonus = new MeleeBonus();
+        dataContainer.getInt(MCDNDSimpleKeys.ATTACK.getQuery()).ifPresent(meleeBonus::setAttack);
+        dataContainer.getInt(MCDNDSimpleKeys.DAMAGE.getQuery()).ifPresent(meleeBonus::setDamage);
+        return meleeBonus;
+    }
 }

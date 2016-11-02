@@ -1,11 +1,13 @@
 package io.musician101.mcdndsimple.sponge.character.equipment.armor;
 
+import io.musician101.mcdndsimple.sponge.DataUtils;
 import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.DataSerializable;
 import org.spongepowered.api.data.MemoryDataContainer;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
 public class Armor implements DataSerializable
 {
@@ -15,13 +17,8 @@ public class Armor implements DataSerializable
     private boolean worn = true;
     private int baseArmorClass = 0;
     private int magicBonus = 0;
-    private MCDNDArmorType armorType = null;
-    private String name = null;
-
-    public Armor(String name)
-    {
-        this.name = name;
-    }
+    private MCDNDArmorType armorType = MCDNDArmorType.NONE;
+    private String name = "";
 
     public MCDNDArmorType getArmorType()
     {
@@ -123,5 +120,24 @@ public class Armor implements DataSerializable
     public void setWorn(boolean worn)
     {
         this.worn = worn;
+    }
+
+    public static Armor fromDataContainer(DataContainer dataContainer)
+    {
+        Armor armor = new Armor();
+        dataContainer.getBoolean(MCDNDSimpleKeys.SPEED_PENALTY.getQuery()).ifPresent(armor::setSpeedPenalty);
+        dataContainer.getBoolean(MCDNDSimpleKeys.STEALTH_PENALTY.getQuery()).ifPresent(armor::setStealthPenalty);
+        dataContainer.getBoolean(MCDNDSimpleKeys.UNARMORED.getQuery()).ifPresent(armor::setUnarmored);
+        dataContainer.getBoolean(MCDNDSimpleKeys.WORN.getQuery()).ifPresent(armor::setWorn);
+        dataContainer.getInt(MCDNDSimpleKeys.BASE_ARMOR_CLASS.getQuery()).ifPresent(armor::setBaseArmorClass);
+        dataContainer.getInt(MCDNDSimpleKeys.MAGIC_BONUS.getQuery()).ifPresent(armor::setMagicBonus);
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.ARMOR_TYPE).ifPresent(data ->
+        {
+            Optional<MCDNDArmorType> optional = MCDNDArmorType.fromDataContainer(data);
+            if (optional.isPresent())
+                armor.setArmorType(optional.get());
+        });
+        dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(armor::setName);
+        return armor;
     }
 }

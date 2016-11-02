@@ -71,4 +71,14 @@ public class MCDNDItem implements DataSerializable
     {
         this.weight = weight;
     }
+
+    public static MCDNDItem fromDataContainer(DataContainer dataContainer)
+    {
+        MCDNDItem mcdndItem = new MCDNDItem();
+        dataContainer.getBoolean(MCDNDSimpleKeys.CARRIED.getQuery()).ifPresent(mcdndItem::setCarried);
+        dataContainer.getDouble(MCDNDSimpleKeys.WEIGHT_DOUBLE.getQuery()).ifPresent(mcdndItem::setWeight);
+        dataContainer.getString(MCDNDSimpleKeys.DESCRIPTION.getQuery()).ifPresent(mcdndItem::setDescription);
+        dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(mcdndItem::setName);
+        return mcdndItem;
+    }
 }

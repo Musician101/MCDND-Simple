@@ -1,5 +1,6 @@
 package io.musician101.mcdndsimple.sponge.character.spell;
 
+import io.musician101.mcdndsimple.sponge.DataUtils;
 import io.musician101.mcdndsimple.sponge.character.SpellcasterClass;
 import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
 import org.spongepowered.api.data.DataContainer;
@@ -229,5 +230,25 @@ public class Spell implements DataSerializable
     public void setTargetArea(String targetArea)
     {
         this.targetArea = targetArea;
+    }
+
+    public static Spell fromDataContainer(DataContainer dataContainer)
+    {
+        Spell spell = new Spell();
+        dataContainer.getBoolean(MCDNDSimpleKeys.NEEDS_CONCENTRATION.getQuery()).ifPresent(spell::setNeedsConcentration);
+        dataContainer.getBoolean(MCDNDSimpleKeys.IS_PREPARED.getQuery()).ifPresent(spell::setPrepared);
+        dataContainer.getInt(MCDNDSimpleKeys.DURATION.getQuery()).ifPresent(spell::setDuration);
+        dataContainer.getInt(MCDNDSimpleKeys.SPELL_LEVEL.getQuery()).ifPresent(spell::setLevel);
+        dataContainer.getInt(MCDNDSimpleKeys.RANGE.getQuery()).ifPresent(spell::setRange);
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.SPELL_DAMAGE).ifPresent(data -> spell.setSpellDamage(SpellDamage.fromDataContainer(data)));
+        dataContainer.getStringList(MCDNDSimpleKeys.SPELL_DESCRIPTION.getQuery()).ifPresent(spell::setDescription);
+        dataContainer.getStringList(MCDNDSimpleKeys.EFFECTS.getQuery()).ifPresent(spell::setEffects);
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.SPELL_SAVE).ifPresent(data -> spell.setSpellSave(SpellSave.fromDataContainer(data)));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.SPELLCASTER_CLASS).ifPresent(data -> SpellcasterClass.fromDataContainer(data).ifPresent(spell::setGainedFrom));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.SPELL_TYPE).ifPresent(data -> SpellType.fromDataContainer(data).ifPresent(spell::setSpellType));
+        dataContainer.getString(MCDNDSimpleKeys.ATTACK_STAT.getQuery()).ifPresent(spell::setAttackStat);
+        dataContainer.getString(MCDNDSimpleKeys.CAST_TIME.getQuery()).ifPresent(spell::setCastTime);
+        dataContainer.getString(MCDNDSimpleKeys.TARGET_AREA.getQuery()).ifPresent(spell::setTargetArea);
+        return spell;
     }
 }

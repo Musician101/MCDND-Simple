@@ -6,12 +6,14 @@ import org.spongepowered.api.data.DataSerializable;
 import org.spongepowered.api.data.MemoryDataContainer;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
 public enum MCDNDArmorType implements DataSerializable
 {
     LIGHT("Light"),
     MEDIUM("Medium"),
-    HEAVY("Heavy");
+    HEAVY("Heavy"),
+    NONE("None");
 
     private final String name;
 
@@ -38,5 +40,16 @@ public enum MCDNDArmorType implements DataSerializable
         return new MemoryDataContainer()
                 .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
                 .set(MCDNDSimpleKeys.NAME, name);
+    }
+
+    public static Optional<MCDNDArmorType> fromDataContainer(DataContainer dataContainer)
+    {
+        Optional<String> name = dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery());
+        if (name.isPresent())
+            for (MCDNDArmorType armorType : values())
+                if (armorType.getName().equals(name.get()))
+                    return Optional.of(armorType);
+
+        return Optional.empty();
     }
 }

@@ -1,5 +1,6 @@
 package io.musician101.mcdndsimple.sponge.character;
 
+import io.musician101.mcdndsimple.sponge.DataUtils;
 import io.musician101.mcdndsimple.sponge.character.tab.ArmorTab;
 import io.musician101.mcdndsimple.sponge.character.tab.BackgroundTab;
 import io.musician101.mcdndsimple.sponge.character.tab.ClassTab;
@@ -126,5 +127,19 @@ public class PlayerSheet implements DataSerializable
     public void setWeaponsTab(WeaponsTab weaponsTab)
     {
         this.weaponsTab = weaponsTab;
+    }
+
+    public static PlayerSheet fromDataContainer(DataContainer dataContainer)
+    {
+        PlayerSheet playerSheet = new PlayerSheet();
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.ARMOR_TAB).ifPresent(data -> playerSheet.setArmorTab(ArmorTab.fromDataContainer(data)));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.BACKGROUND_TAB).ifPresent(data -> playerSheet.setBackgroundTab(BackgroundTab.fromDataContainer(data)));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.CLASS_TAB).ifPresent(data -> playerSheet.setClassTab(ClassTab.fromDataContainer(data)));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.CORE_STATS_TAB).ifPresent(data -> playerSheet.setCoreStatsTab(CoreStatsTab.fromDataContainer(data)));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.INVENTORY_TAB).ifPresent(data -> playerSheet.setInventoryTab(InventoryTab.fromDataContainer(data, playerSheet.getCoreStatsTab().getCoreStats().getStrength().getScore())));
+        playerSheet.setSkillsTab(SkillsTab.fromCoreStats(playerSheet.getCoreStatsTab().getCoreStats()));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.SPELL_BOOK_TAB).ifPresent(data -> playerSheet.setSpellbookTab(SpellbookTab.fromDataContainer(data, playerSheet.getClassTab().getClassLevels().getSorcerer())));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.WEAPONS_TAB).ifPresent(data -> playerSheet.setWeaponsTab(WeaponsTab.fromDataContainer(data)));
+        return playerSheet;
     }
 }

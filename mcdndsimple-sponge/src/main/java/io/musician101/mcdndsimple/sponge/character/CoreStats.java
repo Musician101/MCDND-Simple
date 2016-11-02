@@ -1,5 +1,6 @@
 package io.musician101.mcdndsimple.sponge.character;
 
+import io.musician101.mcdndsimple.sponge.DataUtils;
 import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.DataSerializable;
@@ -94,5 +95,17 @@ public class CoreStats implements DataSerializable
     public void setWisdom(AbilityScore wisdom)
     {
         this.wisdom = wisdom;
+    }
+
+    public static CoreStats fromDataContainer(DataContainer dataContainer)
+    {
+        CoreStats coreStats = new CoreStats();
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.CHARISMA_SCORE).ifPresent(data -> AbilityScore.fromDataContainer(data).ifPresent(coreStats::setCharisma));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.CONSTITUTION_SCORE).ifPresent(data -> AbilityScore.fromDataContainer(data).ifPresent(coreStats::setConstitution));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.DEXTERITY_SCORE).ifPresent(data -> AbilityScore.fromDataContainer(data).ifPresent(coreStats::setDexterity));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.INTELLIGENCE_SCORE).ifPresent(data -> AbilityScore.fromDataContainer(data).ifPresent(coreStats::setIntelligence));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.STRENGTH_SCORE).ifPresent(data -> AbilityScore.fromDataContainer(data).ifPresent(coreStats::setStrength));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.WISDOM_SCORE).ifPresent(data -> AbilityScore.fromDataContainer(data).ifPresent(coreStats::setWisdom));
+        return coreStats;
     }
 }

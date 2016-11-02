@@ -1,11 +1,13 @@
 package io.musician101.mcdndsimple.sponge.character;
 
+import io.musician101.mcdndsimple.sponge.DataUtils;
 import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.DataSerializable;
 import org.spongepowered.api.data.MemoryDataContainer;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
 public class ClassAction implements DataSerializable
 {
@@ -54,7 +56,7 @@ public class ClassAction implements DataSerializable
         return recharge;
     }
 
-    public int getUsed()
+    public int getUsesLeft()
     {
         return used;
     }
@@ -79,8 +81,24 @@ public class ClassAction implements DataSerializable
         this.recharge = recharge;
     }
 
-    public void setUsed(int used)
+    public void setUsesLeft(int used)
     {
         this.used = used;
+    }
+
+    public static ClassAction fromDataContainer(DataContainer dataContainer)
+    {
+        ClassAction classAction = new ClassAction();
+        dataContainer.getInt(MCDNDSimpleKeys.MAX_USES.getQuery()).ifPresent(classAction::setMax);
+        dataContainer.getInt(MCDNDSimpleKeys.USES_LEFT.getQuery()).ifPresent(classAction::setUsesLeft);
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.RECHARGE).ifPresent(data ->
+        {
+            Optional<Recharge> optional = Recharge.fromDataContainer(data);
+            if (optional.isPresent())
+                classAction.setRecharge(optional.get());
+        });
+        dataContainer.getString(MCDNDSimpleKeys.GAINED_FROM.getQuery()).ifPresent(classAction::setGainedFrom);
+        dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(classAction::setName);
+        return classAction;
     }
 }

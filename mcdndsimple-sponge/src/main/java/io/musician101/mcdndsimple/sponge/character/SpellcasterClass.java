@@ -11,6 +11,7 @@ import org.spongepowered.api.data.MemoryDataContainer;
 import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Optional;
 
 public enum SpellcasterClass implements DataSerializable
 {
@@ -22,7 +23,7 @@ public enum SpellcasterClass implements DataSerializable
     PALADIN("Paladin"),
     RANGER("Ranger"),
     SORCERER("Sorcerer"),
-    WARLOCK("Warlock"),
+    WARLOCK("Warlock"),//NOSONAR
     WIZARD("Wizard");
 
     private final Table<Integer, String, Integer> table = Tables.newCustomTable(new HashMap<>(), HashMap::new);
@@ -52,7 +53,7 @@ public enum SpellcasterClass implements DataSerializable
             case "Arcane Trickster":
                 arcaneTrickster();
                 break;
-            case "Bard"://NOSONAR
+            case "Bard":
                 bard();
                 break;
             case "Cleric":
@@ -493,5 +494,17 @@ public enum SpellcasterClass implements DataSerializable
     public String getName()
     {
         return name;
+    }
+
+    public static Optional<SpellcasterClass> fromDataContainer(DataContainer dataContainer)
+    {
+        return dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
+        {
+            for (SpellcasterClass spellcasterClass : values())
+                if (name.equals(spellcasterClass.getName()))
+                    return Optional.of(spellcasterClass);
+
+            return Optional.empty();
+        });
     }
 }

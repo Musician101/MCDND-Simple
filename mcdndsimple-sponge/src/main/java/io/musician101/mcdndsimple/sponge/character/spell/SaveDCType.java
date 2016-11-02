@@ -7,6 +7,7 @@ import org.spongepowered.api.data.DataSerializable;
 import org.spongepowered.api.data.MemoryDataContainer;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 import java.util.function.BiFunction;
 
 public class SaveDCType implements DataSerializable
@@ -59,5 +60,40 @@ public class SaveDCType implements DataSerializable
     public String getName()
     {
         return name;
+    }
+
+    public static Optional<SaveDCType> fromDataContainer(DataContainer dataContainer)//NOSONAR
+    {
+        Optional<String> nameOptional = dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery());
+        if (!nameOptional.isPresent())
+            return Optional.empty();
+
+        String name = nameOptional.get();
+        if ("Custom DC".equals(name))
+        {
+            Optional<Integer> custom = dataContainer.getInt(MCDNDSimpleKeys.CUSTOM_DC.getQuery());
+            if (custom.isPresent())
+                return Optional.of(SaveDCTypes.custom(custom.get()));
+        }
+        else if ("Arcane Trickster DC".equals(name))
+            return Optional.of(SaveDCTypes.ARCANE_TRICKSTER);
+        else if ("Bard DC".equals(name))
+            return Optional.of(SaveDCTypes.BARD);
+        else if ("Cleric DC".equals(name))
+            return Optional.of(SaveDCTypes.CLERIC);
+        else if ("Druid DC".equals(name))
+            return Optional.of(SaveDCTypes.DRUID);
+        else if ("Eldritch Knight DC".equals(name))
+            return Optional.of(SaveDCTypes.ELDRITCH_KNIGHT);
+        else if ("Paladin DC".equals(name))
+            return Optional.of(SaveDCTypes.PALADIN);
+        else if ("Sorcerer DC".equals(name))
+            return Optional.of(SaveDCTypes.SORCERER);
+        else if ("Warlock DC".equals(name))
+            return Optional.of(SaveDCTypes.WARLOCK);
+        else if ("Wizard DC".equals(name))
+            return Optional.of(SaveDCTypes.WIZARD);
+
+        return Optional.empty();
     }
 }

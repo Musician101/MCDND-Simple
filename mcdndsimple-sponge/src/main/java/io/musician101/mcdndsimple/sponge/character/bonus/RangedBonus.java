@@ -47,4 +47,12 @@ public class RangedBonus implements DataSerializable
     {
         this.damage = damage;
     }
+
+    public static RangedBonus fromDataContainer(DataContainer dataContainer)
+    {
+        RangedBonus meleeBonus = new RangedBonus();
+        dataContainer.getInt(MCDNDSimpleKeys.ATTACK.getQuery()).ifPresent(meleeBonus::setAttack);
+        dataContainer.getInt(MCDNDSimpleKeys.DAMAGE.getQuery()).ifPresent(meleeBonus::setDamage);
+        return meleeBonus;
+    }
 }

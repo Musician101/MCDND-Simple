@@ -1,5 +1,6 @@
 package io.musician101.mcdndsimple.sponge.character.spell;
 
+import io.musician101.mcdndsimple.sponge.DataUtils;
 import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.DataSerializable;
@@ -58,5 +59,14 @@ public class SpellSave implements DataSerializable
     public void setSavingStat(String savingStat)
     {
         this.savingStat = savingStat;
+    }
+
+    public static SpellSave fromDataContainer(DataContainer dataContainer)
+    {
+        SpellSave spellSave = new SpellSave();
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.SAVE_DC_TYPE).ifPresent(data -> SaveDCType.fromDataContainer(data).ifPresent(spellSave::setSaveDCType));
+        dataContainer.getString(MCDNDSimpleKeys.SAVE_DC_TYPE.getQuery()).ifPresent(spellSave::setOnSuccessfulSave);
+        dataContainer.getString(MCDNDSimpleKeys.SAVING_STAT.getQuery()).ifPresent(spellSave::setSavingStat);
+        return spellSave;
     }
 }

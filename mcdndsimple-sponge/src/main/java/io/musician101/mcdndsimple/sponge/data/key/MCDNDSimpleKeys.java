@@ -2,7 +2,6 @@ package io.musician101.mcdndsimple.sponge.data.key;
 
 import io.musician101.mcdndsimple.sponge.MCDNDSimpleTypeToken;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
-import io.musician101.mcdndsimple.sponge.character.UnarmoredBonus;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.value.mutable.ListValue;
@@ -158,6 +157,7 @@ public class MCDNDSimpleKeys
     public static final Key<Value<Integer>> SPEED = makeSingleKey(token(), token(), of("Speed"), SpongeMCDNDSimple.getPluginContainer().getId() + ":speed", "Speed");
     public static final Key<Value<Boolean>> SPEED_PENALTY = makeSingleKey(token(), token(), of("SpeedPenalty"), SpongeMCDNDSimple.getPluginContainer().getId() + ":speed_penalty", "Speed Penalty");
     public static final Key<Value<DataContainer>> SPELLCASTER_CLASS = makeSingleKey(token(), token(), of("SpellcasterClass"), SpongeMCDNDSimple.getPluginContainer().getId() + ":spellcaster_class", "Spellcaster Class");
+    public static final Key<ListValue<DataContainer>> SPELLCASTER_CLASSES = makeListKey(token(), token(), of("SpellcasterClasses"), SpongeMCDNDSimple.getPluginContainer().getId() + ":spellcaster_classes", "Spellcaster Classes");
     public static final Key<Value<DataContainer>> SPELLCASTER_TABLE = makeSingleKey(token(), token(), of("SpellcasterTable"), SpongeMCDNDSimple.getPluginContainer().getId() + ":spellcaster_table", "Spellcaster Table");
     public static final Key<Value<DataContainer>> SPELLCASTING_BONUS = makeSingleKey(token(), token(), of("SpellcastingBonus"), SpongeMCDNDSimple.getPluginContainer().getId() + ":spellcasting_bonus", "Spellcasting Bonus");
     public static final Key<ListValue<DataContainer>> SPELLS = makeListKey(token(), token(), of("Spells"), SpongeMCDNDSimple.getPluginContainer().getId() + ":spells", "Spells");

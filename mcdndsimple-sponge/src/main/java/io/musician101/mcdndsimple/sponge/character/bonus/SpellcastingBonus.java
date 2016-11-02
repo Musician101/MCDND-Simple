@@ -59,4 +59,13 @@ public class SpellcastingBonus implements DataSerializable
     {
         this.saveDC = saveDC;
     }
+
+    public static SpellcastingBonus fromDataContainer(DataContainer dataContainer)
+    {
+        SpellcastingBonus meleeBonus = new SpellcastingBonus();
+        dataContainer.getInt(MCDNDSimpleKeys.ATTACK.getQuery()).ifPresent(meleeBonus::setAttack);
+        dataContainer.getInt(MCDNDSimpleKeys.DAMAGE.getQuery()).ifPresent(meleeBonus::setDamage);
+        dataContainer.getInt(MCDNDSimpleKeys.SAVE_DC.getQuery()).ifPresent(meleeBonus::setSaveDC);
+        return meleeBonus;
+    }
 }

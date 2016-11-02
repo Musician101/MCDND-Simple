@@ -6,6 +6,7 @@ import org.spongepowered.api.data.DataSerializable;
 import org.spongepowered.api.data.MemoryDataContainer;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
 public class Coin implements DataSerializable
 {
@@ -59,5 +60,18 @@ public class Coin implements DataSerializable
     public void setAmount(int amount)
     {
         this.amount = amount;
+    }
+
+    public static Optional<Coin> fromDataContainer(DataContainer dataContainer)
+    {
+        Optional<String> name = dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery());
+        Optional<String> shortName = dataContainer.getString(MCDNDSimpleKeys.SHORT_NAME.getQuery());
+        if (!name.isPresent() || !shortName.isPresent())
+            return Optional.empty();
+
+        @SuppressWarnings("OptionalGetWithoutIsPresent")
+        Coin coin = new Coin(name.get(), shortName.get());
+        dataContainer.getInt(MCDNDSimpleKeys.AMOUNT.getQuery()).ifPresent(coin::setAmount);
+        return Optional.of(coin);
     }
 }

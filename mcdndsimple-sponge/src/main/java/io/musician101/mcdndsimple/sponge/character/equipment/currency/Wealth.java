@@ -1,5 +1,6 @@
 package io.musician101.mcdndsimple.sponge.character.equipment.currency;
 
+import io.musician101.mcdndsimple.sponge.DataUtils;
 import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.DataSerializable;
@@ -82,5 +83,16 @@ public class Wealth implements DataSerializable
     public void setSilver(Coin silver)
     {
         this.silver = silver;
+    }
+
+    public static Wealth fromDataContainer(DataContainer dataContainer)
+    {
+        Wealth wealth = new Wealth();
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.COPPER).ifPresent(data -> Coin.fromDataContainer(data).ifPresent(wealth::setCopper));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.ELECTRUM).ifPresent(data -> Coin.fromDataContainer(data).ifPresent(wealth::setElectrum));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.GOLD).ifPresent(data -> Coin.fromDataContainer(data).ifPresent(wealth::setGold));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.PLATINUM).ifPresent(data -> Coin.fromDataContainer(data).ifPresent(wealth::setPlatinum));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.SILVER).ifPresent(data -> Coin.fromDataContainer(data).ifPresent(wealth::setSilver));
+        return wealth;
     }
 }

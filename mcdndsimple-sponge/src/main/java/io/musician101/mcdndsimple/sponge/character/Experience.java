@@ -65,4 +65,12 @@ public class Experience implements DataSerializable
     {
         this.overallLevel = overallLevel;
     }
+
+    public static Experience fromDataContainer(DataContainer dataContainer)
+    {
+        Experience experience = new Experience();
+        dataContainer.getInt(MCDNDSimpleKeys.EXPERIENCE.getQuery()).ifPresent(experience::setExp);
+        dataContainer.getInt(MCDNDSimpleKeys.OVERALL_LEVEL.getQuery()).ifPresent(experience::setOverallLevel);
+        return experience;
+    }
 }

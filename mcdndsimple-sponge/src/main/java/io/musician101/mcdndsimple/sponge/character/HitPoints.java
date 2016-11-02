@@ -59,4 +59,13 @@ public class HitPoints implements DataSerializable
     {
         this.temp = temp;
     }
+
+    public static HitPoints fromDataContainer(DataContainer dataContainer)
+    {
+        HitPoints hitPoints = new HitPoints();
+        dataContainer.getInt(MCDNDSimpleKeys.CURRENT_HP.getQuery()).ifPresent(hitPoints::setCurrent);
+        dataContainer.getInt(MCDNDSimpleKeys.MAX_HP.getQuery()).ifPresent(hitPoints::setMax);
+        dataContainer.getInt(MCDNDSimpleKeys.TEMP_HP.getQuery()).ifPresent(hitPoints::setTemp);
+        return hitPoints;
+    }
 }

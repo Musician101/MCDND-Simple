@@ -1,5 +1,6 @@
 package io.musician101.mcdndsimple.sponge.character;
 
+import io.musician101.mcdndsimple.sponge.DataUtils;
 import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.DataSerializable;
@@ -7,20 +8,17 @@ import org.spongepowered.api.data.MemoryDataContainer;
 
 import javax.annotation.Nonnull;
 
-//TODO needs builder for all
 public class CharacterSheet implements DataSerializable
 {
-    private final BioAndInfo bioAndInfo;
-    private final PlayerSheet playerSheet;
-    private String clazz = null;
-    private String name = "";
-    private String race = null;
+    private BioAndInfo bioAndInfo = new BioAndInfo();
+    private PlayerSheet playerSheet = new PlayerSheet();
+    private String clazz = "";
+    private String name = "Your Name Here";
+    private String race = "";
 
-    public CharacterSheet(String name)
+    public String getClazz()
     {
-        this.name = name;
-        this.bioAndInfo = new BioAndInfo(name);
-        this.playerSheet = new PlayerSheet();
+        return clazz;
     }
 
     public BioAndInfo getBioAndInfo()
@@ -28,15 +26,25 @@ public class CharacterSheet implements DataSerializable
         return bioAndInfo;
     }
 
-    public String getClazz()
+    public PlayerSheet getPlayerSheet()
     {
-        return clazz;
+        return playerSheet;
     }
 
     @Override
     public int getContentVersion()
     {
         return 1;
+    }
+
+    public void setBioAndInfo(BioAndInfo bioAndInfo)
+    {
+        this.bioAndInfo = bioAndInfo;
+    }
+
+    public void setPlayerSheet(PlayerSheet playerSheet)
+    {
+        this.playerSheet = playerSheet;
     }
 
     @Nonnull
@@ -57,11 +65,6 @@ public class CharacterSheet implements DataSerializable
         return name;
     }
 
-    public PlayerSheet getPlayerSheet()
-    {
-        return playerSheet;
-    }
-
     public String getRace()
     {
         return race;
@@ -80,5 +83,16 @@ public class CharacterSheet implements DataSerializable
     public void setRace(String race)
     {
         this.race = race;
+    }
+
+    public static CharacterSheet fromDataContainer(DataContainer dataContainer)
+    {
+        CharacterSheet characterSheet = new CharacterSheet();
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.BIO_AND_INFO).ifPresent(bioData -> characterSheet.setBioAndInfo(BioAndInfo.fromDataContainer(bioData)));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.PLAYER_SHEET).ifPresent(playerData -> characterSheet.setPlayerSheet(PlayerSheet.fromDataContainer(playerData)));
+        dataContainer.getString(MCDNDSimpleKeys.CLASS.getQuery()).ifPresent(characterSheet::setClazz);
+        dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(characterSheet::setName);
+        dataContainer.getString(MCDNDSimpleKeys.RACE.getQuery()).ifPresent(characterSheet::setRace);
+        return characterSheet;
     }
 }

@@ -88,4 +88,14 @@ public class InventoryTab implements DataSerializable
     {
         this.weight = weight;
     }
+
+    public static InventoryTab fromDataContainer(DataContainer dataContainer, int strengthScore)
+    {
+        InventoryTab inventoryTab = new InventoryTab();
+        DataUtils.getDataContainerList(dataContainer, MCDNDSimpleKeys.INVENTORY).ifPresent(list -> list.forEach(data -> inventoryTab.addItem(MCDNDItem.fromDataContainer(data))));
+        dataContainer.getStringList(MCDNDSimpleKeys.INVENTORY_NOTES.getQuery()).ifPresent(inventoryTab::setInventoryNotes);
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.WEALTH).ifPresent(data -> inventoryTab.setWealth(Wealth.fromDataContainer(data)));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.WEIGHT_CLASS).ifPresent(data -> inventoryTab.setWeight(Weight.fromDataContainer(data, strengthScore, inventoryTab.getInventory(), inventoryTab.getWealth())));
+        return inventoryTab;
+    }
 }

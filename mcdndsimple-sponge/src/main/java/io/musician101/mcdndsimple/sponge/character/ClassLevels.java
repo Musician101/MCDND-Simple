@@ -167,4 +167,22 @@ public class ClassLevels implements DataSerializable
     {
         this.wizard = wizard;
     }
+
+    public static ClassLevels fromDataContainer(DataContainer dataContainer)
+    {
+        ClassLevels classLevels = new ClassLevels();
+        dataContainer.getInt(MCDNDSimpleKeys.BARBARIAN_LEVEL.getQuery()).ifPresent(classLevels::setBarbarian);
+        dataContainer.getInt(MCDNDSimpleKeys.BARD_LEVEL.getQuery()).ifPresent(classLevels::setBard);
+        dataContainer.getInt(MCDNDSimpleKeys.CLERIC_LEVEL.getQuery()).ifPresent(classLevels::setCleric);
+        dataContainer.getInt(MCDNDSimpleKeys.DRUID_LEVEL.getQuery()).ifPresent(classLevels::setDruid);
+        dataContainer.getInt(MCDNDSimpleKeys.FIGHTER_LEVEL.getQuery()).ifPresent(classLevels::setFighter);
+        dataContainer.getInt(MCDNDSimpleKeys.MONK_LEVEL.getQuery()).ifPresent(classLevels::setMonk);
+        dataContainer.getInt(MCDNDSimpleKeys.PALADIN_LEVEL.getQuery()).ifPresent(classLevels::setPaladin);
+        dataContainer.getInt(MCDNDSimpleKeys.RANGER_LEVEL.getQuery()).ifPresent(classLevels::setRanger);
+        dataContainer.getInt(MCDNDSimpleKeys.ROGUE_LEVEL.getQuery()).ifPresent(classLevels::setRogue);
+        dataContainer.getInt(MCDNDSimpleKeys.SORCERER_LEVEL.getQuery()).ifPresent(classLevels::setSorcerer);
+        dataContainer.getInt(MCDNDSimpleKeys.WARLOCK_LEVEL.getQuery()).ifPresent(classLevels::setWarlock);
+        dataContainer.getInt(MCDNDSimpleKeys.WIZARD_LEVEL.getQuery()).ifPresent(classLevels::setWizard);
+        return classLevels;
+    }
 }

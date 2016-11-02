@@ -13,12 +13,7 @@ import java.util.List;
 public class BioAndInfo implements DataSerializable
 {
     private List<String> bio = new ArrayList<>();
-    private String name;
-
-    public BioAndInfo(String name)
-    {
-        this.name = name;
-    }
+    private String name = "";
 
     public List<String> getBio()
     {
@@ -54,5 +49,13 @@ public class BioAndInfo implements DataSerializable
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public static BioAndInfo fromDataContainer(DataContainer container)
+    {
+        BioAndInfo bioAndInfo = new BioAndInfo();
+        container.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(bioAndInfo::setName);
+        container.getStringList(MCDNDSimpleKeys.BIO.getQuery()).ifPresent(bioAndInfo::setBio);
+        return bioAndInfo;
     }
 }

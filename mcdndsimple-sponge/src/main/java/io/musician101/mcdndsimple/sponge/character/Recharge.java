@@ -6,6 +6,7 @@ import org.spongepowered.api.data.DataSerializable;
 import org.spongepowered.api.data.MemoryDataContainer;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
 public enum Recharge implements DataSerializable
 {
@@ -39,5 +40,16 @@ public enum Recharge implements DataSerializable
     public String getName()
     {
         return name;
+    }
+
+    public static Optional<Recharge> fromDataContainer(DataContainer dataContainer)
+    {
+        Optional<String> optional = dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery());
+        if (optional.isPresent())
+            for (Recharge recharge : values())
+                if (recharge.getName().equals(optional.get()))
+                    return Optional.of(recharge);
+
+        return Optional.empty();
     }
 }

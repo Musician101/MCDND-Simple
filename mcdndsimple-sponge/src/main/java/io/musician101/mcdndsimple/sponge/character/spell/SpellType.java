@@ -6,6 +6,7 @@ import org.spongepowered.api.data.DataSerializable;
 import org.spongepowered.api.data.MemoryDataContainer;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
 public enum SpellType implements DataSerializable
 {
@@ -43,5 +44,17 @@ public enum SpellType implements DataSerializable
     public String getName()
     {
         return name;
+    }
+
+    public static Optional<SpellType> fromDataContainer(DataContainer dataContainer)
+    {
+        return dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
+        {
+            for (SpellType spellType : values())
+                if (name.equals(spellType.getName()))
+                    return Optional.of(spellType);
+
+            return Optional.empty();
+        });
     }
 }

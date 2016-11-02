@@ -11,13 +11,14 @@ import org.spongepowered.api.data.MemoryDataContainer;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ArmorTab implements DataSerializable
 {
     private int armorClass = 0;
-    private int unarmoredArmorClass = 10;
-    private final List<Armor> armorList = new ArrayList<>();
-    private UnarmoredBonus unarmoredBonus = null;
+    private int unarmoredClass = 10;
+    private List<Armor> armorList = new ArrayList<>();
+    private UnarmoredBonus unarmoredBonus = UnarmoredBonus.NONE;
 
     public int getArmorClass()
     {
@@ -47,19 +48,24 @@ public class ArmorTab implements DataSerializable
         return new MemoryDataContainer()
                 .set(MCDNDSimpleKeys.CONTENT_VERSION, getContentVersion())
                 .set(MCDNDSimpleKeys.ARMOR_CLASS, armorClass)
-                .set(MCDNDSimpleKeys.UNARMORED_ARMOR_CLASS, unarmoredArmorClass)
+                .set(MCDNDSimpleKeys.UNARMORED_ARMOR_CLASS, unarmoredClass)
                 .set(MCDNDSimpleKeys.ARMOR_LIST, DataUtils.serialize(armorList))
                 .set(MCDNDSimpleKeys.UNARMORED_BONUS, unarmoredBonus.toContainer());
     }
 
     public void removeArmor(Armor armor)
     {
-        armorList.remove(armor);
+        armorList.add(armor);
     }
 
-    public int getUnarmoredArmorClass()
+    public void setArmor(List<Armor> armor)
     {
-        return unarmoredArmorClass;
+        this.armorList = armor;
+    }
+
+    public int getUnarmoredClass()
+    {
+        return unarmoredClass;
     }
 
     public UnarmoredBonus getUnarmoredBonus()
@@ -72,13 +78,28 @@ public class ArmorTab implements DataSerializable
         this.armorClass = armorClass;
     }
 
-    public void setUnarmoredArmorClass(int unarmoredArmorClass)
+    public void setUnarmoredClass(int unarmoredArmorClass)
     {
-        this.unarmoredArmorClass = unarmoredArmorClass;
+        this.unarmoredClass = unarmoredArmorClass;
     }
 
     public void setUnarmoredBonus(UnarmoredBonus unarmoredBonus)
     {
         this.unarmoredBonus = unarmoredBonus;
+    }
+
+    public static ArmorTab fromDataContainer(DataContainer dataContainer)
+    {
+        ArmorTab armorTab = new ArmorTab();
+        dataContainer.getInt(MCDNDSimpleKeys.ARMOR_CLASS.getQuery()).ifPresent(armorTab::setArmorClass);
+        dataContainer.getInt(MCDNDSimpleKeys.UNARMORED_ARMOR_CLASS.getQuery()).ifPresent(armorTab::setUnarmoredClass);
+        DataUtils.getDataContainerList(dataContainer, MCDNDSimpleKeys.ARMOR_LIST).ifPresent(list -> list.forEach(data -> armorTab.addArmor(Armor.fromDataContainer(data))));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.UNARMORED_BONUS).ifPresent(data ->
+        {
+            Optional<UnarmoredBonus> unarmoredBonus = UnarmoredBonus.fromDataContainer(data);
+            if (unarmoredBonus.isPresent())
+                armorTab.setUnarmoredBonus(unarmoredBonus.get());
+        });
+        return armorTab;
     }
 }

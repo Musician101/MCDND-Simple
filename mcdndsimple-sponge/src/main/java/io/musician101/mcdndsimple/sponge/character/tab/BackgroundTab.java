@@ -265,4 +265,30 @@ public class BackgroundTab implements DataSerializable
     {
         this.weight = weight;
     }
+
+    public static BackgroundTab fromDataContainer(DataContainer dataContainer)
+    {
+        BackgroundTab backgroundTab = new BackgroundTab();
+        dataContainer.getDouble(MCDNDSimpleKeys.WEIGHT_DOUBLE.getQuery()).ifPresent(backgroundTab::setWeight);
+        dataContainer.getInt(MCDNDSimpleKeys.AGE.getQuery()).ifPresent(backgroundTab::setAge);
+        dataContainer.getStringList(MCDNDSimpleKeys.ARMOR_PROFICIENCIES.getQuery()).ifPresent(backgroundTab::setArmorProficiencies);
+        dataContainer.getStringList(MCDNDSimpleKeys.BACKGROUND.getQuery()).ifPresent(backgroundTab::setBackground);
+        dataContainer.getStringList(MCDNDSimpleKeys.BONDS.getQuery()).ifPresent(backgroundTab::setBonds);
+        dataContainer.getStringList(MCDNDSimpleKeys.FLAWS.getQuery()).ifPresent(backgroundTab::setFlaws);
+        dataContainer.getStringList(MCDNDSimpleKeys.IDEALS.getQuery()).ifPresent(backgroundTab::setIdeals);
+        dataContainer.getStringList(MCDNDSimpleKeys.OTHER_NOTES.getQuery()).ifPresent(backgroundTab::setOtherNotes);
+        dataContainer.getStringList(MCDNDSimpleKeys.PERSONALITY_TRAITS.getQuery());
+        dataContainer.getStringList(MCDNDSimpleKeys.RACIAL_TRAITS.getQuery()).ifPresent(backgroundTab::setRacialTraits);
+        dataContainer.getStringList(MCDNDSimpleKeys.TOOL_PROFICIENCIES.getQuery()).ifPresent(backgroundTab::setToolProficiencies);
+        dataContainer.getStringList(MCDNDSimpleKeys.WEAPON_PROFICIENCIES.getQuery()).ifPresent(backgroundTab::setWeaponProficiencies);
+        dataContainer.getString(MCDNDSimpleKeys.ALIGNMENT.getQuery()).ifPresent(backgroundTab::setAlignment);
+        dataContainer.getString(MCDNDSimpleKeys.EYES.getQuery()).ifPresent(backgroundTab::setEyes);
+        dataContainer.getString(MCDNDSimpleKeys.GENDER.getQuery()).ifPresent(backgroundTab::setGender);
+        dataContainer.getString(MCDNDSimpleKeys.HAIR.getQuery()).ifPresent(backgroundTab::setHair);
+        dataContainer.getString(MCDNDSimpleKeys.HEIGHT.getQuery()).ifPresent(backgroundTab::setHeight);
+        dataContainer.getString(MCDNDSimpleKeys.LANGUAGES.getQuery()).ifPresent(backgroundTab::setLanguages);
+        dataContainer.getString(MCDNDSimpleKeys.SIZE.getQuery()).ifPresent(backgroundTab::setSize);
+        dataContainer.getString(MCDNDSimpleKeys.VISION.getQuery()).ifPresent(backgroundTab::setVision);
+        return backgroundTab;
+    }
 }

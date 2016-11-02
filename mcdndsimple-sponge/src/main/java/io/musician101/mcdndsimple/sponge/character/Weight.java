@@ -96,7 +96,7 @@ public class Weight implements DataSerializable
         this.pushDragLift = this.carryingMax * 2;
     }
 
-    public void setCoin(Wealth wealth)
+    public void setCoinWeight(Wealth wealth)
     {
         this.coin = wealth.getCopper().getWeight() + wealth.getElectrum().getWeight() + wealth.getGold().getWeight()
                 + wealth.getPlatinum().getWeight() + wealth.getSilver().getWeight();
@@ -112,7 +112,7 @@ public class Weight implements DataSerializable
         this.heavilyEncumbered = strengthScore * 10D;
     }
 
-    public void setInventory(List<MCDNDItem> items)
+    public void setInventoryWeight(List<MCDNDItem> items)
     {
         double inventory = 0.0;//NOSONAR
         for (MCDNDItem item : items)
@@ -124,5 +124,17 @@ public class Weight implements DataSerializable
     public void setOther(double other)
     {
         this.other = other;
+    }
+
+    public static Weight fromDataContainer(DataContainer dataContainer, int strengthScore, List<MCDNDItem> items, Wealth wealth)
+    {
+        Weight weight = new Weight();
+        dataContainer.getDouble(MCDNDSimpleKeys.OTHER.getQuery()).ifPresent(weight::setOther);
+        weight.setInventoryWeight(items);
+        weight.setCoinWeight(wealth);
+        weight.setCarryingMax(strengthScore);
+        weight.setEncumbered(strengthScore);
+        weight.setHeavilyEncumbered(strengthScore);
+        return weight;
     }
 }

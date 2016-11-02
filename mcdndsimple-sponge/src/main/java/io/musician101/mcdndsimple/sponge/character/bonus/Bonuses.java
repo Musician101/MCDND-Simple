@@ -1,5 +1,6 @@
 package io.musician101.mcdndsimple.sponge.character.bonus;
 
+import io.musician101.mcdndsimple.sponge.DataUtils;
 import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.DataSerializable;
@@ -82,5 +83,16 @@ public class Bonuses implements DataSerializable
     public void setSpellcasting(SpellcastingBonus spellcasting)
     {
         this.spellcasting = spellcasting;
+    }
+
+    public static Bonuses fromDataContainer(DataContainer dataContainer)
+    {
+        Bonuses bonuses = new Bonuses();
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.MELEE_BONUS).ifPresent(data -> bonuses.setMelee(MeleeBonus.fromDataContainer(data)));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.RANGED_BONUS).ifPresent(data -> bonuses.setRanged(RangedBonus.fromDataContainer(data)));
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.SPELLCASTING_BONUS).ifPresent(data -> bonuses.setSpellcasting(SpellcastingBonus.fromDataContainer(data)));
+        dataContainer.getInt(MCDNDSimpleKeys.SAVES.getQuery()).ifPresent(bonuses::setSaves);
+        dataContainer.getInt(MCDNDSimpleKeys.ABILITIES_AND_SKILLS.getQuery()).ifPresent(bonuses::setAbilitiesAndSkills);
+        return bonuses;
     }
 }

@@ -6,6 +6,7 @@ import org.spongepowered.api.data.DataSerializable;
 import org.spongepowered.api.data.MemoryDataContainer;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
 public class AbilityScore implements DataSerializable
 {
@@ -71,5 +72,21 @@ public class AbilityScore implements DataSerializable
     public void setScore(int score)
     {
         this.score = score;
+    }
+
+    public static Optional<AbilityScore> fromDataContainer(DataContainer dataContainer)
+    {
+        Optional<String> name = dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery());
+        Optional<String> shortName = dataContainer.getString(MCDNDSimpleKeys.SHORT_NAME.getQuery());
+        if (!name.isPresent() || !shortName.isPresent())
+            return Optional.empty();
+
+        // Intellij shows a warning on shortName.get(). Warning is invalid in this case as it's not called if
+        // name.isPresent() returns false
+        @SuppressWarnings("OptionalGetWithoutIsPresent")
+        AbilityScore abilityScore = new AbilityScore(name.get(), shortName.get());
+        dataContainer.getBoolean(MCDNDSimpleKeys.IS_PROFICIENT.getQuery()).ifPresent(abilityScore::setProficient);
+        dataContainer.getInt(MCDNDSimpleKeys.SCORE.getQuery()).ifPresent(abilityScore::setScore);
+        return Optional.of(abilityScore);
     }
 }

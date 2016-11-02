@@ -1,5 +1,6 @@
 package io.musician101.mcdndsimple.sponge.character.spell;
 
+import io.musician101.mcdndsimple.sponge.DataUtils;
 import io.musician101.mcdndsimple.sponge.Dice;
 import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
 import org.spongepowered.api.data.DataContainer;
@@ -71,5 +72,15 @@ public class SpellDamage implements DataSerializable
     public void setDice(Dice dice)
     {
         this.dice = dice;
+    }
+
+    public static SpellDamage fromDataContainer(DataContainer dataContainer)
+    {
+        SpellDamage spellDamage = new SpellDamage();
+        dataContainer.getBoolean(MCDNDSimpleKeys.CAN_CRIT.getQuery()).ifPresent(spellDamage::setCanCrit);
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.DICE).ifPresent(data -> spellDamage.setDice(Dice.fromDataContainer(data)));
+        dataContainer.getInt(MCDNDSimpleKeys.CAN_CRIT.getQuery()).ifPresent(spellDamage::setBonus);
+        dataContainer.getString(MCDNDSimpleKeys.CAN_CRIT.getQuery()).ifPresent(spellDamage::setDamageType);
+        return spellDamage;
     }
 }

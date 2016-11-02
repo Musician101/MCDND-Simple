@@ -204,7 +204,6 @@ public class SkillsTab implements DataSerializable
         AbilityScore intel = coreStats.getIntelligence();
         AbilityScore str = coreStats.getStrength();
         AbilityScore wis = coreStats.getWisdom();
-
         acrobatics.update(dex);
         animalHandling.update(wis);
         arcana.update(intel);
@@ -229,5 +228,12 @@ public class SkillsTab implements DataSerializable
         unskilledINT.update(intel);
         unskilledSTR.update(str);
         unskilledWIS.update(wis);
+    }
+
+    public static SkillsTab fromCoreStats(CoreStats coreStats)
+    {
+        SkillsTab skillsTab = new SkillsTab();
+        skillsTab.updateSkills(coreStats);
+        return skillsTab;
     }
 }

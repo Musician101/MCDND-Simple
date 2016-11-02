@@ -22,6 +22,16 @@ public class HitDice implements DataSerializable
         hitDiceMap.put(12, 0);
     }
 
+    public void addHitDie(int sides, int amount)
+    {
+        hitDiceMap.put(sides, amount);
+    }
+
+    public void removeHitDice(int sides)
+    {
+        hitDiceMap.remove(sides);
+    }
+
     @Override
     public int getContentVersion()
     {
@@ -48,5 +58,12 @@ public class HitDice implements DataSerializable
     public void setHitDice(Dice dice)
     {
         hitDiceMap.put(dice.getSides(), dice.getAmount());
+    }
+
+    public static HitDice fromDataContainer(DataContainer dataContainer)
+    {
+        HitDice hitDice = new HitDice();
+        dataContainer.getKeys(false).forEach(dataQuery -> dataContainer.getInt(dataQuery).ifPresent(amount -> hitDice.addHitDie(Integer.parseInt(dataQuery.toString()), amount)));
+        return hitDice;
     }
 }

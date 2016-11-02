@@ -65,9 +65,29 @@ public class ClassTab implements DataSerializable
         return otherNotes;
     }
 
+    public void addClassAction(ClassAction classAction)
+    {
+        classActions.add(classAction);
+    }
+
+    public void removeClassAction(ClassAction classAction)
+    {
+        classActions.remove(classAction);
+    }
+
     public void setClassActions(List<ClassAction> classActions)
     {
         this.classActions = classActions;
+    }
+
+    public void addClassResource(ClassResource classResource)
+    {
+        classResources.add(classResource);
+    }
+
+    public void removeClassResource(ClassResource classResource)
+    {
+        classResources.remove(classResource);
     }
 
     public void setClassFeatureNotes(List<String> classFeatureNotes)
@@ -88,5 +108,15 @@ public class ClassTab implements DataSerializable
     public void setOtherNotes(List<String> otherNotes)
     {
         this.otherNotes = otherNotes;
+    }
+
+    public static ClassTab fromDataContainer(DataContainer dataContainer)
+    {
+        ClassTab classTab = new ClassTab();
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.CLASS_LEVELS).ifPresent(data -> classTab.setClassLevels(ClassLevels.fromDataContainer(data)));
+        DataUtils.getDataContainerList(dataContainer, MCDNDSimpleKeys.CLASS_ACTIONS).ifPresent(list -> list.forEach(data -> classTab.addClassAction(ClassAction.fromDataContainer(data))));
+        DataUtils.getDataContainerList(dataContainer, MCDNDSimpleKeys.CLASS_RESOURCES).ifPresent(list -> list.forEach(data -> classTab.addClassResource(ClassResource.fromDataContainer(data))));
+        dataContainer.getStringList(MCDNDSimpleKeys.CLASS_FEATURE_NOTES.getQuery()).ifPresent(classTab::setOtherNotes);
+        return classTab;
     }
 }

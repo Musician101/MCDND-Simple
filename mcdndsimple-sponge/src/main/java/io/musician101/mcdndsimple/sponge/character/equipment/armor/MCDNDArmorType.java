@@ -44,12 +44,13 @@ public enum MCDNDArmorType implements DataSerializable
 
     public static Optional<MCDNDArmorType> fromDataContainer(DataContainer dataContainer)
     {
-        Optional<String> name = dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery());
-        if (name.isPresent())
+        return dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
+        {
             for (MCDNDArmorType armorType : values())
-                if (armorType.getName().equals(name.get()))
+                if (armorType.getName().equals(name))
                     return Optional.of(armorType);
 
-        return Optional.empty();
+            return Optional.empty();
+        });
     }
 }

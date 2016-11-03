@@ -57,12 +57,13 @@ public enum UnarmoredBonus implements DataSerializable
 
     public static Optional<UnarmoredBonus> fromDataContainer(DataContainer dataContainer)
     {
-        Optional<String> name = dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery());
-        if (name.isPresent())
+        return dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
+        {
             for (UnarmoredBonus unarmoredBonus : values())
-                if (unarmoredBonus.getName().equals(name.get()))
+                if (unarmoredBonus.getName().equals(name))
                     return Optional.of(unarmoredBonus);
 
-        return Optional.empty();
+            return Optional.empty();
+        });
     }
 }

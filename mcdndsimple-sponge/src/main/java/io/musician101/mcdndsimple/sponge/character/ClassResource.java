@@ -7,7 +7,6 @@ import org.spongepowered.api.data.DataSerializable;
 import org.spongepowered.api.data.MemoryDataContainer;
 
 import javax.annotation.Nonnull;
-import java.util.Optional;
 
 public class ClassResource implements DataSerializable
 {
@@ -79,12 +78,7 @@ public class ClassResource implements DataSerializable
         ClassResource classResource = new ClassResource();
         dataContainer.getInt(MCDNDSimpleKeys.USES_LEFT.getQuery()).ifPresent(classResource::setCurrentCharges);
         dataContainer.getInt(MCDNDSimpleKeys.MAX_USES.getQuery()).ifPresent(classResource::setMaxCharges);
-        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.RECHARGE).ifPresent(data ->
-        {
-            Optional<Recharge> optional = Recharge.fromDataContainer(data);
-            if (optional.isPresent())
-                classResource.setRecharge(optional.get());
-        });
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.RECHARGE).ifPresent(data -> Recharge.fromDataContainer(data).ifPresent(classResource::setRecharge));
         dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(classResource::setName);
         return classResource;
     }

@@ -44,12 +44,14 @@ public enum Recharge implements DataSerializable
 
     public static Optional<Recharge> fromDataContainer(DataContainer dataContainer)
     {
-        Optional<String> optional = dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery());
-        if (optional.isPresent())
+        return dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
+        {
             for (Recharge recharge : values())
-                if (recharge.getName().equals(optional.get()))
+                if (recharge.getName().equals(name))
                     return Optional.of(recharge);
 
-        return Optional.empty();
+
+            return Optional.empty();
+        });
     }
 }

@@ -10,7 +10,6 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.Random;
 
 public class Dice implements DataSerializable
@@ -85,16 +84,6 @@ public class Dice implements DataSerializable
 
     public static Dice fromDataContainer(DataContainer dataContainer)
     {
-        Optional<Integer> sides = dataContainer.getInt(MCDNDSimpleKeys.SIDES.getQuery());
-        Optional<Integer> amount = dataContainer.getInt(MCDNDSimpleKeys.AMOUNT.getQuery());
-        if (!sides.isPresent())
-            return new Dice(6);
-
-        if (!amount.isPresent())
-            //invalid warning
-            //noinspection OptionalGetWithoutIsPresent
-            return new Dice(sides.get());
-
-        return new Dice(sides.get(), amount.get());
+        return dataContainer.getInt(MCDNDSimpleKeys.SIDES.getQuery()).map(sides -> dataContainer.getInt(MCDNDSimpleKeys.AMOUNT.getQuery()).map(amount -> new Dice(amount, sides)).orElse(new Dice(sides))).orElse(new Dice(6));
     }
 }

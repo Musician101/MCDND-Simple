@@ -7,7 +7,6 @@ import org.spongepowered.api.data.DataSerializable;
 import org.spongepowered.api.data.MemoryDataContainer;
 
 import javax.annotation.Nonnull;
-import java.util.Optional;
 
 public class Armor implements DataSerializable
 {
@@ -131,12 +130,7 @@ public class Armor implements DataSerializable
         dataContainer.getBoolean(MCDNDSimpleKeys.WORN.getQuery()).ifPresent(armor::setWorn);
         dataContainer.getInt(MCDNDSimpleKeys.BASE_ARMOR_CLASS.getQuery()).ifPresent(armor::setBaseArmorClass);
         dataContainer.getInt(MCDNDSimpleKeys.MAGIC_BONUS.getQuery()).ifPresent(armor::setMagicBonus);
-        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.ARMOR_TYPE).ifPresent(data ->
-        {
-            Optional<MCDNDArmorType> optional = MCDNDArmorType.fromDataContainer(data);
-            if (optional.isPresent())
-                armor.setArmorType(optional.get());
-        });
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.ARMOR_TYPE).ifPresent(data -> MCDNDArmorType.fromDataContainer(data).ifPresent(armor::setArmorType));
         dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(armor::setName);
         return armor;
     }

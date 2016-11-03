@@ -7,7 +7,6 @@ import org.spongepowered.api.data.DataSerializable;
 import org.spongepowered.api.data.MemoryDataContainer;
 
 import javax.annotation.Nonnull;
-import java.util.Optional;
 
 public class ClassAction implements DataSerializable
 {
@@ -91,12 +90,7 @@ public class ClassAction implements DataSerializable
         ClassAction classAction = new ClassAction();
         dataContainer.getInt(MCDNDSimpleKeys.MAX_USES.getQuery()).ifPresent(classAction::setMax);
         dataContainer.getInt(MCDNDSimpleKeys.USES_LEFT.getQuery()).ifPresent(classAction::setUsesLeft);
-        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.RECHARGE).ifPresent(data ->
-        {
-            Optional<Recharge> optional = Recharge.fromDataContainer(data);
-            if (optional.isPresent())
-                classAction.setRecharge(optional.get());
-        });
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.RECHARGE).ifPresent(data -> Recharge.fromDataContainer(data).ifPresent(classAction::setRecharge));
         dataContainer.getString(MCDNDSimpleKeys.GAINED_FROM.getQuery()).ifPresent(classAction::setGainedFrom);
         dataContainer.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(classAction::setName);
         return classAction;

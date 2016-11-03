@@ -11,7 +11,6 @@ import org.spongepowered.api.data.MemoryDataContainer;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class ArmorTab implements DataSerializable
 {
@@ -94,12 +93,7 @@ public class ArmorTab implements DataSerializable
         dataContainer.getInt(MCDNDSimpleKeys.ARMOR_CLASS.getQuery()).ifPresent(armorTab::setArmorClass);
         dataContainer.getInt(MCDNDSimpleKeys.UNARMORED_ARMOR_CLASS.getQuery()).ifPresent(armorTab::setUnarmoredClass);
         DataUtils.getDataContainerList(dataContainer, MCDNDSimpleKeys.ARMOR_LIST).ifPresent(list -> list.forEach(data -> armorTab.addArmor(Armor.fromDataContainer(data))));
-        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.UNARMORED_BONUS).ifPresent(data ->
-        {
-            Optional<UnarmoredBonus> unarmoredBonus = UnarmoredBonus.fromDataContainer(data);
-            if (unarmoredBonus.isPresent())
-                armorTab.setUnarmoredBonus(unarmoredBonus.get());
-        });
+        DataUtils.getDataContainer(dataContainer, MCDNDSimpleKeys.UNARMORED_BONUS).ifPresent(data -> UnarmoredBonus.fromDataContainer(data).ifPresent(armorTab::setUnarmoredBonus));
         return armorTab;
     }
 }

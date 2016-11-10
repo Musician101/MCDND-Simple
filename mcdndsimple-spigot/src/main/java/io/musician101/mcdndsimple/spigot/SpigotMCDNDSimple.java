@@ -1,21 +1,33 @@
 package io.musician101.mcdndsimple.spigot;
 
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
+import io.musician101.mcdndsimple.spigot.character.SpigotCharacterSheetStorage;
+import io.musician101.musicianlibrary.java.minecraft.spigot.AbstractSpigotPlugin;
 
-public final class SpigotMCDNDSimple extends JavaPlugin implements Listener
+import java.io.File;
+
+public class SpigotMCDNDSimple extends AbstractSpigotPlugin
 {
+    private SpigotCharacterSheetStorage characterSheetStorage;
 
     @Override
     public void onEnable()
     {
-        // Plugin startup logic
-        this.getServer().getPluginManager().registerEvents(this, this);
+        characterSheetStorage = new SpigotCharacterSheetStorage(new File(getDataFolder(), "players"));
     }
 
     @Override
     public void onDisable()
     {
-        // Plugin shutdown logic
+        characterSheetStorage.save();
+    }
+
+    public SpigotCharacterSheetStorage getCharacterSheetStorage()
+    {
+        return characterSheetStorage;
+    }
+
+    public static SpigotMCDNDSimple instance()
+    {
+        return getPlugin(SpigotMCDNDSimple.class);
     }
 }

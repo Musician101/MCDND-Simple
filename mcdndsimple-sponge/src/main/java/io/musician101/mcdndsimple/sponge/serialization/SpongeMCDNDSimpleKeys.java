@@ -1,4 +1,4 @@
-package io.musician101.mcdndsimple.sponge.data.key;
+package io.musician101.mcdndsimple.sponge.serialization;
 
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import org.spongepowered.api.data.DataContainer;
@@ -12,7 +12,7 @@ import static org.spongepowered.api.data.key.KeyFactory.makeListKey;
 import static org.spongepowered.api.data.key.KeyFactory.makeMapKey;
 import static org.spongepowered.api.data.key.KeyFactory.makeSingleKey;
 
-public class MCDNDSimpleKeys
+public class SpongeMCDNDSimpleKeys
 {
     public static final Key<Value<Integer>> ABILITIES_AND_SKILLS = makeSingleKey(token(), token(), of("AbilitiesAndSkills"), SpongeMCDNDSimple.getPluginContainer().getId() + ":abilities_and_skills", "Abilities and Skills");
     public static final Key<Value<DataContainer>> ACROBATICS = makeSingleKey(token(), token(), of("Acrobatics"), SpongeMCDNDSimple.getPluginContainer().getId() + ":acrobatics", "Acrobatics");
@@ -188,7 +188,7 @@ public class MCDNDSimpleKeys
     public static final Key<Value<Integer>> WIZARD_LEVEL = makeSingleKey(token(), token(), of("WizardLevel"), SpongeMCDNDSimple.getPluginContainer().getId() + ":wizard_level", "Wizard Level");
     public static final Key<Value<Boolean>> WORN = makeSingleKey(token(), token(), of("Worn"), SpongeMCDNDSimple.getPluginContainer().getId() + ":worn", "Worn");
 
-    private MCDNDSimpleKeys()
+    private SpongeMCDNDSimpleKeys()
     {
 
     }

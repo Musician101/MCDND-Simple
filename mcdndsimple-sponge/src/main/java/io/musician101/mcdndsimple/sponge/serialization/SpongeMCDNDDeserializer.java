@@ -44,7 +44,6 @@ import io.musician101.mcdndsimple.common.character.tab.WeaponsTab;
 import io.musician101.mcdndsimple.common.character.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.weapon.RangedWeapon;
 import io.musician101.mcdndsimple.common.serialization.MCDNDDeserializer;
-import io.musician101.mcdndsimple.sponge.data.key.MCDNDSimpleKeys;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.value.mutable.ListValue;
@@ -60,13 +59,13 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     public CharacterSheet deserialize(DataContainer characterSheetData)
     {
         CharacterSheet characterSheet = new CharacterSheet();
-        getDataContainer(characterSheetData, MCDNDSimpleKeys.BIO_AND_INFO).ifPresent(bioData ->
+        getDataContainer(characterSheetData, SpongeMCDNDSimpleKeys.BIO_AND_INFO).ifPresent(bioData ->
                 characterSheet.setBioAndInfo(deserializeBioAndInfo(bioData)));
-        getDataContainer(characterSheetData, MCDNDSimpleKeys.PLAYER_SHEET).ifPresent(playerData ->
+        getDataContainer(characterSheetData, SpongeMCDNDSimpleKeys.PLAYER_SHEET).ifPresent(playerData ->
                 characterSheet.setPlayerSheet(deserializePlayerSheet(playerData)));
-        characterSheetData.getString(MCDNDSimpleKeys.CLASS.getQuery()).ifPresent(characterSheet::setClazz);
-        characterSheetData.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(characterSheet::setName);
-        characterSheetData.getString(MCDNDSimpleKeys.RACE.getQuery()).ifPresent(characterSheet::setRace);
+        characterSheetData.getString(SpongeMCDNDSimpleKeys.CLASS.getQuery()).ifPresent(characterSheet::setClazz);
+        characterSheetData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(characterSheet::setName);
+        characterSheetData.getString(SpongeMCDNDSimpleKeys.RACE.getQuery()).ifPresent(characterSheet::setRace);
         return characterSheet;
     }
 
@@ -74,8 +73,8 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected BioAndInfo deserializeBioAndInfo(DataContainer bioAndInfoData)
     {
         BioAndInfo bioAndInfo = new BioAndInfo();
-        bioAndInfoData.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(bioAndInfo::setName);
-        bioAndInfoData.getStringList(MCDNDSimpleKeys.BIO.getQuery()).ifPresent(bioAndInfo::setBio);
+        bioAndInfoData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(bioAndInfo::setName);
+        bioAndInfoData.getStringList(SpongeMCDNDSimpleKeys.BIO.getQuery()).ifPresent(bioAndInfo::setBio);
         return bioAndInfo;
     }
 
@@ -84,77 +83,77 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     {
         SkillsTab skillsTab = new SkillsTab();
         skillsTab.updateSkills(coreStats);
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.ACROBATICS).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.ACROBATICS).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getAcrobatics().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.ANIMAL_HANDLING).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.ANIMAL_HANDLING).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getAnimalHandling().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.ARCANA).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.ARCANA).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getArcana().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.ATHLETICS).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.ATHLETICS).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getAthletics().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.DECEPTION).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.DECEPTION).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getDeception().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.HISTORY).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.HISTORY).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getHistory().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.INSIGHT).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.INSIGHT).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getInsight().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.INTIMIDATION).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.INTIMIDATION).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getIntimidation().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.INVESTIGATION).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.INVESTIGATION).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getInvestigation().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.MEDICINE).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.MEDICINE).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getMedicine().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.NATURE).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.NATURE).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getNature().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.PERCEPTION).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.PERCEPTION).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getPerception().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.PERFORMANCE).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.PERFORMANCE).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getPerformance().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.PERSUASION).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.PERSUASION).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getPersuasion().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.RELIGION).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.RELIGION).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getReligion().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.SLEIGHT_OF_HAND).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.SLEIGHT_OF_HAND).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getSleightOfHand().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.STEALTH).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.STEALTH).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getStealth().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.SURVIVAL).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.SURVIVAL).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getSurvival().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.UNSKILLED_CHA).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.UNSKILLED_CHA).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getUnskilledCHA().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.UNSKILLED_CON).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.UNSKILLED_CON).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getUnskilledCON().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.UNSKILLED_DEX).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.UNSKILLED_DEX).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getUnskilledDEX().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.UNSKILLED_INT).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.UNSKILLED_INT).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getUnskilledINT().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.UNSKILLED_STR).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.UNSKILLED_STR).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getUnskilledSTR().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, MCDNDSimpleKeys.UNSKILLED_WIS).ifPresent(skillData ->
-                getDataContainer(skillData, MCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
+        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.UNSKILLED_WIS).ifPresent(skillData ->
+                getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData ->
                         skillsTab.getUnskilledWIS().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
         return skillsTab;
     }
@@ -162,7 +161,7 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     @Override
     protected SkillProficiency deserializeSkillProficiency(DataContainer skillsProficiencyData)
     {
-        return skillsProficiencyData.getString(MCDNDSimpleKeys.NAME.getQuery()).map(name ->
+        return skillsProficiencyData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).map(name ->
         {
             for (SkillProficiency skillProficiency : SkillProficiency.values())
                 if (name.equals(skillProficiency.getName()))
@@ -176,11 +175,11 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected ArmorTab deserializeArmorTab(DataContainer armorTabData)
     {
         ArmorTab armorTab = new ArmorTab();
-        armorTabData.getInt(MCDNDSimpleKeys.ARMOR_CLASS.getQuery()).ifPresent(armorTab::setArmorClass);
-        armorTabData.getInt(MCDNDSimpleKeys.UNARMORED_ARMOR_CLASS.getQuery()).ifPresent(armorTab::setUnarmoredClass);
-        getDataContainerList(armorTabData, MCDNDSimpleKeys.ARMOR_LIST).ifPresent(list ->
+        armorTabData.getInt(SpongeMCDNDSimpleKeys.ARMOR_CLASS.getQuery()).ifPresent(armorTab::setArmorClass);
+        armorTabData.getInt(SpongeMCDNDSimpleKeys.UNARMORED_ARMOR_CLASS.getQuery()).ifPresent(armorTab::setUnarmoredClass);
+        getDataContainerList(armorTabData, SpongeMCDNDSimpleKeys.ARMOR_LIST).ifPresent(list ->
                 armorTab.setArmor(list.stream().map(this::deserializeArmor).collect(Collectors.toList())));
-        getDataContainer(armorTabData, MCDNDSimpleKeys.UNARMORED_BONUS).ifPresent(unarmoredBonusData ->
+        getDataContainer(armorTabData, SpongeMCDNDSimpleKeys.UNARMORED_BONUS).ifPresent(unarmoredBonusData ->
                 armorTab.setUnarmoredBonus(deserializeUnarmoredBonus(unarmoredBonusData)));
         return armorTab;
     }
@@ -189,22 +188,22 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected Armor deserializeArmor(DataContainer armorTab)
     {
         Armor armor = new Armor();
-        armorTab.getBoolean(MCDNDSimpleKeys.SPEED_PENALTY.getQuery()).ifPresent(armor::setSpeedPenalty);
-        armorTab.getBoolean(MCDNDSimpleKeys.STEALTH_PENALTY.getQuery()).ifPresent(armor::setStealthPenalty);
-        armorTab.getBoolean(MCDNDSimpleKeys.UNARMORED.getQuery()).ifPresent(armor::setUnarmored);
-        armorTab.getBoolean(MCDNDSimpleKeys.WORN.getQuery()).ifPresent(armor::setWorn);
-        armorTab.getInt(MCDNDSimpleKeys.BASE_ARMOR_CLASS.getQuery()).ifPresent(armor::setBaseArmorClass);
-        armorTab.getInt(MCDNDSimpleKeys.MAGIC_BONUS.getQuery()).ifPresent(armor::setMagicBonus);
-        getDataContainer(armorTab, MCDNDSimpleKeys.ARMOR_TYPE).ifPresent(armorTypeData ->
+        armorTab.getBoolean(SpongeMCDNDSimpleKeys.SPEED_PENALTY.getQuery()).ifPresent(armor::setSpeedPenalty);
+        armorTab.getBoolean(SpongeMCDNDSimpleKeys.STEALTH_PENALTY.getQuery()).ifPresent(armor::setStealthPenalty);
+        armorTab.getBoolean(SpongeMCDNDSimpleKeys.UNARMORED.getQuery()).ifPresent(armor::setUnarmored);
+        armorTab.getBoolean(SpongeMCDNDSimpleKeys.WORN.getQuery()).ifPresent(armor::setWorn);
+        armorTab.getInt(SpongeMCDNDSimpleKeys.BASE_ARMOR_CLASS.getQuery()).ifPresent(armor::setBaseArmorClass);
+        armorTab.getInt(SpongeMCDNDSimpleKeys.MAGIC_BONUS.getQuery()).ifPresent(armor::setMagicBonus);
+        getDataContainer(armorTab, SpongeMCDNDSimpleKeys.ARMOR_TYPE).ifPresent(armorTypeData ->
                 armor.setArmorType(deserializeArmorType(armorTypeData)));
-        armorTab.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(armor::setName);
+        armorTab.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(armor::setName);
         return armor;
     }
 
     @Override
     protected UnarmoredBonus deserializeUnarmoredBonus(DataContainer unarmoredBonusData)
     {
-        return unarmoredBonusData.getString(MCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
+        return unarmoredBonusData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
         {
             for (UnarmoredBonus unarmoredBonus : UnarmoredBonus.values())
                 if (unarmoredBonus.getName().equals(name))
@@ -218,33 +217,33 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected BackgroundTab deserializeBackgroundTab(DataContainer backgroundTabData)
     {
         BackgroundTab backgroundTab = new BackgroundTab();
-        backgroundTabData.getDouble(MCDNDSimpleKeys.WEIGHT_DOUBLE.getQuery()).ifPresent(backgroundTab::setWeight);
-        backgroundTabData.getInt(MCDNDSimpleKeys.AGE.getQuery()).ifPresent(backgroundTab::setAge);
-        backgroundTabData.getStringList(MCDNDSimpleKeys.ARMOR_PROFICIENCIES.getQuery()).ifPresent(backgroundTab::setArmorProficiencies);
-        backgroundTabData.getStringList(MCDNDSimpleKeys.BACKGROUND.getQuery()).ifPresent(backgroundTab::setBackground);
-        backgroundTabData.getStringList(MCDNDSimpleKeys.BONDS.getQuery()).ifPresent(backgroundTab::setBonds);
-        backgroundTabData.getStringList(MCDNDSimpleKeys.FLAWS.getQuery()).ifPresent(backgroundTab::setFlaws);
-        backgroundTabData.getStringList(MCDNDSimpleKeys.IDEALS.getQuery()).ifPresent(backgroundTab::setIdeals);
-        backgroundTabData.getStringList(MCDNDSimpleKeys.OTHER_NOTES.getQuery()).ifPresent(backgroundTab::setOtherNotes);
-        backgroundTabData.getStringList(MCDNDSimpleKeys.PERSONALITY_TRAITS.getQuery());
-        backgroundTabData.getStringList(MCDNDSimpleKeys.RACIAL_TRAITS.getQuery()).ifPresent(backgroundTab::setRacialTraits);
-        backgroundTabData.getStringList(MCDNDSimpleKeys.TOOL_PROFICIENCIES.getQuery()).ifPresent(backgroundTab::setToolProficiencies);
-        backgroundTabData.getStringList(MCDNDSimpleKeys.WEAPON_PROFICIENCIES.getQuery()).ifPresent(backgroundTab::setWeaponProficiencies);
-        backgroundTabData.getString(MCDNDSimpleKeys.ALIGNMENT.getQuery()).ifPresent(backgroundTab::setAlignment);
-        backgroundTabData.getString(MCDNDSimpleKeys.EYES.getQuery()).ifPresent(backgroundTab::setEyes);
-        backgroundTabData.getString(MCDNDSimpleKeys.GENDER.getQuery()).ifPresent(backgroundTab::setGender);
-        backgroundTabData.getString(MCDNDSimpleKeys.HAIR.getQuery()).ifPresent(backgroundTab::setHair);
-        backgroundTabData.getString(MCDNDSimpleKeys.HEIGHT.getQuery()).ifPresent(backgroundTab::setHeight);
-        backgroundTabData.getString(MCDNDSimpleKeys.LANGUAGES.getQuery()).ifPresent(backgroundTab::setLanguages);
-        backgroundTabData.getString(MCDNDSimpleKeys.SIZE.getQuery()).ifPresent(backgroundTab::setSize);
-        backgroundTabData.getString(MCDNDSimpleKeys.VISION.getQuery()).ifPresent(backgroundTab::setVision);
+        backgroundTabData.getDouble(SpongeMCDNDSimpleKeys.WEIGHT_DOUBLE.getQuery()).ifPresent(backgroundTab::setWeight);
+        backgroundTabData.getInt(SpongeMCDNDSimpleKeys.AGE.getQuery()).ifPresent(backgroundTab::setAge);
+        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.ARMOR_PROFICIENCIES.getQuery()).ifPresent(backgroundTab::setArmorProficiencies);
+        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.BACKGROUND.getQuery()).ifPresent(backgroundTab::setBackground);
+        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.BONDS.getQuery()).ifPresent(backgroundTab::setBonds);
+        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.FLAWS.getQuery()).ifPresent(backgroundTab::setFlaws);
+        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.IDEALS.getQuery()).ifPresent(backgroundTab::setIdeals);
+        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.OTHER_NOTES.getQuery()).ifPresent(backgroundTab::setOtherNotes);
+        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.PERSONALITY_TRAITS.getQuery());
+        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.RACIAL_TRAITS.getQuery()).ifPresent(backgroundTab::setRacialTraits);
+        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.TOOL_PROFICIENCIES.getQuery()).ifPresent(backgroundTab::setToolProficiencies);
+        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.WEAPON_PROFICIENCIES.getQuery()).ifPresent(backgroundTab::setWeaponProficiencies);
+        backgroundTabData.getString(SpongeMCDNDSimpleKeys.ALIGNMENT.getQuery()).ifPresent(backgroundTab::setAlignment);
+        backgroundTabData.getString(SpongeMCDNDSimpleKeys.EYES.getQuery()).ifPresent(backgroundTab::setEyes);
+        backgroundTabData.getString(SpongeMCDNDSimpleKeys.GENDER.getQuery()).ifPresent(backgroundTab::setGender);
+        backgroundTabData.getString(SpongeMCDNDSimpleKeys.HAIR.getQuery()).ifPresent(backgroundTab::setHair);
+        backgroundTabData.getString(SpongeMCDNDSimpleKeys.HEIGHT.getQuery()).ifPresent(backgroundTab::setHeight);
+        backgroundTabData.getString(SpongeMCDNDSimpleKeys.LANGUAGES.getQuery()).ifPresent(backgroundTab::setLanguages);
+        backgroundTabData.getString(SpongeMCDNDSimpleKeys.SIZE.getQuery()).ifPresent(backgroundTab::setSize);
+        backgroundTabData.getString(SpongeMCDNDSimpleKeys.VISION.getQuery()).ifPresent(backgroundTab::setVision);
         return backgroundTab;
     }
 
     @Override
     protected Recharge deserializeRecharge(DataContainer rechargeData)
     {
-        return rechargeData.getString(MCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
+        return rechargeData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
         {
             for (Recharge recharge : Recharge.values())
                 if (recharge.getName().equals(name))
@@ -259,13 +258,13 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected ClassTab deserializeClassTab(DataContainer classTabData)
     {
         ClassTab classTab = new ClassTab();
-        getDataContainer(classTabData, MCDNDSimpleKeys.CLASS_LEVELS).ifPresent(data ->
+        getDataContainer(classTabData, SpongeMCDNDSimpleKeys.CLASS_LEVELS).ifPresent(data ->
                 classTab.setClassLevels(deserializeClassLevels(data)));
-        getDataContainerList(classTabData, MCDNDSimpleKeys.CLASS_ACTIONS).ifPresent(list ->
+        getDataContainerList(classTabData, SpongeMCDNDSimpleKeys.CLASS_ACTIONS).ifPresent(list ->
                 classTab.setClassActions(list.stream().map(this::deserializeClassAction).collect(Collectors.toList())));
-        getDataContainerList(classTabData, MCDNDSimpleKeys.CLASS_RESOURCES).ifPresent(list ->
+        getDataContainerList(classTabData, SpongeMCDNDSimpleKeys.CLASS_RESOURCES).ifPresent(list ->
                 list.forEach(data -> classTab.addClassResource(deserializeClassResource(data))));
-        classTabData.getStringList(MCDNDSimpleKeys.CLASS_FEATURE_NOTES.getQuery()).ifPresent(classTab::setOtherNotes);
+        classTabData.getStringList(SpongeMCDNDSimpleKeys.CLASS_FEATURE_NOTES.getQuery()).ifPresent(classTab::setOtherNotes);
         return classTab;
     }
 
@@ -273,18 +272,18 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected ClassLevels deserializeClassLevels(DataContainer classLevelsData)
     {
         ClassLevels classLevels = new ClassLevels();
-        classLevelsData.getInt(MCDNDSimpleKeys.BARBARIAN_LEVEL.getQuery()).ifPresent(classLevels::setBarbarian);
-        classLevelsData.getInt(MCDNDSimpleKeys.BARD_LEVEL.getQuery()).ifPresent(classLevels::setBard);
-        classLevelsData.getInt(MCDNDSimpleKeys.CLERIC_LEVEL.getQuery()).ifPresent(classLevels::setCleric);
-        classLevelsData.getInt(MCDNDSimpleKeys.DRUID_LEVEL.getQuery()).ifPresent(classLevels::setDruid);
-        classLevelsData.getInt(MCDNDSimpleKeys.FIGHTER_LEVEL.getQuery()).ifPresent(classLevels::setFighter);
-        classLevelsData.getInt(MCDNDSimpleKeys.MONK_LEVEL.getQuery()).ifPresent(classLevels::setMonk);
-        classLevelsData.getInt(MCDNDSimpleKeys.PALADIN_LEVEL.getQuery()).ifPresent(classLevels::setPaladin);
-        classLevelsData.getInt(MCDNDSimpleKeys.RANGER_LEVEL.getQuery()).ifPresent(classLevels::setRanger);
-        classLevelsData.getInt(MCDNDSimpleKeys.ROGUE_LEVEL.getQuery()).ifPresent(classLevels::setRogue);
-        classLevelsData.getInt(MCDNDSimpleKeys.SORCERER_LEVEL.getQuery()).ifPresent(classLevels::setSorcerer);
-        classLevelsData.getInt(MCDNDSimpleKeys.WARLOCK_LEVEL.getQuery()).ifPresent(classLevels::setWarlock);
-        classLevelsData.getInt(MCDNDSimpleKeys.WIZARD_LEVEL.getQuery()).ifPresent(classLevels::setWizard);
+        classLevelsData.getInt(SpongeMCDNDSimpleKeys.BARBARIAN_LEVEL.getQuery()).ifPresent(classLevels::setBarbarian);
+        classLevelsData.getInt(SpongeMCDNDSimpleKeys.BARD_LEVEL.getQuery()).ifPresent(classLevels::setBard);
+        classLevelsData.getInt(SpongeMCDNDSimpleKeys.CLERIC_LEVEL.getQuery()).ifPresent(classLevels::setCleric);
+        classLevelsData.getInt(SpongeMCDNDSimpleKeys.DRUID_LEVEL.getQuery()).ifPresent(classLevels::setDruid);
+        classLevelsData.getInt(SpongeMCDNDSimpleKeys.FIGHTER_LEVEL.getQuery()).ifPresent(classLevels::setFighter);
+        classLevelsData.getInt(SpongeMCDNDSimpleKeys.MONK_LEVEL.getQuery()).ifPresent(classLevels::setMonk);
+        classLevelsData.getInt(SpongeMCDNDSimpleKeys.PALADIN_LEVEL.getQuery()).ifPresent(classLevels::setPaladin);
+        classLevelsData.getInt(SpongeMCDNDSimpleKeys.RANGER_LEVEL.getQuery()).ifPresent(classLevels::setRanger);
+        classLevelsData.getInt(SpongeMCDNDSimpleKeys.ROGUE_LEVEL.getQuery()).ifPresent(classLevels::setRogue);
+        classLevelsData.getInt(SpongeMCDNDSimpleKeys.SORCERER_LEVEL.getQuery()).ifPresent(classLevels::setSorcerer);
+        classLevelsData.getInt(SpongeMCDNDSimpleKeys.WARLOCK_LEVEL.getQuery()).ifPresent(classLevels::setWarlock);
+        classLevelsData.getInt(SpongeMCDNDSimpleKeys.WIZARD_LEVEL.getQuery()).ifPresent(classLevels::setWizard);
         return classLevels;
     }
 
@@ -292,12 +291,12 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected ClassAction deserializeClassAction(DataContainer classActionData)
     {
         ClassAction classAction = new ClassAction();
-        classActionData.getInt(MCDNDSimpleKeys.MAX_USES.getQuery()).ifPresent(classAction::setMax);
-        classActionData.getInt(MCDNDSimpleKeys.USES_LEFT.getQuery()).ifPresent(classAction::setUsesLeft);
-        getDataContainer(classActionData, MCDNDSimpleKeys.RECHARGE).ifPresent(rechargeData ->
+        classActionData.getInt(SpongeMCDNDSimpleKeys.MAX_USES.getQuery()).ifPresent(classAction::setMax);
+        classActionData.getInt(SpongeMCDNDSimpleKeys.USES_LEFT.getQuery()).ifPresent(classAction::setUsesLeft);
+        getDataContainer(classActionData, SpongeMCDNDSimpleKeys.RECHARGE).ifPresent(rechargeData ->
                 classAction.setRecharge(deserializeRecharge(rechargeData)));
-        classActionData.getString(MCDNDSimpleKeys.GAINED_FROM.getQuery()).ifPresent(classAction::setGainedFrom);
-        classActionData.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(classAction::setName);
+        classActionData.getString(SpongeMCDNDSimpleKeys.GAINED_FROM.getQuery()).ifPresent(classAction::setGainedFrom);
+        classActionData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(classAction::setName);
         return classAction;
     }
 
@@ -305,10 +304,10 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected ClassResource deserializeClassResource(DataContainer classResourceData)
     {
         ClassResource classResource = new ClassResource();
-        classResourceData.getInt(MCDNDSimpleKeys.USES_LEFT.getQuery()).ifPresent(classResource::setCurrentCharges);
-        classResourceData.getInt(MCDNDSimpleKeys.MAX_USES.getQuery()).ifPresent(classResource::setMaxCharges);
-        getDataContainer(classResourceData, MCDNDSimpleKeys.RECHARGE).ifPresent(rechargeData -> classResource.setRecharge(deserializeRecharge(rechargeData)));
-        classResourceData.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(classResource::setName);
+        classResourceData.getInt(SpongeMCDNDSimpleKeys.USES_LEFT.getQuery()).ifPresent(classResource::setCurrentCharges);
+        classResourceData.getInt(SpongeMCDNDSimpleKeys.MAX_USES.getQuery()).ifPresent(classResource::setMaxCharges);
+        getDataContainer(classResourceData, SpongeMCDNDSimpleKeys.RECHARGE).ifPresent(rechargeData -> classResource.setRecharge(deserializeRecharge(rechargeData)));
+        classResourceData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(classResource::setName);
         return classResource;
     }
 
@@ -316,18 +315,18 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected CoreStatsTab deserializeCoreStatsTab(DataContainer coreStatsTabData)
     {
         CoreStatsTab coreStatsTab = new CoreStatsTab();
-        getDataContainer(coreStatsTabData, MCDNDSimpleKeys.BONUSES).ifPresent(data ->
+        getDataContainer(coreStatsTabData, SpongeMCDNDSimpleKeys.BONUSES).ifPresent(data ->
                 coreStatsTab.setBonuses(deserializeBonuses(data)));
-        getDataContainer(coreStatsTabData, MCDNDSimpleKeys.CORE_STATS).ifPresent(data ->
+        getDataContainer(coreStatsTabData, SpongeMCDNDSimpleKeys.CORE_STATS).ifPresent(data ->
                 coreStatsTab.setCoreStats(deserializeCoreStats(data)));
-        getDataContainer(coreStatsTabData, MCDNDSimpleKeys.EXPERIENCE).ifPresent(data ->
+        getDataContainer(coreStatsTabData, SpongeMCDNDSimpleKeys.EXPERIENCE).ifPresent(data ->
                 coreStatsTab.setExperience(deserializeExperience(data)));
-        getDataContainer(coreStatsTabData, MCDNDSimpleKeys.HIT_DICE).ifPresent(data ->
+        getDataContainer(coreStatsTabData, SpongeMCDNDSimpleKeys.HIT_DICE).ifPresent(data ->
                 coreStatsTab.setHitDice(deserializeHitDice(data)));
-        getDataContainer(coreStatsTabData, MCDNDSimpleKeys.HIT_POINTS).ifPresent(data ->
+        getDataContainer(coreStatsTabData, SpongeMCDNDSimpleKeys.HIT_POINTS).ifPresent(data ->
                 coreStatsTab.setHitPoints(deserializeHitPoints(data)));
-        coreStatsTabData.getInt(MCDNDSimpleKeys.INITIATIVE_BONUS.getQuery()).ifPresent(coreStatsTab::setInitiativeBonus);
-        coreStatsTabData.getInt(MCDNDSimpleKeys.SPEED.getQuery()).ifPresent(coreStatsTab::setSpeed);
+        coreStatsTabData.getInt(SpongeMCDNDSimpleKeys.INITIATIVE_BONUS.getQuery()).ifPresent(coreStatsTab::setInitiativeBonus);
+        coreStatsTabData.getInt(SpongeMCDNDSimpleKeys.SPEED.getQuery()).ifPresent(coreStatsTab::setSpeed);
         return coreStatsTab;
     }
 
@@ -335,14 +334,14 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected Bonuses deserializeBonuses(DataContainer bonusesData)
     {
         Bonuses bonuses = new Bonuses();
-        getDataContainer(bonusesData, MCDNDSimpleKeys.MELEE_BONUS).ifPresent(meleeBonusData ->
+        getDataContainer(bonusesData, SpongeMCDNDSimpleKeys.MELEE_BONUS).ifPresent(meleeBonusData ->
                 bonuses.setMelee(deserializeMeleeBonus(meleeBonusData)));
-        getDataContainer(bonusesData, MCDNDSimpleKeys.RANGED_BONUS).ifPresent(rangedBonusData ->
+        getDataContainer(bonusesData, SpongeMCDNDSimpleKeys.RANGED_BONUS).ifPresent(rangedBonusData ->
                 bonuses.setRanged(deserializeRangedBonus(rangedBonusData)));
-        getDataContainer(bonusesData, MCDNDSimpleKeys.SPELLCASTING_BONUS).ifPresent(spellcastingBonusData ->
+        getDataContainer(bonusesData, SpongeMCDNDSimpleKeys.SPELLCASTING_BONUS).ifPresent(spellcastingBonusData ->
                 bonuses.setSpellcasting(deserializeSpellcastingBonus(spellcastingBonusData)));
-        bonusesData.getInt(MCDNDSimpleKeys.SAVES.getQuery()).ifPresent(bonuses::setSaves);
-        bonusesData.getInt(MCDNDSimpleKeys.ABILITIES_AND_SKILLS.getQuery()).ifPresent(bonuses::setAbilitiesAndSkills);
+        bonusesData.getInt(SpongeMCDNDSimpleKeys.SAVES.getQuery()).ifPresent(bonuses::setSaves);
+        bonusesData.getInt(SpongeMCDNDSimpleKeys.ABILITIES_AND_SKILLS.getQuery()).ifPresent(bonuses::setAbilitiesAndSkills);
         return bonuses;
     }
 
@@ -350,8 +349,8 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected MeleeBonus deserializeMeleeBonus(DataContainer meleeBonusData)
     {
         MeleeBonus meleeBonus = new MeleeBonus();
-        meleeBonusData.getInt(MCDNDSimpleKeys.ATTACK.getQuery()).ifPresent(meleeBonus::setAttack);
-        meleeBonusData.getInt(MCDNDSimpleKeys.DAMAGE.getQuery()).ifPresent(meleeBonus::setDamage);
+        meleeBonusData.getInt(SpongeMCDNDSimpleKeys.ATTACK.getQuery()).ifPresent(meleeBonus::setAttack);
+        meleeBonusData.getInt(SpongeMCDNDSimpleKeys.DAMAGE.getQuery()).ifPresent(meleeBonus::setDamage);
         return meleeBonus;
     }
 
@@ -359,8 +358,8 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected RangedBonus deserializeRangedBonus(DataContainer rangedBonusData)
     {
         RangedBonus rangedBonus = new RangedBonus();
-        rangedBonusData.getInt(MCDNDSimpleKeys.ATTACK.getQuery()).ifPresent(rangedBonus::setAttack);
-        rangedBonusData.getInt(MCDNDSimpleKeys.DAMAGE.getQuery()).ifPresent(rangedBonus::setDamage);
+        rangedBonusData.getInt(SpongeMCDNDSimpleKeys.ATTACK.getQuery()).ifPresent(rangedBonus::setAttack);
+        rangedBonusData.getInt(SpongeMCDNDSimpleKeys.DAMAGE.getQuery()).ifPresent(rangedBonus::setDamage);
         return rangedBonus;
     }
 
@@ -368,9 +367,9 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected SpellcastingBonus deserializeSpellcastingBonus(DataContainer spellcastingBonusData)
     {
         SpellcastingBonus spellcastingBonus = new SpellcastingBonus();
-        spellcastingBonusData.getInt(MCDNDSimpleKeys.ATTACK.getQuery()).ifPresent(spellcastingBonus::setAttack);
-        spellcastingBonusData.getInt(MCDNDSimpleKeys.DAMAGE.getQuery()).ifPresent(spellcastingBonus::setDamage);
-        spellcastingBonusData.getInt(MCDNDSimpleKeys.SAVE_DC.getQuery()).ifPresent(spellcastingBonus::setSaveDC);
+        spellcastingBonusData.getInt(SpongeMCDNDSimpleKeys.ATTACK.getQuery()).ifPresent(spellcastingBonus::setAttack);
+        spellcastingBonusData.getInt(SpongeMCDNDSimpleKeys.DAMAGE.getQuery()).ifPresent(spellcastingBonus::setDamage);
+        spellcastingBonusData.getInt(SpongeMCDNDSimpleKeys.SAVE_DC.getQuery()).ifPresent(spellcastingBonus::setSaveDC);
         return spellcastingBonus;
     }
 
@@ -378,17 +377,17 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected CoreStats deserializeCoreStats(DataContainer coreStatsData)
     {
         CoreStats coreStats = new CoreStats();
-        getDataContainer(coreStatsData, MCDNDSimpleKeys.CHARISMA_SCORE).ifPresent(data ->
+        getDataContainer(coreStatsData, SpongeMCDNDSimpleKeys.CHARISMA_SCORE).ifPresent(data ->
                 coreStats.setCharisma(deserializeAbilityScore(data, new AbilityScore("Charisma", "CHA"))));
-        getDataContainer(coreStatsData, MCDNDSimpleKeys.CONSTITUTION_SCORE).ifPresent(data ->
+        getDataContainer(coreStatsData, SpongeMCDNDSimpleKeys.CONSTITUTION_SCORE).ifPresent(data ->
                 coreStats.setDexterity(deserializeAbilityScore(data, new AbilityScore("Constitution", "CON"))));
-        getDataContainer(coreStatsData, MCDNDSimpleKeys.DEXTERITY_SCORE).ifPresent(data ->
+        getDataContainer(coreStatsData, SpongeMCDNDSimpleKeys.DEXTERITY_SCORE).ifPresent(data ->
                 coreStats.setDexterity(deserializeAbilityScore(data, new AbilityScore("Dexterity", "DEX"))));
-        getDataContainer(coreStatsData, MCDNDSimpleKeys.INTELLIGENCE_SCORE).ifPresent(data ->
+        getDataContainer(coreStatsData, SpongeMCDNDSimpleKeys.INTELLIGENCE_SCORE).ifPresent(data ->
                 coreStats.setDexterity(deserializeAbilityScore(data, new AbilityScore("Intelligence", "INT"))));
-        getDataContainer(coreStatsData, MCDNDSimpleKeys.STRENGTH_SCORE).ifPresent(data ->
+        getDataContainer(coreStatsData, SpongeMCDNDSimpleKeys.STRENGTH_SCORE).ifPresent(data ->
                 coreStats.setDexterity(deserializeAbilityScore(data, new AbilityScore("Strength", "STR"))));
-        getDataContainer(coreStatsData, MCDNDSimpleKeys.WISDOM_SCORE).ifPresent(data ->
+        getDataContainer(coreStatsData, SpongeMCDNDSimpleKeys.WISDOM_SCORE).ifPresent(data ->
                 coreStats.setDexterity(deserializeAbilityScore(data, new AbilityScore("Wisdom", "WIS"))));
         return coreStats;
     }
@@ -396,12 +395,12 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     @Override
     protected AbilityScore deserializeAbilityScore(DataContainer abilityScoreData, AbilityScore defaultScore)
     {
-        return abilityScoreData.getString(MCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
-                abilityScoreData.getString(MCDNDSimpleKeys.SHORT_NAME.getQuery()).flatMap(shortName ->
+        return abilityScoreData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
+                abilityScoreData.getString(SpongeMCDNDSimpleKeys.SHORT_NAME.getQuery()).flatMap(shortName ->
                 {
                     AbilityScore abilityScore = new AbilityScore(name, shortName);
-                    abilityScoreData.getBoolean(MCDNDSimpleKeys.IS_PROFICIENT.getQuery()).ifPresent(abilityScore::setProficient);
-                    abilityScoreData.getInt(MCDNDSimpleKeys.SCORE.getQuery()).ifPresent(abilityScore::setScore);
+                    abilityScoreData.getBoolean(SpongeMCDNDSimpleKeys.IS_PROFICIENT.getQuery()).ifPresent(abilityScore::setProficient);
+                    abilityScoreData.getInt(SpongeMCDNDSimpleKeys.SCORE.getQuery()).ifPresent(abilityScore::setScore);
                     return Optional.of(abilityScore);
                 })).orElse(defaultScore);
     }
@@ -410,8 +409,8 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected Experience deserializeExperience(DataContainer experienceData)
     {
         Experience experience = new Experience();
-        experienceData.getInt(MCDNDSimpleKeys.EXPERIENCE.getQuery()).ifPresent(experience::setExp);
-        experienceData.getInt(MCDNDSimpleKeys.OVERALL_LEVEL.getQuery()).ifPresent(experience::setOverallLevel);
+        experienceData.getInt(SpongeMCDNDSimpleKeys.EXPERIENCE.getQuery()).ifPresent(experience::setExp);
+        experienceData.getInt(SpongeMCDNDSimpleKeys.OVERALL_LEVEL.getQuery()).ifPresent(experience::setOverallLevel);
         return experience;
     }
 
@@ -428,8 +427,8 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     @Override
     protected Dice deserializeDice(DataContainer diceData)
     {
-        return diceData.getInt(MCDNDSimpleKeys.SIDES.getQuery()).map(sides ->
-                diceData.getInt(MCDNDSimpleKeys.AMOUNT.getQuery()).map(amount ->
+        return diceData.getInt(SpongeMCDNDSimpleKeys.SIDES.getQuery()).map(sides ->
+                diceData.getInt(SpongeMCDNDSimpleKeys.AMOUNT.getQuery()).map(amount ->
                         new Dice(amount, sides)).orElse(new Dice(sides))).orElse(new Dice(6));
     }
 
@@ -437,9 +436,9 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected HitPoints deserializeHitPoints(DataContainer hitPointsData)
     {
         HitPoints hitPoints = new HitPoints();
-        hitPointsData.getInt(MCDNDSimpleKeys.CURRENT_HP.getQuery()).ifPresent(hitPoints::setCurrent);
-        hitPointsData.getInt(MCDNDSimpleKeys.MAX_HP.getQuery()).ifPresent(hitPoints::setMax);
-        hitPointsData.getInt(MCDNDSimpleKeys.TEMP_HP.getQuery()).ifPresent(hitPoints::setTemp);
+        hitPointsData.getInt(SpongeMCDNDSimpleKeys.CURRENT_HP.getQuery()).ifPresent(hitPoints::setCurrent);
+        hitPointsData.getInt(SpongeMCDNDSimpleKeys.MAX_HP.getQuery()).ifPresent(hitPoints::setMax);
+        hitPointsData.getInt(SpongeMCDNDSimpleKeys.TEMP_HP.getQuery()).ifPresent(hitPoints::setTemp);
         return hitPoints;
     }
 
@@ -447,12 +446,12 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected InventoryTab deserializeInventoryTab(DataContainer inventoryTabData, int strengthScore)
     {
         InventoryTab inventoryTab = new InventoryTab();
-        getDataContainerList(inventoryTabData, MCDNDSimpleKeys.INVENTORY).ifPresent(list ->
+        getDataContainerList(inventoryTabData, SpongeMCDNDSimpleKeys.INVENTORY).ifPresent(list ->
                 inventoryTab.setInventory(list.stream().map(this::deserializeItem).collect(Collectors.toList())));
-        inventoryTabData.getStringList(MCDNDSimpleKeys.INVENTORY_NOTES.getQuery()).ifPresent(inventoryTab::setInventoryNotes);
-        getDataContainer(inventoryTabData, MCDNDSimpleKeys.WEALTH).ifPresent(data ->
+        inventoryTabData.getStringList(SpongeMCDNDSimpleKeys.INVENTORY_NOTES.getQuery()).ifPresent(inventoryTab::setInventoryNotes);
+        getDataContainer(inventoryTabData, SpongeMCDNDSimpleKeys.WEALTH).ifPresent(data ->
                 inventoryTab.setWealth(deserializeWealth(data)));
-        getDataContainer(inventoryTabData, MCDNDSimpleKeys.WEIGHT_CLASS).ifPresent(data ->
+        getDataContainer(inventoryTabData, SpongeMCDNDSimpleKeys.WEIGHT_CLASS).ifPresent(data ->
                 inventoryTab.setWeight(deserializeWeight(data, strengthScore, inventoryTab.getInventory(), inventoryTab.getWealth())));
         return inventoryTab;
     }
@@ -461,10 +460,10 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected MCDNDItem deserializeItem(DataContainer itemData)
     {
         MCDNDItem item = new MCDNDItem();
-        itemData.getBoolean(MCDNDSimpleKeys.CARRIED.getQuery()).ifPresent(item::setCarried);
-        itemData.getDouble(MCDNDSimpleKeys.WEIGHT_DOUBLE.getQuery()).ifPresent(item::setWeight);
-        itemData.getString(MCDNDSimpleKeys.DESCRIPTION.getQuery()).ifPresent(item::setDescription);
-        itemData.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(item::setName);
+        itemData.getBoolean(SpongeMCDNDSimpleKeys.CARRIED.getQuery()).ifPresent(item::setCarried);
+        itemData.getDouble(SpongeMCDNDSimpleKeys.WEIGHT_DOUBLE.getQuery()).ifPresent(item::setWeight);
+        itemData.getString(SpongeMCDNDSimpleKeys.DESCRIPTION.getQuery()).ifPresent(item::setDescription);
+        itemData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(item::setName);
         return item;
     }
 
@@ -472,15 +471,15 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected Wealth deserializeWealth(DataContainer wealthData)
     {
         Wealth wealth = new Wealth();
-        getDataContainer(wealthData, MCDNDSimpleKeys.COPPER).ifPresent(data ->
+        getDataContainer(wealthData, SpongeMCDNDSimpleKeys.COPPER).ifPresent(data ->
                 wealth.setCopper(deserializeCoin(data, new Coin("Copper", "CP"))));
-        getDataContainer(wealthData, MCDNDSimpleKeys.ELECTRUM).ifPresent(data ->
+        getDataContainer(wealthData, SpongeMCDNDSimpleKeys.ELECTRUM).ifPresent(data ->
                 wealth.setCopper(deserializeCoin(data, new Coin("Electrum", "EP"))));
-        getDataContainer(wealthData, MCDNDSimpleKeys.GOLD).ifPresent(data ->
+        getDataContainer(wealthData, SpongeMCDNDSimpleKeys.GOLD).ifPresent(data ->
                 wealth.setCopper(deserializeCoin(data, new Coin("Gold", "GP"))));
-        getDataContainer(wealthData, MCDNDSimpleKeys.PLATINUM).ifPresent(data ->
+        getDataContainer(wealthData, SpongeMCDNDSimpleKeys.PLATINUM).ifPresent(data ->
                 wealth.setCopper(deserializeCoin(data, new Coin("Platinum", "PP"))));
-        getDataContainer(wealthData, MCDNDSimpleKeys.SILVER).ifPresent(data ->
+        getDataContainer(wealthData, SpongeMCDNDSimpleKeys.SILVER).ifPresent(data ->
                 wealth.setCopper(deserializeCoin(data, new Coin("Silver", "SP"))));
         return wealth;
     }
@@ -488,11 +487,11 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     @Override
     protected Coin deserializeCoin(DataContainer coinData, Coin defaultCoin)
     {
-        return coinData.getString(MCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
-                coinData.getString(MCDNDSimpleKeys.SHORT_NAME.getQuery()).flatMap(shortName ->
+        return coinData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
+                coinData.getString(SpongeMCDNDSimpleKeys.SHORT_NAME.getQuery()).flatMap(shortName ->
                 {
                     Coin coin = new Coin(name, shortName);
-                    coinData.getInt(MCDNDSimpleKeys.AMOUNT.getQuery()).ifPresent(coin::setAmount);
+                    coinData.getInt(SpongeMCDNDSimpleKeys.AMOUNT.getQuery()).ifPresent(coin::setAmount);
                     return Optional.of(coin);
                 })).orElse(defaultCoin);
     }
@@ -501,7 +500,7 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected Weight deserializeWeight(DataContainer weightData, int strengthScore, List<MCDNDItem> inventory, Wealth wealth)
     {
         Weight weight = new Weight();
-        weightData.getDouble(MCDNDSimpleKeys.OTHER.getQuery()).ifPresent(weight::setOther);
+        weightData.getDouble(SpongeMCDNDSimpleKeys.OTHER.getQuery()).ifPresent(weight::setOther);
         weight.setInventoryWeight(inventory);
         weight.setCoinWeight(wealth);
         weight.setCarryingMax(strengthScore);
@@ -514,9 +513,9 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected SpellbookTab deserializeSpellbookTab(DataContainer spellbookTabData, int sorcererLevel)
     {
         SpellbookTab spellbookTab = new SpellbookTab();
-        getDataContainerList(spellbookTabData, MCDNDSimpleKeys.SPELLS).ifPresent(list ->
+        getDataContainerList(spellbookTabData, SpongeMCDNDSimpleKeys.SPELLS).ifPresent(list ->
                 spellbookTab.setSpells(list.stream().map(this::deserializeSpell).collect(Collectors.toList())));
-        getDataContainerList(spellbookTabData, MCDNDSimpleKeys.SPELLCASTER_CLASSES).ifPresent(list ->
+        getDataContainerList(spellbookTabData, SpongeMCDNDSimpleKeys.SPELLCASTER_CLASSES).ifPresent(list ->
                 spellbookTab.setSpells(list.stream().map(this::deserializeSpell).collect(Collectors.toList())));
         spellbookTab.setInvocations(sorcererLevel);
         spellbookTab.setSorceryPoints(sorcererLevel);
@@ -527,36 +526,36 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected Spell deserializeSpell(DataContainer spellData)
     {
         Spell spell = new Spell();
-        spellData.getBoolean(MCDNDSimpleKeys.NEEDS_CONCENTRATION.getQuery()).ifPresent(spell::setNeedsConcentration);
-        spellData.getBoolean(MCDNDSimpleKeys.IS_PREPARED.getQuery()).ifPresent(spell::setPrepared);
-        spellData.getInt(MCDNDSimpleKeys.DURATION.getQuery()).ifPresent(spell::setDuration);
-        spellData.getInt(MCDNDSimpleKeys.SPELL_LEVEL.getQuery()).ifPresent(spell::setLevel);
-        spellData.getInt(MCDNDSimpleKeys.RANGE.getQuery()).ifPresent(spell::setRange);
-        getDataContainer(spellData, MCDNDSimpleKeys.SPELL_DAMAGE).ifPresent(data ->
+        spellData.getBoolean(SpongeMCDNDSimpleKeys.NEEDS_CONCENTRATION.getQuery()).ifPresent(spell::setNeedsConcentration);
+        spellData.getBoolean(SpongeMCDNDSimpleKeys.IS_PREPARED.getQuery()).ifPresent(spell::setPrepared);
+        spellData.getInt(SpongeMCDNDSimpleKeys.DURATION.getQuery()).ifPresent(spell::setDuration);
+        spellData.getInt(SpongeMCDNDSimpleKeys.SPELL_LEVEL.getQuery()).ifPresent(spell::setLevel);
+        spellData.getInt(SpongeMCDNDSimpleKeys.RANGE.getQuery()).ifPresent(spell::setRange);
+        getDataContainer(spellData, SpongeMCDNDSimpleKeys.SPELL_DAMAGE).ifPresent(data ->
                 spell.setSpellDamage(deserializeSpellDamage(data)));
-        spellData.getStringList(MCDNDSimpleKeys.SPELL_DESCRIPTION.getQuery()).ifPresent(spell::setDescription);
-        spellData.getStringList(MCDNDSimpleKeys.EFFECTS.getQuery()).ifPresent(spell::setEffects);
-        getDataContainer(spellData, MCDNDSimpleKeys.SPELL_SAVE).ifPresent(data ->
+        spellData.getStringList(SpongeMCDNDSimpleKeys.SPELL_DESCRIPTION.getQuery()).ifPresent(spell::setDescription);
+        spellData.getStringList(SpongeMCDNDSimpleKeys.EFFECTS.getQuery()).ifPresent(spell::setEffects);
+        getDataContainer(spellData, SpongeMCDNDSimpleKeys.SPELL_SAVE).ifPresent(data ->
                 spell.setSpellSave(deserializeSpellSave(data)));
-        getDataContainer(spellData, MCDNDSimpleKeys.SPELLCASTER_CLASS).ifPresent(data ->
+        getDataContainer(spellData, SpongeMCDNDSimpleKeys.SPELLCASTER_CLASS).ifPresent(data ->
                 spell.setGainedFrom(deserializeSpellcasterClass(data)));
-        getDataContainer(spellData, MCDNDSimpleKeys.SPELL_TYPE).ifPresent(data ->
+        getDataContainer(spellData, SpongeMCDNDSimpleKeys.SPELL_TYPE).ifPresent(data ->
                 spell.setSpellType(deserializeSpellType(data)));
-        getDataContainer(spellData, MCDNDSimpleKeys.SPELL_HEALING).ifPresent(data ->
+        getDataContainer(spellData, SpongeMCDNDSimpleKeys.SPELL_HEALING).ifPresent(data ->
                 spell.setSpellHealing(deserializeSpellHealing(data)));
-        spellData.getString(MCDNDSimpleKeys.ATTACK_STAT.getQuery()).ifPresent(spell::setAttackStat);
-        spellData.getString(MCDNDSimpleKeys.CAST_TIME.getQuery()).ifPresent(spell::setCastTime);
-        spellData.getString(MCDNDSimpleKeys.TARGET_AREA.getQuery()).ifPresent(spell::setTargetArea);
+        spellData.getString(SpongeMCDNDSimpleKeys.ATTACK_STAT.getQuery()).ifPresent(spell::setAttackStat);
+        spellData.getString(SpongeMCDNDSimpleKeys.CAST_TIME.getQuery()).ifPresent(spell::setCastTime);
+        spellData.getString(SpongeMCDNDSimpleKeys.TARGET_AREA.getQuery()).ifPresent(spell::setTargetArea);
         return spell;
     }
 
     @Override
     protected SaveDCType deserializeSaveDCType(DataContainer spellData)//NOSONAR
     {
-        return spellData.getString(MCDNDSimpleKeys.NAME.getQuery()).map(name ->//NOSONAR
+        return spellData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).map(name ->//NOSONAR
         {
             if ("Custom DC".equals(name))
-                return spellData.getInt(MCDNDSimpleKeys.CUSTOM_DC.getQuery()).map(SaveDCTypes::custom).orElse(SaveDCTypes.custom(0));
+                return spellData.getInt(SpongeMCDNDSimpleKeys.CUSTOM_DC.getQuery()).map(SaveDCTypes::custom).orElse(SaveDCTypes.custom(0));
             else if ("Arcane Trickster DC".equals(name))
                 return SaveDCTypes.ARCANE_TRICKSTER;
             else if ("Bard DC".equals(name))
@@ -583,7 +582,7 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     @Override
     protected MCDNDArmorType deserializeArmorType(DataContainer armorTypeData)
     {
-        return armorTypeData.getString(MCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
+        return armorTypeData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
         {
             for (MCDNDArmorType armorType : MCDNDArmorType.values())
                 if (armorType.getName().equals(name))
@@ -597,11 +596,11 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected SpellDamage deserializeSpellDamage(DataContainer spellDamageData)
     {
         SpellDamage spellDamage = new SpellDamage();
-        spellDamageData.getBoolean(MCDNDSimpleKeys.CAN_CRIT.getQuery()).ifPresent(spellDamage::setCanCrit);
-        getDataContainer(spellDamageData, MCDNDSimpleKeys.DICE).ifPresent(data ->
+        spellDamageData.getBoolean(SpongeMCDNDSimpleKeys.CAN_CRIT.getQuery()).ifPresent(spellDamage::setCanCrit);
+        getDataContainer(spellDamageData, SpongeMCDNDSimpleKeys.DICE).ifPresent(data ->
                 spellDamage.setDice(deserializeDice(data)));
-        spellDamageData.getInt(MCDNDSimpleKeys.CAN_CRIT.getQuery()).ifPresent(spellDamage::setBonus);
-        spellDamageData.getString(MCDNDSimpleKeys.CAN_CRIT.getQuery()).ifPresent(spellDamage::setDamageType);
+        spellDamageData.getInt(SpongeMCDNDSimpleKeys.CAN_CRIT.getQuery()).ifPresent(spellDamage::setBonus);
+        spellDamageData.getString(SpongeMCDNDSimpleKeys.CAN_CRIT.getQuery()).ifPresent(spellDamage::setDamageType);
         return spellDamage;
     }
 
@@ -609,8 +608,8 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected SpellHealing deserializeSpellHealing(DataContainer spellHealingData)
     {
         SpellHealing spellHealing = new SpellHealing();
-        spellHealingData.getInt(MCDNDSimpleKeys.HEAL_AMOUNT.getQuery()).ifPresent(spellHealing::setHealAmount);
-        spellHealingData.getString(MCDNDSimpleKeys.STAT_BONUS.getQuery()).ifPresent(spellHealing::setStatBonus);
+        spellHealingData.getInt(SpongeMCDNDSimpleKeys.HEAL_AMOUNT.getQuery()).ifPresent(spellHealing::setHealAmount);
+        spellHealingData.getString(SpongeMCDNDSimpleKeys.STAT_BONUS.getQuery()).ifPresent(spellHealing::setStatBonus);
         return spellHealing;
     }
 
@@ -618,17 +617,17 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected SpellSave deserializeSpellSave(DataContainer spellSaveData)
     {
         SpellSave spellSave = new SpellSave();
-        getDataContainer(spellSaveData, MCDNDSimpleKeys.SAVE_DC_TYPE).ifPresent(data ->
+        getDataContainer(spellSaveData, SpongeMCDNDSimpleKeys.SAVE_DC_TYPE).ifPresent(data ->
                 spellSave.setSaveDCType(deserializeSaveDCType(data)));
-        spellSaveData.getString(MCDNDSimpleKeys.SAVE_DC_TYPE.getQuery()).ifPresent(spellSave::setOnSuccessfulSave);
-        spellSaveData.getString(MCDNDSimpleKeys.SAVING_STAT.getQuery()).ifPresent(spellSave::setSavingStat);
+        spellSaveData.getString(SpongeMCDNDSimpleKeys.SAVE_DC_TYPE.getQuery()).ifPresent(spellSave::setOnSuccessfulSave);
+        spellSaveData.getString(SpongeMCDNDSimpleKeys.SAVING_STAT.getQuery()).ifPresent(spellSave::setSavingStat);
         return spellSave;
     }
 
     @Override
     protected SpellType deserializeSpellType(DataContainer spellTypeData)
     {
-        return spellTypeData.getString(MCDNDSimpleKeys.NAME.getQuery()).map(name ->
+        return spellTypeData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).map(name ->
         {
             for (SpellType spellType : SpellType.values())
                 if (name.equals(spellType.getName()))
@@ -641,7 +640,7 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     @Override
     protected SpellcasterClass deserializeSpellcasterClass(DataContainer spellcasterClassData)
     {
-        return spellcasterClassData.getString(MCDNDSimpleKeys.NAME.getQuery()).map(name ->
+        return spellcasterClassData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).map(name ->
         {
             for (SpellcasterClass spellcasterClass : SpellcasterClass.values())
                 if (name.equals(spellcasterClass.getName()))
@@ -655,9 +654,9 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected WeaponsTab deserializeWeaponsTab(DataContainer weaponsTabData)
     {
         WeaponsTab weaponsTab = new WeaponsTab();
-        getDataContainerList(weaponsTabData, MCDNDSimpleKeys.MELEE_WEAPONS).ifPresent(list ->
+        getDataContainerList(weaponsTabData, SpongeMCDNDSimpleKeys.MELEE_WEAPONS).ifPresent(list ->
                 weaponsTab.setMeleeWeapons(list.stream().map(this::deserializeMeleeWeapon).collect(Collectors.toList())));
-        getDataContainerList(weaponsTabData, MCDNDSimpleKeys.RANGED_WEAPONS).ifPresent(list ->
+        getDataContainerList(weaponsTabData, SpongeMCDNDSimpleKeys.RANGED_WEAPONS).ifPresent(list ->
                 weaponsTab.setRangedWeapons(list.stream().map(this::deserializeRangedWeapon).collect(Collectors.toList())));
         return weaponsTab;
     }
@@ -666,18 +665,18 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected MeleeWeapon deserializeMeleeWeapon(DataContainer meleeWeaponData)
     {
         MeleeWeapon meleeWeapon = new MeleeWeapon();
-        meleeWeaponData.getBoolean(MCDNDSimpleKeys.PLUS_STAT.getQuery()).ifPresent(meleeWeapon::setPlusStat);
-        meleeWeaponData.getBoolean(MCDNDSimpleKeys.IS_PROFICIENT.getQuery()).ifPresent(meleeWeapon::setProficient);
-        getDataContainer(meleeWeaponData, MCDNDSimpleKeys.CRIT_DAMAGE_DICE).ifPresent(data ->
+        meleeWeaponData.getBoolean(SpongeMCDNDSimpleKeys.PLUS_STAT.getQuery()).ifPresent(meleeWeapon::setPlusStat);
+        meleeWeaponData.getBoolean(SpongeMCDNDSimpleKeys.IS_PROFICIENT.getQuery()).ifPresent(meleeWeapon::setProficient);
+        getDataContainer(meleeWeaponData, SpongeMCDNDSimpleKeys.CRIT_DAMAGE_DICE).ifPresent(data ->
                 meleeWeapon.setCritDamageDice(deserializeDice(data)));
-        getDataContainer(meleeWeaponData, MCDNDSimpleKeys.DAMAGE_DICE).ifPresent(data ->
+        getDataContainer(meleeWeaponData, SpongeMCDNDSimpleKeys.DAMAGE_DICE).ifPresent(data ->
                 meleeWeapon.setDamageDice(deserializeDice(data)));
-        meleeWeaponData.getInt(MCDNDSimpleKeys.CRIT_MINIMUM.getQuery()).ifPresent(meleeWeapon::setCritMin);
-        meleeWeaponData.getInt(MCDNDSimpleKeys.DAMAGE_BONUS.getQuery()).ifPresent(meleeWeapon::setDamageBonus);
-        meleeWeaponData.getInt(MCDNDSimpleKeys.MAGIC_BONUS.getQuery()).ifPresent(meleeWeapon::setMagicBonus);
-        meleeWeaponData.getInt(MCDNDSimpleKeys.TO_HIT.getQuery()).ifPresent(meleeWeapon::setToHit);
-        meleeWeaponData.getString(MCDNDSimpleKeys.ATTACK_STAT.getQuery()).ifPresent(meleeWeapon::setAttackStat);
-        meleeWeaponData.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(meleeWeapon::setName);
+        meleeWeaponData.getInt(SpongeMCDNDSimpleKeys.CRIT_MINIMUM.getQuery()).ifPresent(meleeWeapon::setCritMin);
+        meleeWeaponData.getInt(SpongeMCDNDSimpleKeys.DAMAGE_BONUS.getQuery()).ifPresent(meleeWeapon::setDamageBonus);
+        meleeWeaponData.getInt(SpongeMCDNDSimpleKeys.MAGIC_BONUS.getQuery()).ifPresent(meleeWeapon::setMagicBonus);
+        meleeWeaponData.getInt(SpongeMCDNDSimpleKeys.TO_HIT.getQuery()).ifPresent(meleeWeapon::setToHit);
+        meleeWeaponData.getString(SpongeMCDNDSimpleKeys.ATTACK_STAT.getQuery()).ifPresent(meleeWeapon::setAttackStat);
+        meleeWeaponData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(meleeWeapon::setName);
         return meleeWeapon;
     }
 
@@ -685,18 +684,18 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected RangedWeapon deserializeRangedWeapon(DataContainer rangedWeaponData)
     {
         RangedWeapon rangedWeapon = new RangedWeapon();
-        rangedWeaponData.getInt(MCDNDSimpleKeys.PLUS_STAT.getQuery()).ifPresent(rangedWeapon::setAmmo);
-        rangedWeaponData.getBoolean(MCDNDSimpleKeys.IS_PROFICIENT.getQuery()).ifPresent(rangedWeapon::setProficient);
-        getDataContainer(rangedWeaponData, MCDNDSimpleKeys.CRIT_DAMAGE_DICE).ifPresent(data ->
+        rangedWeaponData.getInt(SpongeMCDNDSimpleKeys.PLUS_STAT.getQuery()).ifPresent(rangedWeapon::setAmmo);
+        rangedWeaponData.getBoolean(SpongeMCDNDSimpleKeys.IS_PROFICIENT.getQuery()).ifPresent(rangedWeapon::setProficient);
+        getDataContainer(rangedWeaponData, SpongeMCDNDSimpleKeys.CRIT_DAMAGE_DICE).ifPresent(data ->
                 rangedWeapon.setCritDamageDice(deserializeDice(data)));
-        getDataContainer(rangedWeaponData, MCDNDSimpleKeys.DAMAGE_DICE).ifPresent(data ->
+        getDataContainer(rangedWeaponData, SpongeMCDNDSimpleKeys.DAMAGE_DICE).ifPresent(data ->
                 rangedWeapon.setDamageDice(deserializeDice(data)));
-        rangedWeaponData.getInt(MCDNDSimpleKeys.CRIT_MINIMUM.getQuery()).ifPresent(rangedWeapon::setCritMin);
-        rangedWeaponData.getInt(MCDNDSimpleKeys.DAMAGE_BONUS.getQuery()).ifPresent(rangedWeapon::setDamageBonus);
-        rangedWeaponData.getInt(MCDNDSimpleKeys.MAGIC_BONUS.getQuery()).ifPresent(rangedWeapon::setMagicBonus);
-        rangedWeaponData.getInt(MCDNDSimpleKeys.TO_HIT.getQuery()).ifPresent(rangedWeapon::setToHit);
-        rangedWeaponData.getString(MCDNDSimpleKeys.ATTACK_STAT.getQuery()).ifPresent(rangedWeapon::setAttackStat);
-        rangedWeaponData.getString(MCDNDSimpleKeys.NAME.getQuery()).ifPresent(rangedWeapon::setName);
+        rangedWeaponData.getInt(SpongeMCDNDSimpleKeys.CRIT_MINIMUM.getQuery()).ifPresent(rangedWeapon::setCritMin);
+        rangedWeaponData.getInt(SpongeMCDNDSimpleKeys.DAMAGE_BONUS.getQuery()).ifPresent(rangedWeapon::setDamageBonus);
+        rangedWeaponData.getInt(SpongeMCDNDSimpleKeys.MAGIC_BONUS.getQuery()).ifPresent(rangedWeapon::setMagicBonus);
+        rangedWeaponData.getInt(SpongeMCDNDSimpleKeys.TO_HIT.getQuery()).ifPresent(rangedWeapon::setToHit);
+        rangedWeaponData.getString(SpongeMCDNDSimpleKeys.ATTACK_STAT.getQuery()).ifPresent(rangedWeapon::setAttackStat);
+        rangedWeaponData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(rangedWeapon::setName);
         return rangedWeapon;
     }
 
@@ -704,21 +703,21 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected PlayerSheet deserializePlayerSheet(DataContainer playerSheetData)
     {
         PlayerSheet playerSheet = new PlayerSheet();
-        getDataContainer(playerSheetData, MCDNDSimpleKeys.ARMOR_TAB).ifPresent(armorTabData ->
+        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.ARMOR_TAB).ifPresent(armorTabData ->
                 playerSheet.setArmorTab(deserializeArmorTab(armorTabData)));
-        getDataContainer(playerSheetData, MCDNDSimpleKeys.BACKGROUND_TAB).ifPresent(backgroundTabData ->
+        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.BACKGROUND_TAB).ifPresent(backgroundTabData ->
                 playerSheet.setBackgroundTab(deserializeBackgroundTab(backgroundTabData)));
-        getDataContainer(playerSheetData, MCDNDSimpleKeys.CLASS_TAB).ifPresent(classTabData ->
+        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.CLASS_TAB).ifPresent(classTabData ->
                 playerSheet.setClassTab(deserializeClassTab(classTabData)));
-        getDataContainer(playerSheetData, MCDNDSimpleKeys.CORE_STATS_TAB).ifPresent(data ->
+        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.CORE_STATS_TAB).ifPresent(data ->
                 playerSheet.setCoreStatsTab(deserializeCoreStatsTab(data)));
-        getDataContainer(playerSheetData, MCDNDSimpleKeys.INVENTORY_TAB).ifPresent(data ->
+        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.INVENTORY_TAB).ifPresent(data ->
                 playerSheet.setInventoryTab(deserializeInventoryTab(data, playerSheet.getCoreStatsTab().getCoreStats().getStrength().getScore())));
-        getDataContainer(playerSheetData, MCDNDSimpleKeys.SKILLS_TAB).ifPresent(data ->
+        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.SKILLS_TAB).ifPresent(data ->
                 playerSheet.setSkillsTab(deserializeSkillsTab(data, playerSheet.getCoreStatsTab().getCoreStats())));
-        getDataContainer(playerSheetData, MCDNDSimpleKeys.SPELL_BOOK_TAB).ifPresent(data ->
+        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.SPELL_BOOK_TAB).ifPresent(data ->
                 playerSheet.setSpellbookTab(deserializeSpellbookTab(data, playerSheet.getClassTab().getClassLevels().getSorcerer())));
-        getDataContainer(playerSheetData, MCDNDSimpleKeys.WEAPONS_TAB).ifPresent(data ->
+        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.WEAPONS_TAB).ifPresent(data ->
                 playerSheet.setWeaponsTab(deserializeWeaponsTab(data)));
         return playerSheet;
     }

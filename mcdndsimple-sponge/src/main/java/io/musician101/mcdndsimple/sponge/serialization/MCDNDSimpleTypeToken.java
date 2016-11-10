@@ -1,4 +1,4 @@
-package io.musician101.mcdndsimple.sponge.data.key;
+package io.musician101.mcdndsimple.sponge.serialization;
 
 import com.google.common.reflect.TypeToken;
 

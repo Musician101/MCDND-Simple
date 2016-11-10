@@ -45,6 +45,10 @@ import io.musician101.mcdndsimple.common.character.weapon.AbstractWeapon;
 import io.musician101.mcdndsimple.common.character.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.weapon.RangedWeapon;
 
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 public abstract class MCDNDSerializer<S>
 {
     public abstract S serialize(CharacterSheet characterSheet);
@@ -135,4 +139,9 @@ public abstract class MCDNDSerializer<S>
     protected abstract S serialize(MCDNDArmorType armorType);
 
     protected abstract S serialize(Recharge recharge);
+
+    protected <E> List<S> serialize(List<E> list, Function<E, S> mapper)
+    {
+        return list.stream().map(mapper).collect(Collectors.toList());
+    }
 }

@@ -48,10 +48,6 @@ import io.musician101.mcdndsimple.common.serialization.MCDNDSerializer;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.MemoryDataContainer;
 
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 public class SpongeMCDNDSerializer extends MCDNDSerializer<DataContainer>
 {
     @Override
@@ -517,10 +513,5 @@ public class SpongeMCDNDSerializer extends MCDNDSerializer<DataContainer>
     {
         return new MemoryDataContainer()
                 .set(SpongeMCDNDSimpleKeys.NAME, recharge.getName());
-    }
-
-    private <E> List<DataContainer> serialize(List<E> list, Function<E, DataContainer> mapper)//NOSONAR
-    {
-        return list.stream().map(mapper).collect(Collectors.toList());
     }
 }

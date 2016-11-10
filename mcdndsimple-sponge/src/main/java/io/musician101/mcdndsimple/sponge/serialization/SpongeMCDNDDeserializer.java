@@ -599,8 +599,8 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
         spellDamageData.getBoolean(SpongeMCDNDSimpleKeys.CAN_CRIT.getQuery()).ifPresent(spellDamage::setCanCrit);
         getDataContainer(spellDamageData, SpongeMCDNDSimpleKeys.DICE).ifPresent(data ->
                 spellDamage.setDice(deserializeDice(data)));
-        spellDamageData.getInt(SpongeMCDNDSimpleKeys.CAN_CRIT.getQuery()).ifPresent(spellDamage::setBonus);
-        spellDamageData.getString(SpongeMCDNDSimpleKeys.CAN_CRIT.getQuery()).ifPresent(spellDamage::setDamageType);
+        spellDamageData.getInt(SpongeMCDNDSimpleKeys.BONUS.getQuery()).ifPresent(spellDamage::setBonus);
+        spellDamageData.getString(SpongeMCDNDSimpleKeys.DAMAGE_TYPE.getQuery()).ifPresent(spellDamage::setDamageType);
         return spellDamage;
     }
 

@@ -1,0 +1,13 @@
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.google.guava:guava:18.0'
+}
+
+processResources {
+    from('src/main/resources') {
+        expand 'version': project.version
+    }
+}

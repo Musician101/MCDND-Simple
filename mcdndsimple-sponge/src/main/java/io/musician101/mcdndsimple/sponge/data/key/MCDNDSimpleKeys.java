@@ -1,6 +1,5 @@
 package io.musician101.mcdndsimple.sponge.data.key;
 
-import io.musician101.mcdndsimple.sponge.MCDNDSimpleTypeToken;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.key.Key;
@@ -52,9 +51,7 @@ public class MCDNDSimpleKeys
     public static final Key<ListValue<DataContainer>> CLASS_RESOURCES = makeListKey(token(), token(), of("ClassResources"), SpongeMCDNDSimple.getPluginContainer().getId() + ":class_resources", "Class Resources");
     public static final Key<Value<DataContainer>> CLASS_TAB = makeSingleKey(token(), token(), of("ClassTab"), SpongeMCDNDSimple.getPluginContainer().getId() + ":class_tab", "Class Tab");
     public static final Key<Value<Integer>> CLERIC_LEVEL = makeSingleKey(token(), token(), of("ClericLevel"), SpongeMCDNDSimple.getPluginContainer().getId() + ":cleric_level", "Cleric Level");
-    public static final Key<Value<Double>> COIN_WEIGHT = makeSingleKey(token(), token(), of("CoinWeight"), SpongeMCDNDSimple.getPluginContainer().getId() + ":coin_weight", "Coin Weight");
     public static final Key<Value<DataContainer>> CONSTITUTION_SCORE = makeSingleKey(token(), token(), of("ConstitutionScore"), SpongeMCDNDSimple.getPluginContainer().getId() + ":constitution_score", "Constitution Score");
-    public static final Key<Value<Integer>> CONTENT_VERSION = makeSingleKey(token(), token(), of("ContentVersion"), SpongeMCDNDSimple.getPluginContainer().getId() + ":content_version", "Content Version");
     public static final Key<Value<DataContainer>> COPPER = makeSingleKey(token(), token(), of("Copper"), SpongeMCDNDSimple.getPluginContainer().getId() + ":copper", "Copper");
     public static final Key<Value<DataContainer>> CORE_STATS = makeSingleKey(token(), token(), of("CoreStats"), SpongeMCDNDSimple.getPluginContainer().getId() + ":core_stats", "Core Stats");
     public static final Key<Value<DataContainer>> CORE_STATS_TAB = makeSingleKey(token(), token(), of("CoreStatsTab"), SpongeMCDNDSimple.getPluginContainer().getId() + ":core_stats_tab", "Core Stats Tab");
@@ -74,7 +71,6 @@ public class MCDNDSimpleKeys
     public static final Key<Value<Integer>> DURATION = makeSingleKey(token(), token(), of("Duration"), SpongeMCDNDSimple.getPluginContainer().getId() + ":duration", "Duration");
     public static final Key<ListValue<String>> EFFECTS = makeListKey(token(), token(), of("Effects"), SpongeMCDNDSimple.getPluginContainer().getId() + ":effects", "Effects");
     public static final Key<Value<DataContainer>> ELECTRUM = makeSingleKey(token(), token(), of("Electrum"), SpongeMCDNDSimple.getPluginContainer().getId() + ":electrum", "Electrum");
-    public static final Key<Value<Double>> ENCUMBERED = makeSingleKey(token(), token(), of("Encumbered"), SpongeMCDNDSimple.getPluginContainer().getId() + ":encumbered", "Encumbered");
     public static final Key<Value<DataContainer>> EXPERIENCE = makeSingleKey(token(), token(), of("Experience"), SpongeMCDNDSimple.getPluginContainer().getId() + ":experience", "Experience");
     public static final Key<Value<Integer>> EXPERIENCE_AMOUNT = makeSingleKey(token(), token(), of("ExperienceAmount"), SpongeMCDNDSimple.getPluginContainer().getId() + ":experience_amount", "Experience Amount");
     public static final Key<Value<String>> EYES = makeSingleKey(token(), token(), of("Eyes"), SpongeMCDNDSimple.getPluginContainer().getId() + ":eyes", "Eyes");
@@ -85,7 +81,6 @@ public class MCDNDSimpleKeys
     public static final Key<Value<DataContainer>> GOLD = makeSingleKey(token(), token(), of("Gold"), SpongeMCDNDSimple.getPluginContainer().getId() + ":gold", "Gold");
     public static final Key<Value<String>> HAIR = makeSingleKey(token(), token(), of("Hair"), SpongeMCDNDSimple.getPluginContainer().getId() + ":hair", "Hair");
     public static final Key<Value<Integer>> HEAL_AMOUNT = makeSingleKey(token(), token(), of("HealAmount"), SpongeMCDNDSimple.getPluginContainer().getId() + ":heal_amount", "Heal Amount");
-    public static final Key<Value<Double>> HEAVILY_ENCUMBERED = makeSingleKey(token(), token(), of("HeavilyEncumbered"), SpongeMCDNDSimple.getPluginContainer().getId() + ":heavily_encumbered", "Heavily Encumbered");
     public static final Key<Value<String>> HEIGHT = makeSingleKey(token(), token(), of("Height"), SpongeMCDNDSimple.getPluginContainer().getId() + ":height", "Height");
     public static final Key<Value<DataContainer>> HISTORY = makeSingleKey(token(), token(), of("History"), SpongeMCDNDSimple.getPluginContainer().getId() + ":history", "History");
     public static final Key<Value<DataContainer>> HIT_DICE = makeSingleKey(token(), token(), of("HitDice"), SpongeMCDNDSimple.getPluginContainer().getId() + ":hit_dice", "Hit Dice");
@@ -99,16 +94,13 @@ public class MCDNDSimpleKeys
     public static final Key<ListValue<DataContainer>> INVENTORY = makeListKey(token(), token(), of("Inventory"), SpongeMCDNDSimple.getPluginContainer().getId() + ":inventory", "Inventory");
     public static final Key<ListValue<String>> INVENTORY_NOTES = makeListKey(token(), token(), of("InventoryNotes"), SpongeMCDNDSimple.getPluginContainer().getId() + ":inventory_notes", "Inventory Notes");
     public static final Key<Value<DataContainer>> INVENTORY_TAB = makeSingleKey(token(), token(), of("InventoryTab"), SpongeMCDNDSimple.getPluginContainer().getId() + ":inventory_tab", "Inventory Tab");
-    public static final Key<Value<Double>> INVENTORY_WEIGHT = makeSingleKey(token(), token(), of("InventoryWeight"), SpongeMCDNDSimple.getPluginContainer().getId() + ":inventory_weight", "Inventory Weight");
     public static final Key<Value<DataContainer>> INVESTIGATION = makeSingleKey(token(), token(), of("Investigation"), SpongeMCDNDSimple.getPluginContainer().getId() + ":investigation", "Investigation");
     public static final Key<Value<Integer>> INVOCATION_COUNT = makeSingleKey(token(), token(), of("InvocationCount"), SpongeMCDNDSimple.getPluginContainer().getId() + ":invocation_count", "Invocation Count");
     public static final Key<Value<Boolean>> IS_PREPARED = makeSingleKey(token(), token(), of("IsPrepared"), SpongeMCDNDSimple.getPluginContainer().getId() + ":is_prepared", "Is Prepared");
     public static final Key<Value<Boolean>> IS_PROFICIENT = makeSingleKey(token(), token(), of("IsProficient"), SpongeMCDNDSimple.getPluginContainer().getId() + ":is_proficient", "Is Proficient");
     public static final Key<Value<String>> LANGUAGES = makeSingleKey(token(), token(), of("Languages"), SpongeMCDNDSimple.getPluginContainer().getId() + ":languages", "Languages");
     public static final Key<Value<Integer>> MAGIC_BONUS = makeSingleKey(token(), token(), of("MagicBonus"), SpongeMCDNDSimple.getPluginContainer().getId() + ":magic_bonus", "Magic Bonus");
-    public static final Key<Value<Double>> MAX_CARRY = makeSingleKey(token(), token(), of("MaxCarry"), SpongeMCDNDSimple.getPluginContainer().getId() + ":max_carry", "Max Carry");
     public static final Key<Value<Integer>> MAX_HP = makeSingleKey(token(), token(), of("MaxHP"), SpongeMCDNDSimple.getPluginContainer().getId() + ":max_hp", "Max HP");
-    public static final Key<Value<Double>> MAX_PUSH_DRAG_LIFT = makeSingleKey(token(), token(), of("MaxPushDragLift"), SpongeMCDNDSimple.getPluginContainer().getId() + ":max_push_drag_lift", "Max Push Drag Lift");
     public static final Key<Value<Integer>> MAX_USES = makeSingleKey(token(), token(), of("MaxUses"), SpongeMCDNDSimple.getPluginContainer().getId() + ":max_uses", "Max Uses");
     public static final Key<Value<DataContainer>> MEDICINE = makeSingleKey(token(), token(), of("Medicine"), SpongeMCDNDSimple.getPluginContainer().getId() + ":medicine", "Medicine");
     public static final Key<Value<DataContainer>> MELEE_BONUS = makeSingleKey(token(), token(), of("MeleeBonus"), SpongeMCDNDSimple.getPluginContainer().getId() + ":melee_bonus", "Melee Bonus");
@@ -122,7 +114,6 @@ public class MCDNDSimpleKeys
     public static final Key<ListValue<String>> OTHER_NOTES = makeListKey(token(), token(), of("OtherNotes"), SpongeMCDNDSimple.getPluginContainer().getId() + ":other_notes", "Other Notes");
     public static final Key<Value<Integer>> OVERALL_LEVEL = makeSingleKey(token(), token(), of("OverallLevel"), SpongeMCDNDSimple.getPluginContainer().getId() + ":overall_level", "Overall Level");
     public static final Key<Value<Integer>> PALADIN_LEVEL = makeSingleKey(token(), token(), of("PaladinLevel"), SpongeMCDNDSimple.getPluginContainer().getId() + ":paladin_level", "Paladin Level");
-    public static final Key<Value<Integer>> PASS = makeSingleKey(token(), token(), of("Pass"), SpongeMCDNDSimple.getPluginContainer().getId() + ":pass", "Pass");
     public static final Key<Value<DataContainer>> PERCEPTION = makeSingleKey(token(), token(), of("Perception"), SpongeMCDNDSimple.getPluginContainer().getId() + ":perception", "Perception");
     public static final Key<Value<DataContainer>> PERFORMANCE = makeSingleKey(token(), token(), of("Performance"), SpongeMCDNDSimple.getPluginContainer().getId() + ":performance", "Performance");
     public static final Key<ListValue<String>> PERSONALITY_TRAITS = makeListKey(token(), token(), of("PersonalityTraits"), SpongeMCDNDSimple.getPluginContainer().getId() + ":personality_traits", "Personality Traits");
@@ -158,7 +149,6 @@ public class MCDNDSimpleKeys
     public static final Key<Value<Boolean>> SPEED_PENALTY = makeSingleKey(token(), token(), of("SpeedPenalty"), SpongeMCDNDSimple.getPluginContainer().getId() + ":speed_penalty", "Speed Penalty");
     public static final Key<Value<DataContainer>> SPELLCASTER_CLASS = makeSingleKey(token(), token(), of("SpellcasterClass"), SpongeMCDNDSimple.getPluginContainer().getId() + ":spellcaster_class", "Spellcaster Class");
     public static final Key<ListValue<DataContainer>> SPELLCASTER_CLASSES = makeListKey(token(), token(), of("SpellcasterClasses"), SpongeMCDNDSimple.getPluginContainer().getId() + ":spellcaster_classes", "Spellcaster Classes");
-    public static final Key<Value<DataContainer>> SPELLCASTER_TABLE = makeSingleKey(token(), token(), of("SpellcasterTable"), SpongeMCDNDSimple.getPluginContainer().getId() + ":spellcaster_table", "Spellcaster Table");
     public static final Key<Value<DataContainer>> SPELLCASTING_BONUS = makeSingleKey(token(), token(), of("SpellcastingBonus"), SpongeMCDNDSimple.getPluginContainer().getId() + ":spellcasting_bonus", "Spellcasting Bonus");
     public static final Key<ListValue<DataContainer>> SPELLS = makeListKey(token(), token(), of("Spells"), SpongeMCDNDSimple.getPluginContainer().getId() + ":spells", "Spells");
     public static final Key<Value<DataContainer>> SPELL_BOOK_TAB = makeSingleKey(token(), token(), of("SpellBookTab"), SpongeMCDNDSimple.getPluginContainer().getId() + ":spell_book_tab", "Spell Book Tab");
@@ -176,7 +166,6 @@ public class MCDNDSimpleKeys
     public static final Key<Value<String>> TARGET_AREA = makeSingleKey(token(), token(), of("TargetArea"), SpongeMCDNDSimple.getPluginContainer().getId() + ":target_area", "TargetArea");
     public static final Key<Value<Integer>> TEMP_HP = makeSingleKey(token(), token(), of("TempHP"), SpongeMCDNDSimple.getPluginContainer().getId() + ":temp_hp", "Temp HP");
     public static final Key<ListValue<String>> TOOL_PROFICIENCIES = makeListKey(token(), token(), of("ToolProficiencies"), SpongeMCDNDSimple.getPluginContainer().getId() + ":tool_proficiencies", "Tool Proficiencies");
-    public static final Key<Value<Integer>> TOTAL = makeSingleKey(token(), token(), of("Total"), SpongeMCDNDSimple.getPluginContainer().getId() + ":total", "Total");
     public static final Key<Value<Integer>> TO_HIT = makeSingleKey(token(), token(), of("ToHit"), SpongeMCDNDSimple.getPluginContainer().getId() + ":to_hit", "To Hit");
     public static final Key<Value<Boolean>> UNARMORED = makeSingleKey(token(), token(), of("Unarmored"), SpongeMCDNDSimple.getPluginContainer().getId() + ":unarmored", "Unarmored");
     public static final Key<Value<Integer>> UNARMORED_ARMOR_CLASS = makeSingleKey(token(), token(), of("UnarmoredArmorClass"), SpongeMCDNDSimple.getPluginContainer().getId() + ":unarmored_armor_class", "Unarmored Armor Class");

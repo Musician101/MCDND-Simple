@@ -1,6 +1,6 @@
 package io.musician101.mcdndsimple.sponge;
 
-import io.musician101.mcdndsimple.sponge.character.CharacterSheetStorage;
+import io.musician101.mcdndsimple.sponge.character.SpongeCharacterSheetStorage;
 import io.musician101.musicianlibrary.java.minecraft.AbstractConfig;
 import io.musician101.musicianlibrary.java.minecraft.sponge.AbstractSpongePlugin;
 import org.slf4j.Logger;
@@ -23,9 +23,9 @@ import java.io.File;
 )
 public class SpongeMCDNDSimple extends AbstractSpongePlugin<AbstractConfig>
 {
-    private static CharacterSheetStorage characterSheetStorage;
+    private SpongeCharacterSheetStorage characterSheetStorage;
 
-    public static CharacterSheetStorage getCharacterSheetStorage()
+    public SpongeCharacterSheetStorage getCharacterSheetStorage()
     {
         return characterSheetStorage;
     }
@@ -33,7 +33,7 @@ public class SpongeMCDNDSimple extends AbstractSpongePlugin<AbstractConfig>
     @Override
     public void preInit(GamePreInitializationEvent event)
     {
-        characterSheetStorage = new CharacterSheetStorage(new File("mods/mcdndsimple/players"));
+        characterSheetStorage = new SpongeCharacterSheetStorage(new File("mods/mcdndsimple/players"));
     }
 
     public void serverStop(GameStoppingServerEvent event)

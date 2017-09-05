@@ -1,21 +1,13 @@
 package io.musician101.mcdndsimple.common.character.spell;
 
-import io.musician101.mcdndsimple.common.character.AbilityScore;
+import io.musician101.mcdndsimple.common.Dice;
 
 public class SpellHealing
 {
-    private int healAmount = 0;
+    private Dice healAmount = new Dice(0);
     private String statBonus = "None";
 
-    public int getHealTotal(AbilityScore abilityScore)
-    {
-        if ("None".equals(statBonus))
-            return healAmount;
-
-        return healAmount + abilityScore.getMod();
-    }
-
-    public int getHealAmount()
+    public Dice getHealAmount()
     {
         return healAmount;
     }
@@ -25,7 +17,7 @@ public class SpellHealing
         return statBonus;
     }
 
-    public void setHealAmount(int healAmount)
+    public void setHealAmount(Dice healAmount)
     {
         this.healAmount = healAmount;
     }

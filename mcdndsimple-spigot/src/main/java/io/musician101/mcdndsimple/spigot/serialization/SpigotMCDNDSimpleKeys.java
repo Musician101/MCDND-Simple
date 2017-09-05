@@ -84,7 +84,7 @@ public class SpigotMCDNDSimpleKeys
     public static final String INVENTORY_TAB = "InventoryTab";
     public static final String INVESTIGATION = "Investigation";
     public static final String INVOCATION_COUNT = "InvocationCount";
-    public static final String IS_PREPARED = "IsPrepared";
+    public static final String PREPARED = "Prepared";
     public static final String IS_PROFICIENT = "IsProficient";
     public static final String LANGUAGES = "Languages";
     public static final String MAGIC_BONUS = "MagicBonus";
@@ -107,7 +107,7 @@ public class SpigotMCDNDSimpleKeys
     public static final String PERSONALITY_TRAITS = "PersonalityTraits";
     public static final String PERSUASION = "Persuasion";
     public static final String PLATINUM = "Platinum";
-    public static final String PLAYER_SHEET = "PlayerSheet";
+    public static final String PLAYER_SHEET = "CharacterSheet";
     public static final String PLUS_STAT = "PlusStat";
     public static final String PROFICIENT = "Proficient";
     public static final String RACE = "Race";

@@ -47,4 +47,13 @@ public class AbilityScore
     {
         this.score = score;
     }
+
+    public int getSaveMod(ClassLevels classLevels, Experience experience) {
+        int mod = getMod();
+        if (proficient) {
+            return mod + experience.getProficiencyBonus(classLevels);
+        }
+
+        return mod;
+    }
 }

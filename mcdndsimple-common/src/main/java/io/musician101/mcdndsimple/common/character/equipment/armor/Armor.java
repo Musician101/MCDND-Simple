@@ -8,10 +8,10 @@ public class Armor
     private boolean worn = true;
     private int baseArmorClass = 0;
     private int magicBonus = 0;
-    private MCDNDArmorType armorType = MCDNDArmorType.NONE;
+    private ArmorType armorType = ArmorType.NONE;
     private String name = "";
 
-    public MCDNDArmorType getArmorType()
+    public ArmorType getArmorType()
     {
         return armorType;
     }
@@ -51,7 +51,7 @@ public class Armor
         return worn;
     }
 
-    public void setArmorType(MCDNDArmorType armorType)
+    public void setArmorType(ArmorType armorType)
     {
         this.armorType = armorType;
     }
@@ -81,13 +81,17 @@ public class Armor
         this.stealthPenalty = stealthPenalty;
     }
 
-    public void setUnarmored(boolean unarmored)
+    public void setIsUnarmored(boolean unarmored)
     {
         this.unarmored = unarmored;
     }
 
-    public void setWorn(boolean worn)
+    public void setIsWorn(boolean worn)
     {
         this.worn = worn;
+    }
+
+    public int getTotalArmorClass() {
+        return baseArmorClass + magicBonus;
     }
 }

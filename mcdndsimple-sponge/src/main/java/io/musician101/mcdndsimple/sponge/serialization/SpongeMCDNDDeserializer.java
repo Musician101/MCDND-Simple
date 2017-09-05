@@ -4,6 +4,7 @@ import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.character.AbilityScore;
 import io.musician101.mcdndsimple.common.character.BioAndInfo;
 import io.musician101.mcdndsimple.common.character.CharacterSheet;
+import io.musician101.mcdndsimple.common.character.PlayerSheet;
 import io.musician101.mcdndsimple.common.character.ClassAction;
 import io.musician101.mcdndsimple.common.character.ClassLevels;
 import io.musician101.mcdndsimple.common.character.ClassResource;
@@ -12,9 +13,8 @@ import io.musician101.mcdndsimple.common.character.Experience;
 import io.musician101.mcdndsimple.common.character.HitDice;
 import io.musician101.mcdndsimple.common.character.HitPoints;
 import io.musician101.mcdndsimple.common.character.MCDNDItem;
-import io.musician101.mcdndsimple.common.character.PlayerSheet;
 import io.musician101.mcdndsimple.common.character.Recharge;
-import io.musician101.mcdndsimple.common.character.SpellcasterClass;
+import io.musician101.mcdndsimple.common.character.spell.SpellcasterClass;
 import io.musician101.mcdndsimple.common.character.UnarmoredBonus;
 import io.musician101.mcdndsimple.common.character.Weight;
 import io.musician101.mcdndsimple.common.character.bonus.Bonuses;
@@ -22,7 +22,7 @@ import io.musician101.mcdndsimple.common.character.bonus.MeleeBonus;
 import io.musician101.mcdndsimple.common.character.bonus.RangedBonus;
 import io.musician101.mcdndsimple.common.character.bonus.SpellcastingBonus;
 import io.musician101.mcdndsimple.common.character.equipment.armor.Armor;
-import io.musician101.mcdndsimple.common.character.equipment.armor.MCDNDArmorType;
+import io.musician101.mcdndsimple.common.character.equipment.armor.ArmorType;
 import io.musician101.mcdndsimple.common.character.equipment.currency.Coin;
 import io.musician101.mcdndsimple.common.character.equipment.currency.Wealth;
 import io.musician101.mcdndsimple.common.character.skill.SkillProficiency;
@@ -56,17 +56,17 @@ import java.util.stream.Collectors;
 public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
 {
     @Override
-    public CharacterSheet deserialize(DataContainer characterSheetData)
+    public PlayerSheet deserialize(DataContainer characterSheetData)
     {
-        CharacterSheet characterSheet = new CharacterSheet();
+        PlayerSheet playerSheet = new PlayerSheet();
         getDataContainer(characterSheetData, SpongeMCDNDSimpleKeys.BIO_AND_INFO).ifPresent(bioData ->
-                characterSheet.setBioAndInfo(deserializeBioAndInfo(bioData)));
+                playerSheet.setBioAndInfo(deserializeBioAndInfo(bioData)));
         getDataContainer(characterSheetData, SpongeMCDNDSimpleKeys.PLAYER_SHEET).ifPresent(playerData ->
-                characterSheet.setPlayerSheet(deserializePlayerSheet(playerData)));
-        characterSheetData.getString(SpongeMCDNDSimpleKeys.CLASS.getQuery()).ifPresent(characterSheet::setClazz);
-        characterSheetData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(characterSheet::setName);
-        characterSheetData.getString(SpongeMCDNDSimpleKeys.RACE.getQuery()).ifPresent(characterSheet::setRace);
-        return characterSheet;
+                playerSheet.setCharacterSheet(deserializePlayerSheet(playerData)));
+        characterSheetData.getString(SpongeMCDNDSimpleKeys.CLASS.getQuery()).ifPresent(playerSheet::setClazz);
+        characterSheetData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(playerSheet::setName);
+        characterSheetData.getString(SpongeMCDNDSimpleKeys.RACE.getQuery()).ifPresent(playerSheet::setRace);
+        return playerSheet;
     }
 
     @Override
@@ -190,8 +190,8 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
         Armor armor = new Armor();
         armorTab.getBoolean(SpongeMCDNDSimpleKeys.SPEED_PENALTY.getQuery()).ifPresent(armor::setSpeedPenalty);
         armorTab.getBoolean(SpongeMCDNDSimpleKeys.STEALTH_PENALTY.getQuery()).ifPresent(armor::setStealthPenalty);
-        armorTab.getBoolean(SpongeMCDNDSimpleKeys.UNARMORED.getQuery()).ifPresent(armor::setUnarmored);
-        armorTab.getBoolean(SpongeMCDNDSimpleKeys.WORN.getQuery()).ifPresent(armor::setWorn);
+        armorTab.getBoolean(SpongeMCDNDSimpleKeys.UNARMORED.getQuery()).ifPresent(armor::setIsUnarmored);
+        armorTab.getBoolean(SpongeMCDNDSimpleKeys.WORN.getQuery()).ifPresent(armor::setIsWorn);
         armorTab.getInt(SpongeMCDNDSimpleKeys.BASE_ARMOR_CLASS.getQuery()).ifPresent(armor::setBaseArmorClass);
         armorTab.getInt(SpongeMCDNDSimpleKeys.MAGIC_BONUS.getQuery()).ifPresent(armor::setMagicBonus);
         getDataContainer(armorTab, SpongeMCDNDSimpleKeys.ARMOR_TYPE).ifPresent(armorTypeData ->
@@ -292,7 +292,7 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     {
         ClassAction classAction = new ClassAction();
         classActionData.getInt(SpongeMCDNDSimpleKeys.MAX_USES.getQuery()).ifPresent(classAction::setMax);
-        classActionData.getInt(SpongeMCDNDSimpleKeys.USES_LEFT.getQuery()).ifPresent(classAction::setUsesLeft);
+        classActionData.getInt(SpongeMCDNDSimpleKeys.USES_LEFT.getQuery()).ifPresent(classAction::setUsedCharges);
         getDataContainer(classActionData, SpongeMCDNDSimpleKeys.RECHARGE).ifPresent(rechargeData ->
                 classAction.setRecharge(deserializeRecharge(rechargeData)));
         classActionData.getString(SpongeMCDNDSimpleKeys.GAINED_FROM.getQuery()).ifPresent(classAction::setGainedFrom);
@@ -420,7 +420,7 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
         HitDice hitDice = new HitDice();
         hitDiceData.getKeys(false).forEach(dataQuery ->
                 hitDiceData.getInt(dataQuery).ifPresent(amount ->
-                        hitDice.addHitDie(Integer.parseInt(dataQuery.toString()), amount)));
+                        hitDice.updateHitDie(Integer.parseInt(dataQuery.toString()), amount)));
         return hitDice;
     }
 
@@ -460,7 +460,7 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     protected MCDNDItem deserializeItem(DataContainer itemData)
     {
         MCDNDItem item = new MCDNDItem();
-        itemData.getBoolean(SpongeMCDNDSimpleKeys.CARRIED.getQuery()).ifPresent(item::setCarried);
+        itemData.getBoolean(SpongeMCDNDSimpleKeys.CARRIED.getQuery()).ifPresent(item::setIsCarried);
         itemData.getDouble(SpongeMCDNDSimpleKeys.WEIGHT_DOUBLE.getQuery()).ifPresent(item::setWeight);
         itemData.getString(SpongeMCDNDSimpleKeys.DESCRIPTION.getQuery()).ifPresent(item::setDescription);
         itemData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(item::setName);
@@ -518,7 +518,7 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
         getDataContainerList(spellbookTabData, SpongeMCDNDSimpleKeys.SPELLCASTER_CLASSES).ifPresent(list ->
                 spellbookTab.setSpells(list.stream().map(this::deserializeSpell).collect(Collectors.toList())));
         spellbookTab.setInvocations(sorcererLevel);
-        spellbookTab.setSorceryPoints(sorcererLevel);
+        spellbookTab.setSorceryPointsMax(sorcererLevel);
         return spellbookTab;
     }
 
@@ -580,16 +580,16 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     }
 
     @Override
-    protected MCDNDArmorType deserializeArmorType(DataContainer armorTypeData)
+    protected ArmorType deserializeArmorType(DataContainer armorTypeData)
     {
         return armorTypeData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).flatMap(name ->
         {
-            for (MCDNDArmorType armorType : MCDNDArmorType.values())
+            for (ArmorType armorType : ArmorType.values())
                 if (armorType.getName().equals(name))
                     return Optional.of(armorType);
 
             return Optional.empty();
-        }).orElse(MCDNDArmorType.NONE);
+        }).orElse(ArmorType.NONE);
     }
 
     @Override
@@ -666,7 +666,7 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     {
         MeleeWeapon meleeWeapon = new MeleeWeapon();
         meleeWeaponData.getBoolean(SpongeMCDNDSimpleKeys.PLUS_STAT.getQuery()).ifPresent(meleeWeapon::setPlusStat);
-        meleeWeaponData.getBoolean(SpongeMCDNDSimpleKeys.IS_PROFICIENT.getQuery()).ifPresent(meleeWeapon::setProficient);
+        meleeWeaponData.getBoolean(SpongeMCDNDSimpleKeys.IS_PROFICIENT.getQuery()).ifPresent(meleeWeapon::setIsProficient);
         getDataContainer(meleeWeaponData, SpongeMCDNDSimpleKeys.CRIT_DAMAGE_DICE).ifPresent(data ->
                 meleeWeapon.setCritDamageDice(deserializeDice(data)));
         getDataContainer(meleeWeaponData, SpongeMCDNDSimpleKeys.DAMAGE_DICE).ifPresent(data ->
@@ -685,7 +685,7 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     {
         RangedWeapon rangedWeapon = new RangedWeapon();
         rangedWeaponData.getInt(SpongeMCDNDSimpleKeys.PLUS_STAT.getQuery()).ifPresent(rangedWeapon::setAmmo);
-        rangedWeaponData.getBoolean(SpongeMCDNDSimpleKeys.IS_PROFICIENT.getQuery()).ifPresent(rangedWeapon::setProficient);
+        rangedWeaponData.getBoolean(SpongeMCDNDSimpleKeys.IS_PROFICIENT.getQuery()).ifPresent(rangedWeapon::setIsProficient);
         getDataContainer(rangedWeaponData, SpongeMCDNDSimpleKeys.CRIT_DAMAGE_DICE).ifPresent(data ->
                 rangedWeapon.setCritDamageDice(deserializeDice(data)));
         getDataContainer(rangedWeaponData, SpongeMCDNDSimpleKeys.DAMAGE_DICE).ifPresent(data ->
@@ -700,26 +700,26 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer>
     }
 
     @Override
-    protected PlayerSheet deserializePlayerSheet(DataContainer playerSheetData)
+    protected CharacterSheet deserializePlayerSheet(DataContainer playerSheetData)
     {
-        PlayerSheet playerSheet = new PlayerSheet();
+        CharacterSheet characterSheet = new CharacterSheet();
         getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.ARMOR_TAB).ifPresent(armorTabData ->
-                playerSheet.setArmorTab(deserializeArmorTab(armorTabData)));
+                characterSheet.setArmorTab(deserializeArmorTab(armorTabData)));
         getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.BACKGROUND_TAB).ifPresent(backgroundTabData ->
-                playerSheet.setBackgroundTab(deserializeBackgroundTab(backgroundTabData)));
+                characterSheet.setBackgroundTab(deserializeBackgroundTab(backgroundTabData)));
         getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.CLASS_TAB).ifPresent(classTabData ->
-                playerSheet.setClassTab(deserializeClassTab(classTabData)));
+                characterSheet.setClassTab(deserializeClassTab(classTabData)));
         getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.CORE_STATS_TAB).ifPresent(data ->
-                playerSheet.setCoreStatsTab(deserializeCoreStatsTab(data)));
+                characterSheet.setCoreStatsTab(deserializeCoreStatsTab(data)));
         getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.INVENTORY_TAB).ifPresent(data ->
-                playerSheet.setInventoryTab(deserializeInventoryTab(data, playerSheet.getCoreStatsTab().getCoreStats().getStrength().getScore())));
+                characterSheet.setInventoryTab(deserializeInventoryTab(data, characterSheet.getCoreStatsTab().getCoreStats().getStrength().getScore())));
         getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.SKILLS_TAB).ifPresent(data ->
-                playerSheet.setSkillsTab(deserializeSkillsTab(data, playerSheet.getCoreStatsTab().getCoreStats())));
+                characterSheet.setSkillsTab(deserializeSkillsTab(data, characterSheet.getCoreStatsTab().getCoreStats())));
         getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.SPELL_BOOK_TAB).ifPresent(data ->
-                playerSheet.setSpellbookTab(deserializeSpellbookTab(data, playerSheet.getClassTab().getClassLevels().getSorcerer())));
+                characterSheet.setSpellbookTab(deserializeSpellbookTab(data, characterSheet.getClassTab().getClassLevels().getSorcerer())));
         getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.WEAPONS_TAB).ifPresent(data ->
-                playerSheet.setWeaponsTab(deserializeWeaponsTab(data)));
-        return playerSheet;
+                characterSheet.setWeaponsTab(deserializeWeaponsTab(data)));
+        return characterSheet;
     }
 
     private Optional<DataContainer> getDataContainer(DataContainer dataContainer, Key<Value<DataContainer>> key)

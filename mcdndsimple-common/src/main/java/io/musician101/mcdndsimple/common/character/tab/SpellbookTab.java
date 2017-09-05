@@ -1,26 +1,55 @@
 package io.musician101.mcdndsimple.common.character.tab;
 
-import io.musician101.mcdndsimple.common.character.SpellcasterClass;
+import io.musician101.mcdndsimple.common.character.ClassLevels;
 import io.musician101.mcdndsimple.common.character.spell.Spell;
-
+import io.musician101.mcdndsimple.common.character.spell.SpellcasterClass;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SpellbookTab
 {
-    private int invocations = 0;
-    private int sorceryPoints = 0;
+    private int sorceryPointsUsed = 0;
+    private int warlockSpellSlotsUsed = 0;
+    private SpellSlots spellSlots = new SpellSlots();
     private List<Spell> spells = new ArrayList<>();
     private List<SpellcasterClass> spellcasterClasses = new ArrayList<>();
 
-    public int getInvocations()
+    public int getInvocations(ClassLevels classLevels)
     {
-        return invocations;
+        int level = classLevels.getSorcerer();
+        if (spellcasterClasses.contains(SpellcasterClass.WARLOCK))
+        {
+            if (level == 1)
+                return 0;
+            else if (level >= 2 && level <=4)
+                return 2;
+            else if (level >= 5 && level <= 6)
+                return 3;
+        }
+
+        return 0;
     }
 
-    public int getSorceryPoints()
+    public int getSorceryPointsMax(ClassLevels classLevels)
     {
-        return sorceryPoints;
+        int level = classLevels.getSorcerer();
+        if (spellcasterClasses.contains(SpellcasterClass.SORCERER))
+        {
+            if (level == 1)
+                return 0;
+            else
+                return level;
+        }
+
+        return 0;
+    }
+
+    public int getSorceryPointsUsed() {
+        return sorceryPointsUsed;
+    }
+
+    public SpellSlots getSpellSlots() {
+        return spellSlots;
     }
 
     public List<SpellcasterClass> getSpellcasterClasses()
@@ -38,35 +67,21 @@ public class SpellbookTab
         spells.add(spell);
     }
 
+    public int getWarlockSpellSlotsUsed() {
+        return warlockSpellSlotsUsed;
+    }
+
     public void removeSpell(Spell spell)
     {
         spells.remove(spell);
     }
 
-    public void setInvocations(int level)
-    {
-        if (spellcasterClasses.contains(SpellcasterClass.WARLOCK))
-        {
-            if (level == 1)
-                this.invocations = 0;
-            else if (level >= 2 && level <=4)
-                this.invocations = 2;
-            else if (level >= 5 && level <= 6)
-                this.invocations = 3;
-        }
-
-        this.invocations = 0;
+    public void setSorceryPointsUsed(int sorceryPointsUsed) {
+        this.sorceryPointsUsed = sorceryPointsUsed;
     }
 
-    public void setSorceryPoints(int level)
-    {
-        if (spellcasterClasses.contains(SpellcasterClass.SORCERER))
-        {
-            if (level == 1)
-                this.sorceryPoints = 0;
-            else
-                this.sorceryPoints = level;
-        }
+    public void setSpellSlots(SpellSlots spellSlots) {
+        this.spellSlots = spellSlots;
     }
 
     public void setSpellcasterClasses(List<SpellcasterClass> spellcasterClasses)
@@ -87,5 +102,9 @@ public class SpellbookTab
     public void removeSpellcasterClass(SpellcasterClass spellcasterClass)
     {
         spellcasterClasses.remove(spellcasterClass);
+    }
+
+    public void setWarlockSpellSlotsUsed(int warlockSpellSlotsUsed) {
+        this.warlockSpellSlotsUsed = warlockSpellSlotsUsed;
     }
 }

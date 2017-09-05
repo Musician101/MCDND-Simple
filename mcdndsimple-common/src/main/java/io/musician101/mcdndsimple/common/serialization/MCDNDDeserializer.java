@@ -3,7 +3,7 @@ package io.musician101.mcdndsimple.common.serialization;
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.character.AbilityScore;
 import io.musician101.mcdndsimple.common.character.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.CharacterSheet;
+import io.musician101.mcdndsimple.common.character.PlayerSheet;
 import io.musician101.mcdndsimple.common.character.ClassAction;
 import io.musician101.mcdndsimple.common.character.ClassLevels;
 import io.musician101.mcdndsimple.common.character.ClassResource;
@@ -12,9 +12,9 @@ import io.musician101.mcdndsimple.common.character.Experience;
 import io.musician101.mcdndsimple.common.character.HitDice;
 import io.musician101.mcdndsimple.common.character.HitPoints;
 import io.musician101.mcdndsimple.common.character.MCDNDItem;
-import io.musician101.mcdndsimple.common.character.PlayerSheet;
+import io.musician101.mcdndsimple.common.character.CharacterSheet;
 import io.musician101.mcdndsimple.common.character.Recharge;
-import io.musician101.mcdndsimple.common.character.SpellcasterClass;
+import io.musician101.mcdndsimple.common.character.spell.SpellcasterClass;
 import io.musician101.mcdndsimple.common.character.UnarmoredBonus;
 import io.musician101.mcdndsimple.common.character.Weight;
 import io.musician101.mcdndsimple.common.character.bonus.Bonuses;
@@ -22,7 +22,7 @@ import io.musician101.mcdndsimple.common.character.bonus.MeleeBonus;
 import io.musician101.mcdndsimple.common.character.bonus.RangedBonus;
 import io.musician101.mcdndsimple.common.character.bonus.SpellcastingBonus;
 import io.musician101.mcdndsimple.common.character.equipment.armor.Armor;
-import io.musician101.mcdndsimple.common.character.equipment.armor.MCDNDArmorType;
+import io.musician101.mcdndsimple.common.character.equipment.armor.ArmorType;
 import io.musician101.mcdndsimple.common.character.equipment.currency.Coin;
 import io.musician101.mcdndsimple.common.character.equipment.currency.Wealth;
 import io.musician101.mcdndsimple.common.character.skill.SkillProficiency;
@@ -43,11 +43,12 @@ import io.musician101.mcdndsimple.common.character.tab.WeaponsTab;
 import io.musician101.mcdndsimple.common.character.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.weapon.RangedWeapon;
 
+import io.musician101.mcdndsimple.common.character.weapon.WeaponAttackStat;
 import java.util.List;
 
 public abstract class MCDNDDeserializer<S>
 {
-    public abstract CharacterSheet deserialize(S characterSheetData);
+    public abstract PlayerSheet deserialize(S characterSheetData);
 
     protected abstract BioAndInfo deserializeBioAndInfo(S bioAndInfoData);
 
@@ -95,7 +96,7 @@ public abstract class MCDNDDeserializer<S>
 
     protected abstract HitPoints deserializeHitPoints(S hitPointsData);
 
-    protected abstract InventoryTab deserializeInventoryTab(S inventoryTabData, int strengthScore);
+    protected abstract InventoryTab deserializeInventoryTab(S inventoryTabData, CoreStats coreStats);
 
     protected abstract MCDNDItem deserializeItem(S itemData);
 
@@ -103,15 +104,15 @@ public abstract class MCDNDDeserializer<S>
 
     protected abstract Coin deserializeCoin(S coinData, Coin coin);
 
-    protected abstract Weight deserializeWeight(S weightData, int strengthScore, List<MCDNDItem> inventory, Wealth wealth);
+    protected abstract Weight deserializeWeight(S weightData, CoreStats coreStats, List<MCDNDItem> inventory, Wealth wealth);
 
-    protected abstract SpellbookTab deserializeSpellbookTab(S spellbookTabData, int sorcererLevel);
+    protected abstract SpellbookTab deserializeSpellbookTab(S spellbookTabData, ClassLevels classLevels);
 
     protected abstract Spell deserializeSpell(S spellData);
 
     protected abstract SaveDCType deserializeSaveDCType(S spellData);
 
-    protected abstract MCDNDArmorType deserializeArmorType(S armorTypeData);
+    protected abstract ArmorType deserializeArmorType(S armorTypeData);
 
     protected abstract SpellDamage deserializeSpellDamage(S spellDamageData);
 
@@ -129,5 +130,7 @@ public abstract class MCDNDDeserializer<S>
 
     protected abstract RangedWeapon deserializeRangedWeapon(S rangedWeaponData);
 
-    protected abstract PlayerSheet deserializePlayerSheet(S playerSheetData);
+    protected abstract WeaponAttackStat deserializeWeaponAttackStat(S weaponAttackStatData);
+
+    protected abstract CharacterSheet deserializePlayerSheet(S playerSheetData);
 }

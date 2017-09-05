@@ -1,6 +1,6 @@
 package io.musician101.mcdndsimple.sponge.character;
 
-import io.musician101.mcdndsimple.common.character.CharacterSheet;
+import io.musician101.mcdndsimple.common.character.PlayerSheet;
 import io.musician101.mcdndsimple.common.character.CharacterSheetStorage;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.serialization.SpongeMCDNDDeserializer;
@@ -60,7 +60,7 @@ public class SpongeCharacterSheetStorage extends CharacterSheetStorage<SpongeMCD
     @Override
     public void save()
     {
-        for (Entry<UUID, CharacterSheet> entry : map.entrySet())
+        for (Entry<UUID, PlayerSheet> entry : map.entrySet())
         {
             File file = new File(storageDir, entry.getKey().toString() + ".cfg");
             try

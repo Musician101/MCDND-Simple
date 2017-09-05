@@ -13,7 +13,7 @@ public abstract class CharacterSheetStorage<M extends MCDNDSerializer<S>, N exte
     protected M serializer;
     protected N deserializer;
     protected final File storageDir;
-    protected final Map<UUID, CharacterSheet> map = new HashMap<>();
+    protected final Map<UUID, PlayerSheet> map = new HashMap<>();
 
     protected CharacterSheetStorage(File storageDir, M serializer, N deserializer)
     {
@@ -23,12 +23,12 @@ public abstract class CharacterSheetStorage<M extends MCDNDSerializer<S>, N exte
         load();
     }
 
-    public CharacterSheet getCharacterSheet(UUID uuid)
+    public PlayerSheet getCharacterSheet(UUID uuid)
     {
-        return map.containsKey(uuid) ? map.get(uuid) : map.put(uuid, new CharacterSheet());
+        return map.containsKey(uuid) ? map.get(uuid) : map.put(uuid, new PlayerSheet());
     }
 
-    public Map<UUID, CharacterSheet> getCharacterSheets()
+    public Map<UUID, PlayerSheet> getCharacterSheets()
     {
         return map;
     }
@@ -36,7 +36,7 @@ public abstract class CharacterSheetStorage<M extends MCDNDSerializer<S>, N exte
     public void createNewCharacterSheet(UUID uuid)
     {
         if (!map.containsKey(uuid))
-            map.put(uuid, new CharacterSheet());
+            map.put(uuid, new PlayerSheet());
     }
 
     public void removeCharacterSheet(UUID uuid)
@@ -48,13 +48,13 @@ public abstract class CharacterSheetStorage<M extends MCDNDSerializer<S>, N exte
 
     public abstract void save();
 
-    protected CharacterSheet deserialize(S data)
+    protected PlayerSheet deserialize(S data)
     {
         return deserializer.deserialize(data);
     }
 
-    protected S serialize(CharacterSheet characterSheet)
+    protected S serialize(PlayerSheet playerSheet)
     {
-        return serializer.serialize(characterSheet);
+        return serializer.serialize(playerSheet);
     }
 }

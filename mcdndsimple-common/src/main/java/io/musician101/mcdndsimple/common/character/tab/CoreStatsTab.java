@@ -14,7 +14,7 @@ public class CoreStatsTab
     private Experience experience = new Experience();
     private HitDice hitDice = new HitDice();
     private HitPoints hitPoints = new HitPoints();
-    private int initiativeBonus = 0;
+    private Initiative initiative = new Initiative();
     private int speed = 30;
 
     public Bonuses getBonuses()
@@ -42,9 +42,8 @@ public class CoreStatsTab
         return hitPoints;
     }
 
-    public int getInitiativeBonus()
-    {
-        return initiativeBonus;
+    public Initiative getInitiative() {
+        return initiative;
     }
 
     public int getSpeed()
@@ -82,9 +81,8 @@ public class CoreStatsTab
         this.hitPoints = hitPoints;
     }
 
-    public void setInitiativeBonus(int initiativeBonus)
-    {
-        this.initiativeBonus = initiativeBonus;
+    public void setInitiative(Initiative initiative) {
+        this.initiative = initiative;
     }
 
     public void setInspiration(boolean inspiration)

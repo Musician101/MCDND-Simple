@@ -6,7 +6,7 @@ public class MeleeWeapon extends AbstractWeapon
 
     public MeleeWeapon()
     {
-        setAttackStat("STR");
+        setAttackStat(WeaponAttackStat.STR);
     }
 
     public boolean isPlusStat()

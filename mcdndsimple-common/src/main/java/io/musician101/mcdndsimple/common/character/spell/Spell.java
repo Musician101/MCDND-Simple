@@ -1,22 +1,22 @@
 package io.musician101.mcdndsimple.common.character.spell;
 
-import io.musician101.mcdndsimple.common.character.SpellcasterClass;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Spell
 {
+    private MacroOptions macroOptions = new MacroOptions();
     private boolean needsConcentration = false;
-    private boolean isPrepared = true;
+    private Prepared prepared = Prepared.NO;
     private boolean isRitual = false;
-    private int duration = 0;
+    private String duration = "";
     private int level = 0;
-    private int range = 0;
+    private String range = "";
     private SpellDamage spellDamage = new SpellDamage();
     private SpellHealing spellHealing = new SpellHealing();
     private List<String> description = new ArrayList<>();
     private List<String> effects = new ArrayList<>();
+    private List<String> atHigherLevels = new ArrayList<>();
     private SpellSave spellSave = new SpellSave();
     private SpellcasterClass gainedFrom = SpellcasterClass.OTHER;
     private SpellType spellType = SpellType.OTHER;
@@ -26,6 +26,31 @@ public class Spell
     private String castTime = "";
     private String components = "";
     private String targetArea = "";
+    private String name = "";
+
+    public List<String> getAtHigherLevels() {
+        return atHigherLevels;
+    }
+
+    public MacroOptions getMacroOptions() {
+        return macroOptions;
+    }
+
+    public Prepared getPrepared() {
+        return prepared;
+    }
+
+    public void setAtHigherLevels(List<String> atHigherLevels) {
+        this.atHigherLevels = atHigherLevels;
+    }
+
+    public void setMacroOptions(MacroOptions macroOptions) {
+        this.macroOptions = macroOptions;
+    }
+
+    public void setPrepared(Prepared prepared) {
+        this.prepared = prepared;
+    }
 
     public String getAttackStat()
     {
@@ -47,7 +72,7 @@ public class Spell
         return description;
     }
 
-    public int getDuration()
+    public String getDuration()
     {
         return duration;
     }
@@ -67,7 +92,11 @@ public class Spell
         return level;
     }
 
-    public int getRange()
+    public String getName() {
+        return name;
+    }
+
+    public String getRange()
     {
         return range;
     }
@@ -102,11 +131,6 @@ public class Spell
         return needsConcentration;
     }
 
-    public boolean isPrepared()
-    {
-        return isPrepared;
-    }
-
     public boolean isRitual()
     {
         return isRitual;
@@ -132,7 +156,7 @@ public class Spell
         this.description = description;
     }
 
-    public void setDuration(int duration)
+    public void setDuration(String duration)
     {
         this.duration = duration;
     }
@@ -150,6 +174,13 @@ public class Spell
     public void setLevel(int level)
     {
         this.level = level;
+        if (this.level == 0) {
+            prepared = Prepared.ALWAYS;
+        }
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setNeedsConcentration(boolean needsConcentration)
@@ -157,17 +188,12 @@ public class Spell
         this.needsConcentration = needsConcentration;
     }
 
-    public void setPrepared(boolean prepared)
-    {
-        isPrepared = prepared;
-    }
-
-    public void setRange(int range)
+    public void setRange(String range)
     {
         this.range = range;
     }
 
-    public void setRitual(boolean ritual)
+    public void setIsRitual(boolean ritual)
     {
         isRitual = ritual;
     }

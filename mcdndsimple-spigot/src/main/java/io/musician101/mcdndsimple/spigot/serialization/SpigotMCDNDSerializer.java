@@ -3,7 +3,7 @@ package io.musician101.mcdndsimple.spigot.serialization;
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.character.AbilityScore;
 import io.musician101.mcdndsimple.common.character.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.CharacterSheet;
+import io.musician101.mcdndsimple.common.character.PlayerSheet;
 import io.musician101.mcdndsimple.common.character.ClassAction;
 import io.musician101.mcdndsimple.common.character.ClassLevels;
 import io.musician101.mcdndsimple.common.character.ClassResource;
@@ -12,9 +12,9 @@ import io.musician101.mcdndsimple.common.character.Experience;
 import io.musician101.mcdndsimple.common.character.HitDice;
 import io.musician101.mcdndsimple.common.character.HitPoints;
 import io.musician101.mcdndsimple.common.character.MCDNDItem;
-import io.musician101.mcdndsimple.common.character.PlayerSheet;
+import io.musician101.mcdndsimple.common.character.CharacterSheet;
 import io.musician101.mcdndsimple.common.character.Recharge;
-import io.musician101.mcdndsimple.common.character.SpellcasterClass;
+import io.musician101.mcdndsimple.common.character.spell.SpellcasterClass;
 import io.musician101.mcdndsimple.common.character.UnarmoredBonus;
 import io.musician101.mcdndsimple.common.character.Weight;
 import io.musician101.mcdndsimple.common.character.bonus.Bonuses;
@@ -22,7 +22,7 @@ import io.musician101.mcdndsimple.common.character.bonus.MeleeBonus;
 import io.musician101.mcdndsimple.common.character.bonus.RangedBonus;
 import io.musician101.mcdndsimple.common.character.bonus.SpellcastingBonus;
 import io.musician101.mcdndsimple.common.character.equipment.armor.Armor;
-import io.musician101.mcdndsimple.common.character.equipment.armor.MCDNDArmorType;
+import io.musician101.mcdndsimple.common.character.equipment.armor.ArmorType;
 import io.musician101.mcdndsimple.common.character.equipment.currency.Coin;
 import io.musician101.mcdndsimple.common.character.equipment.currency.Wealth;
 import io.musician101.mcdndsimple.common.character.skill.Skill;
@@ -50,14 +50,14 @@ import org.bukkit.configuration.MemoryConfiguration;
 public class SpigotMCDNDSerializer extends MCDNDSerializer<MemoryConfiguration>
 {
     @Override
-    public MemoryConfiguration serialize(CharacterSheet characterSheet)
+    public MemoryConfiguration serialize(PlayerSheet playerSheet)
     {
         MemoryConfiguration mc = new MemoryConfiguration();
-        mc.set(SpigotMCDNDSimpleKeys.BIO_AND_INFO, serialize(characterSheet.getBioAndInfo()));
-        mc.set(SpigotMCDNDSimpleKeys.PLAYER_SHEET, serialize(characterSheet.getPlayerSheet()));
-        mc.set(SpigotMCDNDSimpleKeys.CLASS, characterSheet.getClazz());
-        mc.set(SpigotMCDNDSimpleKeys.NAME, characterSheet.getName());
-        mc.set(SpigotMCDNDSimpleKeys.RACE, characterSheet.getRace());
+        mc.set(SpigotMCDNDSimpleKeys.BIO_AND_INFO, serialize(playerSheet.getBioAndInfo()));
+        mc.set(SpigotMCDNDSimpleKeys.PLAYER_SHEET, serialize(playerSheet.getCharacterSheet()));
+        mc.set(SpigotMCDNDSimpleKeys.CLASS, playerSheet.getClazz());
+        mc.set(SpigotMCDNDSimpleKeys.NAME, playerSheet.getName());
+        mc.set(SpigotMCDNDSimpleKeys.RACE, playerSheet.getRace());
         return mc;
     }
 
@@ -167,7 +167,7 @@ public class SpigotMCDNDSerializer extends MCDNDSerializer<MemoryConfiguration>
     {
         MemoryConfiguration mc = new MemoryConfiguration();
         mc.set(SpigotMCDNDSimpleKeys.MAX_USES, classAction.getMax());
-        mc.set(SpigotMCDNDSimpleKeys.USES_LEFT, classAction.getUsesLeft());
+        mc.set(SpigotMCDNDSimpleKeys.USES_LEFT, classAction.getUsedCharges());
         mc.set(SpigotMCDNDSimpleKeys.RECHARGE, serialize(classAction.getRecharge()));
         mc.set(SpigotMCDNDSimpleKeys.GAINED_FROM, classAction.getGainedFrom());
         mc.set(SpigotMCDNDSimpleKeys.NAME, classAction.getName());
@@ -194,7 +194,6 @@ public class SpigotMCDNDSerializer extends MCDNDSerializer<MemoryConfiguration>
         mc.set(SpigotMCDNDSimpleKeys.EXPERIENCE, serialize(coreStatsTab.getExperience()));
         mc.set(SpigotMCDNDSimpleKeys.HIT_DICE, serialize(coreStatsTab.getHitDice()));
         mc.set(SpigotMCDNDSimpleKeys.HIT_POINTS, serialize(coreStatsTab.getHitPoints()));
-        mc.set(SpigotMCDNDSimpleKeys.INITIATIVE_BONUS, coreStatsTab.getInitiativeBonus());
         mc.set(SpigotMCDNDSimpleKeys.SPEED, coreStatsTab.getSpeed());
         return mc;
     }
@@ -267,8 +266,7 @@ public class SpigotMCDNDSerializer extends MCDNDSerializer<MemoryConfiguration>
     protected MemoryConfiguration serialize(Experience experience)
     {
         MemoryConfiguration mc = new MemoryConfiguration();
-        mc.set(SpigotMCDNDSimpleKeys.EXPERIENCE_AMOUNT, experience.getExp());
-        mc.set(SpigotMCDNDSimpleKeys.OVERALL_LEVEL, experience.getOverallLevel());
+        mc.set(SpigotMCDNDSimpleKeys.EXPERIENCE_AMOUNT, experience.getXP());
         return mc;
     }
 
@@ -399,11 +397,11 @@ public class SpigotMCDNDSerializer extends MCDNDSerializer<MemoryConfiguration>
     }
 
     @Override
-    protected MemoryConfiguration serialize(SpellbookTab spellbookTab)
+    protected MemoryConfiguration serialize(SpellbookTab spellbookTab, ClassLevels classLevels)
     {
         MemoryConfiguration mc = new MemoryConfiguration();
-        mc.set(SpigotMCDNDSimpleKeys.INVOCATION_COUNT, spellbookTab.getInvocations());
-        mc.set(SpigotMCDNDSimpleKeys.SORCERY_POINTS, spellbookTab.getSorceryPoints());
+        mc.set(SpigotMCDNDSimpleKeys.INVOCATION_COUNT, spellbookTab.getInvocations(classLevels));
+        mc.set(SpigotMCDNDSimpleKeys.SORCERY_POINTS, spellbookTab.getSorceryPointsMax(classLevels));
         mc.set(SpigotMCDNDSimpleKeys.SPELLS, serialize(spellbookTab.getSpells(), this::serialize));
         mc.set(SpigotMCDNDSimpleKeys.SPELLCASTER_CLASSES, serialize(spellbookTab.getSpellcasterClasses(), this::serialize));
         return mc;
@@ -414,7 +412,7 @@ public class SpigotMCDNDSerializer extends MCDNDSerializer<MemoryConfiguration>
     {
         MemoryConfiguration mc = new MemoryConfiguration();
         mc.set(SpigotMCDNDSimpleKeys.NEEDS_CONCENTRATION, spell.needsConcentration());
-        mc.set(SpigotMCDNDSimpleKeys.IS_PREPARED, spell.isPrepared());
+        mc.set(SpigotMCDNDSimpleKeys.PREPARED, spell.getPrepared().toString());
         mc.set(SpigotMCDNDSimpleKeys.DURATION, spell.getDuration());
         mc.set(SpigotMCDNDSimpleKeys.SPELL_LEVEL, spell.getLevel());
         mc.set(SpigotMCDNDSimpleKeys.RANGE, spell.getRange());
@@ -455,7 +453,7 @@ public class SpigotMCDNDSerializer extends MCDNDSerializer<MemoryConfiguration>
     protected MemoryConfiguration serialize(SpellSave spellSave)
     {
         MemoryConfiguration mc = new MemoryConfiguration();
-        mc.set(SpigotMCDNDSimpleKeys.SAVE_DC_TYPE, serialize(spellSave.getSaveDCType()));
+        mc.set(SpigotMCDNDSimpleKeys.SAVE_DC_TYPE, serialize(spellSave.getSpellcasterClass()));
         mc.set(SpigotMCDNDSimpleKeys.ON_SUCCESSFUL_SAVE, spellSave.getOnSuccessfulSave());
         mc.set(SpigotMCDNDSimpleKeys.SAVING_STAT, spellSave.getSavingStat());
         return mc;
@@ -502,9 +500,7 @@ public class SpigotMCDNDSerializer extends MCDNDSerializer<MemoryConfiguration>
         weaponData.set(SpigotMCDNDSimpleKeys.CRIT_DAMAGE_DICE, serialize(weapon.getCritDamageDice()));
         weaponData.set(SpigotMCDNDSimpleKeys.DAMAGE_DICE, serialize(weapon.getDamageDice()));
         weaponData.set(SpigotMCDNDSimpleKeys.CRIT_MINIMUM, weapon.getCritMin());
-        weaponData.set(SpigotMCDNDSimpleKeys.DAMAGE_BONUS, weapon.getDamageBonus());
         weaponData.set(SpigotMCDNDSimpleKeys.MAGIC_BONUS, weapon.getMagicBonus());
-        weaponData.set(SpigotMCDNDSimpleKeys.TO_HIT, weapon.getToHit());
         weaponData.set(SpigotMCDNDSimpleKeys.ATTACK_STAT, weapon.getAttackStat());
         weaponData.set(SpigotMCDNDSimpleKeys.NAME, weapon.getName());
         return weaponData;
@@ -527,22 +523,22 @@ public class SpigotMCDNDSerializer extends MCDNDSerializer<MemoryConfiguration>
     }
 
     @Override
-    protected MemoryConfiguration serialize(PlayerSheet playerSheet)
+    protected MemoryConfiguration serialize(CharacterSheet characterSheet)
     {
         MemoryConfiguration mc = new MemoryConfiguration();
-        mc.set(SpigotMCDNDSimpleKeys.ARMOR_TAB, serialize(playerSheet.getArmorTab()));
-        mc.set(SpigotMCDNDSimpleKeys.BACKGROUND_TAB, serialize(playerSheet.getBackgroundTab()));
-        mc.set(SpigotMCDNDSimpleKeys.CLASS_TAB, serialize(playerSheet.getClassTab()));
-        mc.set(SpigotMCDNDSimpleKeys.CORE_STATS_TAB, serialize(playerSheet.getCoreStatsTab()));
-        mc.set(SpigotMCDNDSimpleKeys.INVENTORY_TAB, serialize(playerSheet.getInventoryTab()));
-        mc.set(SpigotMCDNDSimpleKeys.SKILLS_TAB, serialize(playerSheet.getSkillsTab()));
-        mc.set(SpigotMCDNDSimpleKeys.SPELL_BOOK_TAB, serialize(playerSheet.getSpellbookTab()));
-        mc.set(SpigotMCDNDSimpleKeys.WEAPONS_TAB, serialize(playerSheet.getWeaponsTab()));
+        mc.set(SpigotMCDNDSimpleKeys.ARMOR_TAB, serialize(characterSheet.getArmorTab()));
+        mc.set(SpigotMCDNDSimpleKeys.BACKGROUND_TAB, serialize(characterSheet.getBackgroundTab()));
+        mc.set(SpigotMCDNDSimpleKeys.CLASS_TAB, serialize(characterSheet.getClassTab()));
+        mc.set(SpigotMCDNDSimpleKeys.CORE_STATS_TAB, serialize(characterSheet.getCoreStatsTab()));
+        mc.set(SpigotMCDNDSimpleKeys.INVENTORY_TAB, serialize(characterSheet.getInventoryTab()));
+        mc.set(SpigotMCDNDSimpleKeys.SKILLS_TAB, serialize(characterSheet.getSkillsTab()));
+        mc.set(SpigotMCDNDSimpleKeys.SPELL_BOOK_TAB, serialize(characterSheet.getSpellbookTab(), characterSheet.getClassTab().getClassLevels()));
+        mc.set(SpigotMCDNDSimpleKeys.WEAPONS_TAB, serialize(characterSheet.getWeaponsTab()));
         return mc;
     }
 
     @Override
-    protected MemoryConfiguration serialize(MCDNDArmorType armorType)
+    protected MemoryConfiguration serialize(ArmorType armorType)
     {
         MemoryConfiguration mc = new MemoryConfiguration();
         mc.set(SpigotMCDNDSimpleKeys.NAME, armorType.getName());

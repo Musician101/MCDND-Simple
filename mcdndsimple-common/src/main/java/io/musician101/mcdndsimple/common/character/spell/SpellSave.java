@@ -1,19 +1,27 @@
 package io.musician101.mcdndsimple.common.character.spell;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SpellSave
 {
-    private SaveDCType saveDCType = null;
-    private String onSuccessfulSave = "";
+    private int customDC = 0;
+    private SpellcasterClass spellcasterClass = null;
+    private List<String> onSuccessfulSave = new ArrayList<>();
     private String savingStat = "";
 
-    public String getOnSuccessfulSave()
+    public int getCustomDC() {
+        return customDC;
+    }
+
+    public List<String> getOnSuccessfulSave()
     {
         return onSuccessfulSave;
     }
 
-    public SaveDCType getSaveDCType()
+    public SpellcasterClass getSpellcasterClass()
     {
-        return saveDCType;
+        return spellcasterClass;
     }
 
     public String getSavingStat()
@@ -21,14 +29,18 @@ public class SpellSave
         return savingStat;
     }
 
-    public void setOnSuccessfulSave(String onSuccessfulSave)
+    public void setCustomDC(int customDC) {
+        this.customDC = customDC;
+    }
+
+    public void setOnSuccessfulSave(List<String> onSuccessfulSave)
     {
         this.onSuccessfulSave = onSuccessfulSave;
     }
 
-    public void setSaveDCType(SaveDCType saveDCType)
+    public void setSaveDCType(SpellcasterClass spellcasterClass)
     {
-        this.saveDCType = saveDCType;
+        this.spellcasterClass = spellcasterClass;
     }
 
     public void setSavingStat(String savingStat)

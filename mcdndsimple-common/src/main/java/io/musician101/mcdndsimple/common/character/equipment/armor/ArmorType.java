@@ -1,15 +1,16 @@
 package io.musician101.mcdndsimple.common.character.equipment.armor;
 
-public enum MCDNDArmorType
+public enum ArmorType
 {
     LIGHT("Light"),
     MEDIUM("Medium"),
     HEAVY("Heavy"),
+    SHIELD("Shield"),
     NONE("None");
 
     private final String name;
 
-    MCDNDArmorType(String name)
+    ArmorType(String name)
     {
         this.name = name;
     }

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
-public class Dice<S>
+public class Dice
 {
     private final int amount;
     private final int sides;
@@ -37,11 +37,31 @@ public class Dice<S>
         return sides;
     }
 
-    public List<Entry<Dice<S>, Integer>> roll()
+    public static Dice parse(String s) {
+        int amount;
+        int sides = 1;
+        try {
+            if (s.contains("d")) {
+                String[] split = s.split("d");
+                amount = Integer.parseInt(split[0]);
+                sides = Integer.parseInt(split[1]);
+            }
+            else {
+                amount = Integer.parseInt(s);
+            }
+
+            return new Dice(amount, sides);
+        }
+        catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    public List<Entry<Dice, Integer>> roll()
     {
-        List<Entry<Dice<S>, Integer>> list = new ArrayList<>();
+        List<Entry<Dice, Integer>> list = new ArrayList<>();
         for (int x = 0; x < amount; x++)
-            list.add(new SimpleEntry<>(new Dice<>(sides), new Random().nextInt(sides - 1) + 1));
+            list.add(new SimpleEntry<>(new Dice(sides), new Random().nextInt(sides - 1) + 1));
 
         return list;
     }

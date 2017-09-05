@@ -17,14 +17,14 @@ public class HitDice
         hitDiceMap.put(12, 0);
     }
 
-    public void addHitDie(int sides, int amount)
+    public void updateHitDie(int sides, int amount)
     {
         hitDiceMap.put(sides, amount);
     }
 
-    public void removeHitDice(int sides)
+    public void useHitDice(int sides)
     {
-        hitDiceMap.remove(sides);
+        hitDiceMap.compute(sides, (s, amount) -> --amount);
     }
 
     public Dice getHitDice(int sides)

@@ -1,14 +1,16 @@
 package io.musician101.mcdndsimple.common.character.bonus;
 
+import io.musician101.mcdndsimple.common.Dice;
+
 public class Bonuses
 {
     private MeleeBonus melee = new MeleeBonus();
     private RangedBonus ranged = new RangedBonus();
     private SpellcastingBonus spellcasting = new SpellcastingBonus();
-    private int saves = 0;
-    private int abilitiesAndSkills = 0;
+    private Dice saves = new Dice(0);
+    private Dice abilitiesAndSkills = new Dice(0);
 
-    public int getAbilitiesAndSkills()
+    public Dice getAbilitiesAndSkills()
     {
         return abilitiesAndSkills;
     }
@@ -23,7 +25,7 @@ public class Bonuses
         return ranged;
     }
 
-    public int getSaves()
+    public Dice getSaves()
     {
         return saves;
     }
@@ -33,7 +35,7 @@ public class Bonuses
         return spellcasting;
     }
 
-    public void setAbilitiesAndSkills(int abilitiesAndSkills)
+    public void setAbilitiesAndSkills(Dice abilitiesAndSkills)
     {
         this.abilitiesAndSkills = abilitiesAndSkills;
     }
@@ -48,7 +50,7 @@ public class Bonuses
         this.ranged = ranged;
     }
 
-    public void setSaves(int saves)
+    public void setSaves(Dice saves)
     {
         this.saves = saves;
     }

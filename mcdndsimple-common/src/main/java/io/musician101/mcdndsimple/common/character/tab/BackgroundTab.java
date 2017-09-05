@@ -22,7 +22,7 @@ public class BackgroundTab
     private String gender = "";
     private String hair = "";
     private String height = "";
-    private String languages = "";
+    private List<String> languages = new ArrayList<>();
     private String size = "";
     private String vision = "";
 
@@ -81,7 +81,7 @@ public class BackgroundTab
         return ideals;
     }
 
-    public String getLanguages()
+    public List<String> getLanguages()
     {
         return languages;
     }
@@ -181,7 +181,7 @@ public class BackgroundTab
         this.ideals = ideals;
     }
 
-    public void setLanguages(String languages)
+    public void setLanguages(List<String> languages)
     {
         this.languages = languages;
     }

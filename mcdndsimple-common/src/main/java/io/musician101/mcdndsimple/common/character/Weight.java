@@ -11,17 +11,15 @@ public class Weight
     private double other = 0.0;
     private double carryingMax = 150;
     private double pushDragLift = 300;
-    private double encumbered = 50;
-    private double heavilyEncumbered = 100;
 
-    public boolean isEncumbered()
+    public boolean isEncumbered(CoreStats coreStats)
     {
-        return getWeight() <= encumbered;
+        return getWeight() <= getEncumbered(coreStats);
     }
 
-    public boolean isHeavilyEncumbered()
+    public boolean isHeavilyEncumbered(CoreStats coreStats)
     {
-        return getWeight() <= heavilyEncumbered;
+        return getWeight() <= getHeavilyEncumbered(coreStats);
     }
 
     public double getWeight()
@@ -39,14 +37,14 @@ public class Weight
         return coin;
     }
 
-    public double getEncumbered()
+    public double getEncumbered(CoreStats coreStats)
     {
-        return encumbered;
+        return coreStats.getStrength().getScore() * 5D;
     }
 
-    public double getHeavilyEncumbered()
+    public double getHeavilyEncumbered(CoreStats coreStats)
     {
-        return heavilyEncumbered;
+        return coreStats.getStrength().getScore() * 10D;
     }
 
     public double getInventory()
@@ -64,9 +62,9 @@ public class Weight
         return pushDragLift;
     }
 
-    public void setCarryingMax(int strengthScore)
+    public void setCarryingMax(CoreStats coreStats)
     {
-        this.carryingMax = strengthScore * 15D;
+        this.carryingMax = coreStats.getStrength().getScore() * 15D;
         this.pushDragLift = this.carryingMax * 2;
     }
 
@@ -74,16 +72,6 @@ public class Weight
     {
         this.coin = wealth.getCopper().getWeight() + wealth.getElectrum().getWeight() + wealth.getGold().getWeight()
                 + wealth.getPlatinum().getWeight() + wealth.getSilver().getWeight();
-    }
-
-    public void setEncumbered(int strengthScore)
-    {
-        this.encumbered = strengthScore * 5D;
-    }
-
-    public void setHeavilyEncumbered(int strengthScore)
-    {
-        this.heavilyEncumbered = strengthScore * 10D;
     }
 
     public void setInventoryWeight(List<MCDNDItem> items)

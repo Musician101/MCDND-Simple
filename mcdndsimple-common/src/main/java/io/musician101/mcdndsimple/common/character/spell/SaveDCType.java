@@ -1,12 +1,11 @@
 package io.musician101.mcdndsimple.common.character.spell;
 
-import io.musician101.mcdndsimple.common.character.AbilityScore;
-
+import io.musician101.mcdndsimple.common.character.CoreStats;
 import java.util.function.BiFunction;
 
 public class SaveDCType
 {
-    private BiFunction<AbilityScore, Integer, Integer> biFunction;
+    private BiFunction<CoreStats, Integer, Integer> biFunction;
     private int customDC = 0;
     private final String name;
 
@@ -21,16 +20,16 @@ public class SaveDCType
         this.customDC = customDC;
     }
 
-    public SaveDCType(String name, BiFunction<AbilityScore, Integer, Integer> biFunction)
+    public SaveDCType(String name, BiFunction<CoreStats, Integer, Integer> biFunction)
     {
         this(name);
         this.biFunction = biFunction;
     }
 
-    public Integer getSaveDC(AbilityScore abilityScore, int proficiencyBonus)
+    public Integer getSaveDC(CoreStats coreStats, int proficiencyBonus)
     {
         if (biFunction != null)
-            return biFunction.apply(abilityScore, proficiencyBonus);
+            return biFunction.apply(coreStats, proficiencyBonus);
         else
             return customDC;
     }

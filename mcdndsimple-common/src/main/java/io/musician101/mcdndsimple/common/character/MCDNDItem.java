@@ -1,13 +1,17 @@
 package io.musician101.mcdndsimple.common.character;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MCDNDItem
 {
     private boolean carried = true;
     private double weight = 0.0;
-    private String description = "";
+    private int quantity = 1;
+    private List<String> description = new ArrayList<>();
     private String name = "";
 
-    public String getDescription()
+    public List<String> getDescription()
     {
         return description;
     }
@@ -15,6 +19,10 @@ public class MCDNDItem
     public String getName()
     {
         return name;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     public double getWeight()
@@ -27,12 +35,12 @@ public class MCDNDItem
         return carried;
     }
 
-    public void setCarried(boolean carried)
+    public void setIsCarried(boolean carried)
     {
         this.carried = carried;
     }
 
-    public void setDescription(String description)
+    public void setDescription(List<String> description)
     {
         this.description = description;
     }
@@ -40,6 +48,10 @@ public class MCDNDItem
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public void setWeight(double weight)

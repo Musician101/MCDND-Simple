@@ -1,26 +1,28 @@
 package io.musician101.mcdndsimple.common.character.bonus;
 
+import io.musician101.mcdndsimple.common.Dice;
+
 public class RangedBonus
 {
-    private int attack = 0;
-    private int damage = 0;
+    private Dice attack = new Dice(0);
+    private Dice damage = new Dice(0);
 
-    public int getAttack()
+    public Dice getAttack()
     {
         return attack;
     }
 
-    public int getDamage()
+    public Dice getDamage()
     {
         return damage;
     }
 
-    public void setAttack(int attack)
+    public void setAttack(Dice attack)
     {
         this.attack = attack;
     }
 
-    public void setDamage(int damage)
+    public void setDamage(Dice damage)
     {
         this.damage = damage;
     }

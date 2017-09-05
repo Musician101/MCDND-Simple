@@ -3,7 +3,7 @@ package io.musician101.mcdndsimple.common.serialization;
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.character.AbilityScore;
 import io.musician101.mcdndsimple.common.character.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.CharacterSheet;
+import io.musician101.mcdndsimple.common.character.PlayerSheet;
 import io.musician101.mcdndsimple.common.character.ClassAction;
 import io.musician101.mcdndsimple.common.character.ClassLevels;
 import io.musician101.mcdndsimple.common.character.ClassResource;
@@ -12,9 +12,9 @@ import io.musician101.mcdndsimple.common.character.Experience;
 import io.musician101.mcdndsimple.common.character.HitDice;
 import io.musician101.mcdndsimple.common.character.HitPoints;
 import io.musician101.mcdndsimple.common.character.MCDNDItem;
-import io.musician101.mcdndsimple.common.character.PlayerSheet;
+import io.musician101.mcdndsimple.common.character.CharacterSheet;
 import io.musician101.mcdndsimple.common.character.Recharge;
-import io.musician101.mcdndsimple.common.character.SpellcasterClass;
+import io.musician101.mcdndsimple.common.character.spell.SpellcasterClass;
 import io.musician101.mcdndsimple.common.character.UnarmoredBonus;
 import io.musician101.mcdndsimple.common.character.Weight;
 import io.musician101.mcdndsimple.common.character.bonus.Bonuses;
@@ -22,7 +22,7 @@ import io.musician101.mcdndsimple.common.character.bonus.MeleeBonus;
 import io.musician101.mcdndsimple.common.character.bonus.RangedBonus;
 import io.musician101.mcdndsimple.common.character.bonus.SpellcastingBonus;
 import io.musician101.mcdndsimple.common.character.equipment.armor.Armor;
-import io.musician101.mcdndsimple.common.character.equipment.armor.MCDNDArmorType;
+import io.musician101.mcdndsimple.common.character.equipment.armor.ArmorType;
 import io.musician101.mcdndsimple.common.character.equipment.currency.Coin;
 import io.musician101.mcdndsimple.common.character.equipment.currency.Wealth;
 import io.musician101.mcdndsimple.common.character.skill.Skill;
@@ -51,7 +51,7 @@ import java.util.stream.Collectors;
 
 public abstract class MCDNDSerializer<S>
 {
-    public abstract S serialize(CharacterSheet characterSheet);
+    public abstract S serialize(PlayerSheet playerSheet);
 
     protected abstract S serialize(BioAndInfo bioAndInfo);
 
@@ -109,7 +109,7 @@ public abstract class MCDNDSerializer<S>
 
     protected abstract S serialize(SkillProficiency skillProficiency);
 
-    protected abstract S serialize(SpellbookTab spellbookTab);
+    protected abstract S serialize(SpellbookTab spellbookTab, ClassLevels classLevels);
 
     protected abstract S serialize(Spell spell);
 
@@ -134,9 +134,9 @@ public abstract class MCDNDSerializer<S>
 
     protected abstract S serialize(RangedWeapon rangedWeapon);
 
-    protected abstract S serialize(PlayerSheet playerSheet);
+    protected abstract S serialize(CharacterSheet characterSheet);
 
-    protected abstract S serialize(MCDNDArmorType armorType);
+    protected abstract S serialize(ArmorType armorType);
 
     protected abstract S serialize(Recharge recharge);
 

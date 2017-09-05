@@ -1,3 +1,3 @@
-rootProject.name = 'mcdndsimple'
+rootProject.name = 'MCDND-Simple'
 
 include 'mcdndsimple-common', 'mcdndsimple-spigot', 'mcdndsimple-sponge', 'mcdndsimple-forge'

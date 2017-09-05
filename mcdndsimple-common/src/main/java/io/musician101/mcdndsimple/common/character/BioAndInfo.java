@@ -7,7 +7,7 @@ import java.util.List;
 public class BioAndInfo
 {
     private List<String> bio = new ArrayList<>();
-    private String name = "";
+    private String name = "Not Named";
 
     public List<String> getBio()
     {

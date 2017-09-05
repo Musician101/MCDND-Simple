@@ -1,102 +1,60 @@
 package io.musician101.mcdndsimple.common.character;
 
-import io.musician101.mcdndsimple.common.character.tab.ArmorTab;
-import io.musician101.mcdndsimple.common.character.tab.BackgroundTab;
-import io.musician101.mcdndsimple.common.character.tab.ClassTab;
-import io.musician101.mcdndsimple.common.character.tab.CoreStatsTab;
-import io.musician101.mcdndsimple.common.character.tab.InventoryTab;
-import io.musician101.mcdndsimple.common.character.tab.SkillsTab;
-import io.musician101.mcdndsimple.common.character.tab.SpellbookTab;
-import io.musician101.mcdndsimple.common.character.tab.WeaponsTab;
-
 public class PlayerSheet
 {
-    private ArmorTab armorTab = new ArmorTab();
-    private BackgroundTab backgroundTab = new BackgroundTab();
-    private ClassTab classTab = new ClassTab();
-    private CoreStatsTab coreStatsTab = new CoreStatsTab();
-    private InventoryTab inventoryTab = new InventoryTab();
-    private SkillsTab skillsTab = new SkillsTab();
-    private SpellbookTab spellbookTab = new SpellbookTab();
-    private WeaponsTab weaponsTab = new WeaponsTab();
+    private BioAndInfo bioAndInfo = new BioAndInfo();
+    private CharacterSheet characterSheet = new CharacterSheet();
+    private String clazz = "";
+    private String name = "Your Name Here";
+    private String race = "";
 
-    public ArmorTab getArmorTab()
+    public String getClazz()
     {
-        return armorTab;
+        return clazz;
     }
 
-    public BackgroundTab getBackgroundTab()
+    public BioAndInfo getBioAndInfo()
     {
-        return backgroundTab;
+        return bioAndInfo;
     }
 
-    public ClassTab getClassTab()
+    public CharacterSheet getCharacterSheet()
     {
-        return classTab;
+        return characterSheet;
     }
 
-    public CoreStatsTab getCoreStatsTab()
+    public void setBioAndInfo(BioAndInfo bioAndInfo)
     {
-        return coreStatsTab;
+        this.bioAndInfo = bioAndInfo;
     }
 
-    public InventoryTab getInventoryTab()
+    public void setCharacterSheet(CharacterSheet characterSheet)
     {
-        return inventoryTab;
+        this.characterSheet = characterSheet;
     }
 
-    public SkillsTab getSkillsTab()
+    public String getName()
     {
-        return skillsTab;
+        return name;
     }
 
-    public SpellbookTab getSpellbookTab()
+    public String getRace()
     {
-        return spellbookTab;
+        return race;
     }
 
-    public WeaponsTab getWeaponsTab()
+    public void setClazz(String clazz)
     {
-        return weaponsTab;
+        this.clazz = clazz;
     }
 
-    public void setArmorTab(ArmorTab armorTab)
+    public void setName(String name)
     {
-        this.armorTab = armorTab;
+        this.name = name;
     }
 
-    public void setBackgroundTab(BackgroundTab backgroundTab)
+    public void setRace(String race)
     {
-        this.backgroundTab = backgroundTab;
-    }
-
-    public void setClassTab(ClassTab classTab)
-    {
-        this.classTab = classTab;
-    }
-
-    public void setCoreStatsTab(CoreStatsTab coreStatsTab)
-    {
-        this.coreStatsTab = coreStatsTab;
-    }
-
-    public void setInventoryTab(InventoryTab inventoryTab)
-    {
-        this.inventoryTab = inventoryTab;
-    }
-
-    public void setSkillsTab(SkillsTab skillsTab)
-    {
-        this.skillsTab = skillsTab;
-    }
-
-    public void setSpellbookTab(SpellbookTab spellbookTab)
-    {
-        this.spellbookTab = spellbookTab;
-    }
-
-    public void setWeaponsTab(WeaponsTab weaponsTab)
-    {
-        this.weaponsTab = weaponsTab;
+        this.race = race;
     }
 }

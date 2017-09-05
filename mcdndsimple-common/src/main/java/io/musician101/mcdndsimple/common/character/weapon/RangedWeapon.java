@@ -6,7 +6,7 @@ public class RangedWeapon extends AbstractWeapon
 
     public RangedWeapon()
     {
-        setAttackStat("DEX");
+        setAttackStat(WeaponAttackStat.DEX);
     }
 
     public int getAmmo()

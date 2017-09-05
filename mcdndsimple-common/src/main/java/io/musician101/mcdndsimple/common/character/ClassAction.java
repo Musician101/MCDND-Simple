@@ -1,10 +1,15 @@
 package io.musician101.mcdndsimple.common.character;
 
-public class ClassAction
+import io.musician101.mcdndsimple.common.character.outputoption.OutputOptions;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ClassAction extends Rechargeable
 {
     private int max = 0;
     private int used = 0;
-    private Recharge recharge = Recharge.NONE;
+    private List<String> output = new ArrayList<>();
+    private OutputOptions outputOptions = new OutputOptions();
     private String gainedFrom = "---";
     private String name = "";
 
@@ -23,12 +28,15 @@ public class ClassAction
         return name;
     }
 
-    public Recharge getRecharge()
-    {
-        return recharge;
+    public List<String> getOutput() {
+        return output;
     }
 
-    public int getUsesLeft()
+    public OutputOptions getOutputOptions() {
+        return outputOptions;
+    }
+
+    public int getUsedCharges()
     {
         return used;
     }
@@ -48,12 +56,15 @@ public class ClassAction
         this.name = name;
     }
 
-    public void setRecharge(Recharge recharge)
-    {
-        this.recharge = recharge;
+    public void setOutput(List<String> output) {
+        this.output = output;
     }
 
-    public void setUsesLeft(int used)
+    public void setOutputOptions(OutputOptions outputOptions) {
+        this.outputOptions = outputOptions;
+    }
+
+    public void setUsedCharges(int used)
     {
         this.used = used;
     }

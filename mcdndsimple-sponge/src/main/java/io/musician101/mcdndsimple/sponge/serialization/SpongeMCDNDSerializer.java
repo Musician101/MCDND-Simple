@@ -3,7 +3,7 @@ package io.musician101.mcdndsimple.sponge.serialization;
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.character.AbilityScore;
 import io.musician101.mcdndsimple.common.character.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.CharacterSheet;
+import io.musician101.mcdndsimple.common.character.PlayerSheet;
 import io.musician101.mcdndsimple.common.character.ClassAction;
 import io.musician101.mcdndsimple.common.character.ClassLevels;
 import io.musician101.mcdndsimple.common.character.ClassResource;
@@ -12,9 +12,9 @@ import io.musician101.mcdndsimple.common.character.Experience;
 import io.musician101.mcdndsimple.common.character.HitDice;
 import io.musician101.mcdndsimple.common.character.HitPoints;
 import io.musician101.mcdndsimple.common.character.MCDNDItem;
-import io.musician101.mcdndsimple.common.character.PlayerSheet;
+import io.musician101.mcdndsimple.common.character.CharacterSheet;
 import io.musician101.mcdndsimple.common.character.Recharge;
-import io.musician101.mcdndsimple.common.character.SpellcasterClass;
+import io.musician101.mcdndsimple.common.character.spell.SpellcasterClass;
 import io.musician101.mcdndsimple.common.character.UnarmoredBonus;
 import io.musician101.mcdndsimple.common.character.Weight;
 import io.musician101.mcdndsimple.common.character.bonus.Bonuses;
@@ -22,7 +22,7 @@ import io.musician101.mcdndsimple.common.character.bonus.MeleeBonus;
 import io.musician101.mcdndsimple.common.character.bonus.RangedBonus;
 import io.musician101.mcdndsimple.common.character.bonus.SpellcastingBonus;
 import io.musician101.mcdndsimple.common.character.equipment.armor.Armor;
-import io.musician101.mcdndsimple.common.character.equipment.armor.MCDNDArmorType;
+import io.musician101.mcdndsimple.common.character.equipment.armor.ArmorType;
 import io.musician101.mcdndsimple.common.character.equipment.currency.Coin;
 import io.musician101.mcdndsimple.common.character.equipment.currency.Wealth;
 import io.musician101.mcdndsimple.common.character.skill.Skill;
@@ -51,15 +51,15 @@ import org.spongepowered.api.data.MemoryDataContainer;
 public class SpongeMCDNDSerializer extends MCDNDSerializer<DataContainer>
 {
     @Override
-    public DataContainer serialize(CharacterSheet characterSheet)
+    public DataContainer serialize(PlayerSheet playerSheet)
     {
         //TODO left off here
         return new MemoryDataContainer()
-                .set(SpongeMCDNDSimpleKeys.BIO_AND_INFO, serialize(characterSheet.getBioAndInfo()))
-                .set(SpongeMCDNDSimpleKeys.PLAYER_SHEET, serialize(characterSheet.getPlayerSheet()))
-                .set(SpongeMCDNDSimpleKeys.CLASS, characterSheet.getClazz())
-                .set(SpongeMCDNDSimpleKeys.NAME, characterSheet.getName())
-                .set(SpongeMCDNDSimpleKeys.RACE, characterSheet.getRace());
+                .set(SpongeMCDNDSimpleKeys.BIO_AND_INFO, serialize(playerSheet.getBioAndInfo()))
+                .set(SpongeMCDNDSimpleKeys.PLAYER_SHEET, serialize(playerSheet.getCharacterSheet()))
+                .set(SpongeMCDNDSimpleKeys.CLASS, playerSheet.getClazz())
+                .set(SpongeMCDNDSimpleKeys.NAME, playerSheet.getName())
+                .set(SpongeMCDNDSimpleKeys.RACE, playerSheet.getRace());
     }
 
     @Override
@@ -161,7 +161,7 @@ public class SpongeMCDNDSerializer extends MCDNDSerializer<DataContainer>
     {
         return new MemoryDataContainer()
                 .set(SpongeMCDNDSimpleKeys.MAX_USES, classAction.getMax())
-                .set(SpongeMCDNDSimpleKeys.USES_LEFT, classAction.getUsesLeft())
+                .set(SpongeMCDNDSimpleKeys.USES_LEFT, classAction.getUsedCharges())
                 .set(SpongeMCDNDSimpleKeys.RECHARGE, serialize(classAction.getRecharge()))
                 .set(SpongeMCDNDSimpleKeys.GAINED_FROM, classAction.getGainedFrom())
                 .set(SpongeMCDNDSimpleKeys.NAME, classAction.getName());
@@ -252,7 +252,7 @@ public class SpongeMCDNDSerializer extends MCDNDSerializer<DataContainer>
     protected DataContainer serialize(Experience experience)
     {
         return new MemoryDataContainer()
-                .set(SpongeMCDNDSimpleKeys.EXPERIENCE_AMOUNT, experience.getExp())
+                .set(SpongeMCDNDSimpleKeys.EXPERIENCE_AMOUNT, experience.getXP())
                 .set(SpongeMCDNDSimpleKeys.OVERALL_LEVEL, experience.getOverallLevel());
     }
 
@@ -376,7 +376,7 @@ public class SpongeMCDNDSerializer extends MCDNDSerializer<DataContainer>
     {
         return new MemoryDataContainer()
                 .set(SpongeMCDNDSimpleKeys.INVOCATION_COUNT, spellbookTab.getInvocations())
-                .set(SpongeMCDNDSimpleKeys.SORCERY_POINTS, spellbookTab.getSorceryPoints())
+                .set(SpongeMCDNDSimpleKeys.SORCERY_POINTS, spellbookTab.getSorceryPointsMax())
                 .set(SpongeMCDNDSimpleKeys.SPELLS, serialize(spellbookTab.getSpells(), this::serialize))
                 .set(SpongeMCDNDSimpleKeys.SPELLCASTER_CLASSES, serialize(spellbookTab.getSpellcasterClasses(), this::serialize));
     }
@@ -424,7 +424,7 @@ public class SpongeMCDNDSerializer extends MCDNDSerializer<DataContainer>
     protected DataContainer serialize(SpellSave spellSave)
     {
         return new MemoryDataContainer()
-                .set(SpongeMCDNDSimpleKeys.SAVE_DC_TYPE, serialize(spellSave.getSaveDCType()))
+                .set(SpongeMCDNDSimpleKeys.SAVE_DC_TYPE, serialize(spellSave.getSpellcasterClass()))
                 .set(SpongeMCDNDSimpleKeys.ON_SUCCESSFUL_SAVE, spellSave.getOnSuccessfulSave())
                 .set(SpongeMCDNDSimpleKeys.SAVING_STAT, spellSave.getSavingStat());
     }
@@ -488,21 +488,21 @@ public class SpongeMCDNDSerializer extends MCDNDSerializer<DataContainer>
     }
 
     @Override
-    protected DataContainer serialize(PlayerSheet playerSheet)
+    protected DataContainer serialize(CharacterSheet characterSheet)
     {
         return new MemoryDataContainer()
-                .set(SpongeMCDNDSimpleKeys.ARMOR_TAB, serialize(playerSheet.getArmorTab()))
-                .set(SpongeMCDNDSimpleKeys.BACKGROUND_TAB, serialize(playerSheet.getBackgroundTab()))
-                .set(SpongeMCDNDSimpleKeys.CLASS_TAB, serialize(playerSheet.getClassTab()))
-                .set(SpongeMCDNDSimpleKeys.CORE_STATS_TAB, serialize(playerSheet.getCoreStatsTab()))
-                .set(SpongeMCDNDSimpleKeys.INVENTORY_TAB, serialize(playerSheet.getInventoryTab()))
-                .set(SpongeMCDNDSimpleKeys.SKILLS_TAB, serialize(playerSheet.getSkillsTab()))
-                .set(SpongeMCDNDSimpleKeys.SPELL_BOOK_TAB, serialize(playerSheet.getSpellbookTab()))
-                .set(SpongeMCDNDSimpleKeys.WEAPONS_TAB, serialize(playerSheet.getWeaponsTab()));
+                .set(SpongeMCDNDSimpleKeys.ARMOR_TAB, serialize(characterSheet.getArmorTab()))
+                .set(SpongeMCDNDSimpleKeys.BACKGROUND_TAB, serialize(characterSheet.getBackgroundTab()))
+                .set(SpongeMCDNDSimpleKeys.CLASS_TAB, serialize(characterSheet.getClassTab()))
+                .set(SpongeMCDNDSimpleKeys.CORE_STATS_TAB, serialize(characterSheet.getCoreStatsTab()))
+                .set(SpongeMCDNDSimpleKeys.INVENTORY_TAB, serialize(characterSheet.getInventoryTab()))
+                .set(SpongeMCDNDSimpleKeys.SKILLS_TAB, serialize(characterSheet.getSkillsTab()))
+                .set(SpongeMCDNDSimpleKeys.SPELL_BOOK_TAB, serialize(characterSheet.getSpellbookTab()))
+                .set(SpongeMCDNDSimpleKeys.WEAPONS_TAB, serialize(characterSheet.getWeaponsTab()));
     }
 
     @Override
-    protected DataContainer serialize(MCDNDArmorType armorType)
+    protected DataContainer serialize(ArmorType armorType)
     {
         return new MemoryDataContainer()
                 .set(SpongeMCDNDSimpleKeys.NAME, armorType.getName());

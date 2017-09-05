@@ -8,19 +8,17 @@ import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSp
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public class ArmorTabGUI extends MCDNDSimpleChestGUI
-{
+public class ArmorTabGUI extends MCDNDSimpleChestGUI {
+
     private final ArmorTab armorTab;
 
-    public ArmorTabGUI(Player player, ArmorTab armorTab, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI)
-    {
+    public ArmorTabGUI(Player player, ArmorTab armorTab, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
         super(player, 9, MenuText.ARMOR, prevGUI);
         this.armorTab = armorTab;
     }
 
     @Override
-    protected void build()
-    {
+    protected void build() {
         set(0, createItem(Material.CHAINMAIL_CHESTPLATE, MenuText.armoredAC(armorTab)));
         set(1, createItem(Material.LEATHER_CHESTPLATE, MenuText.unarmoredAC(armorTab)));
         set(2, createItem(Material.DIAMOND_CHESTPLATE, MenuText.ARMOR), player -> new ArmorListGUI(player, armorTab.getArmorList(), 0, this));

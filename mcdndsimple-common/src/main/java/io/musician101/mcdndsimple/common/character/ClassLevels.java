@@ -1,7 +1,7 @@
 package io.musician101.mcdndsimple.common.character;
 
-public class ClassLevels
-{
+public class ClassLevels {
+
     private int barbarian = 0;
     private int bard = 0;
     private int cleric = 0;
@@ -15,123 +15,99 @@ public class ClassLevels
     private int warlock = 0;
     private int wizard = 0;
 
-    public int getBarbarian()
-    {
+    public int getBarbarian() {
         return barbarian;
     }
 
-    public int getBard()
-    {
-        return bard;
-    }
-
-    public int getCleric()
-    {
-        return cleric;
-    }
-
-    public int getDruid()
-    {
-        return druid;
-    }
-
-    public int getFighter()
-    {
-        return fighter;
-    }
-
-    public int getMonk()
-    {
-        return monk;
-    }
-
-    public int getPaladin()
-    {
-        return paladin;
-    }
-
-    public int getRanger()
-    {
-        return ranger;
-    }
-
-    public int getRogue()
-    {
-        return rogue;
-    }
-
-    public int getSorcerer()
-    {
-        return sorcerer;
-    }
-
-    public int getWarlock()
-    {
-        return warlock;
-    }
-
-    public int getWizard()
-    {
-        return wizard;
-    }
-
-    public void setBarbarian(int barbarian)
-    {
+    public void setBarbarian(int barbarian) {
         this.barbarian = barbarian;
     }
 
-    public void setBard(int bard)
-    {
+    public int getBard() {
+        return bard;
+    }
+
+    public void setBard(int bard) {
         this.bard = bard;
     }
 
-    public void setCleric(int cleric)
-    {
+    public int getCleric() {
+        return cleric;
+    }
+
+    public void setCleric(int cleric) {
         this.cleric = cleric;
     }
 
-    public void setDruid(int druid)
-    {
+    public int getDruid() {
+        return druid;
+    }
+
+    public void setDruid(int druid) {
         this.druid = druid;
     }
 
-    public void setFighter(int fighter)
-    {
+    public int getFighter() {
+        return fighter;
+    }
+
+    public void setFighter(int fighter) {
         this.fighter = fighter;
     }
 
-    public void setMonk(int monk)
-    {
+    public int getMonk() {
+        return monk;
+    }
+
+    public void setMonk(int monk) {
         this.monk = monk;
     }
 
-    public void setPaladin(int paladin)
-    {
+    public int getPaladin() {
+        return paladin;
+    }
+
+    public void setPaladin(int paladin) {
         this.paladin = paladin;
     }
 
-    public void setRanger(int ranger)
-    {
+    public int getRanger() {
+        return ranger;
+    }
+
+    public void setRanger(int ranger) {
         this.ranger = ranger;
     }
 
-    public void setRogue(int rogue)
-    {
+    public int getRogue() {
+        return rogue;
+    }
+
+    public void setRogue(int rogue) {
         this.rogue = rogue;
     }
 
-    public void setSorcerer(int sorcerer)
-    {
+    public int getSorcerer() {
+        return sorcerer;
+    }
+
+    public void setSorcerer(int sorcerer) {
         this.sorcerer = sorcerer;
     }
 
-    public void setWarlock(int warlock)
-    {
+    public int getWarlock() {
+        return warlock;
+    }
+
+    public void setWarlock(int warlock) {
         this.warlock = warlock;
     }
 
-    public void setWizard(int wizard)
-    {
+    public int getWizard() {
+        return wizard;
+    }
+
+    public void setWizard(int wizard) {
         this.wizard = wizard;
     }
 }

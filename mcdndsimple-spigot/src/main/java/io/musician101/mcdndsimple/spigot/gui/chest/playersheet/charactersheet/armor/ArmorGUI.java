@@ -12,19 +12,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionType;
 
-public class ArmorGUI extends MCDNDSimpleChestGUI
-{
+public class ArmorGUI extends MCDNDSimpleChestGUI {
+
     private final Armor armor;
 
-    public ArmorGUI(Player player, Armor armor, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI)
-    {
+    public ArmorGUI(Player player, Armor armor, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
         super(player, 18, armor.getName(), prevGUI);
         this.armor = armor;
     }
 
     @Override
-    protected void build()
-    {
+    protected void build() {
         boolean isWorn = armor.isUnarmored();
         ItemStack worn = createItem(Material.LEATHER_CHESTPLATE, MenuText.isWorn(armor));
         if (isWorn) {

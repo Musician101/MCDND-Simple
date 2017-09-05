@@ -29,50 +29,38 @@ public class SpellSlotsGUI extends MCDNDSimpleChestGUI {
         setBackButton(17, Material.BARRIER);
     }
 
-    private Consumer<Player> usedConsumer(int level) {
-        return player -> new IntegerInputAnvilGUI(player, (p, i) -> {
-            setUsed(level, i);
-            delayedOpen();
-        });
-    }
-
-    private Consumer<Player> maxConsumer(int level) {
-        return player -> new IntegerInputAnvilGUI(player, (p, i) -> {
-            setMax(level, i);
-            delayedOpen();
-        });
-    }
-    
-    private void setUsed(int x, int i) {
+    private int getMax(int x) {
         if (x == 0) {
-            spellSlots.setFirstLevelSpellsUsed(i);
+            return spellSlots.getFirstLevelSpellsUsed();
         }
         else if (x == 1) {
-            spellSlots.setSecondLevelSpellsUsed(i);
+            return spellSlots.getSecondLevelSpellsUsed();
         }
         else if (x == 2) {
-            spellSlots.setThirdLevelSpellsUsed(i);
+            return spellSlots.getThirdLevelSpellsUsed();
         }
         else if (x == 3) {
-            spellSlots.setFourthLevelSpellsUsed(i);
+            return spellSlots.getFourthLevelSpellsUsed();
         }
         else if (x == 4) {
-            spellSlots.setFifthLevelSpellsUsed(i);
+            return spellSlots.getFifthLevelSpellsUsed();
         }
         else if (x == 5) {
-            spellSlots.setSixthLevelSpellsUsed(i);
+            return spellSlots.getSixthLevelSpellsUsed();
         }
         else if (x == 6) {
-            spellSlots.setSeventhLevelSpellsUsed(i);
+            return spellSlots.getSeventhLevelSpellsUsed();
         }
         else if (x == 7) {
-            spellSlots.setEighthLevelSpellsUsed(i);
+            return spellSlots.getEighthLevelSpellsUsed();
         }
         else if (x == 9) {
-            spellSlots.setNinthLevelSpellsUsed(i);
+            return spellSlots.getNinthLevelSpellsUsed();
         }
+
+        return 0;
     }
-    
+
     private int getUsed(int x) {
         if (x == 0) {
             return spellSlots.getFirstLevelSpellsUsed();
@@ -101,8 +89,15 @@ public class SpellSlotsGUI extends MCDNDSimpleChestGUI {
         else if (x == 9) {
             return spellSlots.getNinthLevelSpellsUsed();
         }
-        
+
         return 0;
+    }
+
+    private Consumer<Player> maxConsumer(int level) {
+        return player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+            setMax(level, i);
+            delayedOpen();
+        });
     }
 
     private void setMax(int x, int i) {
@@ -135,35 +130,40 @@ public class SpellSlotsGUI extends MCDNDSimpleChestGUI {
         }
     }
 
-    private int getMax(int x) {
+    private void setUsed(int x, int i) {
         if (x == 0) {
-            return spellSlots.getFirstLevelSpellsUsed();
+            spellSlots.setFirstLevelSpellsUsed(i);
         }
         else if (x == 1) {
-            return spellSlots.getSecondLevelSpellsUsed();
+            spellSlots.setSecondLevelSpellsUsed(i);
         }
         else if (x == 2) {
-            return spellSlots.getThirdLevelSpellsUsed();
+            spellSlots.setThirdLevelSpellsUsed(i);
         }
         else if (x == 3) {
-            return spellSlots.getFourthLevelSpellsUsed();
+            spellSlots.setFourthLevelSpellsUsed(i);
         }
         else if (x == 4) {
-            return spellSlots.getFifthLevelSpellsUsed();
+            spellSlots.setFifthLevelSpellsUsed(i);
         }
         else if (x == 5) {
-            return spellSlots.getSixthLevelSpellsUsed();
+            spellSlots.setSixthLevelSpellsUsed(i);
         }
         else if (x == 6) {
-            return spellSlots.getSeventhLevelSpellsUsed();
+            spellSlots.setSeventhLevelSpellsUsed(i);
         }
         else if (x == 7) {
-            return spellSlots.getEighthLevelSpellsUsed();
+            spellSlots.setEighthLevelSpellsUsed(i);
         }
         else if (x == 9) {
-            return spellSlots.getNinthLevelSpellsUsed();
+            spellSlots.setNinthLevelSpellsUsed(i);
         }
+    }
 
-        return 0;
+    private Consumer<Player> usedConsumer(int level) {
+        return player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+            setUsed(level, i);
+            delayedOpen();
+        });
     }
 }

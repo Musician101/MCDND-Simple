@@ -2,28 +2,24 @@ package io.musician101.mcdndsimple.common.character.spell;
 
 import io.musician101.mcdndsimple.common.Dice;
 
-public class SpellHealing
-{
+public class SpellHealing {
+
     private Dice healAmount = new Dice(0);
     private String statBonus = "None";
 
-    public Dice getHealAmount()
-    {
+    public Dice getHealAmount() {
         return healAmount;
     }
 
-    public String getStatBonus()
-    {
-        return statBonus;
-    }
-
-    public void setHealAmount(Dice healAmount)
-    {
+    public void setHealAmount(Dice healAmount) {
         this.healAmount = healAmount;
     }
 
-    public void setStatBonus(String statBonus)
-    {
+    public String getStatBonus() {
+        return statBonus;
+    }
+
+    public void setStatBonus(String statBonus) {
         this.statBonus = statBonus;
     }
 }

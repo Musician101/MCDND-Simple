@@ -20,28 +20,22 @@ public abstract class MCDNDSimpleCommands {
     }
 
     private static SpigotCommand<SpigotMCDNDSimple> callback() {
-        return SpigotCommand.<SpigotMCDNDSimple>builder().name(Commands.CALLBACK_NAME).description(Commands.CALLBACK_DESC)
-                .usage(SpigotCommandUsage.builder().minArgs(1).addArgument(SpigotCommandArgument.of(Commands.UUID)).build())
-                .permissions(SpigotCommandPermissions.builder().permissionNode(Permissions.CALLBACK).isPlayerOnly(true)
-                        .noPermissionMessage(ChatColor.RED + Messages.NO_PERMISSION)
-                        .playerOnlyMessage(ChatColor.RED + Messages.PLAYER_ONLY).build())
-                .function((sender, args) -> {
-                    try {
-                        Consumer<CommandSender> callback = SpigotMCDNDSimple.instance().getCallbackTracker().get(UUID.fromString(args.get(0)));
-                        if (callback == null) {
-                            sender.sendMessage(ChatColor.RED + Messages.PREFIX + "A callback with that ID doesn't exist. Callbacks expire after 10 minutes.");
-                            return false;
-                        }
-
-                        callback.accept(sender);
-                        return true;
-                    }
-                    catch (IllegalArgumentException e) {
-                        sender.sendMessage(ChatColor.RED + Messages.PREFIX + "The given input was not a valid UUID.");
-                    }
-
+        return SpigotCommand.<SpigotMCDNDSimple>builder().name(Commands.CALLBACK_NAME).description(Commands.CALLBACK_DESC).usage(SpigotCommandUsage.builder().minArgs(1).addArgument(SpigotCommandArgument.of(Commands.UUID)).build()).permissions(SpigotCommandPermissions.builder().permissionNode(Permissions.CALLBACK).isPlayerOnly(true).noPermissionMessage(ChatColor.RED + Messages.NO_PERMISSION).playerOnlyMessage(ChatColor.RED + Messages.PLAYER_ONLY).build()).function((sender, args) -> {
+            try {
+                Consumer<CommandSender> callback = SpigotMCDNDSimple.instance().getCallbackTracker().get(UUID.fromString(args.get(0)));
+                if (callback == null) {
+                    sender.sendMessage(ChatColor.RED + Messages.PREFIX + "A callback with that ID doesn't exist. Callbacks expire after 10 minutes.");
                     return false;
-                })
-                .build();
+                }
+
+                callback.accept(sender);
+                return true;
+            }
+            catch (IllegalArgumentException e) {
+                sender.sendMessage(ChatColor.RED + Messages.PREFIX + "The given input was not a valid UUID.");
+            }
+
+            return false;
+        }).build();
     }
 }

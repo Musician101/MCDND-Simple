@@ -35,7 +35,7 @@ public class MeleeBonusGUI extends MCDNDSimpleChestGUI {
             delayedOpen();
         }));
 
-        set(1, setPotionEffect(createItem(Material.POTION, MenuText.DAMAGE_ROLLS), PotionType.STRENGTH),player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(1, setPotionEffect(createItem(Material.POTION, MenuText.DAMAGE_ROLLS), PotionType.STRENGTH), player -> new StringInputAnvilGUI(player, (p, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 player.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));

@@ -18,10 +18,10 @@ import org.bukkit.entity.Player;
 
 public class AbilityScoreGUI extends MCDNDSimpleChestGUI {
 
-    private final AbilityScore score;
     private final BioAndInfo bioAndInfo;
     private final ClassLevels classLevels;
     private final Experience experience;
+    private final AbilityScore score;
 
     public AbilityScoreGUI(Player player, AbilityScore score, BioAndInfo bioAndInfo, ClassLevels classLevels, Experience experience, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
         super(player, 9, score.getName(), prevGUI);

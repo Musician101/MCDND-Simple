@@ -1,13 +1,7 @@
 package io.musician101.mcdndsimple.common.character.weapon;
 
 public enum WeaponAttackStat {
-    CHA,
-    CON,
-    DEX,
-    FINESSE("Finesse"),
-    INT,
-    STR,
-    WIS;
+    CHA, CON, DEX, FINESSE("Finesse"), INT, STR, WIS;
 
     private final String name;
 

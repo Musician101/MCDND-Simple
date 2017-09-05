@@ -3,7 +3,7 @@ package io.musician101.mcdndsimple.common.serialization;
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.character.AbilityScore;
 import io.musician101.mcdndsimple.common.character.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.PlayerSheet;
+import io.musician101.mcdndsimple.common.character.CharacterSheet;
 import io.musician101.mcdndsimple.common.character.ClassAction;
 import io.musician101.mcdndsimple.common.character.ClassLevels;
 import io.musician101.mcdndsimple.common.character.ClassResource;
@@ -12,9 +12,8 @@ import io.musician101.mcdndsimple.common.character.Experience;
 import io.musician101.mcdndsimple.common.character.HitDice;
 import io.musician101.mcdndsimple.common.character.HitPoints;
 import io.musician101.mcdndsimple.common.character.MCDNDItem;
-import io.musician101.mcdndsimple.common.character.CharacterSheet;
+import io.musician101.mcdndsimple.common.character.PlayerSheet;
 import io.musician101.mcdndsimple.common.character.Recharge;
-import io.musician101.mcdndsimple.common.character.spell.SpellcasterClass;
 import io.musician101.mcdndsimple.common.character.UnarmoredBonus;
 import io.musician101.mcdndsimple.common.character.Weight;
 import io.musician101.mcdndsimple.common.character.bonus.Bonuses;
@@ -33,6 +32,7 @@ import io.musician101.mcdndsimple.common.character.spell.SpellDamage;
 import io.musician101.mcdndsimple.common.character.spell.SpellHealing;
 import io.musician101.mcdndsimple.common.character.spell.SpellSave;
 import io.musician101.mcdndsimple.common.character.spell.SpellType;
+import io.musician101.mcdndsimple.common.character.spell.SpellcasterClass;
 import io.musician101.mcdndsimple.common.character.tab.ArmorTab;
 import io.musician101.mcdndsimple.common.character.tab.BackgroundTab;
 import io.musician101.mcdndsimple.common.character.tab.ClassTab;
@@ -44,13 +44,12 @@ import io.musician101.mcdndsimple.common.character.tab.WeaponsTab;
 import io.musician101.mcdndsimple.common.character.weapon.AbstractWeapon;
 import io.musician101.mcdndsimple.common.character.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.weapon.RangedWeapon;
-
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public abstract class MCDNDSerializer<S>
-{
+public abstract class MCDNDSerializer<S> {
+
     public abstract S serialize(PlayerSheet playerSheet);
 
     protected abstract S serialize(BioAndInfo bioAndInfo);
@@ -140,8 +139,7 @@ public abstract class MCDNDSerializer<S>
 
     protected abstract S serialize(Recharge recharge);
 
-    protected <E> List<S> serialize(List<E> list, Function<E, S> mapper)
-    {
+    protected <E> List<S> serialize(List<E> list, Function<E, S> mapper) {
         return list.stream().map(mapper).collect(Collectors.toList());
     }
 }

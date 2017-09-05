@@ -3,6 +3,7 @@ package io.musician101.mcdndsimple.common.character.tab;
 import io.musician101.mcdndsimple.common.character.AbilityScore;
 
 public class Initiative {
+
     private int bonus = 0;
 
     public int getBonus() {

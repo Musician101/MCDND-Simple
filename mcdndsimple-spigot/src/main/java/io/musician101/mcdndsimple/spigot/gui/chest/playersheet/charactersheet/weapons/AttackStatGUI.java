@@ -25,6 +25,20 @@ public class AttackStatGUI extends MCDNDSimpleChestGUI {
         this.coreStats = coreStats;
     }
 
+    /**
+     * @deprecated Add this method to MusicianLibrary
+     * Need to look into this so I don't have to pass a value into the method
+     * Try supplier
+     */
+    @Deprecated
+    private ItemStack addGlowIfSelected(ItemStack itemStack, Supplier<Boolean> predicate) {
+        if (predicate.get()) {
+            return addGlow(itemStack);
+        }
+
+        return itemStack;
+    }
+
     @Override
     protected void build() {
         WeaponAttackStat[] weaponAttackStats = WeaponAttackStat.values();
@@ -34,6 +48,10 @@ public class AttackStatGUI extends MCDNDSimpleChestGUI {
         }
 
         setBackButton(8, Material.BARRIER);
+    }
+
+    private String getAbilityScoreShortName(AbilityScore abilityScore) {
+        return abilityScore.getShortName().toUpperCase();
     }
 
     private ItemStack getMaterial(WeaponAttackStat weaponAttackStat) {
@@ -60,24 +78,6 @@ public class AttackStatGUI extends MCDNDSimpleChestGUI {
         }
 
         return createItem(Material.BARRIER, "I'M AN ERROR! PLEASE REPORT ME!");
-    }
-
-    /**
-     * @deprecated Add this method to MusicianLibrary
-     * Need to look into this so I don't have to pass a value into the method
-     * Try supplier
-     */
-    @Deprecated
-    private ItemStack addGlowIfSelected(ItemStack itemStack, Supplier<Boolean> predicate) {
-        if (predicate.get()) {
-            return addGlow(itemStack);
-        }
-
-        return itemStack;
-    }
-
-    private String getAbilityScoreShortName(AbilityScore abilityScore) {
-        return abilityScore.getShortName().toUpperCase();
     }
 
     private Consumer<Player> setAttackStat(WeaponAttackStat attackStat) {

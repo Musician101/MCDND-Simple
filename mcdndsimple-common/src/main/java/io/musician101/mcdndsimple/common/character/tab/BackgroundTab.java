@@ -3,226 +3,186 @@ package io.musician101.mcdndsimple.common.character.tab;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BackgroundTab
-{
-    private double weight = 0.0;
+public class BackgroundTab {
+
     private int age = 0;
+    private String alignment = "";
     private List<String> armorProficiencies = new ArrayList<>();
     private List<String> background = new ArrayList<>();
     private List<String> bonds = new ArrayList<>();
-    private List<String> flaws = new ArrayList<>();
-    private List<String> ideals = new ArrayList<>();
-    private List<String> otherNotes = new ArrayList<>();
-    private List<String> personalityTraits = new ArrayList<>();
-    private List<String> racialTraits = new ArrayList<>();
-    private List<String> toolProficiencies = new ArrayList<>();
-    private List<String> weaponProficiencies = new ArrayList<>();
-    private String alignment = "";
     private String eyes = "";
+    private List<String> flaws = new ArrayList<>();
     private String gender = "";
     private String hair = "";
     private String height = "";
+    private List<String> ideals = new ArrayList<>();
     private List<String> languages = new ArrayList<>();
+    private List<String> otherNotes = new ArrayList<>();
+    private List<String> personalityTraits = new ArrayList<>();
+    private List<String> racialTraits = new ArrayList<>();
     private String size = "";
+    private List<String> toolProficiencies = new ArrayList<>();
     private String vision = "";
+    private List<String> weaponProficiencies = new ArrayList<>();
+    private double weight = 0.0;
 
-    public int getAge()
-    {
+    public int getAge() {
         return age;
     }
 
-    public String getAlignment()
-    {
-        return alignment;
-    }
-
-    public List<String> getArmorProficiencies()
-    {
-        return armorProficiencies;
-    }
-
-    public List<String> getBackground()
-    {
-        return background;
-    }
-
-    public List<String> getBonds()
-    {
-        return bonds;
-    }
-
-    public String getEyes()
-    {
-        return eyes;
-    }
-
-    public List<String> getFlaws()
-    {
-        return flaws;
-    }
-
-    public String getGender()
-    {
-        return gender;
-    }
-
-    public String getHair()
-    {
-        return hair;
-    }
-
-    public String getHeight()
-    {
-        return height;
-    }
-
-    public List<String> getIdeals()
-    {
-        return ideals;
-    }
-
-    public List<String> getLanguages()
-    {
-        return languages;
-    }
-
-    public List<String> getOtherNotes()
-    {
-        return otherNotes;
-    }
-
-    public List<String> getPersonalityTraits()
-    {
-        return personalityTraits;
-    }
-
-    public List<String> getRacialTraits()
-    {
-        return racialTraits;
-    }
-
-    public String getSize()
-    {
-        return size;
-    }
-
-    public List<String> getToolProficiencies()
-    {
-        return toolProficiencies;
-    }
-
-    public String getVision()
-    {
-        return vision;
-    }
-
-    public List<String> getWeaponProficiencies()
-    {
-        return weaponProficiencies;
-    }
-
-    public double getWeight()
-    {
-        return weight;
-    }
-
-    public void setAge(int age)
-    {
+    public void setAge(int age) {
         this.age = age;
     }
 
-    public void setAlignment(String alignment)
-    {
+    public String getAlignment() {
+        return alignment;
+    }
+
+    public void setAlignment(String alignment) {
         this.alignment = alignment;
     }
 
-    public void setArmorProficiencies(List<String> armorProficiencies)
-    {
+    public List<String> getArmorProficiencies() {
+        return armorProficiencies;
+    }
+
+    public void setArmorProficiencies(List<String> armorProficiencies) {
         this.armorProficiencies = armorProficiencies;
     }
 
-    public void setBackground(List<String> background)
-    {
+    public List<String> getBackground() {
+        return background;
+    }
+
+    public void setBackground(List<String> background) {
         this.background = background;
     }
 
-    public void setBonds(List<String> bonds)
-    {
+    public List<String> getBonds() {
+        return bonds;
+    }
+
+    public void setBonds(List<String> bonds) {
         this.bonds = bonds;
     }
 
-    public void setEyes(String eyes)
-    {
+    public String getEyes() {
+        return eyes;
+    }
+
+    public void setEyes(String eyes) {
         this.eyes = eyes;
     }
 
-    public void setFlaws(List<String> flaws)
-    {
+    public List<String> getFlaws() {
+        return flaws;
+    }
+
+    public void setFlaws(List<String> flaws) {
         this.flaws = flaws;
     }
 
-    public void setGender(String gender)
-    {
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public void setHair(String hair)
-    {
+    public String getHair() {
+        return hair;
+    }
+
+    public void setHair(String hair) {
         this.hair = hair;
     }
 
-    public void setHeight(String height)
-    {
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
         this.height = height;
     }
 
-    public void setIdeals(List<String> ideals)
-    {
+    public List<String> getIdeals() {
+        return ideals;
+    }
+
+    public void setIdeals(List<String> ideals) {
         this.ideals = ideals;
     }
 
-    public void setLanguages(List<String> languages)
-    {
+    public List<String> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(List<String> languages) {
         this.languages = languages;
     }
 
-    public void setOtherNotes(List<String> otherNotes)
-    {
+    public List<String> getOtherNotes() {
+        return otherNotes;
+    }
+
+    public void setOtherNotes(List<String> otherNotes) {
         this.otherNotes = otherNotes;
     }
 
-    public void setPersonalityTraits(List<String> personalityTraits)
-    {
+    public List<String> getPersonalityTraits() {
+        return personalityTraits;
+    }
+
+    public void setPersonalityTraits(List<String> personalityTraits) {
         this.personalityTraits = personalityTraits;
     }
 
-    public void setRacialTraits(List<String> racialTraits)
-    {
+    public List<String> getRacialTraits() {
+        return racialTraits;
+    }
+
+    public void setRacialTraits(List<String> racialTraits) {
         this.racialTraits = racialTraits;
     }
 
-    public void setSize(String size)
-    {
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
         this.size = size;
     }
 
-    public void setToolProficiencies(List<String> toolProficiencies)
-    {
+    public List<String> getToolProficiencies() {
+        return toolProficiencies;
+    }
+
+    public void setToolProficiencies(List<String> toolProficiencies) {
         this.toolProficiencies = toolProficiencies;
     }
 
-    public void setVision(String vision)
-    {
+    public String getVision() {
+        return vision;
+    }
+
+    public void setVision(String vision) {
         this.vision = vision;
     }
 
-    public void setWeaponProficiencies(List<String> weaponProficiencies)
-    {
+    public List<String> getWeaponProficiencies() {
+        return weaponProficiencies;
+    }
+
+    public void setWeaponProficiencies(List<String> weaponProficiencies) {
         this.weaponProficiencies = weaponProficiencies;
     }
 
-    public void setWeight(double weight)
-    {
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 }

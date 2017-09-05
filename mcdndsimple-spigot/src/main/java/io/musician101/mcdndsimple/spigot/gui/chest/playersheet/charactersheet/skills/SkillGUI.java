@@ -18,8 +18,8 @@ import org.bukkit.entity.Player;
 public class SkillGUI extends MCDNDSimpleChestGUI {
 
     private final BioAndInfo bioAndInfo;
-    private final Dice skillBonus;
     private final Skill skill;
+    private final Dice skillBonus;
 
     public SkillGUI(Player player, BioAndInfo bioAndInfo, Dice skillBonus, Skill skill, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
         super(player, 9, skill.getName(), prevGUI);

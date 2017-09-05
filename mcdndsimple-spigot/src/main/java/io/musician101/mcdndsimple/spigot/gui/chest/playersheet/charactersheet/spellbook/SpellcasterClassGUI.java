@@ -13,9 +13,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class SpellcasterClassGUI<T> extends MCDNDSimpleChestGUI {
 
-    private final BiConsumer<T, SpellcasterClass> valueSetter;
     private final Predicate<SpellcasterClass> glowApplier;
     private final T value;
+    private final BiConsumer<T, SpellcasterClass> valueSetter;
 
     public SpellcasterClassGUI(Player player, T value, BiConsumer<T, SpellcasterClass> valueSetter, Predicate<SpellcasterClass> glowApplier, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
         super(player, 18, MenuText.GAINED_FROM, prevGUI);

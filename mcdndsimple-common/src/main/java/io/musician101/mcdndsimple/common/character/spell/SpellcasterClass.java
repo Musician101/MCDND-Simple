@@ -4,30 +4,308 @@ import io.musician101.mcdndsimple.common.character.ClassLevels;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.Experience;
 
-public enum SpellcasterClass
-{
-    ARCANE_TRICKSTER("Arcane Trickster"),
-    BARD("Bard"),
-    CLERIC("Cleric"),
-    DRUID("Druid"),
-    ELDRITCH_KNIGHT("Eldritch Knight"),
-    PALADIN("Paladin"),
-    OTHER("Other"),
-    RANGER("Ranger"),
-    SORCERER("Sorcerer"),
-    WARLOCK("Warlock"),//NOSONAR
+public enum SpellcasterClass {
+    ARCANE_TRICKSTER("Arcane Trickster"), BARD("Bard"), CLERIC("Cleric"), DRUID("Druid"), ELDRITCH_KNIGHT("Eldritch Knight"), PALADIN("Paladin"), OTHER("Other"), RANGER("Ranger"), SORCERER("Sorcerer"), WARLOCK("Warlock"),
     WIZARD("Wizard");
 
     private final String name;
 
-    SpellcasterClass(String name)
-    {
+    SpellcasterClass(String name) {
         this.name = name;
     }
 
-    public int getCantripsAmount(int level)
-    {
-        switch(this) {
+    public int get1stLevelAmount(int level) {
+        switch (this) {
+            case ARCANE_TRICKSTER:
+            case ELDRITCH_KNIGHT:
+                if (level == 3) {
+                    return 2;
+                }
+                else if (level >= 4 && level <= 6) {
+                    return 3;
+                }
+                else if (level >= 7 && level <= 20) {
+                    return 4;
+                }
+                break;
+            case BARD:
+            case CLERIC:
+            case DRUID:
+            case SORCERER:
+            case WIZARD:
+                if (level == 1) {
+                    return 2;
+                }
+                else if (level == 2) {
+                    return 3;
+                }
+                else if (level >= 3 && level <= 20) {
+                    return 4;
+                }
+                break;
+            case PALADIN:
+                if (level == 2) {
+                    return 2;
+                }
+                else if (level >= 3 && level <= 5) {
+                    return 3;
+                }
+                else if (level >= 6 && level <= 20) {
+                    return 4;
+                }
+                break;
+            case WARLOCK:
+                if (level == 1) {
+                    return 1;
+                }
+                else if (level == 2) {
+                    return 2;
+                }
+                break;
+        }
+
+        return 0;
+    }
+
+    public int get2ndLevelAmount(int level) {
+        switch (this) {
+            case ARCANE_TRICKSTER:
+            case ELDRITCH_KNIGHT:
+                if (level >= 5 && level <= 7) {
+                    return 2;
+                }
+                else if (level >= 8 && level <= 20) {
+                    return 3;
+                }
+                break;
+            case BARD:
+            case CLERIC:
+            case DRUID:
+            case SORCERER:
+            case WIZARD:
+                if (level == 3) {
+                    return 2;
+                }
+                else if (level >= 4 && level <= 20) {
+                    return 3;
+                }
+                break;
+            case PALADIN:
+                if (level >= 5 && level <= 7) {
+                    return 2;
+                }
+                else if (level >= 8 && level <= 20) {
+                    return 3;
+                }
+                break;
+            case WARLOCK:
+                if (level == 3 || level == 4) {
+                    return 2;
+                }
+                break;
+        }
+
+        return 0;
+    }
+
+    public int get3rdLevelAmount(int level) {
+        switch (this) {
+            case ARCANE_TRICKSTER:
+            case ELDRITCH_KNIGHT:
+                if (level >= 13 && level <= 15) {
+                    return 2;
+                }
+                else if (level >= 16 && level <= 20) {
+                    return 3;
+                }
+                break;
+            case BARD:
+            case CLERIC:
+            case DRUID:
+            case SORCERER:
+            case WIZARD:
+                if (level == 5) {
+                    return 2;
+                }
+                else if (level >= 6 && level <= 20) {
+                    return 3;
+                }
+                break;
+            case PALADIN:
+                if (level == 9 || level == 10) {
+                    return 2;
+                }
+                else if (level >= 11 && level <= 20) {
+                    return 3;
+                }
+                break;
+            case WARLOCK:
+                if (level == 5 || level == 6) {
+                    return 2;
+                }
+                break;
+        }
+
+        return 0;
+    }
+
+    public int get4thLevelAmount(int level) {
+        switch (this) {
+            case ARCANE_TRICKSTER:
+            case ELDRITCH_KNIGHT:
+                if (level == 19 || level == 20) {
+                    return 1;
+                }
+                break;
+            case BARD:
+            case CLERIC:
+            case DRUID:
+            case SORCERER:
+            case WIZARD:
+                if (level == 7) {
+                    return 1;
+                }
+                else if (level == 8) {
+                    return 2;
+                }
+                else if (level >= 9 && level <= 20) {
+                    return 3;
+                }
+                break;
+            case PALADIN:
+                if (level == 13 || level == 14) {
+                    return 1;
+                }
+                else if (level == 15 || level == 16) {
+                    return 2;
+                }
+                else if (level >= 17 && level >= 20) {
+                    return 3;
+                }
+                break;
+            case WARLOCK:
+                if (level == 7 || level == 8) {
+                    return 2;
+                }
+                break;
+        }
+
+        return 0;
+    }
+
+    public int get5thLevelAmount(int level) {
+        switch (this) {
+            case BARD:
+            case CLERIC:
+            case DRUID:
+            case SORCERER:
+            case WIZARD:
+                if (level == 9) {
+                    return 1;
+                }
+                else if (level >= 10 && level <= 17) {
+                    return 2;
+                }
+                else if (level >= 18 && level <= 20) {
+                    return 3;
+                }
+                break;
+            case PALADIN:
+                if (level == 17 || level == 18) {
+                    return 1;
+                }
+                else if (level == 19 || level == 20) {
+                    return 2;
+                }
+                break;
+            case WARLOCK:
+                if (level == 9 || level == 10) {
+                    return 2;
+                }
+                else if (level >= 11 && level <= 16) {
+                    return 3;
+                }
+                else if (level >= 17 && level <= 20) {
+                    return 4;
+                }
+                break;
+        }
+
+        return 0;
+    }
+
+    public int get6thLevelAmount(int level) {
+        switch (this) {
+            case BARD:
+            case CLERIC:
+            case DRUID:
+            case SORCERER:
+            case WIZARD:
+                if (level >= 11 && level <= 18) {
+                    return 1;
+                }
+                else if (level >= 19 && level <= 20) {
+                    return 2;
+                }
+                break;
+        }
+
+        return 0;
+    }
+
+    public int get7thLevelAmount(int level) {
+        switch (this) {
+            case BARD:
+            case CLERIC:
+            case DRUID:
+            case SORCERER:
+            case WIZARD:
+                if (level >= 13 && level <= 19) {
+                    return 1;
+                }
+                else if (level == 20) {
+                    return 2;
+                }
+                break;
+        }
+
+        return 0;
+    }
+
+    public int get8thLevelAmount(int level) {
+        switch (this) {
+            case BARD:
+            case CLERIC:
+            case DRUID:
+            case SORCERER:
+            case WIZARD:
+                if (level >= 15 && level <= 20) {
+                    return 1;
+                }
+                break;
+        }
+
+        return 0;
+    }
+
+    public int get9thLevelAmount(int level) {
+        switch (this) {
+            case BARD:
+            case CLERIC:
+            case DRUID:
+            case SORCERER:
+            case WIZARD:
+                if (level >= 17 && level <= 20) {
+                    return 1;
+                }
+                break;
+        }
+
+        return 0;
+    }
+
+    public int getCantripsAmount(int level) {
+        switch (this) {
             case ARCANE_TRICKSTER:
                 if (level >= 3 && level <= 9) {
                     return 3;
@@ -117,8 +395,65 @@ public enum SpellcasterClass
         return 0;
     }
 
-    public int getSpellsAmount(int level)
-    {
+    public String getName() {
+        return name;
+    }
+
+    public int getPreparedSpells(CoreStats coreStats, int level) {
+        switch (this) {
+            case CLERIC:
+            case DRUID:
+                return level + coreStats.getWisdom().getMod();
+            case PALADIN:
+                return level + coreStats.getCharisma().getMod();
+            case WIZARD:
+                return level + coreStats.getWisdom().getMod();
+        }
+
+        return 0;
+    }
+
+    public int getSpellAttack(ClassLevels classLevels, CoreStats coreStats, Experience experience) {
+        switch (this) {
+            case ARCANE_TRICKSTER:
+            case ELDRITCH_KNIGHT:
+            case WIZARD:
+                return experience.getProficiencyBonus(classLevels) + coreStats.getIntelligence().getMod();
+            case BARD:
+            case PALADIN:
+            case SORCERER:
+            case WARLOCK:
+                return experience.getProficiencyBonus(classLevels) + coreStats.getCharisma().getMod();
+            case CLERIC:
+            case DRUID:
+            case RANGER:
+                return experience.getProficiencyBonus(classLevels) + coreStats.getWisdom().getMod();
+        }
+
+        return 0;
+    }
+
+    public int getSpellSaveDC(ClassLevels classLevels, CoreStats coreStats, Experience experience) {
+        switch (this) {
+            case ARCANE_TRICKSTER:
+            case ELDRITCH_KNIGHT:
+            case WIZARD:
+                return 8 + experience.getProficiencyBonus(classLevels) + coreStats.getIntelligence().getMod();
+            case BARD:
+            case PALADIN:
+            case SORCERER:
+            case WARLOCK:
+                return 8 + experience.getProficiencyBonus(classLevels) + coreStats.getCharisma().getMod();
+            case CLERIC:
+            case DRUID:
+            case RANGER:
+                return 8 + experience.getProficiencyBonus(classLevels) + coreStats.getWisdom().getMod();
+        }
+
+        return 0;
+    }
+
+    public int getSpellsAmount(int level) {
         switch (this) {
             case ARCANE_TRICKSTER:
             case ELDRITCH_KNIGHT:
@@ -303,364 +638,6 @@ public enum SpellcasterClass
                         return 15;
                 }
                 break;
-        }
-
-        return 0;
-    }
-
-    public int get1stLevelAmount(int level)
-    {
-        switch (this) {
-            case ARCANE_TRICKSTER:
-            case ELDRITCH_KNIGHT:
-                if (level == 3) {
-                    return 2;
-                }
-                else if (level >= 4 && level <= 6) {
-                    return 3;
-                }
-                else if (level >= 7 && level <= 20) {
-                    return 4;
-                }
-                break;
-            case BARD:
-            case CLERIC:
-            case DRUID:
-            case SORCERER:
-            case WIZARD:
-                if (level == 1) {
-                    return 2;
-                }
-                else if (level == 2) {
-                    return 3;
-                }
-                else if (level >= 3 && level <= 20) {
-                    return 4;
-                }
-                break;
-            case PALADIN:
-                if (level == 2) {
-                    return 2;
-                }
-                else if (level >= 3 && level <= 5) {
-                    return 3;
-                }
-                else if (level >= 6 && level <= 20) {
-                    return 4;
-                }
-                break;
-            case WARLOCK:
-                if (level == 1) {
-                    return 1;
-                }
-                else if (level == 2) {
-                    return 2;
-                }
-                break;
-        }
-
-        return 0;
-    }
-
-    public int get2ndLevelAmount(int level)
-    {
-        switch (this) {
-            case ARCANE_TRICKSTER:
-            case ELDRITCH_KNIGHT:
-                if (level >= 5 && level <= 7) {
-                    return 2;
-                }
-                else if (level >= 8 && level <= 20) {
-                    return 3;
-                }
-                break;
-            case BARD:
-            case CLERIC:
-            case DRUID:
-            case SORCERER:
-            case WIZARD:
-                if (level == 3) {
-                    return 2;
-                }
-                else if (level >= 4 && level <= 20) {
-                    return 3;
-                }
-                break;
-            case PALADIN:
-                if (level >= 5 && level <= 7) {
-                    return 2;
-                }
-                else if (level >= 8 && level <= 20) {
-                    return 3;
-                }
-                break;
-            case WARLOCK:
-                if (level == 3 || level == 4) {
-                    return 2;
-                }
-                break;
-        }
-
-        return 0;
-    }
-
-    public int get3rdLevelAmount(int level)
-    {
-        switch (this) {
-            case ARCANE_TRICKSTER:
-            case ELDRITCH_KNIGHT:
-                if (level >= 13 && level <= 15) {
-                    return 2;
-                }
-                else if (level >= 16 && level <= 20) {
-                    return 3;
-                }
-                break;
-            case BARD:
-            case CLERIC:
-            case DRUID:
-            case SORCERER:
-            case WIZARD:
-                if (level == 5) {
-                    return 2;
-                }
-                else if (level >= 6 && level <= 20) {
-                    return 3;
-                }
-                break;
-            case PALADIN:
-                if (level == 9 || level == 10) {
-                    return 2;
-                }
-                else if (level >= 11 && level <= 20) {
-                    return 3;
-                }
-                break;
-            case WARLOCK:
-                if (level == 5 || level == 6) {
-                    return 2;
-                }
-                break;
-        }
-
-        return 0;
-    }
-
-    public int get4thLevelAmount(int level)
-    {
-        switch (this) {
-            case ARCANE_TRICKSTER:
-            case ELDRITCH_KNIGHT:
-                if (level == 19 || level == 20) {
-                    return 1;
-                }
-                break;
-            case BARD:
-            case CLERIC:
-            case DRUID:
-            case SORCERER:
-            case WIZARD:
-                if (level == 7) {
-                    return 1;
-                }
-                else if (level == 8) {
-                    return 2;
-                }
-                else if (level >= 9 && level <= 20) {
-                    return 3;
-                }
-                break;
-            case PALADIN:
-                if (level == 13 || level == 14) {
-                    return 1;
-                }
-                else if (level == 15 || level == 16) {
-                    return 2;
-                }
-                else if (level >= 17 && level >= 20) {
-                    return 3;
-                }
-                break;
-            case WARLOCK:
-                if (level == 7 || level == 8) {
-                    return 2;
-                }
-                break;
-        }
-
-        return 0;
-    }
-
-    public int get5thLevelAmount(int level)
-    {
-        switch (this) {
-            case BARD:
-            case CLERIC:
-            case DRUID:
-            case SORCERER:
-            case WIZARD:
-                if (level == 9) {
-                    return 1;
-                }
-                else if (level >= 10 && level <= 17) {
-                    return 2;
-                }
-                else if (level >= 18 && level <= 20) {
-                    return 3;
-                }
-                break;
-            case PALADIN:
-                if (level == 17 || level == 18) {
-                    return 1;
-                }
-                else if (level == 19 || level == 20) {
-                    return 2;
-                }
-                break;
-            case WARLOCK:
-                if (level == 9 || level == 10) {
-                    return 2;
-                }
-                else if (level >= 11 && level <= 16) {
-                    return 3;
-                }
-                else if (level >= 17 && level <= 20) {
-                    return 4;
-                }
-                break;
-        }
-
-        return 0;
-    }
-
-    public int get6thLevelAmount(int level)
-    {
-        switch (this) {
-            case BARD:
-            case CLERIC:
-            case DRUID:
-            case SORCERER:
-            case WIZARD:
-                if (level >= 11 && level <= 18) {
-                    return 1;
-                }
-                else if (level >= 19 && level <= 20) {
-                    return 2;
-                }
-                break;
-        }
-
-        return 0;
-    }
-
-    public int get7thLevelAmount(int level)
-    {
-        switch (this) {
-            case BARD:
-            case CLERIC:
-            case DRUID:
-            case SORCERER:
-            case WIZARD:
-                if (level >= 13 && level <= 19) {
-                    return 1;
-                }
-                else if (level == 20) {
-                    return 2;
-                }
-                break;
-        }
-
-        return 0;
-    }
-
-    public int get8thLevelAmount(int level)
-    {
-        switch (this) {
-            case BARD:
-            case CLERIC:
-            case DRUID:
-            case SORCERER:
-            case WIZARD:
-                if (level >= 15 && level <= 20) {
-                    return 1;
-                }
-                break;
-        }
-
-        return 0;
-    }
-
-    public int get9thLevelAmount(int level)
-    {
-        switch (this) {
-            case BARD:
-            case CLERIC:
-            case DRUID:
-            case SORCERER:
-            case WIZARD:
-                if (level >= 17 && level <= 20) {
-                    return 1;
-                }
-                break;
-        }
-
-        return 0;
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public int getPreparedSpells(CoreStats coreStats, int level) {
-        switch (this) {
-            case CLERIC:
-            case DRUID:
-                return level + coreStats.getWisdom().getMod();
-            case PALADIN:
-                return level + coreStats.getCharisma().getMod();
-            case WIZARD:
-                return level + coreStats.getWisdom().getMod();
-        }
-
-        return 0;
-    }
-
-    public int getSpellSaveDC(ClassLevels classLevels, CoreStats coreStats, Experience experience) {
-        switch (this) {
-            case ARCANE_TRICKSTER:
-            case ELDRITCH_KNIGHT:
-            case WIZARD:
-                return 8 + experience.getProficiencyBonus(classLevels) + coreStats.getIntelligence().getMod();
-            case BARD:
-            case PALADIN:
-            case SORCERER:
-            case WARLOCK:
-                return 8 + experience.getProficiencyBonus(classLevels) + coreStats.getCharisma().getMod();
-            case CLERIC:
-            case DRUID:
-            case RANGER:
-                return 8 + experience.getProficiencyBonus(classLevels) + coreStats.getWisdom().getMod();
-        }
-
-        return 0;
-    }
-
-    public int getSpellAttack(ClassLevels classLevels, CoreStats coreStats, Experience experience) {
-        switch (this) {
-            case ARCANE_TRICKSTER:
-            case ELDRITCH_KNIGHT:
-            case WIZARD:
-                return experience.getProficiencyBonus(classLevels) + coreStats.getIntelligence().getMod();
-            case BARD:
-            case PALADIN:
-            case SORCERER:
-            case WARLOCK:
-                return experience.getProficiencyBonus(classLevels) + coreStats.getCharisma().getMod();
-            case CLERIC:
-            case DRUID:
-            case RANGER:
-                return experience.getProficiencyBonus(classLevels) + coreStats.getWisdom().getMod();
         }
 
         return 0;

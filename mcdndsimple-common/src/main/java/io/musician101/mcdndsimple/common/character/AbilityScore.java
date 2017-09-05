@@ -1,51 +1,23 @@
 package io.musician101.mcdndsimple.common.character;
 
-public class AbilityScore
-{
+public class AbilityScore {
+
+    private final String name;
+    private final String shortName;
     private boolean proficient = false;
     private int score = 0;
-    private final String shortName;
-    private final String name;
 
-    public AbilityScore(String name, String shortName)
-    {
+    public AbilityScore(String name, String shortName) {
         this.name = name;
         this.shortName = shortName;
     }
 
-    public String getName()
-    {
-        return name;
-    }
-
-    public int getScore()
-    {
-        return score;
-    }
-
-    public int getMod()
-    {
+    public int getMod() {
         return (score - 10) / 2;
     }
 
-    public String getShortName()
-    {
-        return shortName;
-    }
-
-    public boolean isProficient()
-    {
-        return proficient;
-    }
-
-    public void setProficient(boolean proficient)
-    {
-        this.proficient = proficient;
-    }
-
-    public void setScore(int score)
-    {
-        this.score = score;
+    public String getName() {
+        return name;
     }
 
     public int getSaveMod(ClassLevels classLevels, Experience experience) {
@@ -55,5 +27,25 @@ public class AbilityScore
         }
 
         return mod;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public boolean isProficient() {
+        return proficient;
+    }
+
+    public void setProficient(boolean proficient) {
+        this.proficient = proficient;
     }
 }

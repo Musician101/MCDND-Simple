@@ -22,6 +22,20 @@ public class ItemRepresentation {
 
     }
 
+    public static ItemStack armor(Armor armor) {
+        ItemStack itemStack = new ItemStack(getArmorMaterial(armor.getArmorType()));
+        setName(itemStack, armor.getName());
+        setLore(itemStack, Arrays.asList("Armor Class: " + armor.getBaseArmorClass(), "Armor Type: " + armor.getArmorType().getName(), "Magic Bonus: " + armor.getMagicBonus(), "Speed Penalty: " + armor.hasSpeedPenalty(), "Stealth Penalty: " + armor.hasStealthPenalty(), "Unarmored?: " + armor.isUnarmored(), "Worn?: " + armor.isWorn()));
+
+        return itemStack;
+    }
+
+    public static ItemStack armorType(ArmorType armorType) {
+        ItemStack itemStack = new ItemStack(getArmorMaterial(armorType));
+        setName(itemStack, armorType.getName());
+        return itemStack;
+    }
+
     private static Material getArmorMaterial(ArmorType armorType) {
         Material material = Material.GOLD_CHESTPLATE;
         if (armorType == ArmorType.LIGHT) {
@@ -37,10 +51,21 @@ public class ItemRepresentation {
         return material;
     }
 
-    private static void setName(ItemStack itemStack, String name) {
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(name);
-        itemStack.setItemMeta(itemMeta);
+    public static ItemStack meleeWeapon(MeleeWeapon weapon, ClassLevels classLevels, CoreStats coreStats, Experience experience) {
+        ItemStack itemStack = new ItemStack(Material.DIAMOND_SWORD);
+        setName(itemStack, weapon.getName());
+        List<String> lore = new ArrayList<>();
+        lore.add(MenuText.isProficient(weapon.isProficient()));
+        lore.add(MenuText.attackStat(weapon.getAttackStat()));
+        lore.add(MenuText.magicBonus(weapon.getMagicBonus()));
+        lore.add(MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)));
+        lore.add(MenuText.damageDice(weapon.getDamageDice()));
+        lore.add(MenuText.damageBonus(weapon.getDamageBonus(coreStats)));
+        lore.add(MenuText.damageType(weapon.getDamageType()));
+        lore.add(MenuText.critDamage(weapon.getCritDamageDice()));
+        lore.add(MenuText.critOn(weapon.getCritMin()));
+        setLore(itemStack, lore);
+        return itemStack;
     }
 
     private static void setLore(ItemStack itemStack, List<String> lore) {
@@ -49,24 +74,25 @@ public class ItemRepresentation {
         itemStack.setItemMeta(itemMeta);
     }
 
-    public static ItemStack armorType(ArmorType armorType) {
-        ItemStack itemStack = new ItemStack(getArmorMaterial(armorType));
-        setName(itemStack, armorType.getName());
-        return itemStack;
+    private static void setName(ItemStack itemStack, String name) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(name);
+        itemStack.setItemMeta(itemMeta);
     }
 
-    public static ItemStack armor(Armor armor) {
-        ItemStack itemStack = new ItemStack(getArmorMaterial(armor.getArmorType()));
-        setName(itemStack, armor.getName());
-        setLore(itemStack, Arrays.asList(
-                "Armor Class: " + armor.getBaseArmorClass(),
-                "Armor Type: " + armor.getArmorType().getName(),
-                "Magic Bonus: " + armor.getMagicBonus(),
-                "Speed Penalty: " + armor.hasSpeedPenalty(),
-                "Stealth Penalty: " + armor.hasStealthPenalty(),
-                "Unarmored?: " + armor.isUnarmored(),
-                "Worn?: " + armor.isWorn()));
-
+    public static ItemStack spell(Spell spell) {
+        ItemStack itemStack = new ItemStack(Material.ENCHANTED_BOOK);
+        setName(itemStack, spell.getName());
+        List<String> lore = new ArrayList<>();
+        lore.add(MenuText.spellLevel(spell.getLevel()));
+        lore.add(MenuText.spellType(spell.getSpellType()));
+        lore.add(MenuText.gainedFrom(spell.getGainedFrom()));
+        lore.add(MenuText.components(spell.getComponents()));
+        lore.add(MenuText.castTime(spell.getCastTime()));
+        lore.add(MenuText.duration(spell.getDuration()));
+        lore.add(MenuText.target(spell.getTargetArea()));
+        lore.add(MenuText.range(spell.getRange()));
+        setLore(itemStack, lore);
         return itemStack;
     }
 
@@ -92,39 +118,6 @@ public class ItemRepresentation {
 
         ItemStack itemStack = new ItemStack(material);
         setName(itemStack, unarmoredBonus.getName());
-        return itemStack;
-    }
-
-    public static ItemStack spell(Spell spell) {
-        ItemStack itemStack = new ItemStack(Material.ENCHANTED_BOOK);
-        setName(itemStack, spell.getName());
-        List<String> lore = new ArrayList<>();
-        lore.add(MenuText.spellLevel(spell.getLevel()));
-        lore.add(MenuText.spellType(spell.getSpellType()));
-        lore.add(MenuText.gainedFrom(spell.getGainedFrom()));
-        lore.add(MenuText.components(spell.getComponents()));
-        lore.add(MenuText.castTime(spell.getCastTime()));
-        lore.add(MenuText.duration(spell.getDuration()));
-        lore.add(MenuText.target(spell.getTargetArea()));
-        lore.add(MenuText.range(spell.getRange()));
-        setLore(itemStack, lore);
-        return itemStack;
-    }
-
-    public static ItemStack meleeWeapon(MeleeWeapon weapon, ClassLevels classLevels, CoreStats coreStats, Experience experience) {
-        ItemStack itemStack = new ItemStack(Material.DIAMOND_SWORD);
-        setName(itemStack, weapon.getName());
-        List<String> lore = new ArrayList<>();
-        lore.add(MenuText.isProficient(weapon.isProficient()));
-        lore.add(MenuText.attackStat(weapon.getAttackStat()));
-        lore.add(MenuText.magicBonus(weapon.getMagicBonus()));
-        lore.add(MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)));
-        lore.add(MenuText.damageDice(weapon.getDamageDice()));
-        lore.add(MenuText.damageBonus(weapon.getDamageBonus(coreStats)));
-        lore.add(MenuText.damageType(weapon.getDamageType()));
-        lore.add(MenuText.critDamage(weapon.getCritDamageDice()));
-        lore.add(MenuText.critOn(weapon.getCritMin()));
-        setLore(itemStack, lore);
         return itemStack;
     }
 }

@@ -30,7 +30,7 @@ public class SavingThrowOutputOptionsGUI extends MCDNDSimpleChestGUI {
             player.closeInventory();
             open();
         });
-        
+
         ItemStack dexterity = createItem(Material.BOW, MenuText.DEXTERITY);
         if (savingThrowOutputOptions.isDexterityEnabled()) {
             dexterity = addGlow(dexterity);
@@ -90,7 +90,7 @@ public class SavingThrowOutputOptionsGUI extends MCDNDSimpleChestGUI {
         if (savingThrowOutputOptions.isIntelligenceEnabled()) {
             death = addGlow(intelligence);
         }
-        
+
         set(6, death, player -> {
             savingThrowOutputOptions.setDeathEnabled(!savingThrowOutputOptions.isDeathEnabled());
             player.closeInventory();

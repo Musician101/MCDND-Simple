@@ -12,9 +12,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class RechargeGUI<R extends Rechargeable> extends MCDNDSimpleChestGUI {
 
-    private final Runnable runnable;
-    private final R rechargeable;
     private final Recharge recharge;
+    private final R rechargeable;
+    private final Runnable runnable;
 
     public RechargeGUI(Player player, R rechargeable, Runnable runnable, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
         super(player, 9, MenuText.recharge(rechargeable.getRecharge()), prevGUI);

@@ -29,6 +29,26 @@ public class SpellDashboardGUI extends MCDNDSimpleChestGUI {
         this.experience = experience;
     }
 
+    private ItemStack arcaneTrickster() {
+        SpellcasterClass sc = SpellcasterClass.ARCANE_TRICKSTER;
+        ItemStack itemStack = createItem(Material.ENCHANTED_BOOK, sc.getName(), spellcastingTable(sc));
+        if (spellbookTab.getSpellcasterClasses().contains(sc)) {
+            return addGlow(itemStack);
+        }
+
+        return itemStack;
+    }
+
+    private ItemStack bard() {
+        SpellcasterClass sc = SpellcasterClass.BARD;
+        ItemStack itemStack = createItem(Material.ENCHANTED_BOOK, sc.getName(), spellcastingTable(sc));
+        if (spellbookTab.getSpellcasterClasses().contains(sc)) {
+            return addGlow(itemStack);
+        }
+
+        return itemStack;
+    }
+
     @Override
     protected void build() {
         set(0, arcaneTrickster());
@@ -53,10 +73,56 @@ public class SpellDashboardGUI extends MCDNDSimpleChestGUI {
         setBackButton(26, Material.BARRIER);
     }
 
+    private ItemStack cleric() {
+        SpellcasterClass sc = SpellcasterClass.CLERIC;
+        ItemStack itemStack = createItem(Material.ENCHANTED_BOOK, sc.getName(), spellcastingTable(sc));
+        if (spellbookTab.getSpellcasterClasses().contains(sc)) {
+            return addGlow(itemStack);
+        }
+
+        return itemStack;
+    }
+
+    private ItemStack druid() {
+        SpellcasterClass sc = SpellcasterClass.DRUID;
+        ItemStack itemStack = createItem(Material.ENCHANTED_BOOK, sc.getName(), spellcastingTable(sc));
+        if (spellbookTab.getSpellcasterClasses().contains(sc)) {
+            return addGlow(itemStack);
+        }
+
+        return itemStack;
+    }
+
+    private ItemStack eldritchKnight() {
+        SpellcasterClass sc = SpellcasterClass.ELDRITCH_KNIGHT;
+        ItemStack itemStack = createItem(Material.ENCHANTED_BOOK, sc.getName(), spellcastingTable(sc));
+        if (spellbookTab.getSpellcasterClasses().contains(sc)) {
+            return addGlow(itemStack);
+        }
+
+        return itemStack;
+    }
+
+    private int getCantrips(SpellcasterClass spellcasterClass, ClassLevels classLevels) {
+        return spellcasterClass.getCantripsAmount(classLevels.getRogue());
+    }
+
+    private int getPreparedSpells(SpellcasterClass spellcasterClass, ClassLevels classLevels, CoreStats coreStats) {
+        return spellcasterClass.getPreparedSpells(coreStats, classLevels.getRogue());
+    }
+
+    private int getSaveDC(SpellcasterClass spellcasterClass, ClassLevels classLevels, CoreStats coreStats, Experience experience) {
+        return spellcasterClass.getSpellSaveDC(classLevels, coreStats, experience);
+    }
+
+    private int getSpellsAmount(SpellcasterClass spellcasterClass, ClassLevels classLevels) {
+        return spellcasterClass.getSpellsAmount(classLevels.getRogue());
+    }
+
     private int getWarlockSlots() {
         SpellcasterClass sc = SpellcasterClass.WARLOCK;
         int level = classLevels.getWarlock();
-        switch(level) {
+        switch (level) {
             case 1:
                 return sc.get1stLevelAmount(1);
             case 2:
@@ -109,56 +175,6 @@ public class SpellDashboardGUI extends MCDNDSimpleChestGUI {
         return 0;
     }
 
-    private ItemStack arcaneTrickster() {
-        SpellcasterClass sc = SpellcasterClass.ARCANE_TRICKSTER;
-        ItemStack itemStack = createItem(Material.ENCHANTED_BOOK, sc.getName(), spellcastingTable(sc));
-        if (spellbookTab.getSpellcasterClasses().contains(sc)) {
-            return addGlow(itemStack);
-        }
-
-        return itemStack;
-    }
-
-    private ItemStack bard() {
-        SpellcasterClass sc = SpellcasterClass.BARD;
-        ItemStack itemStack = createItem(Material.ENCHANTED_BOOK, sc.getName(), spellcastingTable(sc));
-        if (spellbookTab.getSpellcasterClasses().contains(sc)) {
-            return addGlow(itemStack);
-        }
-
-        return itemStack;
-    }
-
-    private ItemStack cleric() {
-        SpellcasterClass sc = SpellcasterClass.CLERIC;
-        ItemStack itemStack = createItem(Material.ENCHANTED_BOOK, sc.getName(), spellcastingTable(sc));
-        if (spellbookTab.getSpellcasterClasses().contains(sc)) {
-            return addGlow(itemStack);
-        }
-
-        return itemStack;
-    }
-
-    private ItemStack druid() {
-        SpellcasterClass sc = SpellcasterClass.DRUID;
-        ItemStack itemStack = createItem(Material.ENCHANTED_BOOK, sc.getName(), spellcastingTable(sc));
-        if (spellbookTab.getSpellcasterClasses().contains(sc)) {
-            return addGlow(itemStack);
-        }
-
-        return itemStack;
-    }
-
-    private ItemStack eldritchKnight() {
-        SpellcasterClass sc = SpellcasterClass.ELDRITCH_KNIGHT;
-        ItemStack itemStack = createItem(Material.ENCHANTED_BOOK, sc.getName(), spellcastingTable(sc));
-        if (spellbookTab.getSpellcasterClasses().contains(sc)) {
-            return addGlow(itemStack);
-        }
-
-        return itemStack;
-    }
-
     private ItemStack paladin() {
         SpellcasterClass sc = SpellcasterClass.PALADIN;
         ItemStack itemStack = createItem(Material.ENCHANTED_BOOK, sc.getName(), spellcastingTable(sc));
@@ -189,6 +205,10 @@ public class SpellDashboardGUI extends MCDNDSimpleChestGUI {
         return itemStack;
     }
 
+    private String[] spellcastingTable(SpellcasterClass spellcasterClass) {
+        return MenuText.spellcastingTable(getCantrips(spellcasterClass, classLevels), getSpellsAmount(spellcasterClass, classLevels), getPreparedSpells(spellcasterClass, classLevels, coreStats), getSaveDC(spellcasterClass, classLevels, coreStats, experience));
+    }
+
     private ItemStack warlock() {
         SpellcasterClass sc = SpellcasterClass.WARLOCK;
         ItemStack itemStack = createItem(Material.ENCHANTED_BOOK, sc.getName(), spellcastingTable(sc));
@@ -207,25 +227,5 @@ public class SpellDashboardGUI extends MCDNDSimpleChestGUI {
         }
 
         return itemStack;
-    }
-
-    private int getCantrips(SpellcasterClass spellcasterClass, ClassLevels classLevels) {
-        return spellcasterClass.getCantripsAmount(classLevels.getRogue());
-    }
-
-    private int getSpellsAmount(SpellcasterClass spellcasterClass, ClassLevels classLevels) {
-        return spellcasterClass.getSpellsAmount(classLevels.getRogue());
-    }
-
-    private int getPreparedSpells(SpellcasterClass spellcasterClass, ClassLevels classLevels, CoreStats coreStats) {
-        return spellcasterClass.getPreparedSpells(coreStats, classLevels.getRogue());
-    }
-
-    private int getSaveDC(SpellcasterClass spellcasterClass, ClassLevels classLevels, CoreStats coreStats, Experience experience) {
-        return spellcasterClass.getSpellSaveDC(classLevels, coreStats, experience);
-    }
-
-    private String[] spellcastingTable(SpellcasterClass spellcasterClass) {
-        return MenuText.spellcastingTable(getCantrips(spellcasterClass, classLevels), getSpellsAmount(spellcasterClass, classLevels), getPreparedSpells(spellcasterClass, classLevels, coreStats), getSaveDC(spellcasterClass, classLevels, coreStats, experience));
     }
 }

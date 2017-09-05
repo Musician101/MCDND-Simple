@@ -13,9 +13,9 @@ import org.bukkit.entity.Player;
 
 public class StatBonusGUI<T> extends MCDNDSimpleChestGUI {
 
-    private final BiConsumer<T, String> valueSetter;
     private final CoreStats coreStats;
     private final T value;
+    private final BiConsumer<T, String> valueSetter;
 
     public StatBonusGUI(Player player, CoreStats coreStats, T value, BiConsumer<T, String> valueSetter, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
         super(player, 9, MenuText.STAT_BONUS, prevGUI);

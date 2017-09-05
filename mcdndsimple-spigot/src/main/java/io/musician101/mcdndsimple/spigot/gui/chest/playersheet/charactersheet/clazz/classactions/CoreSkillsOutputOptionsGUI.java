@@ -196,7 +196,7 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             player.closeInventory();
             open();
         });
-        
+
         ItemStack stealth = setPotionEffect(createItem(Material.POTION, MenuText.STEALTH), PotionType.NIGHT_VISION);
         if (coreSkillsOutputOptions.isStealthEnabled()) {
             stealth = addGlow(stealth);
@@ -218,7 +218,7 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             player.closeInventory();
             open();
         });
-        
+
         setBackButton(22, Material.BARRIER);
     }
 }

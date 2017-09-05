@@ -1,7 +1,7 @@
 package io.musician101.mcdndsimple.spigot.serialization;
 
-public class SpigotMCDNDSimpleKeys
-{
+public class SpigotMCDNDSimpleKeys {
+
     public static final String ABILITIES_AND_SKILLS = "AbilitiesAndSkills";
     public static final String ACROBATICS = "Acrobatics";
     public static final String AGE = "Age";
@@ -84,7 +84,6 @@ public class SpigotMCDNDSimpleKeys
     public static final String INVENTORY_TAB = "InventoryTab";
     public static final String INVESTIGATION = "Investigation";
     public static final String INVOCATION_COUNT = "InvocationCount";
-    public static final String PREPARED = "Prepared";
     public static final String IS_PROFICIENT = "IsProficient";
     public static final String LANGUAGES = "Languages";
     public static final String MAGIC_BONUS = "MagicBonus";
@@ -109,6 +108,7 @@ public class SpigotMCDNDSimpleKeys
     public static final String PLATINUM = "Platinum";
     public static final String PLAYER_SHEET = "CharacterSheet";
     public static final String PLUS_STAT = "PlusStat";
+    public static final String PREPARED = "Prepared";
     public static final String PROFICIENT = "Proficient";
     public static final String RACE = "Race";
     public static final String RACIAL_TRAITS = "RacialTraits";
@@ -176,8 +176,7 @@ public class SpigotMCDNDSimpleKeys
     public static final String WIZARD_LEVEL = "WizardLevel";
     public static final String WORN = "Worn";
 
-    private SpigotMCDNDSimpleKeys()
-    {
+    private SpigotMCDNDSimpleKeys() {
 
     }
 }

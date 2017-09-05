@@ -18,8 +18,8 @@ import org.bukkit.entity.Player;
 
 public class InitiativeGUI extends MCDNDSimpleChestGUI {
 
-    private final AbilityScore dex;
     private final BioAndInfo bioAndInfo;
+    private final AbilityScore dex;
     private final Initiative initiative;
 
     public InitiativeGUI(Player player, AbilityScore dex, BioAndInfo bioAndInfo, Initiative initiative, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI) {

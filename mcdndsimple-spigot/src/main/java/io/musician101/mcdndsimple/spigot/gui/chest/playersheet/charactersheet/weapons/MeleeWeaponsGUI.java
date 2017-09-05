@@ -21,8 +21,8 @@ public class MeleeWeaponsGUI extends MCDNDSimplePagedGUI {
     private final ClassLevels classLevels;
     private final CoreStats coreStats;
     private final Experience experience;
-    private final List<MeleeWeapon> weapons;
     private final MeleeBonus meleeBonus;
+    private final List<MeleeWeapon> weapons;
 
     public MeleeWeaponsGUI(Player player, List<MeleeWeapon> weapons, int page, BioAndInfo bioAndInfo, ClassLevels classLevels, CoreStats coreStats, Experience experience, MeleeBonus meleeBonus, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
         super(player, 54, MenuText.MELEE_WEAPONS, page, prevGUI);

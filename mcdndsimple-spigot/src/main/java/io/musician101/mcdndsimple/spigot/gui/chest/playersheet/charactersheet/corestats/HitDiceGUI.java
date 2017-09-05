@@ -15,8 +15,8 @@ import org.bukkit.entity.Player;
 
 public class HitDiceGUI extends MCDNDSimpleChestGUI {
 
-    private final AbilityScore con;
     private final BioAndInfo bioAndInfo;
+    private final AbilityScore con;
     private final HitDice hitDice;
 
     public HitDiceGUI(Player player, AbilityScore con, BioAndInfo bioAndInfo, HitDice hitDice, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI) {

@@ -10,19 +10,17 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public class ArmorListGUI extends MCDNDSimplePagedGUI
-{
+public class ArmorListGUI extends MCDNDSimplePagedGUI {
+
     private final List<Armor> armorList;
 
-    public ArmorListGUI(Player player, List<Armor> armorList, int page, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI)
-    {
+    public ArmorListGUI(Player player, List<Armor> armorList, int page, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
         super(player, 54, MenuText.ARMOR, page, prevGUI);
         this.armorList = armorList;
     }
 
     @Override
-    protected void build()
-    {
+    protected void build() {
         setContents(armorList, ItemRepresentation::armor, (player, armor) -> p -> new ArmorGUI(player, armor, this));
         int maxPage = new Double(Math.ceil(armorList.size() / 45)).intValue();
         setJumpToPage(45, maxPage, (player, page) -> new ArmorListGUI(player, armorList, page, prevGUI));

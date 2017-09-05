@@ -27,14 +27,6 @@ public abstract class MCDNDSimpleChestGUI extends AbstractSpigotChestGUI<SpigotM
         super(player, size, name, prevGUI, SpigotMCDNDSimple.instance());
     }
 
-    protected ItemStack addGlowIfConditionsMet(@Nonnull ItemStack itemStack, @Nonnull Supplier<Boolean> conditionSupplier) {
-        if (conditionSupplier.get()) {
-            return addGlow(itemStack);
-        }
-
-        return itemStack;
-    }
-
     protected ItemStack addGlow(@Nonnull ItemStack itemStack) {
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.addEnchant(Enchantment.DURABILITY, 1, true);
@@ -43,16 +35,11 @@ public abstract class MCDNDSimpleChestGUI extends AbstractSpigotChestGUI<SpigotM
         return itemStack;
     }
 
-    protected ItemStack setPotionEffect(@Nonnull ItemStack itemStack, @Nonnull PotionType potionType) {
-        PotionMeta potionMeta = (PotionMeta) itemStack.getItemMeta();
-        potionMeta.setBasePotionData(new PotionData(potionType));
-        potionMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-        itemStack.setItemMeta(potionMeta);
-        return itemStack;
-    }
+    protected ItemStack addGlowIfConditionsMet(@Nonnull ItemStack itemStack, @Nonnull Supplier<Boolean> conditionSupplier) {
+        if (conditionSupplier.get()) {
+            return addGlow(itemStack);
+        }
 
-    protected ItemStack setDurability(ItemStack itemStack, int durability) {
-        itemStack.setDurability((short) durability);
         return itemStack;
     }
 
@@ -62,5 +49,18 @@ public abstract class MCDNDSimpleChestGUI extends AbstractSpigotChestGUI<SpigotM
 
     protected <G extends MCDNDSimpleChestGUI> void delayedOpen(Supplier<G> gui) {
         Bukkit.getScheduler().runTaskLater(SpigotMCDNDSimple.instance(), gui::get, 1L);
+    }
+
+    protected ItemStack setDurability(ItemStack itemStack, int durability) {
+        itemStack.setDurability((short) durability);
+        return itemStack;
+    }
+
+    protected ItemStack setPotionEffect(@Nonnull ItemStack itemStack, @Nonnull PotionType potionType) {
+        PotionMeta potionMeta = (PotionMeta) itemStack.getItemMeta();
+        potionMeta.setBasePotionData(new PotionData(potionType));
+        potionMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        itemStack.setItemMeta(potionMeta);
+        return itemStack;
     }
 }

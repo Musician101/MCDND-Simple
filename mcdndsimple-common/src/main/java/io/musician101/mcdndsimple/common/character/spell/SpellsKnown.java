@@ -123,196 +123,6 @@ public class SpellsKnown {
         return 0;
     }
 
-    public static int getSpellsKnown(String clazz, int level) {
-        switch (clazz) {
-            case "arcane trickster":
-            case "eldritch knight":
-                switch (level) {
-                    case 3:
-                        return 3;
-                    case 4:
-                    case 5:
-                    case 6:
-                        return 4;
-                    case 7:
-                        return 5;
-                    case 8:
-                    case 9:
-                        return 6;
-                    case 10:
-                        return 7;
-                    case 11:
-                    case 12:
-                        return 8;
-                    case 13:
-                        return 9;
-                    case 14:
-                    case 15:
-                        return 10;
-                    case 16:
-                    case 17:
-                    case 18:
-                        return 11;
-                    case 19:
-                        return 12;
-                    case 20:
-                        return 13;
-                }
-                break;
-            case "bard":
-                switch (level) {
-                    case 1:
-                        return 4;
-                    case 2:
-                        return 5;
-                    case 3:
-                        return 6;
-                    case 4:
-                        return 7;
-                    case 5:
-                        return 8;
-                    case 6:
-                        return 9;
-                    case 7:
-                        return 10;
-                    case 8:
-                        return 11;
-                    case 9:
-                        return 12;
-                    case 10:
-                        return 14;
-                    case 11:
-                    case 12:
-                        return 15;
-                    case 13:
-                        return 16;
-                    case 14:
-                        return 18;
-                    case 15:
-                    case 16:
-                        return 19;
-                    case 17:
-                        return 20;
-                    case 18:
-                    case 19:
-                    case 20:
-                        return 22;
-                }
-                break;
-            case "ranger":
-                switch (level) {
-                    case 2:
-                        return 2;
-                    case 3:
-                    case 4:
-                        return 3;
-                    case 5:
-                    case 6:
-                        return 4;
-                    case 7:
-                    case 8:
-                        return 5;
-                    case 9:
-                    case 10:
-                        return 6;
-                    case 11:
-                    case 12:
-                        return 7;
-                    case 13:
-                    case 14:
-                        return 8;
-                    case 15:
-                    case 16:
-                        return 9;
-                    case 17:
-                    case 18:
-                        return 10;
-                    case 19:
-                    case 20:
-                        return 11;
-                }
-                break;
-            case "sorcerer":
-                switch (level) {
-                    case 1:
-                        return 2;
-                    case 2:
-                        return 3;
-                    case 3:
-                        return 4;
-                    case 4:
-                        return 5;
-                    case 5:
-                        return 6;
-                    case 6:
-                        return 7;
-                    case 7:
-                        return 8;
-                    case 8:
-                        return 9;
-                    case 9:
-                        return 10;
-                    case 10:
-                        return 11;
-                    case 11:
-                    case 12:
-                        return 12;
-                    case 13:
-                    case 14:
-                        return 13;
-                    case 15:
-                    case 16:
-                        return 14;
-                    case 17:
-                    case 18:
-                    case 19:
-                    case 20:
-                        return 15;
-                }
-                break;
-            case "warlock":
-                switch (level) {
-                    case 1:
-                        return 2;
-                    case 2:
-                        return 3;
-                    case 3:
-                        return 4;
-                    case 4:
-                        return 5;
-                    case 5:
-                        return 6;
-                    case 6:
-                        return 7;
-                    case 7:
-                        return 8;
-                    case 8:
-                        return 9;
-                    case 9:
-                    case 10:
-                        return 10;
-                    case 11:
-                    case 12:
-                        return 11;
-                    case 13:
-                    case 14:
-                        return 12;
-                    case 15:
-                    case 16:
-                        return 13;
-                    case 17:
-                    case 18:
-                        return 14;
-                    case 19:
-                    case 20:
-                        return 15;
-                }
-                break;
-        }
-
-        return 0;
-    }
-
     public static int getSpellSlots(String clazz, int level, int spellLevel) {
         switch (clazz) {
             case "arcane trickster":
@@ -497,6 +307,196 @@ public class SpellsKnown {
                 }
                 else if (level >= 17 && level <= 20) {
                     return 4;
+                }
+                break;
+        }
+
+        return 0;
+    }
+
+    public static int getSpellsKnown(String clazz, int level) {
+        switch (clazz) {
+            case "arcane trickster":
+            case "eldritch knight":
+                switch (level) {
+                    case 3:
+                        return 3;
+                    case 4:
+                    case 5:
+                    case 6:
+                        return 4;
+                    case 7:
+                        return 5;
+                    case 8:
+                    case 9:
+                        return 6;
+                    case 10:
+                        return 7;
+                    case 11:
+                    case 12:
+                        return 8;
+                    case 13:
+                        return 9;
+                    case 14:
+                    case 15:
+                        return 10;
+                    case 16:
+                    case 17:
+                    case 18:
+                        return 11;
+                    case 19:
+                        return 12;
+                    case 20:
+                        return 13;
+                }
+                break;
+            case "bard":
+                switch (level) {
+                    case 1:
+                        return 4;
+                    case 2:
+                        return 5;
+                    case 3:
+                        return 6;
+                    case 4:
+                        return 7;
+                    case 5:
+                        return 8;
+                    case 6:
+                        return 9;
+                    case 7:
+                        return 10;
+                    case 8:
+                        return 11;
+                    case 9:
+                        return 12;
+                    case 10:
+                        return 14;
+                    case 11:
+                    case 12:
+                        return 15;
+                    case 13:
+                        return 16;
+                    case 14:
+                        return 18;
+                    case 15:
+                    case 16:
+                        return 19;
+                    case 17:
+                        return 20;
+                    case 18:
+                    case 19:
+                    case 20:
+                        return 22;
+                }
+                break;
+            case "ranger":
+                switch (level) {
+                    case 2:
+                        return 2;
+                    case 3:
+                    case 4:
+                        return 3;
+                    case 5:
+                    case 6:
+                        return 4;
+                    case 7:
+                    case 8:
+                        return 5;
+                    case 9:
+                    case 10:
+                        return 6;
+                    case 11:
+                    case 12:
+                        return 7;
+                    case 13:
+                    case 14:
+                        return 8;
+                    case 15:
+                    case 16:
+                        return 9;
+                    case 17:
+                    case 18:
+                        return 10;
+                    case 19:
+                    case 20:
+                        return 11;
+                }
+                break;
+            case "sorcerer":
+                switch (level) {
+                    case 1:
+                        return 2;
+                    case 2:
+                        return 3;
+                    case 3:
+                        return 4;
+                    case 4:
+                        return 5;
+                    case 5:
+                        return 6;
+                    case 6:
+                        return 7;
+                    case 7:
+                        return 8;
+                    case 8:
+                        return 9;
+                    case 9:
+                        return 10;
+                    case 10:
+                        return 11;
+                    case 11:
+                    case 12:
+                        return 12;
+                    case 13:
+                    case 14:
+                        return 13;
+                    case 15:
+                    case 16:
+                        return 14;
+                    case 17:
+                    case 18:
+                    case 19:
+                    case 20:
+                        return 15;
+                }
+                break;
+            case "warlock":
+                switch (level) {
+                    case 1:
+                        return 2;
+                    case 2:
+                        return 3;
+                    case 3:
+                        return 4;
+                    case 4:
+                        return 5;
+                    case 5:
+                        return 6;
+                    case 6:
+                        return 7;
+                    case 7:
+                        return 8;
+                    case 8:
+                        return 9;
+                    case 9:
+                    case 10:
+                        return 10;
+                    case 11:
+                    case 12:
+                        return 11;
+                    case 13:
+                    case 14:
+                        return 12;
+                    case 15:
+                    case 16:
+                        return 13;
+                    case 17:
+                    case 18:
+                        return 14;
+                    case 19:
+                    case 20:
+                        return 15;
                 }
                 break;
         }

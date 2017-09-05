@@ -18,21 +18,19 @@ import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSp
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public class CharacterSheetGUI extends MCDNDSimpleChestGUI
-{
+public class CharacterSheetGUI extends MCDNDSimpleChestGUI {
+
     private final BioAndInfo bioAndInfo;
     private final CharacterSheet characterSheet;
 
-    public CharacterSheetGUI(Player player, BioAndInfo bioAndInfo, CharacterSheet characterSheet, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI)
-    {
+    public CharacterSheetGUI(Player player, BioAndInfo bioAndInfo, CharacterSheet characterSheet, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
         super(player, 9, MenuText.CHARACTER_SHEET, prevGUI);
         this.characterSheet = characterSheet;
         this.bioAndInfo = bioAndInfo;
     }
 
     @Override
-    protected void build()
-    {
+    protected void build() {
         set(0, createItem(Material.DIAMOND_CHESTPLATE, MenuText.ARMOR), player -> new ArmorTabGUI(player, characterSheet.getArmorTab(), this));
         set(1, createItem(Material.BOOK, MenuText.BACKGROUND), player -> new BackgroundTabGUI(player, characterSheet.getBackgroundTab(), this));
         ClassTab classTab = characterSheet.getClassTab();

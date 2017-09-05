@@ -5,34 +5,42 @@ import io.musician101.mcdndsimple.common.character.ClassLevels;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.Experience;
 
-public abstract class AbstractWeapon
-{
-    private boolean isProficient = true;
-    private Dice critDamageDice = new Dice(0);
-    private Dice damageDice = new Dice(0);
-    private int critMin = 20;
-    private int magicBonus = 0;
+public abstract class AbstractWeapon {
+
     private WeaponAttackStat attackStat;
+    private Dice critDamageDice = new Dice(0);
+    private int critMin = 20;
+    private Dice damageDice = new Dice(0);
     private String damageType = "";
+    private boolean isProficient = true;
+    private int magicBonus = 0;
     private String name = "";
 
-    public WeaponAttackStat getAttackStat()
-    {
+    public WeaponAttackStat getAttackStat() {
         return attackStat;
     }
 
-    public Dice getCritDamageDice()
-    {
+    public void setAttackStat(WeaponAttackStat attackStat) {
+        this.attackStat = attackStat;
+    }
+
+    public Dice getCritDamageDice() {
         return critDamageDice;
     }
 
-    public int getCritMin()
-    {
+    public void setCritDamageDice(Dice critDamageDice) {
+        this.critDamageDice = critDamageDice;
+    }
+
+    public int getCritMin() {
         return critMin;
     }
 
-    public int getDamageBonus(CoreStats coreStats)
-    {
+    public void setCritMin(int critMin) {
+        this.critMin = critMin;
+    }
+
+    public int getDamageBonus(CoreStats coreStats) {
         if (attackStat.equals(WeaponAttackStat.FINESSE)) {
             return Math.max(coreStats.getStrength().getMod(), coreStats.getDexterity().getMod());
         }
@@ -58,94 +66,70 @@ public abstract class AbstractWeapon
         return 0;
     }
 
-    public Dice getDamageDice()
-    {
+    public Dice getDamageDice() {
         return damageDice;
+    }
+
+    public void setDamageDice(Dice damageDice) {
+        this.damageDice = damageDice;
     }
 
     public String getDamageType() {
         return damageType;
     }
 
-    public int getMagicBonus()
-    {
+    public void setDamageType(String damageType) {
+        this.damageType = damageType;
+    }
+
+    public int getMagicBonus() {
         return magicBonus;
     }
 
-    public String getName()
-    {
+    public void setMagicBonus(int magicBonus) {
+        this.magicBonus = magicBonus;
+    }
+
+    public String getName() {
         return name;
     }
 
-    public int getToHit(ClassLevels classLevels, CoreStats coreStats, Experience experience)
-    {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getToHit(ClassLevels classLevels, CoreStats coreStats, Experience experience) {
         int toHit = experience.getProficiencyBonus(classLevels);
         if (attackStat.equals(WeaponAttackStat.FINESSE)) {
-            toHit =+ Math.max(coreStats.getStrength().getMod(), coreStats.getDexterity().getMod());
+            toHit = +Math.max(coreStats.getStrength().getMod(), coreStats.getDexterity().getMod());
         }
         else if (attackStat.equals(WeaponAttackStat.CHA)) {
-            toHit =+ coreStats.getCharisma().getMod();
+            toHit = +coreStats.getCharisma().getMod();
         }
         else if (attackStat.equals(WeaponAttackStat.CON)) {
-            toHit =+ coreStats.getConstitution().getMod();
+            toHit = +coreStats.getConstitution().getMod();
         }
         else if (attackStat.equals(WeaponAttackStat.DEX)) {
-            toHit =+ coreStats.getDexterity().getMod();
+            toHit = +coreStats.getDexterity().getMod();
         }
         else if (attackStat.equals(WeaponAttackStat.INT)) {
-            toHit =+ coreStats.getIntelligence().getMod();
+            toHit = +coreStats.getIntelligence().getMod();
         }
         else if (attackStat.equals(WeaponAttackStat.STR)) {
-            toHit =+ coreStats.getStrength().getMod();
+            toHit = +coreStats.getStrength().getMod();
         }
         else if (attackStat.equals(WeaponAttackStat.WIS)) {
-            toHit =+ coreStats.getWisdom().getMod();
+            toHit = +coreStats.getWisdom().getMod();
         }
 
         return toHit;
     }
 
-    public boolean isProficient()
-    {
+    public boolean isProficient() {
         return isProficient;
     }
 
-    public void setAttackStat(WeaponAttackStat attackStat)
-    {
-        this.attackStat = attackStat;
-    }
-
-    public void setCritDamageDice(Dice critDamageDice)
-    {
-        this.critDamageDice = critDamageDice;
-    }
-
-    public void setCritMin(int critMin)
-    {
-        this.critMin = critMin;
-    }
-
-    public void setDamageDice(Dice damageDice)
-    {
-        this.damageDice = damageDice;
-    }
-
-    public void setDamageType(String damageType) {
-        this.damageType = damageType;
-    }
-
-    public void setMagicBonus(int magicBonus)
-    {
-        this.magicBonus = magicBonus;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public void setIsProficient(boolean proficient)
-    {
+    public void setIsProficient(boolean proficient) {
         isProficient = proficient;
     }
 }

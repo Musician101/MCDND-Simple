@@ -4,8 +4,8 @@ import io.musician101.mcdndsimple.common.character.AbilityScore;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.skill.Skill;
 
-public class SkillsTab
-{
+public class SkillsTab {
+
     private final Skill acrobatics = new Skill("Acrobatics (Dex)");
     private final Skill animalHandling = new Skill("Animal Handling (Wis)");
     private final Skill arcana = new Skill("Arcana (Int)");
@@ -31,128 +31,103 @@ public class SkillsTab
     private final Skill unskilledSTR = new Skill("Unskilled STR");
     private final Skill unskilledWIS = new Skill("Unskilled WIS");
 
-    public Skill getAcrobatics()
-    {
+    public Skill getAcrobatics() {
         return acrobatics;
     }
 
-    public Skill getAnimalHandling()
-    {
+    public Skill getAnimalHandling() {
         return animalHandling;
     }
 
-    public Skill getArcana()
-    {
+    public Skill getArcana() {
         return arcana;
     }
 
-    public Skill getAthletics()
-    {
+    public Skill getAthletics() {
         return athletics;
     }
 
-    public Skill getDeception()
-    {
+    public Skill getDeception() {
         return deception;
     }
 
-    public Skill getHistory()
-    {
+    public Skill getHistory() {
         return history;
     }
 
-    public Skill getInsight()
-    {
+    public Skill getInsight() {
         return insight;
     }
 
-    public Skill getIntimidation()
-    {
+    public Skill getIntimidation() {
         return intimidation;
     }
 
-    public Skill getInvestigation()
-    {
+    public Skill getInvestigation() {
         return investigation;
     }
 
-    public Skill getMedicine()
-    {
+    public Skill getMedicine() {
         return medicine;
     }
 
-    public Skill getNature()
-    {
+    public Skill getNature() {
         return nature;
     }
 
-    public Skill getPerception()
-    {
+    public Skill getPerception() {
         return perception;
     }
 
-    public Skill getPerformance()
-    {
+    public Skill getPerformance() {
         return performance;
     }
 
-    public Skill getPersuasion()
-    {
+    public Skill getPersuasion() {
         return persuasion;
     }
 
-    public Skill getReligion()
-    {
+    public Skill getReligion() {
         return religion;
     }
 
-    public Skill getSleightOfHand()
-    {
+    public Skill getSleightOfHand() {
         return sleightOfHand;
     }
 
-    public Skill getStealth()
-    {
+    public Skill getStealth() {
         return stealth;
     }
 
-    public Skill getSurvival()
-    {
+    public Skill getSurvival() {
         return survival;
     }
 
-    public Skill getUnskilledCHA()
-    {
+    public Skill getUnskilledCHA() {
         return unskilledCHA;
     }
 
-    public Skill getUnskilledCON()
-    {
+    public Skill getUnskilledCON() {
         return unskilledCON;
     }
 
-    public Skill getUnskilledDEX()
-    {
+    public Skill getUnskilledDEX() {
         return unskilledDEX;
     }
 
-    public Skill getUnskilledINT()
-    {
+    public Skill getUnskilledINT() {
         return unskilledINT;
     }
 
-    public Skill getUnskilledSTR()
-    {
+    public Skill getUnskilledSTR() {
         return unskilledSTR;
     }
 
-    public Skill getUnskilledWIS()
-    {
+    public Skill getUnskilledWIS() {
         return unskilledWIS;
     }
 
-    public void updateSkills(CoreStats coreStats)
-    {
+    public void updateSkills(CoreStats coreStats) {
         AbilityScore cha = coreStats.getCharisma();
         AbilityScore con = coreStats.getConstitution();
         AbilityScore dex = coreStats.getDexterity();

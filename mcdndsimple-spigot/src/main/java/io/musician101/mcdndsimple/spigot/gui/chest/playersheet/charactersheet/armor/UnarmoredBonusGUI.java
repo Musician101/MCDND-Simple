@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class UnarmoredBonusGUI extends MCDNDSimpleChestGUI {
 
     private ArmorTab armorTab;
+
     public UnarmoredBonusGUI(Player player, ArmorTab armorTab, AbstractSpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
         super(player, 9, "Unarmored Bonus", prevGUI);
         this.armorTab = armorTab;

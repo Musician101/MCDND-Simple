@@ -14,8 +14,8 @@ import static org.spongepowered.api.data.key.KeyFactory.makeListKey;
 import static org.spongepowered.api.data.key.KeyFactory.makeMapKey;
 import static org.spongepowered.api.data.key.KeyFactory.makeSingleKey;
 
-public class SpongeMCDNDSimpleKeys
-{
+public class SpongeMCDNDSimpleKeys {
+
     public static final Key<BaseValue<Integer>> ABILITIES_AND_SKILLS = makeSingleKey(token(Integer.class), token(), of("AbilitiesAndSkills"), SpongeMCDNDSimple.getPluginContainer().getId() + ":abilities_and_skills", "Abilities and Skills");
     public static final Key<Value<DataContainer>> ACROBATICS = makeSingleKey(token(DataContainer.class), token(), of("Acrobatics"), SpongeMCDNDSimple.getPluginContainer().getId() + ":acrobatics", "Acrobatics");
     public static final Key<Value<Integer>> AGE = makeSingleKey(token(Integer.class), token(), of("Age"), SpongeMCDNDSimple.getPluginContainer().getId() + ":age", "Age");
@@ -190,8 +190,7 @@ public class SpongeMCDNDSimpleKeys
     public static final Key<Value<Integer>> WIZARD_LEVEL = makeSingleKey(token(Integer.class), token(), of("WizardLevel"), SpongeMCDNDSimple.getPluginContainer().getId() + ":wizard_level", "Wizard Level");
     public static final Key<Value<Boolean>> WORN = makeSingleKey(token(Boolean.class), token(), of("Worn"), SpongeMCDNDSimple.getPluginContainer().getId() + ":worn", "Worn");
 
-    private SpongeMCDNDSimpleKeys()
-    {
+    private SpongeMCDNDSimpleKeys() {
 
     }
 
@@ -199,8 +198,9 @@ public class SpongeMCDNDSimpleKeys
         return TypeToken.of(clazz);
     }
 
-    private static <E> TypeToken<E> token()
-    {
-        return new TypeToken<E>(){};
+    private static <E> TypeToken<E> token() {
+        return new TypeToken<E>() {
+
+        };
     }
 }

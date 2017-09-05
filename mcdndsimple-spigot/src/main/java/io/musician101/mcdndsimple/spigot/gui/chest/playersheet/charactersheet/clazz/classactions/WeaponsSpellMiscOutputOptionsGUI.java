@@ -86,7 +86,7 @@ public class WeaponsSpellMiscOutputOptionsGUI extends MCDNDSimpleChestGUI {
             player.closeInventory();
             open();
         });
-        
+
         setBackButton(8, Material.BARRIER);
     }
 }

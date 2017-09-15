@@ -9,6 +9,7 @@ import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSp
 import java.util.function.Consumer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class SpellSlotsGUI extends MCDNDSimpleChestGUI {
 
@@ -22,11 +23,11 @@ public class SpellSlotsGUI extends MCDNDSimpleChestGUI {
     @Override
     protected void build() {
         for (int x = 0; x < 18; x++) {
-            set(x, createItem(Material.ENCHANTED_BOOK, MenuText.level(x), MenuText.used(getUsed(x))), usedConsumer(x));
-            set(x + 9, createItem(Material.ENCHANTED_BOOK, MenuText.level(x), MenuText.maxUses(getMax(x))), maxConsumer(x));
+            set(x, ClickType.LEFT, createItem(Material.ENCHANTED_BOOK, MenuText.level(x), MenuText.used(getUsed(x))), usedConsumer(x));
+            set(x + 9, ClickType.LEFT, createItem(Material.ENCHANTED_BOOK, MenuText.level(x), MenuText.maxUses(getMax(x))), maxConsumer(x));
         }
 
-        setBackButton(17, Material.BARRIER);
+        setBackButton(17, ClickType.LEFT, Material.BARRIER);
     }
 
     private int getMax(int x) {

@@ -6,6 +6,8 @@ import io.musician101.mcdndsimple.spigot.serialization.SpigotMCDNDSerializer;
 import java.io.File;
 import org.bukkit.configuration.MemoryConfiguration;
 
+//TODO incomplete
+@Deprecated
 public class SpigotCharacterSheetStorage extends CharacterSheetStorage<SpigotMCDNDSerializer, SpigotMCDNDDeserializer, MemoryConfiguration> {
 
     public SpigotCharacterSheetStorage(File storageDir) {

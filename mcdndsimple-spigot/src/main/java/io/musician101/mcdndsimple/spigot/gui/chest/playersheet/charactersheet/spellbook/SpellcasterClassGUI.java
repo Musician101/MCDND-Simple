@@ -9,6 +9,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 public class SpellcasterClassGUI<T> extends MCDNDSimpleChestGUI {
@@ -34,17 +35,12 @@ public class SpellcasterClassGUI<T> extends MCDNDSimpleChestGUI {
                 addGlow(itemStack);
             }
 
-            set(x, itemStack, player -> {
+            set(x, ClickType.LEFT, itemStack, player -> {
                 valueSetter.accept(value, spellcasterClass);
-                if (prevGUI == null) {
-                    player.closeInventory();
-                }
-                else {
-                    prevGUI.open();
-                }
+                delayedOpen();
             });
         }
 
-        setBackButton(18, Material.BARRIER);
+        setBackButton(17, ClickType.LEFT, Material.BARRIER);
     }
 }

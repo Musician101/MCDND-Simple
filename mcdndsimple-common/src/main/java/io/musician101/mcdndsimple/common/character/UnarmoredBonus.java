@@ -3,7 +3,10 @@ package io.musician101.mcdndsimple.common.character;
 import java.util.function.BiFunction;
 
 public enum UnarmoredBonus {
-    BARBARIAN("Barbarian"), DRACONIC_RESILIENCE("Draconic Resilience (Sorcerer Subclass)", (dexMod, secondMod) -> 13 + dexMod), MONK("Monk"), NONE("None", (dexMod, secondMod) -> 0);
+    BARBARIAN("Barbarian"),
+    DRACONIC_RESILIENCE("Draconic Resilience (Sorcerer Subclass)", (dexMod, secondMod) -> 13 + dexMod),
+    MONK("Monk"),
+    NONE("None", (dexMod, secondMod) -> 0);
 
     private final BiFunction<Integer, Integer, Integer> biFunction;
     private final String name;

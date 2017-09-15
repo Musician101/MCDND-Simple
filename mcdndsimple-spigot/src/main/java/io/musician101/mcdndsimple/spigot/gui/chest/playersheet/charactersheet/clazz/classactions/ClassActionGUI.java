@@ -14,6 +14,7 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
@@ -30,37 +31,34 @@ public class ClassActionGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
-        set(0, createItem(Material.PAPER, classAction.getName()), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(0, ClickType.LEFT, createItem(Material.PAPER, classAction.getName()), player -> new StringInputAnvilGUI(player, (p, s) -> {
             classAction.setName(s);
             new ClassActionGUI(player, classAction, classActions, prevGUI);
         }));
-        set(1, createItem(Material.REDSTONE_TORCH_OFF, MenuText.used(classAction.getUsedCharges())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(1, ClickType.LEFT, createItem(Material.REDSTONE_TORCH_OFF, MenuText.used(classAction.getUsedCharges())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             classAction.setUsedCharges(i);
-            player.closeInventory();
             open();
         }));
-        set(2, createItem(Material.REDSTONE_TORCH_ON, MenuText.maxUses(classAction.getMax())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(2, ClickType.LEFT, createItem(Material.REDSTONE_TORCH_ON, MenuText.maxUses(classAction.getMax())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             classAction.setMax(i);
-            player.closeInventory();
             open();
         }));
-        set(3, createItem(Material.BED, MenuText.recharge(classAction.getRecharge())), player -> new RechargeGUI<>(player, classAction, () -> new ClassActionGUI(player, classAction, classActions, prevGUI), this));
-        set(4, createItem(Material.DIAMOND_SWORD, MenuText.GAINED_FROM), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(3, ClickType.LEFT, createItem(Material.BED, MenuText.recharge(classAction.getRecharge())), player -> new RechargeGUI<>(player, classAction, () -> new ClassActionGUI(player, classAction, classActions, prevGUI), this));
+        set(4, ClickType.LEFT, createItem(Material.DIAMOND_SWORD, MenuText.GAINED_FROM), player -> new StringInputAnvilGUI(player, (p, s) -> {
             classAction.setGainedFrom(s);
-            player.closeInventory();
             open();
         }));
         ItemStack output = createItem(Material.BOOK, MenuText.OUTPUT);
         BookMeta outputMeta = (BookMeta) output.getItemMeta();
         outputMeta.setPages(classAction.getOutput());
         output.setItemMeta(outputMeta);
-        set(5, output, player -> new SpigotBookGUI<>(SpigotMCDNDSimple.instance(), player, output, pages -> {
+        set(5, ClickType.LEFT, output, player -> new SpigotBookGUI<>(SpigotMCDNDSimple.instance(), player, output, pages -> {
             classAction.setOutput(pages);
             open();
         }));
-        set(6, createItem(Material.REDSTONE, MenuText.OUTPUT_OPTIONS), player -> new OutputOptionsGUI(player, classAction.getOutputOptions(), this));
+        set(6, ClickType.LEFT, createItem(Material.REDSTONE, MenuText.OUTPUT_OPTIONS), player -> new OutputOptionsGUI(player, classAction.getOutputOptions(), this));
         //TODO need to add delete function to classaction, classresource and inventory guis
-        set(7, createItem(Material.ENDER_CHEST, MenuText.DELETE), player -> {
+        set(7, ClickType.LEFT, createItem(Material.ENDER_CHEST, MenuText.DELETE), player -> {
             classActions.remove(classAction);
             if (prevGUI != null) {
                 prevGUI.open();
@@ -70,6 +68,6 @@ public class ClassActionGUI extends MCDNDSimpleChestGUI {
                 player.sendMessage(ChatColor.GREEN + Messages.CLASS_ACTION_DELETED);
             }
         });
-        setBackButton(9, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

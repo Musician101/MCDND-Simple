@@ -9,6 +9,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class WealthGUI extends MCDNDSimpleChestGUI {
 
@@ -21,32 +22,32 @@ public class WealthGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
-        set(0, createItem(Material.ROTTEN_FLESH, MenuText.coin(wealth.getCopper())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(0, ClickType.LEFT, createItem(Material.ROTTEN_FLESH, MenuText.coin(wealth.getCopper())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             Coin coin = new Coin("Copper", "CP");
             coin.setAmount(i);
             wealth.setCopper(coin);
         }));
-        set(1, createItem(Material.IRON_NUGGET, MenuText.coin(wealth.getCopper())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(1, ClickType.LEFT, createItem(Material.IRON_NUGGET, MenuText.coin(wealth.getCopper())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             Coin coin = new Coin("Silver", "SP");
             coin.setAmount(i);
             wealth.setCopper(coin);
         }));
-        set(2, createItem(Material.IRON_INGOT, MenuText.coin(wealth.getCopper())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(2, ClickType.LEFT, createItem(Material.IRON_INGOT, MenuText.coin(wealth.getCopper())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             Coin coin = new Coin("Electrum", "EP");
             coin.setAmount(i);
             wealth.setCopper(coin);
         }));
-        set(3, createItem(Material.GOLD_NUGGET, MenuText.coin(wealth.getCopper())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(3, ClickType.LEFT, createItem(Material.GOLD_NUGGET, MenuText.coin(wealth.getCopper())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             Coin coin = new Coin("Gold", "GP");
             coin.setAmount(i);
             wealth.setCopper(coin);
         }));
-        set(4, createItem(Material.DIAMOND, MenuText.coin(wealth.getCopper())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(4, ClickType.LEFT, createItem(Material.DIAMOND, MenuText.coin(wealth.getCopper())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             Coin coin = new Coin("Platinum", "PP");
             coin.setAmount(i);
             wealth.setCopper(coin);
         }));
         set(5, createItem(Material.EMERALD, MenuText.total(wealth), MenuText.TOTAL_IN_GOLD));
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

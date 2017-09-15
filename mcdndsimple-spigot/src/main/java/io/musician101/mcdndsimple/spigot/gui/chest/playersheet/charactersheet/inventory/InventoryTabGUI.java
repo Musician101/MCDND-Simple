@@ -10,6 +10,7 @@ import io.musician101.musicianlibrary.java.minecraft.spigot.gui.SpigotBookGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
@@ -27,10 +28,10 @@ public class InventoryTabGUI extends MCDNDSimpleChestGUI {
     @Override
     protected void build() {
         Wealth wealth = inventoryTab.getWealth();
-        set(0, createItem(Material.EMERALD, MenuText.COIN_CARRIED, MenuText.coinCarriedDescription(wealth)), player -> new WealthGUI(player, inventoryTab.getWealth(), this));
-        set(1, createItem(Material.STONE, MenuText.WEIGHT), player -> new WeightGUI(player, inventoryTab.getWeight(), coreStats, this));
-        set(2, createItem(Material.CHEST, MenuText.INVENTORY), player -> new InventoryGUI(player, inventoryTab.getInventory(), 0, this));
-        set(3, createItem(Material.BOOK, MenuText.INVENTORY_NOTES), player -> {
+        set(0, ClickType.LEFT, createItem(Material.EMERALD, MenuText.COIN_CARRIED, MenuText.coinCarriedDescription(wealth)), player -> new WealthGUI(player, inventoryTab.getWealth(), this));
+        set(1, ClickType.LEFT, createItem(Material.STONE, MenuText.WEIGHT), player -> new WeightGUI(player, inventoryTab.getWeight(), coreStats, this));
+        set(2, ClickType.LEFT, createItem(Material.CHEST, MenuText.INVENTORY), player -> new InventoryGUI(player, inventoryTab.getInventory(), 0, this));
+        set(3, ClickType.LEFT, createItem(Material.BOOK, MenuText.INVENTORY_NOTES), player -> {
             ItemStack book = createItem(Material.BOOK_AND_QUILL, MenuText.INVENTORY_NOTES);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setPages(inventoryTab.getInventoryNotes());
@@ -40,6 +41,6 @@ public class InventoryTabGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

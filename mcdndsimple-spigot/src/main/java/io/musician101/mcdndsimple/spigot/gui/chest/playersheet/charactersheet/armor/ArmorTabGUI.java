@@ -7,6 +7,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class ArmorTabGUI extends MCDNDSimpleChestGUI {
 
@@ -21,8 +22,8 @@ public class ArmorTabGUI extends MCDNDSimpleChestGUI {
     protected void build() {
         set(0, createItem(Material.CHAINMAIL_CHESTPLATE, MenuText.armoredAC(armorTab)));
         set(1, createItem(Material.LEATHER_CHESTPLATE, MenuText.unarmoredAC(armorTab)));
-        set(2, createItem(Material.DIAMOND_CHESTPLATE, MenuText.ARMOR), player -> new ArmorListGUI(player, armorTab.getArmorList(), 0, this));
-        set(3, createItem(Material.IRON_CHESTPLATE, MenuText.UNARMORED_BONUS, MenuText.current(armorTab)), player -> new UnarmoredBonusGUI(player, armorTab, this));
-        setBackButton(8, Material.BARRIER);
+        set(2, ClickType.LEFT, createItem(Material.DIAMOND_CHESTPLATE, MenuText.ARMOR), player -> new ArmorListGUI(player, armorTab.getArmorList(), 0, this));
+        set(3, ClickType.LEFT, createItem(Material.IRON_CHESTPLATE, MenuText.UNARMORED_BONUS, MenuText.current(armorTab)), player -> new UnarmoredBonusGUI(player, armorTab, this));
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

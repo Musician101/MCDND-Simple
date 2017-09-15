@@ -1,0 +1,19 @@
+[
+    {
+        "modid": "mcdndsimple",
+        "name": "MCDND-Simple",
+        "version": "${project.version}",
+        "description": "Test",
+        "authorList": [
+            "Musician101"
+        ],
+        "dependencies": [
+            "spongemusicianlibrary",
+            "spongeapi@7.0.0-SNAPSHOT"
+        ],
+        "requiredMods": [
+            "spongemusicianlibrary",
+            "spongeapi@7.0.0-SNAPSHOT"
+        ]
+    }
+]

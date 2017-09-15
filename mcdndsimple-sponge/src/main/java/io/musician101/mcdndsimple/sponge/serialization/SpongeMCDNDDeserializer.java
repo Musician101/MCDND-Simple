@@ -25,6 +25,7 @@ import io.musician101.mcdndsimple.common.character.equipment.armor.ArmorType;
 import io.musician101.mcdndsimple.common.character.equipment.currency.Coin;
 import io.musician101.mcdndsimple.common.character.equipment.currency.Wealth;
 import io.musician101.mcdndsimple.common.character.skill.SkillProficiency;
+import io.musician101.mcdndsimple.common.character.spell.Prepared;
 import io.musician101.mcdndsimple.common.character.spell.SaveDCType;
 import io.musician101.mcdndsimple.common.character.spell.SaveDCTypes;
 import io.musician101.mcdndsimple.common.character.spell.Spell;
@@ -33,6 +34,7 @@ import io.musician101.mcdndsimple.common.character.spell.SpellHealing;
 import io.musician101.mcdndsimple.common.character.spell.SpellSave;
 import io.musician101.mcdndsimple.common.character.spell.SpellType;
 import io.musician101.mcdndsimple.common.character.spell.SpellcasterClass;
+import io.musician101.mcdndsimple.common.character.spell.StatBonus;
 import io.musician101.mcdndsimple.common.character.tab.ArmorTab;
 import io.musician101.mcdndsimple.common.character.tab.BackgroundTab;
 import io.musician101.mcdndsimple.common.character.tab.ClassTab;
@@ -43,335 +45,315 @@ import io.musician101.mcdndsimple.common.character.tab.SpellbookTab;
 import io.musician101.mcdndsimple.common.character.tab.WeaponsTab;
 import io.musician101.mcdndsimple.common.character.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.weapon.RangedWeapon;
+import io.musician101.mcdndsimple.common.character.weapon.WeaponAttackStat;
 import io.musician101.mcdndsimple.common.serialization.MCDNDDeserializer;
+import io.musician101.mcdndsimple.common.serialization.MCDNDSimpleKeys;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-import org.spongepowered.api.data.DataContainer;
-import org.spongepowered.api.data.key.Key;
-import org.spongepowered.api.data.value.mutable.ListValue;
-import org.spongepowered.api.data.value.mutable.Value;
+import java.util.stream.Stream;
+import ninja.leaping.configurate.ConfigurationNode;
 
-public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer> {
+public class SpongeMCDNDDeserializer extends MCDNDDeserializer<ConfigurationNode> {
+
+    private boolean containsKey(ConfigurationNode configurationNode, String key) {
+        return configurationNode.getNode(key).isVirtual();
+    }
 
     @Override
-    public PlayerSheet deserialize(DataContainer characterSheetData) {
+    public PlayerSheet deserialize(ConfigurationNode characterSheetData) {
         PlayerSheet playerSheet = new PlayerSheet();
-        getDataContainer(characterSheetData, SpongeMCDNDSimpleKeys.BIO_AND_INFO).ifPresent(bioData -> playerSheet.setBioAndInfo(deserializeBioAndInfo(bioData)));
-        getDataContainer(characterSheetData, SpongeMCDNDSimpleKeys.PLAYER_SHEET).ifPresent(playerData -> playerSheet.setCharacterSheet(deserializePlayerSheet(playerData)));
-        characterSheetData.getString(SpongeMCDNDSimpleKeys.CLASS.getQuery()).ifPresent(playerSheet::setClazz);
-        characterSheetData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(playerSheet::setName);
-        characterSheetData.getString(SpongeMCDNDSimpleKeys.RACE.getQuery()).ifPresent(playerSheet::setRace);
+        playerSheet.setBioAndInfo(deserializeBioAndInfo(characterSheetData.getNode(characterSheetData, MCDNDSimpleKeys.BIO_AND_INFO)));
+        playerSheet.setCharacterSheet(deserializePlayerSheet(characterSheetData.getNode(characterSheetData, MCDNDSimpleKeys.PLAYER_SHEET)));
+        playerSheet.setClazz(characterSheetData.getNode(MCDNDSimpleKeys.CLASS).getString(""));
+        playerSheet.setName(characterSheetData.getNode(MCDNDSimpleKeys.NAME).getString(""));
+        playerSheet.setRace(characterSheetData.getNode(MCDNDSimpleKeys.RACE).getString(""));
         return playerSheet;
     }
 
     @Override
-    protected AbilityScore deserializeAbilityScore(DataContainer abilityScoreData, AbilityScore defaultScore) {
-        return abilityScoreData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).flatMap(name -> abilityScoreData.getString(SpongeMCDNDSimpleKeys.SHORT_NAME.getQuery()).flatMap(shortName -> {
-            AbilityScore abilityScore = new AbilityScore(name, shortName);
-            abilityScoreData.getBoolean(SpongeMCDNDSimpleKeys.IS_PROFICIENT.getQuery()).ifPresent(abilityScore::setProficient);
-            abilityScoreData.getInt(SpongeMCDNDSimpleKeys.SCORE.getQuery()).ifPresent(abilityScore::setScore);
-            return Optional.of(abilityScore);
-        })).orElse(defaultScore);
+    protected AbilityScore deserializeAbilityScore(ConfigurationNode abilityScoreData, AbilityScore defaultScore) {
+        if (containsKey(abilityScoreData, MCDNDSimpleKeys.NAME) || containsKey(abilityScoreData, MCDNDSimpleKeys.SHORT_NAME)) {
+            AbilityScore abilityScore = new AbilityScore(abilityScoreData.getNode(MCDNDSimpleKeys.NAME).getString(), abilityScoreData.getNode(MCDNDSimpleKeys.SHORT_NAME).getString());
+            abilityScore.setProficient(abilityScoreData.getNode(MCDNDSimpleKeys.IS_PROFICIENT).getBoolean(false));
+            abilityScore.setScore(abilityScoreData.getNode(MCDNDSimpleKeys.SCORE).getInt(0));
+            return abilityScore;
+        }
+
+        return defaultScore;
     }
 
     @Override
-    protected Armor deserializeArmor(DataContainer armorTab) {
+    protected Armor deserializeArmor(ConfigurationNode armorData) {
         Armor armor = new Armor();
-        armorTab.getBoolean(SpongeMCDNDSimpleKeys.SPEED_PENALTY.getQuery()).ifPresent(armor::setSpeedPenalty);
-        armorTab.getBoolean(SpongeMCDNDSimpleKeys.STEALTH_PENALTY.getQuery()).ifPresent(armor::setStealthPenalty);
-        armorTab.getBoolean(SpongeMCDNDSimpleKeys.UNARMORED.getQuery()).ifPresent(armor::setIsUnarmored);
-        armorTab.getBoolean(SpongeMCDNDSimpleKeys.WORN.getQuery()).ifPresent(armor::setIsWorn);
-        armorTab.getInt(SpongeMCDNDSimpleKeys.BASE_ARMOR_CLASS.getQuery()).ifPresent(armor::setBaseArmorClass);
-        armorTab.getInt(SpongeMCDNDSimpleKeys.MAGIC_BONUS.getQuery()).ifPresent(armor::setMagicBonus);
-        getDataContainer(armorTab, SpongeMCDNDSimpleKeys.ARMOR_TYPE).ifPresent(armorTypeData -> armor.setArmorType(deserializeArmorType(armorTypeData)));
-        armorTab.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(armor::setName);
+        armor.setSpeedPenalty(armorData.getNode(MCDNDSimpleKeys.SPEED_PENALTY).getBoolean(false));
+        armor.setStealthPenalty(armorData.getNode(MCDNDSimpleKeys.STEALTH_PENALTY).getBoolean(false));
+        armor.setIsUnarmored(armorData.getNode(MCDNDSimpleKeys.UNARMORED).getBoolean(false));
+        armor.setIsWorn(armorData.getNode(MCDNDSimpleKeys.WORN).getBoolean(false));
+        armor.setBaseArmorClass(armorData.getNode(MCDNDSimpleKeys.BASE_ARMOR_CLASS).getInt(0));
+        armor.setMagicBonus(armorData.getNode(MCDNDSimpleKeys.MAGIC_BONUS).getInt(0));
+        armor.setArmorType(deserializeArmorType(armorData.getNode(armorData, MCDNDSimpleKeys.ARMOR_TYPE)));
+        armor.setName(armorData.getNode(MCDNDSimpleKeys.NAME).getString(""));
         return armor;
     }
 
     @Override
-    protected ArmorTab deserializeArmorTab(DataContainer armorTabData) {
+    protected ArmorTab deserializeArmorTab(ConfigurationNode armorTabData) {
         ArmorTab armorTab = new ArmorTab();
-        armorTabData.getInt(SpongeMCDNDSimpleKeys.ARMOR_CLASS.getQuery()).ifPresent(armorTab::setArmorClass);
-        armorTabData.getInt(SpongeMCDNDSimpleKeys.UNARMORED_ARMOR_CLASS.getQuery()).ifPresent(armorTab::setUnarmoredClass);
-        getDataContainerList(armorTabData, SpongeMCDNDSimpleKeys.ARMOR_LIST).ifPresent(list -> armorTab.setArmor(list.stream().map(this::deserializeArmor).collect(Collectors.toList())));
-        getDataContainer(armorTabData, SpongeMCDNDSimpleKeys.UNARMORED_BONUS).ifPresent(unarmoredBonusData -> armorTab.setUnarmoredBonus(deserializeUnarmoredBonus(unarmoredBonusData)));
+        armorTab.setArmorClass(armorTabData.getNode(MCDNDSimpleKeys.ARMOR_CLASS).getInt(0));
+        armorTab.setUnarmoredClass(armorTabData.getNode(MCDNDSimpleKeys.UNARMORED_ARMOR_CLASS).getInt(0));
+        armorTab.setArmor(getConfigurationNodeList(armorTabData, MCDNDSimpleKeys.ARMOR_LIST).stream().map(this::deserializeArmor).collect(Collectors.toList()));
+        armorTab.setUnarmoredBonus(deserializeUnarmoredBonus(armorTabData.getNode(armorTabData, MCDNDSimpleKeys.UNARMORED_BONUS)));
         return armorTab;
     }
 
     @Override
-    protected ArmorType deserializeArmorType(DataContainer armorTypeData) {
-        return armorTypeData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).flatMap(name -> {
-            for (ArmorType armorType : ArmorType.values()) {
-                if (armorType.getName().equals(name)) {
-                    return Optional.of(armorType);
-                }
-            }
-
-            return Optional.empty();
-        }).orElse(ArmorType.NONE);
+    protected ArmorType deserializeArmorType(ConfigurationNode armorTypeData) {
+        return Stream.of(ArmorType.values()).filter(armorType -> containsKey(armorTypeData, MCDNDSimpleKeys.NAME) && armorType.getName().equals(armorTypeData.getNode(MCDNDSimpleKeys.NAME).getString())).findFirst().orElse(ArmorType.NONE);
     }
 
     @Override
-    protected BackgroundTab deserializeBackgroundTab(DataContainer backgroundTabData) {
+    protected BackgroundTab deserializeBackgroundTab(ConfigurationNode backgroundTabData) {
         BackgroundTab backgroundTab = new BackgroundTab();
-        backgroundTabData.getDouble(SpongeMCDNDSimpleKeys.WEIGHT_DOUBLE.getQuery()).ifPresent(backgroundTab::setWeight);
-        backgroundTabData.getInt(SpongeMCDNDSimpleKeys.AGE.getQuery()).ifPresent(backgroundTab::setAge);
-        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.ARMOR_PROFICIENCIES.getQuery()).ifPresent(backgroundTab::setArmorProficiencies);
-        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.BACKGROUND.getQuery()).ifPresent(backgroundTab::setBackground);
-        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.BONDS.getQuery()).ifPresent(backgroundTab::setBonds);
-        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.FLAWS.getQuery()).ifPresent(backgroundTab::setFlaws);
-        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.IDEALS.getQuery()).ifPresent(backgroundTab::setIdeals);
-        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.OTHER_NOTES.getQuery()).ifPresent(backgroundTab::setOtherNotes);
-        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.PERSONALITY_TRAITS.getQuery());
-        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.RACIAL_TRAITS.getQuery()).ifPresent(backgroundTab::setRacialTraits);
-        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.TOOL_PROFICIENCIES.getQuery()).ifPresent(backgroundTab::setToolProficiencies);
-        backgroundTabData.getStringList(SpongeMCDNDSimpleKeys.WEAPON_PROFICIENCIES.getQuery()).ifPresent(backgroundTab::setWeaponProficiencies);
-        backgroundTabData.getString(SpongeMCDNDSimpleKeys.ALIGNMENT.getQuery()).ifPresent(backgroundTab::setAlignment);
-        backgroundTabData.getString(SpongeMCDNDSimpleKeys.EYES.getQuery()).ifPresent(backgroundTab::setEyes);
-        backgroundTabData.getString(SpongeMCDNDSimpleKeys.GENDER.getQuery()).ifPresent(backgroundTab::setGender);
-        backgroundTabData.getString(SpongeMCDNDSimpleKeys.HAIR.getQuery()).ifPresent(backgroundTab::setHair);
-        backgroundTabData.getString(SpongeMCDNDSimpleKeys.HEIGHT.getQuery()).ifPresent(backgroundTab::setHeight);
-        backgroundTabData.getString(SpongeMCDNDSimpleKeys.LANGUAGES.getQuery()).ifPresent(backgroundTab::setLanguages);
-        backgroundTabData.getString(SpongeMCDNDSimpleKeys.SIZE.getQuery()).ifPresent(backgroundTab::setSize);
-        backgroundTabData.getString(SpongeMCDNDSimpleKeys.VISION.getQuery()).ifPresent(backgroundTab::setVision);
+        backgroundTab.setWeight(backgroundTabData.getNode(MCDNDSimpleKeys.WEIGHT_DOUBLE).getDouble(0));
+        backgroundTab.setAge(backgroundTabData.getNode(MCDNDSimpleKeys.AGE).getInt(0));
+        backgroundTab.setArmorProficiencies(getStringList(backgroundTabData, MCDNDSimpleKeys.ARMOR_PROFICIENCIES));
+        backgroundTab.setBackground(getStringList(backgroundTabData, MCDNDSimpleKeys.BACKGROUND));
+        backgroundTab.setBonds(getStringList(backgroundTabData, MCDNDSimpleKeys.BONDS));
+        backgroundTab.setFlaws(getStringList(backgroundTabData, MCDNDSimpleKeys.FLAWS));
+        backgroundTab.setIdeals(getStringList(backgroundTabData, MCDNDSimpleKeys.IDEALS));
+        backgroundTab.setOtherNotes(getStringList(backgroundTabData, MCDNDSimpleKeys.OTHER_NOTES));
+        backgroundTab.setPersonalityTraits(getStringList(backgroundTabData, MCDNDSimpleKeys.PERSONALITY_TRAITS));
+        backgroundTab.setRacialTraits(getStringList(backgroundTabData, MCDNDSimpleKeys.RACIAL_TRAITS));
+        backgroundTab.setToolProficiencies(getStringList(backgroundTabData, MCDNDSimpleKeys.TOOL_PROFICIENCIES));
+        backgroundTab.setWeaponProficiencies(getStringList(backgroundTabData, MCDNDSimpleKeys.WEAPON_PROFICIENCIES));
+        backgroundTab.setAlignment(backgroundTabData.getNode(MCDNDSimpleKeys.ALIGNMENT).getString(""));
+        backgroundTab.setEyes(backgroundTabData.getNode(MCDNDSimpleKeys.EYES).getString(""));
+        backgroundTab.setGender(backgroundTabData.getNode(MCDNDSimpleKeys.GENDER).getString(""));
+        backgroundTab.setHair(backgroundTabData.getNode(MCDNDSimpleKeys.HAIR).getString(""));
+        backgroundTab.setHeight(backgroundTabData.getNode(MCDNDSimpleKeys.HEIGHT).getString(""));
+        backgroundTab.setLanguages(getStringList(backgroundTabData, MCDNDSimpleKeys.LANGUAGES));
+        backgroundTab.setSize(backgroundTabData.getNode(MCDNDSimpleKeys.SIZE).getString(""));
+        backgroundTab.setVision(backgroundTabData.getNode(MCDNDSimpleKeys.VISION).getString(""));
         return backgroundTab;
     }
 
     @Override
-    protected BioAndInfo deserializeBioAndInfo(DataContainer bioAndInfoData) {
+    protected BioAndInfo deserializeBioAndInfo(ConfigurationNode bioAndInfoData) {
         BioAndInfo bioAndInfo = new BioAndInfo();
-        bioAndInfoData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(bioAndInfo::setName);
-        bioAndInfoData.getStringList(SpongeMCDNDSimpleKeys.BIO.getQuery()).ifPresent(bioAndInfo::setBio);
+        bioAndInfo.setName(bioAndInfoData.getNode(MCDNDSimpleKeys.NAME).getString(""));
+        bioAndInfo.setBio(getStringList(bioAndInfoData, MCDNDSimpleKeys.BIO));
         return bioAndInfo;
     }
 
     @Override
-    protected Bonuses deserializeBonuses(DataContainer bonusesData) {
+    protected Bonuses deserializeBonuses(ConfigurationNode bonusesData) {
         Bonuses bonuses = new Bonuses();
-        getDataContainer(bonusesData, SpongeMCDNDSimpleKeys.MELEE_BONUS).ifPresent(meleeBonusData -> bonuses.setMelee(deserializeMeleeBonus(meleeBonusData)));
-        getDataContainer(bonusesData, SpongeMCDNDSimpleKeys.RANGED_BONUS).ifPresent(rangedBonusData -> bonuses.setRanged(deserializeRangedBonus(rangedBonusData)));
-        getDataContainer(bonusesData, SpongeMCDNDSimpleKeys.SPELLCASTING_BONUS).ifPresent(spellcastingBonusData -> bonuses.setSpellcasting(deserializeSpellcastingBonus(spellcastingBonusData)));
-        bonusesData.getInt(SpongeMCDNDSimpleKeys.SAVES.getQuery()).ifPresent(bonuses::setSaves);
-        bonusesData.getInt(SpongeMCDNDSimpleKeys.ABILITIES_AND_SKILLS.getQuery()).ifPresent(bonuses::setAbilitiesAndSkills);
+        bonuses.setMelee(deserializeMeleeBonus(bonusesData.getNode(bonusesData, MCDNDSimpleKeys.MELEE_BONUS)));
+        bonuses.setRanged(deserializeRangedBonus(bonusesData.getNode(bonusesData, MCDNDSimpleKeys.RANGED_BONUS)));
+        bonuses.setSpellcasting(deserializeSpellcastingBonus(bonusesData.getNode(bonusesData, MCDNDSimpleKeys.SPELLCASTING_BONUS)));
+        bonuses.setSaves(deserializeDice(bonusesData.getNode(bonusesData, MCDNDSimpleKeys.SAVES)));
+        bonuses.setAbilitiesAndSkills(deserializeDice(bonusesData.getNode(bonusesData, MCDNDSimpleKeys.ABILITIES_AND_SKILLS)));
         return bonuses;
     }
 
     @Override
-    protected ClassAction deserializeClassAction(DataContainer classActionData) {
+    protected ClassAction deserializeClassAction(ConfigurationNode classActionData) {
         ClassAction classAction = new ClassAction();
-        classActionData.getInt(SpongeMCDNDSimpleKeys.MAX_USES.getQuery()).ifPresent(classAction::setMax);
-        classActionData.getInt(SpongeMCDNDSimpleKeys.USES_LEFT.getQuery()).ifPresent(classAction::setUsedCharges);
-        getDataContainer(classActionData, SpongeMCDNDSimpleKeys.RECHARGE).ifPresent(rechargeData -> classAction.setRecharge(deserializeRecharge(rechargeData)));
-        classActionData.getString(SpongeMCDNDSimpleKeys.GAINED_FROM.getQuery()).ifPresent(classAction::setGainedFrom);
-        classActionData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(classAction::setName);
+        classAction.setMax(classActionData.getNode(MCDNDSimpleKeys.MAX_USES).getInt(0));
+        classAction.setUsedCharges(classActionData.getNode(MCDNDSimpleKeys.USES_LEFT).getInt(0));
+        classAction.setRecharge(deserializeRecharge(classActionData.getNode(classActionData, MCDNDSimpleKeys.RECHARGE)));
+        classAction.setGainedFrom(classActionData.getNode(MCDNDSimpleKeys.GAINED_FROM).getString(""));
+        classAction.setName(classActionData.getNode(MCDNDSimpleKeys.NAME).getString(""));
         return classAction;
     }
 
     @Override
-    protected ClassLevels deserializeClassLevels(DataContainer classLevelsData) {
+    protected ClassLevels deserializeClassLevels(ConfigurationNode classLevelsData) {
         ClassLevels classLevels = new ClassLevels();
-        classLevelsData.getInt(SpongeMCDNDSimpleKeys.BARBARIAN_LEVEL.getQuery()).ifPresent(classLevels::setBarbarian);
-        classLevelsData.getInt(SpongeMCDNDSimpleKeys.BARD_LEVEL.getQuery()).ifPresent(classLevels::setBard);
-        classLevelsData.getInt(SpongeMCDNDSimpleKeys.CLERIC_LEVEL.getQuery()).ifPresent(classLevels::setCleric);
-        classLevelsData.getInt(SpongeMCDNDSimpleKeys.DRUID_LEVEL.getQuery()).ifPresent(classLevels::setDruid);
-        classLevelsData.getInt(SpongeMCDNDSimpleKeys.FIGHTER_LEVEL.getQuery()).ifPresent(classLevels::setFighter);
-        classLevelsData.getInt(SpongeMCDNDSimpleKeys.MONK_LEVEL.getQuery()).ifPresent(classLevels::setMonk);
-        classLevelsData.getInt(SpongeMCDNDSimpleKeys.PALADIN_LEVEL.getQuery()).ifPresent(classLevels::setPaladin);
-        classLevelsData.getInt(SpongeMCDNDSimpleKeys.RANGER_LEVEL.getQuery()).ifPresent(classLevels::setRanger);
-        classLevelsData.getInt(SpongeMCDNDSimpleKeys.ROGUE_LEVEL.getQuery()).ifPresent(classLevels::setRogue);
-        classLevelsData.getInt(SpongeMCDNDSimpleKeys.SORCERER_LEVEL.getQuery()).ifPresent(classLevels::setSorcerer);
-        classLevelsData.getInt(SpongeMCDNDSimpleKeys.WARLOCK_LEVEL.getQuery()).ifPresent(classLevels::setWarlock);
-        classLevelsData.getInt(SpongeMCDNDSimpleKeys.WIZARD_LEVEL.getQuery()).ifPresent(classLevels::setWizard);
+        classLevels.setBarbarian(classLevelsData.getNode(MCDNDSimpleKeys.BARBARIAN_LEVEL).getInt(0));
+        classLevels.setBard(classLevelsData.getNode(MCDNDSimpleKeys.BARD_LEVEL).getInt(0));
+        classLevels.setCleric(classLevelsData.getNode(MCDNDSimpleKeys.CLERIC_LEVEL).getInt(0));
+        classLevels.setDruid(classLevelsData.getNode(MCDNDSimpleKeys.DRUID_LEVEL).getInt(0));
+        classLevels.setFighter(classLevelsData.getNode(MCDNDSimpleKeys.FIGHTER_LEVEL).getInt(0));
+        classLevels.setMonk(classLevelsData.getNode(MCDNDSimpleKeys.MONK_LEVEL).getInt(0));
+        classLevels.setPaladin(classLevelsData.getNode(MCDNDSimpleKeys.PALADIN_LEVEL).getInt(0));
+        classLevels.setRanger(classLevelsData.getNode(MCDNDSimpleKeys.RANGER_LEVEL).getInt(0));
+        classLevels.setRogue(classLevelsData.getNode(MCDNDSimpleKeys.ROGUE_LEVEL).getInt(0));
+        classLevels.setSorcerer(classLevelsData.getNode(MCDNDSimpleKeys.SORCERER_LEVEL).getInt(0));
+        classLevels.setWarlock(classLevelsData.getNode(MCDNDSimpleKeys.WARLOCK_LEVEL).getInt(0));
+        classLevels.setWizard(classLevelsData.getNode(MCDNDSimpleKeys.WIZARD_LEVEL).getInt(0));
         return classLevels;
     }
 
     @Override
-    protected ClassResource deserializeClassResource(DataContainer classResourceData) {
+    protected ClassResource deserializeClassResource(ConfigurationNode classResourceData) {
         ClassResource classResource = new ClassResource();
-        classResourceData.getInt(SpongeMCDNDSimpleKeys.USES_LEFT.getQuery()).ifPresent(classResource::setCurrentCharges);
-        classResourceData.getInt(SpongeMCDNDSimpleKeys.MAX_USES.getQuery()).ifPresent(classResource::setMaxCharges);
-        getDataContainer(classResourceData, SpongeMCDNDSimpleKeys.RECHARGE).ifPresent(rechargeData -> classResource.setRecharge(deserializeRecharge(rechargeData)));
-        classResourceData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(classResource::setName);
+        classResource.setCurrentCharges(classResourceData.getNode(MCDNDSimpleKeys.USES_LEFT).getInt(0));
+        classResource.setMaxCharges(classResourceData.getNode(MCDNDSimpleKeys.MAX_USES).getInt(0));
+        classResource.setRecharge(deserializeRecharge(classResourceData.getNode(classResourceData, MCDNDSimpleKeys.RECHARGE)));
+        classResource.setName(classResourceData.getNode(MCDNDSimpleKeys.NAME).getString(""));
         return classResource;
     }
 
     @Override
-    protected ClassTab deserializeClassTab(DataContainer classTabData) {
+    protected ClassTab deserializeClassTab(ConfigurationNode classTabData) {
         ClassTab classTab = new ClassTab();
-        getDataContainer(classTabData, SpongeMCDNDSimpleKeys.CLASS_LEVELS).ifPresent(data -> classTab.setClassLevels(deserializeClassLevels(data)));
-        getDataContainerList(classTabData, SpongeMCDNDSimpleKeys.CLASS_ACTIONS).ifPresent(list -> classTab.setClassActions(list.stream().map(this::deserializeClassAction).collect(Collectors.toList())));
-        getDataContainerList(classTabData, SpongeMCDNDSimpleKeys.CLASS_RESOURCES).ifPresent(list -> list.forEach(data -> classTab.addClassResource(deserializeClassResource(data))));
-        classTabData.getStringList(SpongeMCDNDSimpleKeys.CLASS_FEATURE_NOTES.getQuery()).ifPresent(classTab::setOtherNotes);
+        classTab.setClassLevels(deserializeClassLevels(classTabData.getNode(classTabData, MCDNDSimpleKeys.CLASS_LEVELS)));
+        classTab.setClassActions(getConfigurationNodeList(classTabData, MCDNDSimpleKeys.CLASS_ACTIONS).stream().map(this::deserializeClassAction).collect(Collectors.toList()));
+        classTab.setClassResources(getConfigurationNodeList(classTabData, MCDNDSimpleKeys.CLASS_RESOURCES).stream().map(this::deserializeClassResource).collect(Collectors.toList()));
+        classTab.setClassFeatureNotes(getStringList(classTabData, MCDNDSimpleKeys.CLASS_FEATURE_NOTES));
         return classTab;
     }
 
     @Override
-    protected Coin deserializeCoin(DataContainer coinData, Coin defaultCoin) {
-        return coinData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).flatMap(name -> coinData.getString(SpongeMCDNDSimpleKeys.SHORT_NAME.getQuery()).flatMap(shortName -> {
-            Coin coin = new Coin(name, shortName);
-            coinData.getInt(SpongeMCDNDSimpleKeys.AMOUNT.getQuery()).ifPresent(coin::setAmount);
-            return Optional.of(coin);
-        })).orElse(defaultCoin);
+    protected Coin deserializeCoin(ConfigurationNode coinData, Coin defaultCoin) {
+        Coin coin = new Coin(coinData.getNode(MCDNDSimpleKeys.NAME).getString(), coinData.getNode(MCDNDSimpleKeys.SHORT_NAME).getString());
+        coin.setAmount(coinData.getNode(MCDNDSimpleKeys.AMOUNT).getInt(0));
+        return coin;
     }
 
     @Override
-    protected CoreStats deserializeCoreStats(DataContainer coreStatsData) {
+    protected CoreStats deserializeCoreStats(ConfigurationNode coreStatsData) {
         CoreStats coreStats = new CoreStats();
-        getDataContainer(coreStatsData, SpongeMCDNDSimpleKeys.CHARISMA_SCORE).ifPresent(data -> coreStats.setCharisma(deserializeAbilityScore(data, new AbilityScore("Charisma", "CHA"))));
-        getDataContainer(coreStatsData, SpongeMCDNDSimpleKeys.CONSTITUTION_SCORE).ifPresent(data -> coreStats.setDexterity(deserializeAbilityScore(data, new AbilityScore("Constitution", "CON"))));
-        getDataContainer(coreStatsData, SpongeMCDNDSimpleKeys.DEXTERITY_SCORE).ifPresent(data -> coreStats.setDexterity(deserializeAbilityScore(data, new AbilityScore("Dexterity", "DEX"))));
-        getDataContainer(coreStatsData, SpongeMCDNDSimpleKeys.INTELLIGENCE_SCORE).ifPresent(data -> coreStats.setDexterity(deserializeAbilityScore(data, new AbilityScore("Intelligence", "INT"))));
-        getDataContainer(coreStatsData, SpongeMCDNDSimpleKeys.STRENGTH_SCORE).ifPresent(data -> coreStats.setDexterity(deserializeAbilityScore(data, new AbilityScore("Strength", "STR"))));
-        getDataContainer(coreStatsData, SpongeMCDNDSimpleKeys.WISDOM_SCORE).ifPresent(data -> coreStats.setDexterity(deserializeAbilityScore(data, new AbilityScore("Wisdom", "WIS"))));
+        coreStats.setCharisma(deserializeAbilityScore(coreStatsData.getNode(coreStatsData, MCDNDSimpleKeys.CHARISMA_SCORE), new AbilityScore("Charisma", "CHA")));
+        coreStats.setConstitution(deserializeAbilityScore(coreStatsData.getNode(coreStatsData, MCDNDSimpleKeys.CONSTITUTION_SCORE), new AbilityScore("Constitution", "CON")));
+        coreStats.setDexterity(deserializeAbilityScore(coreStatsData.getNode(coreStatsData, MCDNDSimpleKeys.DEXTERITY_SCORE), new AbilityScore("Dexterity", "DEX")));
+        coreStats.setIntelligence(deserializeAbilityScore(coreStatsData.getNode(coreStatsData, MCDNDSimpleKeys.INTELLIGENCE_SCORE), new AbilityScore("Intelligence", "INT")));
+        coreStats.setStrength(deserializeAbilityScore(coreStatsData.getNode(coreStatsData, MCDNDSimpleKeys.STRENGTH_SCORE), new AbilityScore("Strength", "STR")));
+        coreStats.setWisdom(deserializeAbilityScore(coreStatsData.getNode(coreStatsData, MCDNDSimpleKeys.WISDOM_SCORE), new AbilityScore("Wisdom", "WIS")));
         return coreStats;
     }
 
     @Override
-    protected CoreStatsTab deserializeCoreStatsTab(DataContainer coreStatsTabData) {
+    protected CoreStatsTab deserializeCoreStatsTab(ConfigurationNode coreStatsTabData) {
         CoreStatsTab coreStatsTab = new CoreStatsTab();
-        getDataContainer(coreStatsTabData, SpongeMCDNDSimpleKeys.BONUSES).ifPresent(data -> coreStatsTab.setBonuses(deserializeBonuses(data)));
-        getDataContainer(coreStatsTabData, SpongeMCDNDSimpleKeys.CORE_STATS).ifPresent(data -> coreStatsTab.setCoreStats(deserializeCoreStats(data)));
-        getDataContainer(coreStatsTabData, SpongeMCDNDSimpleKeys.EXPERIENCE).ifPresent(data -> coreStatsTab.setExperience(deserializeExperience(data)));
-        getDataContainer(coreStatsTabData, SpongeMCDNDSimpleKeys.HIT_DICE).ifPresent(data -> coreStatsTab.setHitDice(deserializeHitDice(data)));
-        getDataContainer(coreStatsTabData, SpongeMCDNDSimpleKeys.HIT_POINTS).ifPresent(data -> coreStatsTab.setHitPoints(deserializeHitPoints(data)));
-        coreStatsTabData.getInt(SpongeMCDNDSimpleKeys.INITIATIVE_BONUS.getQuery()).ifPresent(coreStatsTab::setInitiativeBonus);
-        coreStatsTabData.getInt(SpongeMCDNDSimpleKeys.SPEED.getQuery()).ifPresent(coreStatsTab::setSpeed);
+        coreStatsTab.setBonuses(deserializeBonuses(coreStatsTabData.getNode(coreStatsTabData, MCDNDSimpleKeys.BONUSES)));
+        coreStatsTab.setCoreStats(deserializeCoreStats(coreStatsTabData.getNode(coreStatsTabData, MCDNDSimpleKeys.CORE_STATS)));
+        coreStatsTab.setExperience(deserializeExperience(coreStatsTabData.getNode(coreStatsTabData, MCDNDSimpleKeys.EXPERIENCE)));
+        coreStatsTab.setHitDice(deserializeHitDice(coreStatsTabData.getNode(coreStatsTabData, MCDNDSimpleKeys.HIT_DICE)));
+        coreStatsTab.setHitPoints(deserializeHitPoints(coreStatsTabData.getNode(coreStatsTabData, MCDNDSimpleKeys.HIT_POINTS)));
+        coreStatsTab.setSpeed(coreStatsTabData.getNode(MCDNDSimpleKeys.SPEED).getInt(0));
         return coreStatsTab;
     }
 
     @Override
-    protected Dice deserializeDice(DataContainer diceData) {
-        return diceData.getInt(SpongeMCDNDSimpleKeys.SIDES.getQuery()).map(sides -> diceData.getInt(SpongeMCDNDSimpleKeys.AMOUNT.getQuery()).map(amount -> new Dice(amount, sides)).orElse(new Dice(sides))).orElse(new Dice(6));
+    protected Dice deserializeDice(ConfigurationNode diceData) {
+        return new Dice(diceData.getNode(MCDNDSimpleKeys.SIDES).getInt(0), diceData.getNode(MCDNDSimpleKeys.AMOUNT).getInt(0));
     }
 
     @Override
-    protected Experience deserializeExperience(DataContainer experienceData) {
+    protected Experience deserializeExperience(ConfigurationNode experienceData) {
         Experience experience = new Experience();
-        experienceData.getInt(SpongeMCDNDSimpleKeys.EXPERIENCE.getQuery()).ifPresent(experience::setExp);
-        experienceData.getInt(SpongeMCDNDSimpleKeys.OVERALL_LEVEL.getQuery()).ifPresent(experience::setOverallLevel);
+        experience.setExp(experienceData.getNode(MCDNDSimpleKeys.EXPERIENCE).getInt(0));
         return experience;
     }
 
     @Override
-    protected HitDice deserializeHitDice(DataContainer hitDiceData) {
+    protected HitDice deserializeHitDice(ConfigurationNode hitDiceData) {
         HitDice hitDice = new HitDice();
-        hitDiceData.getKeys(false).forEach(dataQuery -> hitDiceData.getInt(dataQuery).ifPresent(amount -> hitDice.updateHitDie(Integer.parseInt(dataQuery.toString()), amount)));
+        hitDice.setHitDice(deserializeDice(hitDiceData));
         return hitDice;
     }
 
     @Override
-    protected HitPoints deserializeHitPoints(DataContainer hitPointsData) {
+    protected HitPoints deserializeHitPoints(ConfigurationNode hitPointsData) {
         HitPoints hitPoints = new HitPoints();
-        hitPointsData.getInt(SpongeMCDNDSimpleKeys.CURRENT_HP.getQuery()).ifPresent(hitPoints::setCurrent);
-        hitPointsData.getInt(SpongeMCDNDSimpleKeys.MAX_HP.getQuery()).ifPresent(hitPoints::setMax);
-        hitPointsData.getInt(SpongeMCDNDSimpleKeys.TEMP_HP.getQuery()).ifPresent(hitPoints::setTemp);
+        hitPoints.setCurrent(hitPointsData.getNode(MCDNDSimpleKeys.CURRENT_HP).getInt(0));
+        hitPoints.setMax(hitPointsData.getNode(MCDNDSimpleKeys.MAX_HP).getInt(0));
+        hitPoints.setTemp(hitPointsData.getNode(MCDNDSimpleKeys.TEMP_HP).getInt(0));
         return hitPoints;
     }
 
     @Override
-    protected InventoryTab deserializeInventoryTab(DataContainer inventoryTabData, int strengthScore) {
+    protected InventoryTab deserializeInventoryTab(ConfigurationNode inventoryTabData, CoreStats coreStats) {
         InventoryTab inventoryTab = new InventoryTab();
-        getDataContainerList(inventoryTabData, SpongeMCDNDSimpleKeys.INVENTORY).ifPresent(list -> inventoryTab.setInventory(list.stream().map(this::deserializeItem).collect(Collectors.toList())));
-        inventoryTabData.getStringList(SpongeMCDNDSimpleKeys.INVENTORY_NOTES.getQuery()).ifPresent(inventoryTab::setInventoryNotes);
-        getDataContainer(inventoryTabData, SpongeMCDNDSimpleKeys.WEALTH).ifPresent(data -> inventoryTab.setWealth(deserializeWealth(data)));
-        getDataContainer(inventoryTabData, SpongeMCDNDSimpleKeys.WEIGHT_CLASS).ifPresent(data -> inventoryTab.setWeight(deserializeWeight(data, strengthScore, inventoryTab.getInventory(), inventoryTab.getWealth())));
+        inventoryTab.setInventory(getConfigurationNodeList(inventoryTabData, MCDNDSimpleKeys.INVENTORY).stream().map(this::deserializeItem).collect(Collectors.toList()));
+        inventoryTab.setInventoryNotes(getStringList(inventoryTabData, MCDNDSimpleKeys.INVENTORY_NOTES));
+        inventoryTab.setWealth(deserializeWealth(inventoryTabData.getNode(inventoryTabData, MCDNDSimpleKeys.WEALTH)));
+        inventoryTab.setWeight(deserializeWeight(inventoryTabData.getNode(inventoryTabData, MCDNDSimpleKeys.WEIGHT_CLASS), coreStats, inventoryTab.getInventory(), inventoryTab.getWealth()));
         return inventoryTab;
     }
 
     @Override
-    protected MCDNDItem deserializeItem(DataContainer itemData) {
+    protected MCDNDItem deserializeItem(ConfigurationNode itemData) {
         MCDNDItem item = new MCDNDItem();
-        itemData.getBoolean(SpongeMCDNDSimpleKeys.CARRIED.getQuery()).ifPresent(item::setIsCarried);
-        itemData.getDouble(SpongeMCDNDSimpleKeys.WEIGHT_DOUBLE.getQuery()).ifPresent(item::setWeight);
-        itemData.getString(SpongeMCDNDSimpleKeys.DESCRIPTION.getQuery()).ifPresent(item::setDescription);
-        itemData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(item::setName);
+        item.setIsCarried(itemData.getNode(MCDNDSimpleKeys.CARRIED).getBoolean(true));
+        item.setWeight(itemData.getNode(MCDNDSimpleKeys.WEIGHT_DOUBLE).getDouble(0));
+        item.setDescription(getStringList(itemData, MCDNDSimpleKeys.DESCRIPTION));
+        item.setName(itemData.getNode(MCDNDSimpleKeys.NAME).getString(""));
         return item;
     }
 
     @Override
-    protected MeleeBonus deserializeMeleeBonus(DataContainer meleeBonusData) {
+    protected MeleeBonus deserializeMeleeBonus(ConfigurationNode meleeBonusData) {
         MeleeBonus meleeBonus = new MeleeBonus();
-        meleeBonusData.getInt(SpongeMCDNDSimpleKeys.ATTACK.getQuery()).ifPresent(meleeBonus::setAttack);
-        meleeBonusData.getInt(SpongeMCDNDSimpleKeys.DAMAGE.getQuery()).ifPresent(meleeBonus::setDamage);
+        meleeBonus.setAttack(deserializeDice(meleeBonusData.getNode(meleeBonusData, MCDNDSimpleKeys.ATTACK)));
+        meleeBonus.setDamage(deserializeDice(meleeBonusData.getNode(meleeBonusData, MCDNDSimpleKeys.DAMAGE)));
         return meleeBonus;
     }
 
     @Override
-    protected MeleeWeapon deserializeMeleeWeapon(DataContainer meleeWeaponData) {
+    protected MeleeWeapon deserializeMeleeWeapon(ConfigurationNode meleeWeaponData) {
         MeleeWeapon meleeWeapon = new MeleeWeapon();
-        meleeWeaponData.getBoolean(SpongeMCDNDSimpleKeys.PLUS_STAT.getQuery()).ifPresent(meleeWeapon::setPlusStat);
-        meleeWeaponData.getBoolean(SpongeMCDNDSimpleKeys.IS_PROFICIENT.getQuery()).ifPresent(meleeWeapon::setIsProficient);
-        getDataContainer(meleeWeaponData, SpongeMCDNDSimpleKeys.CRIT_DAMAGE_DICE).ifPresent(data -> meleeWeapon.setCritDamageDice(deserializeDice(data)));
-        getDataContainer(meleeWeaponData, SpongeMCDNDSimpleKeys.DAMAGE_DICE).ifPresent(data -> meleeWeapon.setDamageDice(deserializeDice(data)));
-        meleeWeaponData.getInt(SpongeMCDNDSimpleKeys.CRIT_MINIMUM.getQuery()).ifPresent(meleeWeapon::setCritMin);
-        meleeWeaponData.getInt(SpongeMCDNDSimpleKeys.DAMAGE_BONUS.getQuery()).ifPresent(meleeWeapon::setDamageBonus);
-        meleeWeaponData.getInt(SpongeMCDNDSimpleKeys.MAGIC_BONUS.getQuery()).ifPresent(meleeWeapon::setMagicBonus);
-        meleeWeaponData.getInt(SpongeMCDNDSimpleKeys.TO_HIT.getQuery()).ifPresent(meleeWeapon::setToHit);
-        meleeWeaponData.getString(SpongeMCDNDSimpleKeys.ATTACK_STAT.getQuery()).ifPresent(meleeWeapon::setAttackStat);
-        meleeWeaponData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(meleeWeapon::setName);
+        meleeWeapon.setPlusStat(meleeWeaponData.getNode(MCDNDSimpleKeys.PLUS_STAT).getBoolean(false));
+        meleeWeapon.setIsProficient(meleeWeaponData.getNode(MCDNDSimpleKeys.IS_PROFICIENT).getBoolean(false));
+        meleeWeapon.setCritDamageDice(deserializeDice(meleeWeaponData.getNode(meleeWeaponData, MCDNDSimpleKeys.CRIT_DAMAGE_DICE)));
+        meleeWeapon.setDamageDice(deserializeDice(meleeWeaponData.getNode(meleeWeaponData, MCDNDSimpleKeys.DAMAGE_DICE)));
+        meleeWeapon.setCritMin(meleeWeaponData.getNode(MCDNDSimpleKeys.CRIT_MINIMUM).getInt(0));
+        meleeWeapon.setMagicBonus(meleeWeaponData.getNode(MCDNDSimpleKeys.MAGIC_BONUS).getInt(0));
+        meleeWeapon.setAttackStat(deserializeWeaponAttackStat(meleeWeaponData.getNode(meleeWeaponData, MCDNDSimpleKeys.ATTACK_STAT)));
+        meleeWeapon.setName(meleeWeaponData.getNode(MCDNDSimpleKeys.NAME).getString(""));
         return meleeWeapon;
     }
 
     @Override
-    protected CharacterSheet deserializePlayerSheet(DataContainer playerSheetData) {
+    protected CharacterSheet deserializePlayerSheet(ConfigurationNode playerSheetData) {
         CharacterSheet characterSheet = new CharacterSheet();
-        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.ARMOR_TAB).ifPresent(armorTabData -> characterSheet.setArmorTab(deserializeArmorTab(armorTabData)));
-        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.BACKGROUND_TAB).ifPresent(backgroundTabData -> characterSheet.setBackgroundTab(deserializeBackgroundTab(backgroundTabData)));
-        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.CLASS_TAB).ifPresent(classTabData -> characterSheet.setClassTab(deserializeClassTab(classTabData)));
-        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.CORE_STATS_TAB).ifPresent(data -> characterSheet.setCoreStatsTab(deserializeCoreStatsTab(data)));
-        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.INVENTORY_TAB).ifPresent(data -> characterSheet.setInventoryTab(deserializeInventoryTab(data, characterSheet.getCoreStatsTab().getCoreStats().getStrength().getScore())));
-        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.SKILLS_TAB).ifPresent(data -> characterSheet.setSkillsTab(deserializeSkillsTab(data, characterSheet.getCoreStatsTab().getCoreStats())));
-        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.SPELL_BOOK_TAB).ifPresent(data -> characterSheet.setSpellbookTab(deserializeSpellbookTab(data, characterSheet.getClassTab().getClassLevels().getSorcerer())));
-        getDataContainer(playerSheetData, SpongeMCDNDSimpleKeys.WEAPONS_TAB).ifPresent(data -> characterSheet.setWeaponsTab(deserializeWeaponsTab(data)));
+        characterSheet.setArmorTab(deserializeArmorTab(playerSheetData.getNode(playerSheetData, MCDNDSimpleKeys.ARMOR_TAB)));
+        characterSheet.setBackgroundTab(deserializeBackgroundTab(playerSheetData.getNode(playerSheetData, MCDNDSimpleKeys.BACKGROUND_TAB)));
+        characterSheet.setClassTab(deserializeClassTab(playerSheetData.getNode(playerSheetData, MCDNDSimpleKeys.CLASS_TAB)));
+        characterSheet.setCoreStatsTab(deserializeCoreStatsTab(playerSheetData.getNode(playerSheetData, MCDNDSimpleKeys.CORE_STATS_TAB)));
+        characterSheet.setInventoryTab(deserializeInventoryTab(playerSheetData.getNode(playerSheetData, MCDNDSimpleKeys.INVENTORY_TAB), characterSheet.getCoreStatsTab().getCoreStats()));
+        characterSheet.setSkillsTab(deserializeSkillsTab(playerSheetData.getNode(playerSheetData, MCDNDSimpleKeys.SKILLS_TAB), characterSheet.getCoreStatsTab().getCoreStats()));
+        characterSheet.setSpellbookTab(deserializeSpellbookTab(playerSheetData.getNode(playerSheetData, MCDNDSimpleKeys.SPELL_BOOK_TAB), characterSheet.getClassTab().getClassLevels()));
+        characterSheet.setWeaponsTab(deserializeWeaponsTab(playerSheetData.getNode(playerSheetData, MCDNDSimpleKeys.WEAPONS_TAB)));
         return characterSheet;
     }
 
     @Override
-    protected RangedBonus deserializeRangedBonus(DataContainer rangedBonusData) {
+    protected RangedBonus deserializeRangedBonus(ConfigurationNode rangedBonusData) {
         RangedBonus rangedBonus = new RangedBonus();
-        rangedBonusData.getInt(SpongeMCDNDSimpleKeys.ATTACK.getQuery()).ifPresent(rangedBonus::setAttack);
-        rangedBonusData.getInt(SpongeMCDNDSimpleKeys.DAMAGE.getQuery()).ifPresent(rangedBonus::setDamage);
+        rangedBonus.setAttack(deserializeDice(rangedBonusData.getNode(rangedBonusData, MCDNDSimpleKeys.ATTACK)));
+        rangedBonus.setDamage(deserializeDice(rangedBonusData.getNode(rangedBonusData, MCDNDSimpleKeys.DAMAGE)));
         return rangedBonus;
     }
 
     @Override
-    protected RangedWeapon deserializeRangedWeapon(DataContainer rangedWeaponData) {
+    protected RangedWeapon deserializeRangedWeapon(ConfigurationNode rangedWeaponData) {
         RangedWeapon rangedWeapon = new RangedWeapon();
-        rangedWeaponData.getInt(SpongeMCDNDSimpleKeys.PLUS_STAT.getQuery()).ifPresent(rangedWeapon::setAmmo);
-        rangedWeaponData.getBoolean(SpongeMCDNDSimpleKeys.IS_PROFICIENT.getQuery()).ifPresent(rangedWeapon::setIsProficient);
-        getDataContainer(rangedWeaponData, SpongeMCDNDSimpleKeys.CRIT_DAMAGE_DICE).ifPresent(data -> rangedWeapon.setCritDamageDice(deserializeDice(data)));
-        getDataContainer(rangedWeaponData, SpongeMCDNDSimpleKeys.DAMAGE_DICE).ifPresent(data -> rangedWeapon.setDamageDice(deserializeDice(data)));
-        rangedWeaponData.getInt(SpongeMCDNDSimpleKeys.CRIT_MINIMUM.getQuery()).ifPresent(rangedWeapon::setCritMin);
-        rangedWeaponData.getInt(SpongeMCDNDSimpleKeys.DAMAGE_BONUS.getQuery()).ifPresent(rangedWeapon::setDamageBonus);
-        rangedWeaponData.getInt(SpongeMCDNDSimpleKeys.MAGIC_BONUS.getQuery()).ifPresent(rangedWeapon::setMagicBonus);
-        rangedWeaponData.getInt(SpongeMCDNDSimpleKeys.TO_HIT.getQuery()).ifPresent(rangedWeapon::setToHit);
-        rangedWeaponData.getString(SpongeMCDNDSimpleKeys.ATTACK_STAT.getQuery()).ifPresent(rangedWeapon::setAttackStat);
-        rangedWeaponData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).ifPresent(rangedWeapon::setName);
+        rangedWeapon.setAmmo(rangedWeaponData.getNode(MCDNDSimpleKeys.PLUS_STAT).getInt(0));
+        rangedWeapon.setIsProficient(rangedWeaponData.getNode(MCDNDSimpleKeys.IS_PROFICIENT).getBoolean(false));
+        rangedWeapon.setCritDamageDice(deserializeDice(rangedWeaponData.getNode(rangedWeaponData, MCDNDSimpleKeys.CRIT_DAMAGE_DICE)));
+        rangedWeapon.setDamageDice(deserializeDice(rangedWeaponData.getNode(rangedWeaponData, MCDNDSimpleKeys.DAMAGE_DICE)));
+        rangedWeapon.setCritMin(rangedWeaponData.getNode(MCDNDSimpleKeys.CRIT_MINIMUM).getInt(0));
+        rangedWeapon.setMagicBonus(rangedWeaponData.getNode(MCDNDSimpleKeys.MAGIC_BONUS).getInt(0));
+        rangedWeapon.setAttackStat(deserializeWeaponAttackStat(rangedWeaponData.getNode(rangedWeaponData, MCDNDSimpleKeys.ATTACK_STAT)));
+        rangedWeapon.setName(rangedWeaponData.getNode(MCDNDSimpleKeys.NAME).getString(""));
         return rangedWeapon;
     }
 
     @Override
-    protected Recharge deserializeRecharge(DataContainer rechargeData) {
-        return rechargeData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).flatMap(name -> {
-            for (Recharge recharge : Recharge.values()) {
-                if (recharge.getName().equals(name)) {
-                    return Optional.of(recharge);
-                }
-            }
-
-
-            return Optional.empty();
-        }).orElse(Recharge.NONE);
+    protected Recharge deserializeRecharge(ConfigurationNode rechargeData) {
+        return Stream.of(Recharge.values()).filter(recharge -> containsKey(rechargeData, MCDNDSimpleKeys.NAME) && recharge.getName().equals(rechargeData.getNode(MCDNDSimpleKeys.NAME).getString())).findFirst().orElse(Recharge.OTHER);
     }
 
     @Override
-    protected SaveDCType deserializeSaveDCType(DataContainer spellData)
-    {
-        return spellData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).map(name ->
-        {
+    protected SaveDCType deserializeSaveDCType(ConfigurationNode spellData) {
+        if (containsKey(spellData, MCDNDSimpleKeys.NAME)) {
+            String name = spellData.getNode(MCDNDSimpleKeys.NAME).getString();
             if ("Custom DC".equals(name)) {
-                return spellData.getInt(SpongeMCDNDSimpleKeys.CUSTOM_DC.getQuery()).map(SaveDCTypes::custom).orElse(SaveDCTypes.custom(0));
+                return SaveDCTypes.custom(spellData.getNode(MCDNDSimpleKeys.CUSTOM_DC).getInt(0));
             }
             else if ("Arcane Trickster DC".equals(name)) {
                 return SaveDCTypes.ARCANE_TRICKSTER;
@@ -400,197 +382,149 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<DataContainer> {
             else if ("Wizard DC".equals(name)) {
                 return SaveDCTypes.WIZARD;
             }
+        }
 
-            return SaveDCTypes.custom(0);
-        }).orElse(SaveDCTypes.custom(0));
+        return SaveDCTypes.custom(0);
     }
 
     @Override
-    protected SkillProficiency deserializeSkillProficiency(DataContainer skillsProficiencyData) {
-        return skillsProficiencyData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).map(name -> {
-            for (SkillProficiency skillProficiency : SkillProficiency.values()) {
-                if (name.equals(skillProficiency.getName())) {
-                    return skillProficiency;
-                }
-            }
-
-            return SkillProficiency.NONE;
-        }).orElse(SkillProficiency.NONE);
+    protected SkillProficiency deserializeSkillProficiency(ConfigurationNode skillsProficiencyData) {
+        return Stream.of(SkillProficiency.values()).filter(skillProficiency -> containsKey(skillsProficiencyData, MCDNDSimpleKeys.NAME) && skillProficiency.getName().equals(skillsProficiencyData.getNode(MCDNDSimpleKeys.NAME).getString())).findFirst().orElse(SkillProficiency.NONE);
     }
 
     @Override
-    protected SkillsTab deserializeSkillsTab(DataContainer skillsTabData, CoreStats coreStats) {
+    protected SkillsTab deserializeSkillsTab(ConfigurationNode skillsTabData, CoreStats coreStats) {
         SkillsTab skillsTab = new SkillsTab();
         skillsTab.updateSkills(coreStats);
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.ACROBATICS).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getAcrobatics().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.ANIMAL_HANDLING).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getAnimalHandling().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.ARCANA).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getArcana().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.ATHLETICS).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getAthletics().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.DECEPTION).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getDeception().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.HISTORY).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getHistory().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.INSIGHT).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getInsight().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.INTIMIDATION).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getIntimidation().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.INVESTIGATION).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getInvestigation().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.MEDICINE).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getMedicine().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.NATURE).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getNature().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.PERCEPTION).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getPerception().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.PERFORMANCE).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getPerformance().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.PERSUASION).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getPersuasion().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.RELIGION).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getReligion().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.SLEIGHT_OF_HAND).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getSleightOfHand().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.STEALTH).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getStealth().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.SURVIVAL).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getSurvival().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.UNSKILLED_CHA).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getUnskilledCHA().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.UNSKILLED_CON).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getUnskilledCON().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.UNSKILLED_DEX).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getUnskilledDEX().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.UNSKILLED_INT).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getUnskilledINT().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.UNSKILLED_STR).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getUnskilledSTR().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
-        getDataContainer(skillsTabData, SpongeMCDNDSimpleKeys.UNSKILLED_WIS).ifPresent(skillData -> getDataContainer(skillData, SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY).ifPresent(skillProficiencyData -> skillsTab.getUnskilledWIS().setSkillProficiency(deserializeSkillProficiency(skillProficiencyData))));
         return skillsTab;
     }
 
     @Override
-    protected Spell deserializeSpell(DataContainer spellData) {
+    protected Spell deserializeSpell(ConfigurationNode spellData) {
         Spell spell = new Spell();
-        spellData.getBoolean(SpongeMCDNDSimpleKeys.NEEDS_CONCENTRATION.getQuery()).ifPresent(spell::setNeedsConcentration);
-        spellData.getBoolean(SpongeMCDNDSimpleKeys.IS_PREPARED.getQuery()).ifPresent(spell::setPrepared);
-        spellData.getInt(SpongeMCDNDSimpleKeys.DURATION.getQuery()).ifPresent(spell::setDuration);
-        spellData.getInt(SpongeMCDNDSimpleKeys.SPELL_LEVEL.getQuery()).ifPresent(spell::setLevel);
-        spellData.getInt(SpongeMCDNDSimpleKeys.RANGE.getQuery()).ifPresent(spell::setRange);
-        getDataContainer(spellData, SpongeMCDNDSimpleKeys.SPELL_DAMAGE).ifPresent(data -> spell.setSpellDamage(deserializeSpellDamage(data)));
-        spellData.getStringList(SpongeMCDNDSimpleKeys.SPELL_DESCRIPTION.getQuery()).ifPresent(spell::setDescription);
-        spellData.getStringList(SpongeMCDNDSimpleKeys.EFFECTS.getQuery()).ifPresent(spell::setEffects);
-        getDataContainer(spellData, SpongeMCDNDSimpleKeys.SPELL_SAVE).ifPresent(data -> spell.setSpellSave(deserializeSpellSave(data)));
-        getDataContainer(spellData, SpongeMCDNDSimpleKeys.SPELLCASTER_CLASS).ifPresent(data -> spell.setGainedFrom(deserializeSpellcasterClass(data)));
-        getDataContainer(spellData, SpongeMCDNDSimpleKeys.SPELL_TYPE).ifPresent(data -> spell.setSpellType(deserializeSpellType(data)));
-        getDataContainer(spellData, SpongeMCDNDSimpleKeys.SPELL_HEALING).ifPresent(data -> spell.setSpellHealing(deserializeSpellHealing(data)));
-        spellData.getString(SpongeMCDNDSimpleKeys.ATTACK_STAT.getQuery()).ifPresent(spell::setAttackStat);
-        spellData.getString(SpongeMCDNDSimpleKeys.CAST_TIME.getQuery()).ifPresent(spell::setCastTime);
-        spellData.getString(SpongeMCDNDSimpleKeys.TARGET_AREA.getQuery()).ifPresent(spell::setTargetArea);
+        spell.setNeedsConcentration(spellData.getNode(MCDNDSimpleKeys.NEEDS_CONCENTRATION).getBoolean(false));
+        spell.setPrepared(Prepared.valueOf(spellData.getNode(MCDNDSimpleKeys.PREPARED).getString("NO")));
+        spell.setDuration(spellData.getNode(MCDNDSimpleKeys.DURATION).getString(""));
+        spell.setLevel(spellData.getNode(MCDNDSimpleKeys.SPELL_LEVEL).getInt(0));
+        spell.setRange(spellData.getNode(MCDNDSimpleKeys.RANGE).getString(""));
+        spell.setSpellDamage(deserializeSpellDamage(spellData.getNode(spellData, MCDNDSimpleKeys.SPELL_DAMAGE)));
+        spell.setDescription(getStringList(spellData, MCDNDSimpleKeys.SPELL_DESCRIPTION));
+        spell.setEffects(getStringList(spellData, MCDNDSimpleKeys.EFFECTS));
+        spell.setSpellSave(deserializeSpellSave(spellData.getNode(spellData, MCDNDSimpleKeys.SPELL_SAVE)));
+        spell.setGainedFrom(deserializeSpellcasterClass(spellData.getNode(spellData, MCDNDSimpleKeys.SPELLCASTER_CLASS)));
+        spell.setSpellType(deserializeSpellType(spellData.getNode(spellData, MCDNDSimpleKeys.SPELL_TYPE)));
+        spell.setSpellHealing(deserializeSpellHealing(spellData.getNode(spellData, MCDNDSimpleKeys.SPELL_HEALING)));
+        spell.setAttackStat(deserializeStatBonus(spellData.getNode(MCDNDSimpleKeys.ATTACK_STAT)));
+        spell.setCastTime(spellData.getNode(MCDNDSimpleKeys.CAST_TIME).getString(""));
+        spell.setTargetArea(spellData.getNode(MCDNDSimpleKeys.TARGET_AREA).getString(""));
         return spell;
     }
 
     @Override
-    protected SpellDamage deserializeSpellDamage(DataContainer spellDamageData) {
+    protected SpellDamage deserializeSpellDamage(ConfigurationNode spellDamageData) {
         SpellDamage spellDamage = new SpellDamage();
-        spellDamageData.getBoolean(SpongeMCDNDSimpleKeys.CAN_CRIT.getQuery()).ifPresent(spellDamage::setCanCrit);
-        getDataContainer(spellDamageData, SpongeMCDNDSimpleKeys.DICE).ifPresent(data -> spellDamage.setDice(deserializeDice(data)));
-        spellDamageData.getInt(SpongeMCDNDSimpleKeys.BONUS.getQuery()).ifPresent(spellDamage::setBonus);
-        spellDamageData.getString(SpongeMCDNDSimpleKeys.DAMAGE_TYPE.getQuery()).ifPresent(spellDamage::setDamageType);
+        spellDamage.setCanCrit(spellDamageData.getNode(MCDNDSimpleKeys.CAN_CRIT).getBoolean(false));
+        spellDamage.setDice(deserializeDice(spellDamageData.getNode(spellDamageData, MCDNDSimpleKeys.DICE)));
+        spellDamageData.getNode(MCDNDSimpleKeys.BONUS).getInt(0);
+        spellDamage.setDamageType(spellDamageData.getNode(MCDNDSimpleKeys.DAMAGE_TYPE).getString(""));
         return spellDamage;
     }
 
     @Override
-    protected SpellHealing deserializeSpellHealing(DataContainer spellHealingData) {
+    protected SpellHealing deserializeSpellHealing(ConfigurationNode spellHealingData) {
         SpellHealing spellHealing = new SpellHealing();
-        spellHealingData.getInt(SpongeMCDNDSimpleKeys.HEAL_AMOUNT.getQuery()).ifPresent(spellHealing::setHealAmount);
-        spellHealingData.getString(SpongeMCDNDSimpleKeys.STAT_BONUS.getQuery()).ifPresent(spellHealing::setStatBonus);
+        deserializeDice(spellHealingData.getNode(spellHealingData, MCDNDSimpleKeys.HEAL_AMOUNT));
+        spellHealing.setHealAmount(deserializeDice(spellHealingData.getNode(spellHealingData, MCDNDSimpleKeys.HEAL_AMOUNT)));
+        spellHealing.setStatBonus(deserializeStatBonus(spellHealingData.getNode(MCDNDSimpleKeys.STAT_BONUS)));
         return spellHealing;
     }
 
     @Override
-    protected SpellSave deserializeSpellSave(DataContainer spellSaveData) {
+    protected StatBonus deserializeStatBonus(ConfigurationNode statBonusData) {
+        return Stream.of(StatBonus.values()).filter(statBonus -> containsKey(statBonusData, MCDNDSimpleKeys.NAME) && statBonus.getName().equals(statBonusData.getNode(MCDNDSimpleKeys.NAME).getString())).findFirst().orElse(StatBonus.NONE);
+    }
+
+    @Override
+    protected SpellSave deserializeSpellSave(ConfigurationNode spellSaveData) {
         SpellSave spellSave = new SpellSave();
-        getDataContainer(spellSaveData, SpongeMCDNDSimpleKeys.SAVE_DC_TYPE).ifPresent(data -> spellSave.setSaveDCType(deserializeSaveDCType(data)));
-        spellSaveData.getString(SpongeMCDNDSimpleKeys.SAVE_DC_TYPE.getQuery()).ifPresent(spellSave::setOnSuccessfulSave);
-        spellSaveData.getString(SpongeMCDNDSimpleKeys.SAVING_STAT.getQuery()).ifPresent(spellSave::setSavingStat);
+        spellSave.setSaveDCType(deserializeSpellcasterClass(spellSaveData.getNode(spellSaveData, MCDNDSimpleKeys.SAVE_DC_TYPE)));
+
+        spellSave.setOnSuccessfulSave(getStringList(spellSaveData, MCDNDSimpleKeys.SAVE_DC_TYPE));
+        spellSave.setSavingStat(spellSaveData.getNode(MCDNDSimpleKeys.SAVING_STAT).getString(""));
         return spellSave;
     }
 
     @Override
-    protected SpellType deserializeSpellType(DataContainer spellTypeData) {
-        return spellTypeData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).map(name -> {
-            for (SpellType spellType : SpellType.values()) {
-                if (name.equals(spellType.getName())) {
-                    return spellType;
-                }
-            }
-
-            return SpellType.OTHER;
-        }).orElse(SpellType.OTHER);
+    protected SpellType deserializeSpellType(ConfigurationNode spellTypeData) {
+        return Stream.of(SpellType.values()).filter(spellType -> containsKey(spellTypeData, MCDNDSimpleKeys.NAME) && spellType.getName().equals(spellTypeData.getNode(MCDNDSimpleKeys.NAME).getString())).findFirst().orElse(SpellType.OTHER);
     }
 
     @Override
-    protected SpellbookTab deserializeSpellbookTab(DataContainer spellbookTabData, int sorcererLevel) {
+    protected SpellbookTab deserializeSpellbookTab(ConfigurationNode spellbookTabData, ClassLevels classLevels) {
         SpellbookTab spellbookTab = new SpellbookTab();
-        getDataContainerList(spellbookTabData, SpongeMCDNDSimpleKeys.SPELLS).ifPresent(list -> spellbookTab.setSpells(list.stream().map(this::deserializeSpell).collect(Collectors.toList())));
-        getDataContainerList(spellbookTabData, SpongeMCDNDSimpleKeys.SPELLCASTER_CLASSES).ifPresent(list -> spellbookTab.setSpells(list.stream().map(this::deserializeSpell).collect(Collectors.toList())));
-        spellbookTab.setInvocations(sorcererLevel);
-        spellbookTab.setSorceryPointsMax(sorcererLevel);
+        spellbookTab.setSpells(getConfigurationNodeList(spellbookTabData, MCDNDSimpleKeys.SPELLS).stream().map(this::deserializeSpell).collect(Collectors.toList()));
+        spellbookTab.setSpellcasterClasses(getConfigurationNodeList(spellbookTabData, MCDNDSimpleKeys.SPELLCASTER_CLASSES).stream().map(this::deserializeSpellcasterClass).collect(Collectors.toList()));
         return spellbookTab;
     }
 
     @Override
-    protected SpellcasterClass deserializeSpellcasterClass(DataContainer spellcasterClassData) {
-        return spellcasterClassData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).map(name -> {
-            for (SpellcasterClass spellcasterClass : SpellcasterClass.values()) {
-                if (name.equals(spellcasterClass.getName())) {
-                    return spellcasterClass;
-                }
-            }
-
-            return SpellcasterClass.OTHER;
-        }).orElse(SpellcasterClass.OTHER);
+    protected SpellcasterClass deserializeSpellcasterClass(ConfigurationNode spellcasterClassData) {
+        return Stream.of(SpellcasterClass.values()).filter(spellcasterClass -> containsKey(spellcasterClassData, MCDNDSimpleKeys.NAME) && spellcasterClass.getName().equals(spellcasterClassData.getNode(MCDNDSimpleKeys.NAME).getString())).findFirst().orElse(SpellcasterClass.OTHER);
     }
 
     @Override
-    protected SpellcastingBonus deserializeSpellcastingBonus(DataContainer spellcastingBonusData) {
+    protected SpellcastingBonus deserializeSpellcastingBonus(ConfigurationNode spellcastingBonusData) {
         SpellcastingBonus spellcastingBonus = new SpellcastingBonus();
-        spellcastingBonusData.getInt(SpongeMCDNDSimpleKeys.ATTACK.getQuery()).ifPresent(spellcastingBonus::setAttack);
-        spellcastingBonusData.getInt(SpongeMCDNDSimpleKeys.DAMAGE.getQuery()).ifPresent(spellcastingBonus::setDamage);
-        spellcastingBonusData.getInt(SpongeMCDNDSimpleKeys.SAVE_DC.getQuery()).ifPresent(spellcastingBonus::setSaveDC);
+        spellcastingBonus.setAttack(deserializeDice(spellcastingBonusData.getNode(spellcastingBonusData, MCDNDSimpleKeys.ATTACK)));
+        spellcastingBonus.setDamage(deserializeDice(spellcastingBonusData.getNode(spellcastingBonusData, MCDNDSimpleKeys.DAMAGE)));
+        spellcastingBonus.setSaveDC(deserializeDice(spellcastingBonusData.getNode(spellcastingBonusData, MCDNDSimpleKeys.SAVE_DC)));
         return spellcastingBonus;
     }
 
     @Override
-    protected UnarmoredBonus deserializeUnarmoredBonus(DataContainer unarmoredBonusData) {
-        return unarmoredBonusData.getString(SpongeMCDNDSimpleKeys.NAME.getQuery()).flatMap(name -> {
-            for (UnarmoredBonus unarmoredBonus : UnarmoredBonus.values()) {
-                if (unarmoredBonus.getName().equals(name)) {
-                    return Optional.of(unarmoredBonus);
-                }
-            }
-
-            return Optional.empty();
-        }).orElse(UnarmoredBonus.NONE);
+    protected UnarmoredBonus deserializeUnarmoredBonus(ConfigurationNode unarmoredBonusData) {
+        return Stream.of(UnarmoredBonus.values()).filter(unarmoredBonus -> containsKey(unarmoredBonusData, MCDNDSimpleKeys.NAME) && unarmoredBonus.getName().equals(unarmoredBonusData.getNode(MCDNDSimpleKeys.NAME).getString())).findFirst().orElse(UnarmoredBonus.NONE);
     }
 
     @Override
-    protected Wealth deserializeWealth(DataContainer wealthData) {
+    protected Wealth deserializeWealth(ConfigurationNode wealthData) {
         Wealth wealth = new Wealth();
-        getDataContainer(wealthData, SpongeMCDNDSimpleKeys.COPPER).ifPresent(data -> wealth.setCopper(deserializeCoin(data, new Coin("Copper", "CP"))));
-        getDataContainer(wealthData, SpongeMCDNDSimpleKeys.ELECTRUM).ifPresent(data -> wealth.setCopper(deserializeCoin(data, new Coin("Electrum", "EP"))));
-        getDataContainer(wealthData, SpongeMCDNDSimpleKeys.GOLD).ifPresent(data -> wealth.setCopper(deserializeCoin(data, new Coin("Gold", "GP"))));
-        getDataContainer(wealthData, SpongeMCDNDSimpleKeys.PLATINUM).ifPresent(data -> wealth.setCopper(deserializeCoin(data, new Coin("Platinum", "PP"))));
-        getDataContainer(wealthData, SpongeMCDNDSimpleKeys.SILVER).ifPresent(data -> wealth.setCopper(deserializeCoin(data, new Coin("Silver", "SP"))));
+        wealth.setCopper(deserializeCoin(wealthData.getNode(wealthData, MCDNDSimpleKeys.COPPER), new Coin("Copper", "CP")));
+        wealth.setElectrum(deserializeCoin(wealthData.getNode(wealthData, MCDNDSimpleKeys.ELECTRUM), new Coin("Electrum", "EP")));
+        wealth.setGold(deserializeCoin(wealthData.getNode(wealthData, MCDNDSimpleKeys.GOLD), new Coin("Gold", "GP")));
+        wealth.setPlatinum(deserializeCoin(wealthData.getNode(wealthData, MCDNDSimpleKeys.PLATINUM), new Coin("Platinum", "PP")));
+        wealth.setPlatinum(deserializeCoin(wealthData.getNode(wealthData, MCDNDSimpleKeys.SILVER), new Coin("Silver", "SP")));
         return wealth;
     }
 
     @Override
-    protected WeaponsTab deserializeWeaponsTab(DataContainer weaponsTabData) {
+    protected WeaponAttackStat deserializeWeaponAttackStat(ConfigurationNode weaponAttackStatData) {
+        return Stream.of(WeaponAttackStat.values()).filter(weaponAttackStatus -> containsKey(weaponAttackStatData, MCDNDSimpleKeys.NAME) && weaponAttackStatus.getName().equals(weaponAttackStatData.getNode(MCDNDSimpleKeys.NAME).getString())).findFirst().orElse(WeaponAttackStat.STR);
+    }
+
+    @Override
+    protected WeaponsTab deserializeWeaponsTab(ConfigurationNode weaponsTabData) {
         WeaponsTab weaponsTab = new WeaponsTab();
-        getDataContainerList(weaponsTabData, SpongeMCDNDSimpleKeys.MELEE_WEAPONS).ifPresent(list -> weaponsTab.setMeleeWeapons(list.stream().map(this::deserializeMeleeWeapon).collect(Collectors.toList())));
-        getDataContainerList(weaponsTabData, SpongeMCDNDSimpleKeys.RANGED_WEAPONS).ifPresent(list -> weaponsTab.setRangedWeapons(list.stream().map(this::deserializeRangedWeapon).collect(Collectors.toList())));
+        weaponsTab.setMeleeWeapons(getConfigurationNodeList(weaponsTabData, MCDNDSimpleKeys.MELEE_WEAPONS).stream().map(this::deserializeMeleeWeapon).collect(Collectors.toList()));
+        weaponsTab.setRangedWeapons(getConfigurationNodeList(weaponsTabData, MCDNDSimpleKeys.RANGED_WEAPONS).stream().map(this::deserializeRangedWeapon).collect(Collectors.toList()));
         return weaponsTab;
     }
 
     @Override
-    protected Weight deserializeWeight(DataContainer weightData, int strengthScore, List<MCDNDItem> inventory, Wealth wealth) {
+    protected Weight deserializeWeight(ConfigurationNode weightData, CoreStats coreStats, List<MCDNDItem> inventory, Wealth wealth) {
         Weight weight = new Weight();
-        weightData.getDouble(SpongeMCDNDSimpleKeys.OTHER.getQuery()).ifPresent(weight::setOther);
+        weight.setOther(weightData.getNode(MCDNDSimpleKeys.OTHER).getDouble(0));
         weight.setInventoryWeight(inventory);
         weight.setCoinWeight(wealth);
-        weight.setCarryingMax(strengthScore);
-        weight.setEncumbered(strengthScore);
-        weight.setHeavilyEncumbered(strengthScore);
+        weight.setCarryingMax(coreStats);
         return weight;
     }
 
-    private Optional<DataContainer> getDataContainer(DataContainer dataContainer, Key<Value<DataContainer>> key) {
-        return dataContainer.getObject(key.getQuery(), DataContainer.class);
+    private List<? extends ConfigurationNode> getConfigurationNodeList(ConfigurationNode configurationNode, String key) {
+        return containsKey(configurationNode, key) ? configurationNode.getNode(key).getChildrenList() : new ArrayList<>();
     }
 
-    private Optional<List<DataContainer>> getDataContainerList(DataContainer dataContainer, Key<ListValue<DataContainer>> key) {
-        return dataContainer.getObjectList(key.getQuery(), DataContainer.class);
+    private List<String> getStringList(ConfigurationNode configurationNode, String key) {
+        return configurationNode.getNode(key).getList(Object::toString, new ArrayList<>());
     }
 }

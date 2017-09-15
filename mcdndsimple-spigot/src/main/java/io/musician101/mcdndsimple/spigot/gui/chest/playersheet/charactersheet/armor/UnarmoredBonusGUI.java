@@ -9,6 +9,7 @@ import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSp
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -35,7 +36,7 @@ public class UnarmoredBonusGUI extends MCDNDSimpleChestGUI {
                 itemStack.setItemMeta(itemMeta);
             }
 
-            set(i, itemStack, player -> {
+            set(i, ClickType.LEFT, itemStack, player -> {
                 armorTab.setUnarmoredBonus(unarmoredBonus);
                 if (prevGUI == null) {
                     player.closeInventory();
@@ -46,6 +47,6 @@ public class UnarmoredBonusGUI extends MCDNDSimpleChestGUI {
             });
         }
 
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

@@ -5,7 +5,16 @@ import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.Experience;
 
 public enum SpellcasterClass {
-    ARCANE_TRICKSTER("Arcane Trickster"), BARD("Bard"), CLERIC("Cleric"), DRUID("Druid"), ELDRITCH_KNIGHT("Eldritch Knight"), PALADIN("Paladin"), OTHER("Other"), RANGER("Ranger"), SORCERER("Sorcerer"), WARLOCK("Warlock"),
+    ARCANE_TRICKSTER("Arcane Trickster"),
+    BARD("Bard"),
+    CLERIC("Cleric"),
+    DRUID("Druid"),
+    ELDRITCH_KNIGHT("Eldritch Knight"),
+    PALADIN("Paladin"),
+    OTHER("Other"),
+    RANGER("Ranger"),
+    SORCERER("Sorcerer"),
+    WARLOCK("Warlock"),
     WIZARD("Wizard");
 
     private final String name;

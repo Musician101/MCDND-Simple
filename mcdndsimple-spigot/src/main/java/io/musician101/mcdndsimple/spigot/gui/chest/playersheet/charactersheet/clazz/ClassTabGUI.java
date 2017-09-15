@@ -9,6 +9,7 @@ import io.musician101.musicianlibrary.java.minecraft.spigot.gui.SpigotBookGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
@@ -23,9 +24,9 @@ public class ClassTabGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
-        set(0, createItem(Material.ENCHANTED_BOOK, MenuText.CLASS_LEVELS), player -> new ClassLevelsGUI(player, classTab.getClassLevels(), this));
-        set(1, createItem(Material.DIAMOND, MenuText.CLASS_RESOURCES), player -> new ClassResourcesGUI(player, classTab.getClassResources(), 0, this));
-        set(2, createItem(Material.BOOK, MenuText.CLASS_FEATURE_NOTES), player -> {
+        set(0, ClickType.LEFT, createItem(Material.ENCHANTED_BOOK, MenuText.CLASS_LEVELS), player -> new ClassLevelsGUI(player, classTab.getClassLevels(), this));
+        set(1, ClickType.LEFT, createItem(Material.DIAMOND, MenuText.CLASS_RESOURCES), player -> new ClassResourcesGUI(player, classTab.getClassResources(), 0, this));
+        set(2, ClickType.LEFT, createItem(Material.BOOK, MenuText.CLASS_FEATURE_NOTES), player -> {
             ItemStack classFeatureNotes = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta classFeatureNotesMeta = (BookMeta) classFeatureNotes.getItemMeta();
             classFeatureNotesMeta.setLore(classTab.getClassFeatureNotes());
@@ -35,7 +36,7 @@ public class ClassTabGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        set(3, createItem(Material.BOOK, MenuText.CLASS_FEATURE_NOTES), player -> {
+        set(3, ClickType.LEFT, createItem(Material.BOOK, MenuText.CLASS_FEATURE_NOTES), player -> {
             ItemStack otherNotes = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta otherNotesMeta = (BookMeta) otherNotes.getItemMeta();
             otherNotesMeta.setLore(classTab.getClassFeatureNotes());
@@ -45,7 +46,7 @@ public class ClassTabGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        set(4, createItem(Material.REDSTONE_TORCH_ON, MenuText.CLASS_ACTIONS), player -> new ClassActionsGUI(player, classTab.getClassActions(), 0, this));
-        setBackButton(9, Material.BARRIER);
+        set(4, ClickType.LEFT, createItem(Material.REDSTONE_TORCH_ON, MenuText.CLASS_ACTIONS), player -> new ClassActionsGUI(player, classTab.getClassActions(), 0, this));
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

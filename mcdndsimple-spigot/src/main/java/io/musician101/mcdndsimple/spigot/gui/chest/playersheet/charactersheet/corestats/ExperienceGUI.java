@@ -9,6 +9,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class ExperienceGUI extends MCDNDSimpleChestGUI {
 
@@ -25,7 +26,7 @@ public class ExperienceGUI extends MCDNDSimpleChestGUI {
     protected void build() {
         set(0, createItem(Material.BOOK, MenuText.overallLevel(experience, classLevels)));
         set(1, createItem(Material.ANVIL, MenuText.proficiencyBonus(experience, classLevels)));
-        set(2, createItem(Material.EXP_BOTTLE, MenuText.currentXP(experience)), player -> {
+        set(2, ClickType.LEFT, createItem(Material.EXP_BOTTLE, MenuText.currentXP(experience)), player -> {
             new IntegerInputAnvilGUI(player, (p, i) -> {
                 experience.setExp(i);
                 player.closeInventory();
@@ -33,6 +34,6 @@ public class ExperienceGUI extends MCDNDSimpleChestGUI {
             });
         });
         set(3, createItem(Material.EXP_BOTTLE, MenuText.xpForNextLevel(experience, classLevels)));
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

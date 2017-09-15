@@ -14,6 +14,7 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
@@ -30,27 +31,27 @@ public class ItemGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
-        set(0, createItem(Material.PAPER, item.getName()), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(0, ClickType.LEFT, createItem(Material.PAPER, item.getName()), player -> new StringInputAnvilGUI(player, (p, s) -> {
             item.setName(s);
             delayedOpen();
         }));
 
-        set(1, createItem(item.isCarried() ? Material.REDSTONE_TORCH_ON : Material.REDSTONE_TORCH_OFF, MenuText.carried(item)), player -> {
+        set(1, ClickType.LEFT, createItem(item.isCarried() ? Material.REDSTONE_TORCH_ON : Material.REDSTONE_TORCH_OFF, MenuText.carried(item)), player -> {
             item.setIsCarried(!item.isCarried());
             open();
         });
 
-        set(2, createItem(Material.CHEST, MenuText.quantity(item)), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(2, ClickType.LEFT, createItem(Material.CHEST, MenuText.quantity(item)), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             item.setQuantity(i);
             delayedOpen();
         }));
 
-        set(3, createItem(Material.OBSIDIAN, MenuText.weight(item)), player -> new DoubleInputAnvilGUI(player, (p, d) -> {
+        set(3, ClickType.LEFT, createItem(Material.OBSIDIAN, MenuText.weight(item)), player -> new DoubleInputAnvilGUI(player, (p, d) -> {
             item.setWeight(d);
             delayedOpen();
         }));
 
-        set(4, createItem(Material.BOOK, MenuText.DESCRIPTION), player -> {
+        set(4, ClickType.LEFT, createItem(Material.BOOK, MenuText.DESCRIPTION), player -> {
             ItemStack book = createItem(Material.BOOK_AND_QUILL, MenuText.DESCRIPTION);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setPages(item.getDescription());
@@ -61,7 +62,7 @@ public class ItemGUI extends MCDNDSimpleChestGUI {
             });
         });
 
-        set(5, createItem(Material.ENDER_CHEST, MenuText.DELETE), player -> {
+        set(5, ClickType.LEFT, createItem(Material.ENDER_CHEST, MenuText.DELETE), player -> {
             items.remove(item);
             if (prevGUI != null) {
                 prevGUI.open();
@@ -71,6 +72,6 @@ public class ItemGUI extends MCDNDSimpleChestGUI {
                 player.sendMessage(ChatColor.GREEN + Messages.ITEM_DELETED);
             }
         });
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

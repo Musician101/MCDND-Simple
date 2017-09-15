@@ -9,6 +9,7 @@ import io.musician101.mcdndsimple.common.character.equipment.armor.Armor;
 import io.musician101.mcdndsimple.common.character.equipment.armor.ArmorType;
 import io.musician101.mcdndsimple.common.character.spell.Spell;
 import io.musician101.mcdndsimple.common.character.weapon.MeleeWeapon;
+import io.musician101.mcdndsimple.common.character.weapon.RangedWeapon;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -64,6 +65,24 @@ public class ItemRepresentation {
         lore.add(MenuText.damageType(weapon.getDamageType()));
         lore.add(MenuText.critDamage(weapon.getCritDamageDice()));
         lore.add(MenuText.critOn(weapon.getCritMin()));
+        setLore(itemStack, lore);
+        return itemStack;
+    }
+
+    public static ItemStack rangedWeapon(RangedWeapon weapon, ClassLevels classLevels, CoreStats coreStats, Experience experience) {
+        ItemStack itemStack = new ItemStack(Material.BOW);
+        setName(itemStack, weapon.getName());
+        List<String> lore = new ArrayList<>();
+        lore.add(MenuText.isProficient(weapon.isProficient()));
+        lore.add(MenuText.attackStat(weapon.getAttackStat()));
+        lore.add(MenuText.magicBonus(weapon.getMagicBonus()));
+        lore.add(MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)));
+        lore.add(MenuText.damageDice(weapon.getDamageDice()));
+        lore.add(MenuText.damageBonus(weapon.getDamageBonus(coreStats)));
+        lore.add(MenuText.damageType(weapon.getDamageType()));
+        lore.add(MenuText.critDamage(weapon.getCritDamageDice()));
+        lore.add(MenuText.critOn(weapon.getCritMin()));
+        lore.add(MenuText.ammo(weapon.getAmmo()));
         setLore(itemStack, lore);
         return itemStack;
     }

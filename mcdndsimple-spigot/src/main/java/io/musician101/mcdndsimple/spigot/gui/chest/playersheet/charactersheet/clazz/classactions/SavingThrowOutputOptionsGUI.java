@@ -7,6 +7,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 public class SavingThrowOutputOptionsGUI extends MCDNDSimpleChestGUI {
@@ -25,9 +26,8 @@ public class SavingThrowOutputOptionsGUI extends MCDNDSimpleChestGUI {
             strength = addGlow(strength);
         }
 
-        set(0, strength, player -> {
+        set(0, ClickType.LEFT, strength, player -> {
             savingThrowOutputOptions.setStrengthEnabled(!savingThrowOutputOptions.isStrengthEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -36,9 +36,8 @@ public class SavingThrowOutputOptionsGUI extends MCDNDSimpleChestGUI {
             dexterity = addGlow(dexterity);
         }
 
-        set(1, dexterity, player -> {
+        set(1, ClickType.LEFT, dexterity, player -> {
             savingThrowOutputOptions.setDexterityEnabled(!savingThrowOutputOptions.isDexterityEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -47,9 +46,8 @@ public class SavingThrowOutputOptionsGUI extends MCDNDSimpleChestGUI {
             constitution = setDurability(constitution, 1);
         }
 
-        set(2, constitution, player -> {
+        set(2, ClickType.LEFT, constitution, player -> {
             savingThrowOutputOptions.setConstitutionEnabled(!savingThrowOutputOptions.isConstitutionEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -58,9 +56,8 @@ public class SavingThrowOutputOptionsGUI extends MCDNDSimpleChestGUI {
             intelligence = addGlow(intelligence);
         }
 
-        set(3, intelligence, player -> {
+        set(3, ClickType.LEFT, intelligence, player -> {
             savingThrowOutputOptions.setIntelligenceEnabled(!savingThrowOutputOptions.isIntelligenceEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -69,9 +66,8 @@ public class SavingThrowOutputOptionsGUI extends MCDNDSimpleChestGUI {
             wisdom = addGlow(intelligence);
         }
 
-        set(4, wisdom, player -> {
+        set(4, ClickType.LEFT, wisdom, player -> {
             savingThrowOutputOptions.setWisdomEnabled(!savingThrowOutputOptions.isWisdomEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -80,9 +76,8 @@ public class SavingThrowOutputOptionsGUI extends MCDNDSimpleChestGUI {
             charisma = addGlow(intelligence);
         }
 
-        set(5, charisma, player -> {
+        set(5, ClickType.LEFT, charisma, player -> {
             savingThrowOutputOptions.setCharismaEnabled(!savingThrowOutputOptions.isCharismaEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -91,12 +86,11 @@ public class SavingThrowOutputOptionsGUI extends MCDNDSimpleChestGUI {
             death = addGlow(intelligence);
         }
 
-        set(6, death, player -> {
+        set(6, ClickType.LEFT, death, player -> {
             savingThrowOutputOptions.setDeathEnabled(!savingThrowOutputOptions.isDeathEnabled());
-            player.closeInventory();
             open();
         });
 
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

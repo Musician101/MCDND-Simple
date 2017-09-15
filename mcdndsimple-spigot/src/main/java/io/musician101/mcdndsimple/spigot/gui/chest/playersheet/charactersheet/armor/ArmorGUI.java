@@ -9,6 +9,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionType;
 
@@ -29,9 +30,8 @@ public class ArmorGUI extends MCDNDSimpleChestGUI {
             worn = addGlow(worn);
         }
 
-        set(0, worn, player -> {
+        set(0, ClickType.LEFT, worn, player -> {
             armor.setIsWorn(!isWorn);
-            player.closeInventory();
             open();
         });
 
@@ -41,38 +41,32 @@ public class ArmorGUI extends MCDNDSimpleChestGUI {
             unarmored = addGlow(unarmored);
         }
 
-        set(1, unarmored, player -> {
+        set(1, ClickType.LEFT, unarmored, player -> {
             armor.setIsUnarmored(!isUnarmored);
-            player.closeInventory();
             open();
         });
-        set(2, createItem(Material.PAPER, MenuText.RENAME), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(2, ClickType.LEFT, createItem(Material.PAPER, MenuText.RENAME), player -> new StringInputAnvilGUI(player, (p, s) -> {
             armor.setName(s);
-            player.closeInventory();
             open();
         }));
-        set(3, createItem(Material.CHAINMAIL_CHESTPLATE, MenuText.baseAC(armor)), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(3, ClickType.LEFT, createItem(Material.CHAINMAIL_CHESTPLATE, MenuText.baseAC(armor)), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             armor.setBaseArmorClass(i);
-            player.closeInventory();
             open();
         }));
-        set(4, createItem(Material.IRON_INGOT, armor.getArmorType().getName()), player -> new ArmorTypeGUI(player, armor, this));
-        set(5, createItem(Material.ENCHANTMENT_TABLE, MenuText.magicBonus(armor.getMagicBonus())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(4, ClickType.LEFT, createItem(Material.IRON_INGOT, armor.getArmorType().getName()), player -> new ArmorTypeGUI(player, armor, this));
+        set(5, ClickType.LEFT, createItem(Material.ENCHANTMENT_TABLE, MenuText.magicBonus(armor.getMagicBonus())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             armor.setMagicBonus(i);
-            player.closeInventory();
             open();
         }));
         set(6, createItem(Material.DIAMOND_CHESTPLATE, MenuText.totalAC(armor)));
-        set(7, setPotionEffect(createItem(Material.POTION, MenuText.hasStealthPenalty(armor)), PotionType.INVISIBILITY), player -> {
+        set(7, ClickType.LEFT, setPotionEffect(createItem(Material.POTION, MenuText.hasStealthPenalty(armor)), PotionType.INVISIBILITY), player -> {
             armor.setStealthPenalty(!armor.hasStealthPenalty());
-            player.closeInventory();
             open();
         });
-        set(8, setPotionEffect(createItem(Material.POTION, MenuText.hasSpeedPenalty(armor)), PotionType.SPEED), player -> {
+        set(8, ClickType.LEFT, setPotionEffect(createItem(Material.POTION, MenuText.hasSpeedPenalty(armor)), PotionType.SPEED), player -> {
             armor.setSpeedPenalty(!armor.hasSpeedPenalty());
-            player.closeInventory();
             open();
         });
-        setBackButton(17, Material.BARRIER);
+        setBackButton(17, ClickType.LEFT, Material.BARRIER);
     }
 }

@@ -8,6 +8,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 public class PreparedGUI extends MCDNDSimpleChestGUI {
@@ -29,7 +30,7 @@ public class PreparedGUI extends MCDNDSimpleChestGUI {
                 itemStack = addGlow(itemStack);
             }
 
-            set(x, itemStack, player -> {
+            set(x, ClickType.LEFT, itemStack, player -> {
                 spell.setPrepared(prepared);
                 if (prevGUI == null) {
                     player.closeInventory();
@@ -40,6 +41,6 @@ public class PreparedGUI extends MCDNDSimpleChestGUI {
             });
         }
 
-        setBackButton(9, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

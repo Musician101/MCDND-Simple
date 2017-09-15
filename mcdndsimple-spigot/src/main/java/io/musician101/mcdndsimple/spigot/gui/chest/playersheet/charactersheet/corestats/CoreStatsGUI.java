@@ -11,6 +11,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class CoreStatsGUI extends MCDNDSimpleChestGUI {
 
@@ -30,17 +31,17 @@ public class CoreStatsGUI extends MCDNDSimpleChestGUI {
     @Override
     protected void build() {
         AbilityScore str = coreStats.getStrength();
-        set(0, createItem(Material.IRON_SWORD, str.getName(), MenuText.scoreLore(str, classLevels, experience)), player -> new AbilityScoreGUI(player, str, bioAndInfo, classLevels, experience, this));
+        set(0, ClickType.LEFT, createItem(Material.IRON_SWORD, str.getName(), MenuText.scoreLore(str, classLevels, experience)), player -> new AbilityScoreGUI(player, str, bioAndInfo, classLevels, experience, this));
         AbilityScore dex = coreStats.getDexterity();
-        set(1, createItem(Material.BOW, dex.getName(), MenuText.scoreLore(dex, classLevels, experience)), player -> new AbilityScoreGUI(player, dex, bioAndInfo, classLevels, experience, this));
+        set(1, ClickType.LEFT, createItem(Material.BOW, dex.getName(), MenuText.scoreLore(dex, classLevels, experience)), player -> new AbilityScoreGUI(player, dex, bioAndInfo, classLevels, experience, this));
         AbilityScore con = coreStats.getConstitution();
-        set(2, createItem(Material.GOLDEN_APPLE, con.getName(), MenuText.scoreLore(con, classLevels, experience)), player -> new AbilityScoreGUI(player, con, bioAndInfo, classLevels, experience, this));
+        set(2, ClickType.LEFT, createItem(Material.GOLDEN_APPLE, con.getName(), MenuText.scoreLore(con, classLevels, experience)), player -> new AbilityScoreGUI(player, con, bioAndInfo, classLevels, experience, this));
         AbilityScore intel = coreStats.getIntelligence();
-        set(3, createItem(Material.BOOK_AND_QUILL, intel.getName(), MenuText.scoreLore(intel, classLevels, experience)), player -> new AbilityScoreGUI(player, intel, bioAndInfo, classLevels, experience, this));
+        set(3, ClickType.LEFT, createItem(Material.BOOK_AND_QUILL, intel.getName(), MenuText.scoreLore(intel, classLevels, experience)), player -> new AbilityScoreGUI(player, intel, bioAndInfo, classLevels, experience, this));
         AbilityScore wis = coreStats.getWisdom();
-        set(4, createItem(Material.ENCHANTED_BOOK, wis.getName(), MenuText.scoreLore(wis, classLevels, experience)), player -> new AbilityScoreGUI(player, wis, bioAndInfo, classLevels, experience, this));
+        set(4, ClickType.LEFT, createItem(Material.ENCHANTED_BOOK, wis.getName(), MenuText.scoreLore(wis, classLevels, experience)), player -> new AbilityScoreGUI(player, wis, bioAndInfo, classLevels, experience, this));
         AbilityScore cha = coreStats.getCharisma();
-        set(5, setDurability(createItem(Material.SKULL_ITEM, cha.getName(), MenuText.scoreLore(cha, classLevels, experience)), 3), player -> new AbilityScoreGUI(player, cha, bioAndInfo, classLevels, experience, this));
-        setBackButton(8, Material.BARRIER);
+        set(5, ClickType.LEFT, setDurability(createItem(Material.SKULL_ITEM, cha.getName(), MenuText.scoreLore(cha, classLevels, experience)), 3), player -> new AbilityScoreGUI(player, cha, bioAndInfo, classLevels, experience, this));
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

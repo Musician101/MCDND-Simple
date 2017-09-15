@@ -8,6 +8,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 public class SpellTypeGUI extends MCDNDSimpleChestGUI {
@@ -29,16 +30,11 @@ public class SpellTypeGUI extends MCDNDSimpleChestGUI {
                 itemStack = addGlow(itemStack);
             }
 
-            set(x, itemStack, player -> {
+            set(x, ClickType.LEFT, itemStack, player -> {
                 spell.setSpellType(spellType);
-                if (prevGUI == null) {
-                    player.closeInventory();
-                }
-                else {
-                    prevGUI.open();
-                }
+                open();
             });
         }
-        setBackButton(17, Material.BARRIER);
+        setBackButton(17, ClickType.LEFT, Material.BARRIER);
     }
 }

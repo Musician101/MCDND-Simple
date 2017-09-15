@@ -5,7 +5,7 @@ import io.musician101.mcdndsimple.common.Dice;
 public class SpellHealing {
 
     private Dice healAmount = new Dice(0);
-    private String statBonus = "None";
+    private StatBonus statBonus = StatBonus.NONE;
 
     public Dice getHealAmount() {
         return healAmount;
@@ -15,11 +15,11 @@ public class SpellHealing {
         this.healAmount = healAmount;
     }
 
-    public String getStatBonus() {
+    public StatBonus getStatBonus() {
         return statBonus;
     }
 
-    public void setStatBonus(String statBonus) {
+    public void setStatBonus(StatBonus statBonus) {
         this.statBonus = statBonus;
     }
 }

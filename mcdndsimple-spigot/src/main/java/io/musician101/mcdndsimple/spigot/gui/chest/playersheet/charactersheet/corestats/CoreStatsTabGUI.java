@@ -15,6 +15,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.playersheet.charactersheet.co
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.potion.PotionType;
 
 public class CoreStatsTabGUI extends MCDNDSimpleChestGUI {
@@ -33,25 +34,23 @@ public class CoreStatsTabGUI extends MCDNDSimpleChestGUI {
     @Override
     protected void build() {
         CoreStats coreStats = coreStatsTab.getCoreStats();
-        set(0, setPotionEffect(createItem(Material.POTION, MenuText.CORE_STATS), PotionType.STRENGTH), player -> new CoreStatsGUI(player, bioAndInfo, classLevels, coreStats, coreStatsTab.getExperience(), this));
-        set(1, createItem(Material.GOLDEN_APPLE, MenuText.HIT_POINTS, MenuText.hitPoints(coreStatsTab.getHitPoints())), player -> new HitPointsGUI(player, coreStatsTab.getHitPoints(), this));
-        set(2, setPotionEffect(createItem(Material.POTION, MenuText.speed(coreStatsTab)), PotionType.SPEED), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(0, ClickType.LEFT, setPotionEffect(createItem(Material.POTION, MenuText.CORE_STATS), PotionType.STRENGTH), player -> new CoreStatsGUI(player, bioAndInfo, classLevels, coreStats, coreStatsTab.getExperience(), this));
+        set(1, ClickType.LEFT, createItem(Material.GOLDEN_APPLE, MenuText.HIT_POINTS, MenuText.hitPoints(coreStatsTab.getHitPoints())), player -> new HitPointsGUI(player, coreStatsTab.getHitPoints(), this));
+        set(2, ClickType.LEFT, setPotionEffect(createItem(Material.POTION, MenuText.speed(coreStatsTab)), PotionType.SPEED), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             coreStatsTab.setSpeed(i);
-            player.closeInventory();
             open();
         }));
         AbilityScore dex = coreStats.getDexterity();
-        set(3, setPotionEffect(createItem(Material.POTION, MenuText.initiative(coreStatsTab.getInitiative(), dex)), PotionType.SPEED), player -> new InitiativeGUI(player, dex, bioAndInfo, coreStatsTab.getInitiative(), this));
+        set(3, ClickType.LEFT, setPotionEffect(createItem(Material.POTION, MenuText.initiative(coreStatsTab.getInitiative(), dex)), PotionType.SPEED), player -> new InitiativeGUI(player, dex, bioAndInfo, coreStatsTab.getInitiative(), this));
         Experience experience = coreStatsTab.getExperience();
-        set(4, createItem(Material.EXP_BOTTLE, MenuText.LEVEL_AND_XP, MenuText.experience(experience, classLevels)), player -> new ExperienceGUI(player, classLevels, experience, this));
+        set(4, ClickType.LEFT, createItem(Material.EXP_BOTTLE, MenuText.LEVEL_AND_XP, MenuText.experience(experience, classLevels)), player -> new ExperienceGUI(player, classLevels, experience, this));
         HitDice hitDice = coreStatsTab.getHitDice();
-        set(5, setPotionEffect(createItem(Material.POTION, MenuText.HIT_DICE, MenuText.hitDice(hitDice)), PotionType.REGEN), player -> new HitDiceGUI(player, coreStats.getConstitution(), bioAndInfo, hitDice, this));
-        set(6, createItem(Material.ENCHANTED_BOOK, MenuText.BONUSES_PENALTIES), player -> new BonusesGUI(player, coreStatsTab.getBonuses(), this));
-        set(7, createItem(Material.GOLD_NUGGET, MenuText.INSPIRATION), player -> {
+        set(5, ClickType.LEFT, setPotionEffect(createItem(Material.POTION, MenuText.HIT_DICE, MenuText.hitDice(hitDice)), PotionType.REGEN), player -> new HitDiceGUI(player, coreStats.getConstitution(), bioAndInfo, hitDice, this));
+        set(6, ClickType.LEFT, createItem(Material.ENCHANTED_BOOK, MenuText.BONUSES_PENALTIES), player -> new BonusesGUI(player, coreStatsTab.getBonuses(), this));
+        set(7, ClickType.LEFT, createItem(Material.GOLD_NUGGET, MenuText.INSPIRATION), player -> {
             coreStatsTab.setInspiration(!coreStatsTab.isInspiration());
-            player.closeInventory();
             open();
         });
-        setBackButton(9, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

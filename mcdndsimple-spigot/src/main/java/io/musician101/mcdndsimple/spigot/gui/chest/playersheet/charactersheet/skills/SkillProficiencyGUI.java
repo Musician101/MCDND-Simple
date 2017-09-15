@@ -8,6 +8,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class SkillProficiencyGUI extends MCDNDSimpleChestGUI {
 
@@ -23,16 +24,11 @@ public class SkillProficiencyGUI extends MCDNDSimpleChestGUI {
         SkillProficiency[] skillProficiencies = SkillProficiency.values();
         for (int x = 0; x < skillProficiencies.length; x++) {
             SkillProficiency skillProficiency = skillProficiencies[x];
-            set(x, createItem(Material.BOOK, skillProficiency.getName()), player -> {
+            set(x, ClickType.LEFT, createItem(Material.BOOK, skillProficiency.getName()), player -> {
                 skill.setSkillProficiency(skillProficiency);
-                if (prevGUI != null) {
-                    prevGUI.open();
-                }
-                else {
-                    player.closeInventory();
-                }
+                open();
             });
         }
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

@@ -11,6 +11,7 @@ import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSp
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.potion.PotionType;
 
 public class RangedBonusGUI extends MCDNDSimpleChestGUI {
@@ -24,7 +25,7 @@ public class RangedBonusGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
-        set(0, createItem(Material.DIAMOND_SWORD, MenuText.ATTACK_ROLLS), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(0, ClickType.LEFT, createItem(Material.DIAMOND_SWORD, MenuText.ATTACK_ROLLS), player -> new StringInputAnvilGUI(player, (p, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 player.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -32,11 +33,10 @@ public class RangedBonusGUI extends MCDNDSimpleChestGUI {
             }
 
             rangedBonus.setAttack(dice);
-            player.closeInventory();
             open();
         }));
 
-        set(1, setPotionEffect(createItem(Material.POTION, MenuText.DAMAGE_ROLLS), PotionType.STRENGTH), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(1, ClickType.LEFT, setPotionEffect(createItem(Material.POTION, MenuText.DAMAGE_ROLLS), PotionType.STRENGTH), player -> new StringInputAnvilGUI(player, (p, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 player.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -44,10 +44,9 @@ public class RangedBonusGUI extends MCDNDSimpleChestGUI {
             }
 
             rangedBonus.setDamage(dice);
-            player.closeInventory();
             open();
         }));
 
-        setBackButton(9, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

@@ -8,6 +8,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 public class RechargeGUI<R extends Rechargeable> extends MCDNDSimpleChestGUI {
@@ -33,12 +34,12 @@ public class RechargeGUI<R extends Rechargeable> extends MCDNDSimpleChestGUI {
                 itemStack = addGlow(itemStack);
             }
 
-            set(i, itemStack, player -> {
+            set(i, ClickType.LEFT, itemStack, player -> {
                 rechargeable.setRecharge(recharge);
                 runnable.run();
             });
         }
 
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

@@ -12,6 +12,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class HitDiceGUI extends MCDNDSimpleChestGUI {
 
@@ -30,31 +31,27 @@ public class HitDiceGUI extends MCDNDSimpleChestGUI {
     protected void build() {
         Material redstoneLamp = Material.REDSTONE_LAMP_OFF;
         String[] hitDiceStrings = MenuText.hitDice(hitDice);
-        set(0, createItem(redstoneLamp, hitDiceStrings[0], MenuText.D6_DESC), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(0, ClickType.LEFT, createItem(redstoneLamp, hitDiceStrings[0], MenuText.D6_DESC), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             hitDice.updateHitDie(6, i);
-            player.closeInventory();
             open();
         }));
-        set(1, createItem(redstoneLamp, hitDiceStrings[1], MenuText.D8_DESC), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(1, ClickType.LEFT, createItem(redstoneLamp, hitDiceStrings[1], MenuText.D8_DESC), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             hitDice.updateHitDie(8, i);
-            player.closeInventory();
             open();
         }));
-        set(2, createItem(redstoneLamp, hitDiceStrings[2], MenuText.D10_DESC), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(2, ClickType.LEFT, createItem(redstoneLamp, hitDiceStrings[2], MenuText.D10_DESC), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             hitDice.updateHitDie(10, i);
-            player.closeInventory();
             open();
         }));
-        set(3, createItem(redstoneLamp, hitDiceStrings[3], MenuText.D12_DESC), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(3, ClickType.LEFT, createItem(redstoneLamp, hitDiceStrings[3], MenuText.D12_DESC), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             hitDice.updateHitDie(12, i);
-            player.closeInventory();
             open();
         }));
-        set(9, createItem(Material.REDSTONE_LAMP_ON, MenuText.rollHitDie(6)), player -> new IntegerInputAnvilGUI(player, (p, i) -> rollHitDie(i, 6)));
-        set(10, createItem(Material.REDSTONE_LAMP_ON, MenuText.rollHitDie(8)), player -> new IntegerInputAnvilGUI(player, (p, i) -> rollHitDie(i, 8)));
-        set(11, createItem(Material.REDSTONE_LAMP_ON, MenuText.rollHitDie(10)), player -> new IntegerInputAnvilGUI(player, (p, i) -> rollHitDie(i, 10)));
-        set(12, createItem(Material.REDSTONE_LAMP_ON, MenuText.rollHitDie(12)), player -> new IntegerInputAnvilGUI(player, (p, i) -> rollHitDie(i, 12)));
-        setBackButton(17, Material.BARRIER);
+        set(9, ClickType.LEFT, createItem(Material.REDSTONE_LAMP_ON, MenuText.rollHitDie(6)), player -> new IntegerInputAnvilGUI(player, (p, i) -> rollHitDie(i, 6)));
+        set(10, ClickType.LEFT, createItem(Material.REDSTONE_LAMP_ON, MenuText.rollHitDie(8)), player -> new IntegerInputAnvilGUI(player, (p, i) -> rollHitDie(i, 8)));
+        set(11, ClickType.LEFT, createItem(Material.REDSTONE_LAMP_ON, MenuText.rollHitDie(10)), player -> new IntegerInputAnvilGUI(player, (p, i) -> rollHitDie(i, 10)));
+        set(12, ClickType.LEFT, createItem(Material.REDSTONE_LAMP_ON, MenuText.rollHitDie(12)), player -> new IntegerInputAnvilGUI(player, (p, i) -> rollHitDie(i, 12)));
+        setBackButton(17, ClickType.LEFT, Material.BARRIER);
     }
 
     private void rollHitDie(int amount, int sides) {

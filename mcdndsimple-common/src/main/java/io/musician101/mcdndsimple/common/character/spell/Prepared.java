@@ -2,7 +2,9 @@ package io.musician101.mcdndsimple.common.character.spell;
 
 public enum Prepared {
 
-    ALWAYS("Always"), YES("Yes"), NO("No");
+    ALWAYS("Always"),
+    YES("Yes"),
+    NO("No");
 
     private final String name;
 

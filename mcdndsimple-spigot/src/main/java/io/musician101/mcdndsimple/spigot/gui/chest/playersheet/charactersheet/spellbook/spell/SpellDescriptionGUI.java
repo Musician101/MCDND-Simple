@@ -8,6 +8,7 @@ import io.musician101.musicianlibrary.java.minecraft.spigot.gui.SpigotBookGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
@@ -22,7 +23,7 @@ public class SpellDescriptionGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
-        set(0, createItem(Material.BOOK, MenuText.DESCRIPTION), player -> {
+        set(0, ClickType.LEFT, createItem(Material.BOOK, MenuText.DESCRIPTION), player -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setAuthor(player.getName());
@@ -33,7 +34,7 @@ public class SpellDescriptionGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        set(1, createItem(Material.BOOK, MenuText.AT_HIGHER_LEVELS), player -> {
+        set(1, ClickType.LEFT, createItem(Material.BOOK, MenuText.AT_HIGHER_LEVELS), player -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setAuthor(player.getName());
@@ -44,6 +45,6 @@ public class SpellDescriptionGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

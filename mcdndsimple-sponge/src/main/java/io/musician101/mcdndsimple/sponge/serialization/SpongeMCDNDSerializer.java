@@ -45,229 +45,469 @@ import io.musician101.mcdndsimple.common.character.weapon.AbstractWeapon;
 import io.musician101.mcdndsimple.common.character.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.weapon.RangedWeapon;
 import io.musician101.mcdndsimple.common.serialization.MCDNDSerializer;
-import org.spongepowered.api.data.DataContainer;
-import org.spongepowered.api.data.MemoryDataContainer;
+import io.musician101.mcdndsimple.common.serialization.MCDNDSimpleKeys;
+import ninja.leaping.configurate.ConfigurationNode;
+import ninja.leaping.configurate.SimpleConfigurationNode;
 
-public class SpongeMCDNDSerializer extends MCDNDSerializer<DataContainer> {
+public class SpongeMCDNDSerializer extends MCDNDSerializer<ConfigurationNode> {
 
     @Override
-    public DataContainer serialize(PlayerSheet playerSheet) {
-        //TODO left off here
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.BIO_AND_INFO, serialize(playerSheet.getBioAndInfo())).set(SpongeMCDNDSimpleKeys.PLAYER_SHEET, serialize(playerSheet.getCharacterSheet())).set(SpongeMCDNDSimpleKeys.CLASS, playerSheet.getClazz()).set(SpongeMCDNDSimpleKeys.NAME, playerSheet.getName()).set(SpongeMCDNDSimpleKeys.RACE, playerSheet.getRace());
+    public ConfigurationNode serialize(PlayerSheet playerSheet) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.BIO_AND_INFO).setValue(serialize(playerSheet.getBioAndInfo()));
+        mc.getNode(MCDNDSimpleKeys.PLAYER_SHEET).setValue(serialize(playerSheet.getCharacterSheet()));
+        mc.getNode(MCDNDSimpleKeys.CLASS).setValue(playerSheet.getClazz());
+        mc.getNode(MCDNDSimpleKeys.NAME).setValue(playerSheet.getName());
+        mc.getNode(MCDNDSimpleKeys.RACE).setValue(playerSheet.getRace());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(BioAndInfo bioAndInfo) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.NAME, bioAndInfo.getName()).set(SpongeMCDNDSimpleKeys.BIO, bioAndInfo.getBio());
+    protected ConfigurationNode serialize(BioAndInfo bioAndInfo) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.NAME).setValue(bioAndInfo.getName());
+        mc.getNode(MCDNDSimpleKeys.BIO).setValue(bioAndInfo.getBio());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(ArmorTab armorTab) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.ARMOR_CLASS, armorTab.getArmorClass()).set(SpongeMCDNDSimpleKeys.UNARMORED_ARMOR_CLASS, armorTab.getUnarmoredClass()).set(SpongeMCDNDSimpleKeys.ARMOR_LIST, serialize(armorTab.getArmorList(), this::serialize)).set(SpongeMCDNDSimpleKeys.UNARMORED_BONUS, serialize(armorTab.getUnarmoredBonus()));
+    protected ConfigurationNode serialize(ArmorTab armorTab) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.ARMOR_CLASS).setValue(armorTab.getArmorClass());
+        mc.getNode(MCDNDSimpleKeys.UNARMORED_ARMOR_CLASS).setValue(armorTab.getUnarmoredClass());
+        mc.getNode(MCDNDSimpleKeys.ARMOR_LIST).setValue(serialize(armorTab.getArmorList(), this::serialize));
+        mc.getNode(MCDNDSimpleKeys.UNARMORED_BONUS).setValue(serialize(armorTab.getUnarmoredBonus()));
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(Armor armor) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.SPEED_PENALTY, armor.hasSpeedPenalty()).set(SpongeMCDNDSimpleKeys.STEALTH_PENALTY, armor.hasStealthPenalty()).set(SpongeMCDNDSimpleKeys.UNARMORED, armor.isUnarmored()).set(SpongeMCDNDSimpleKeys.WORN, armor.isWorn()).set(SpongeMCDNDSimpleKeys.BASE_ARMOR_CLASS, armor.getBaseArmorClass()).set(SpongeMCDNDSimpleKeys.MAGIC_BONUS, armor.getMagicBonus()).set(SpongeMCDNDSimpleKeys.ARMOR_TYPE, serialize(armor.getArmorType())).set(SpongeMCDNDSimpleKeys.NAME, armor.getName());
+    protected ConfigurationNode serialize(Armor armor) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.SPEED_PENALTY).setValue(armor.hasSpeedPenalty());
+        mc.getNode(MCDNDSimpleKeys.STEALTH_PENALTY).setValue(armor.hasStealthPenalty());
+        mc.getNode(MCDNDSimpleKeys.UNARMORED).setValue(armor.isUnarmored());
+        mc.getNode(MCDNDSimpleKeys.WORN).setValue(armor.isWorn());
+        mc.getNode(MCDNDSimpleKeys.BASE_ARMOR_CLASS).setValue(armor.getBaseArmorClass());
+        mc.getNode(MCDNDSimpleKeys.MAGIC_BONUS).setValue(armor.getMagicBonus());
+        mc.getNode(MCDNDSimpleKeys.ARMOR_TYPE).setValue(serialize(armor.getArmorType()));
+        mc.getNode(MCDNDSimpleKeys.NAME).setValue(armor.getName());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(UnarmoredBonus unarmoredBonus) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.NAME, unarmoredBonus.getName());
+    protected ConfigurationNode serialize(UnarmoredBonus unarmoredBonus) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.NAME).setValue(unarmoredBonus.getName());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(BackgroundTab backgroundTab) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.WEIGHT_DOUBLE, backgroundTab.getWeight()).set(SpongeMCDNDSimpleKeys.AGE, backgroundTab.getAge()).set(SpongeMCDNDSimpleKeys.ARMOR_PROFICIENCIES, backgroundTab.getArmorProficiencies()).set(SpongeMCDNDSimpleKeys.BACKGROUND, backgroundTab.getBackground()).set(SpongeMCDNDSimpleKeys.BONDS, backgroundTab.getBonds()).set(SpongeMCDNDSimpleKeys.FLAWS, backgroundTab.getFlaws()).set(SpongeMCDNDSimpleKeys.IDEALS, backgroundTab.getIdeals()).set(SpongeMCDNDSimpleKeys.OTHER_NOTES, backgroundTab.getOtherNotes()).set(SpongeMCDNDSimpleKeys.PERSONALITY_TRAITS, backgroundTab.getPersonalityTraits()).set(SpongeMCDNDSimpleKeys.RACIAL_TRAITS, backgroundTab.getRacialTraits()).set(SpongeMCDNDSimpleKeys.TOOL_PROFICIENCIES, backgroundTab.getToolProficiencies()).set(SpongeMCDNDSimpleKeys.WEAPON_PROFICIENCIES, backgroundTab.getWeaponProficiencies()).set(SpongeMCDNDSimpleKeys.ALIGNMENT, backgroundTab.getAlignment()).set(SpongeMCDNDSimpleKeys.EYES, backgroundTab.getEyes()).set(SpongeMCDNDSimpleKeys.GENDER, backgroundTab.getGender()).set(SpongeMCDNDSimpleKeys.HAIR, backgroundTab.getHair()).set(SpongeMCDNDSimpleKeys.HEIGHT, backgroundTab.getHeight()).set(SpongeMCDNDSimpleKeys.LANGUAGES, backgroundTab.getLanguages()).set(SpongeMCDNDSimpleKeys.SIZE, backgroundTab.getSize()).set(SpongeMCDNDSimpleKeys.VISION, backgroundTab.getVision());
+    protected ConfigurationNode serialize(BackgroundTab backgroundTab) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.WEIGHT_DOUBLE).setValue(backgroundTab.getWeight());
+        mc.getNode(MCDNDSimpleKeys.AGE).setValue(backgroundTab.getAge());
+        mc.getNode(MCDNDSimpleKeys.ARMOR_PROFICIENCIES).setValue(backgroundTab.getArmorProficiencies());
+        mc.getNode(MCDNDSimpleKeys.BACKGROUND).setValue(backgroundTab.getBackground());
+        mc.getNode(MCDNDSimpleKeys.BONDS).setValue(backgroundTab.getBonds());
+        mc.getNode(MCDNDSimpleKeys.FLAWS).setValue(backgroundTab.getFlaws());
+        mc.getNode(MCDNDSimpleKeys.IDEALS).setValue(backgroundTab.getIdeals());
+        mc.getNode(MCDNDSimpleKeys.OTHER_NOTES).setValue(backgroundTab.getOtherNotes());
+        mc.getNode(MCDNDSimpleKeys.PERSONALITY_TRAITS).setValue(backgroundTab.getPersonalityTraits());
+        mc.getNode(MCDNDSimpleKeys.RACIAL_TRAITS).setValue(backgroundTab.getRacialTraits());
+        mc.getNode(MCDNDSimpleKeys.TOOL_PROFICIENCIES).setValue(backgroundTab.getToolProficiencies());
+        mc.getNode(MCDNDSimpleKeys.WEAPON_PROFICIENCIES).setValue(backgroundTab.getWeaponProficiencies());
+        mc.getNode(MCDNDSimpleKeys.ALIGNMENT).setValue(backgroundTab.getAlignment());
+        mc.getNode(MCDNDSimpleKeys.EYES).setValue(backgroundTab.getEyes());
+        mc.getNode(MCDNDSimpleKeys.GENDER).setValue(backgroundTab.getGender());
+        mc.getNode(MCDNDSimpleKeys.HAIR).setValue(backgroundTab.getHair());
+        mc.getNode(MCDNDSimpleKeys.HEIGHT).setValue(backgroundTab.getHeight());
+        mc.getNode(MCDNDSimpleKeys.LANGUAGES).setValue(backgroundTab.getLanguages());
+        mc.getNode(MCDNDSimpleKeys.SIZE).setValue(backgroundTab.getSize());
+        mc.getNode(MCDNDSimpleKeys.VISION).setValue(backgroundTab.getVision());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(ClassTab classTab) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.CLASS_LEVELS, serialize(classTab.getClassLevels())).set(SpongeMCDNDSimpleKeys.CLASS_ACTIONS, serialize(classTab.getClassActions(), this::serialize)).set(SpongeMCDNDSimpleKeys.CLASS_RESOURCES, serialize(classTab.getClassResources(), this::serialize)).set(SpongeMCDNDSimpleKeys.CLASS_FEATURE_NOTES, classTab.getClassFeatureNotes()).set(SpongeMCDNDSimpleKeys.OTHER_NOTES, classTab.getOtherNotes());
+    protected ConfigurationNode serialize(ClassTab classTab) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.CLASS_LEVELS).setValue(serialize(classTab.getClassLevels()));
+        mc.getNode(MCDNDSimpleKeys.CLASS_ACTIONS).setValue(serialize(classTab.getClassActions(), this::serialize));
+        mc.getNode(MCDNDSimpleKeys.CLASS_RESOURCES).setValue(serialize(classTab.getClassResources(), this::serialize));
+        mc.getNode(MCDNDSimpleKeys.CLASS_FEATURE_NOTES).setValue(classTab.getClassFeatureNotes());
+        mc.getNode(MCDNDSimpleKeys.OTHER_NOTES).setValue(classTab.getOtherNotes());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(ClassLevels classLevels) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.BARBARIAN_LEVEL, classLevels.getBarbarian()).set(SpongeMCDNDSimpleKeys.BARD_LEVEL, classLevels.getBard()).set(SpongeMCDNDSimpleKeys.CLERIC_LEVEL, classLevels.getCleric()).set(SpongeMCDNDSimpleKeys.DRUID_LEVEL, classLevels.getDruid()).set(SpongeMCDNDSimpleKeys.FIGHTER_LEVEL, classLevels.getFighter()).set(SpongeMCDNDSimpleKeys.MONK_LEVEL, classLevels.getMonk()).set(SpongeMCDNDSimpleKeys.PALADIN_LEVEL, classLevels.getPaladin()).set(SpongeMCDNDSimpleKeys.RANGER_LEVEL, classLevels.getRanger()).set(SpongeMCDNDSimpleKeys.ROGUE_LEVEL, classLevels.getRogue()).set(SpongeMCDNDSimpleKeys.SORCERER_LEVEL, classLevels.getSorcerer()).set(SpongeMCDNDSimpleKeys.WARLOCK_LEVEL, classLevels.getWarlock()).set(SpongeMCDNDSimpleKeys.WIZARD_LEVEL, classLevels.getWizard());
+    protected ConfigurationNode serialize(ClassLevels classLevels) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.BARBARIAN_LEVEL).setValue(classLevels.getBarbarian());
+        mc.getNode(MCDNDSimpleKeys.BARD_LEVEL).setValue(classLevels.getBard());
+        mc.getNode(MCDNDSimpleKeys.CLERIC_LEVEL).setValue(classLevels.getCleric());
+        mc.getNode(MCDNDSimpleKeys.DRUID_LEVEL).setValue(classLevels.getDruid());
+        mc.getNode(MCDNDSimpleKeys.FIGHTER_LEVEL).setValue(classLevels.getFighter());
+        mc.getNode(MCDNDSimpleKeys.MONK_LEVEL).setValue(classLevels.getMonk());
+        mc.getNode(MCDNDSimpleKeys.PALADIN_LEVEL).setValue(classLevels.getPaladin());
+        mc.getNode(MCDNDSimpleKeys.RANGER_LEVEL).setValue(classLevels.getRanger());
+        mc.getNode(MCDNDSimpleKeys.ROGUE_LEVEL).setValue(classLevels.getRogue());
+        mc.getNode(MCDNDSimpleKeys.SORCERER_LEVEL).setValue(classLevels.getSorcerer());
+        mc.getNode(MCDNDSimpleKeys.WARLOCK_LEVEL).setValue(classLevels.getWarlock());
+        mc.getNode(MCDNDSimpleKeys.WIZARD_LEVEL).setValue(classLevels.getWizard());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(ClassAction classAction) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.MAX_USES, classAction.getMax()).set(SpongeMCDNDSimpleKeys.USES_LEFT, classAction.getUsedCharges()).set(SpongeMCDNDSimpleKeys.RECHARGE, serialize(classAction.getRecharge())).set(SpongeMCDNDSimpleKeys.GAINED_FROM, classAction.getGainedFrom()).set(SpongeMCDNDSimpleKeys.NAME, classAction.getName());
+    protected ConfigurationNode serialize(ClassAction classAction) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.MAX_USES).setValue(classAction.getMax());
+        mc.getNode(MCDNDSimpleKeys.USES_LEFT).setValue(classAction.getUsedCharges());
+        mc.getNode(MCDNDSimpleKeys.RECHARGE).setValue(serialize(classAction.getRecharge()));
+        mc.getNode(MCDNDSimpleKeys.GAINED_FROM).setValue(classAction.getGainedFrom());
+        mc.getNode(MCDNDSimpleKeys.NAME).setValue(classAction.getName());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(ClassResource classResource) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.USES_LEFT, classResource.getUsesLeft()).set(SpongeMCDNDSimpleKeys.MAX_USES, classResource.getMaxUses()).set(SpongeMCDNDSimpleKeys.RECHARGE, serialize(classResource.getRecharge())).set(SpongeMCDNDSimpleKeys.NAME, classResource.getName());
+    protected ConfigurationNode serialize(ClassResource classResource) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.USES_LEFT).setValue(classResource.getUsesLeft());
+        mc.getNode(MCDNDSimpleKeys.MAX_USES).setValue(classResource.getMaxUses());
+        mc.getNode(MCDNDSimpleKeys.RECHARGE).setValue(serialize(classResource.getRecharge()));
+        mc.getNode(MCDNDSimpleKeys.NAME).setValue(classResource.getName());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(CoreStatsTab coreStatsTab) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.BONUSES, serialize(coreStatsTab.getBonuses())).set(SpongeMCDNDSimpleKeys.CORE_STATS, serialize(coreStatsTab.getCoreStats())).set(SpongeMCDNDSimpleKeys.EXPERIENCE, serialize(coreStatsTab.getExperience())).set(SpongeMCDNDSimpleKeys.HIT_DICE, serialize(coreStatsTab.getHitDice())).set(SpongeMCDNDSimpleKeys.HIT_POINTS, serialize(coreStatsTab.getHitPoints())).set(SpongeMCDNDSimpleKeys.INITIATIVE_BONUS, coreStatsTab.getInitiativeBonus()).set(SpongeMCDNDSimpleKeys.SPEED, coreStatsTab.getSpeed());
+    protected ConfigurationNode serialize(CoreStatsTab coreStatsTab) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.BONUSES).setValue(serialize(coreStatsTab.getBonuses()));
+        mc.getNode(MCDNDSimpleKeys.CORE_STATS).setValue(serialize(coreStatsTab.getCoreStats()));
+        mc.getNode(MCDNDSimpleKeys.EXPERIENCE).setValue(serialize(coreStatsTab.getExperience()));
+        mc.getNode(MCDNDSimpleKeys.HIT_DICE).setValue(serialize(coreStatsTab.getHitDice()));
+        mc.getNode(MCDNDSimpleKeys.HIT_POINTS).setValue(serialize(coreStatsTab.getHitPoints()));
+        mc.getNode(MCDNDSimpleKeys.SPEED).setValue(coreStatsTab.getSpeed());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(Bonuses bonuses) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.MELEE_BONUS, serialize(bonuses.getMelee())).set(SpongeMCDNDSimpleKeys.RANGED_BONUS, serialize(bonuses.getRanged())).set(SpongeMCDNDSimpleKeys.SPELLCASTING_BONUS, serialize(bonuses.getSpellcasting())).set(SpongeMCDNDSimpleKeys.SAVES, bonuses.getSaves()).set(SpongeMCDNDSimpleKeys.ABILITIES_AND_SKILLS, bonuses.getAbilitiesAndSkills());
+    protected ConfigurationNode serialize(Bonuses bonuses) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.MELEE_BONUS).setValue(serialize(bonuses.getMelee()));
+        mc.getNode(MCDNDSimpleKeys.RANGED_BONUS).setValue(serialize(bonuses.getRanged()));
+        mc.getNode(MCDNDSimpleKeys.SPELLCASTING_BONUS).setValue(serialize(bonuses.getSpellcasting()));
+        mc.getNode(MCDNDSimpleKeys.SAVES).setValue(bonuses.getSaves());
+        mc.getNode(MCDNDSimpleKeys.ABILITIES_AND_SKILLS).setValue(bonuses.getAbilitiesAndSkills());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(MeleeBonus meleeBonus) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.ATTACK, meleeBonus.getAttack()).set(SpongeMCDNDSimpleKeys.DAMAGE, meleeBonus.getDamage());
+    protected ConfigurationNode serialize(MeleeBonus meleeBonus) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.ATTACK).setValue(meleeBonus.getAttack());
+        mc.getNode(MCDNDSimpleKeys.DAMAGE).setValue(meleeBonus.getDamage());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(RangedBonus rangedBonus) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.ATTACK, rangedBonus.getAttack()).set(SpongeMCDNDSimpleKeys.DAMAGE, rangedBonus.getDamage());
+    protected ConfigurationNode serialize(RangedBonus rangedBonus) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.ATTACK).setValue(rangedBonus.getAttack());
+        mc.getNode(MCDNDSimpleKeys.DAMAGE).setValue(rangedBonus.getDamage());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(SpellcastingBonus spellcastingBonus) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.ATTACK, spellcastingBonus.getAttack()).set(SpongeMCDNDSimpleKeys.DAMAGE, spellcastingBonus.getDamage()).set(SpongeMCDNDSimpleKeys.SAVE_DC, spellcastingBonus.getSaveDC());
+    protected ConfigurationNode serialize(SpellcastingBonus spellcastingBonus) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.ATTACK).setValue(spellcastingBonus.getAttack());
+        mc.getNode(MCDNDSimpleKeys.DAMAGE).setValue(spellcastingBonus.getDamage());
+        mc.getNode(MCDNDSimpleKeys.SAVE_DC).setValue(spellcastingBonus.getSaveDC());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(CoreStats coreStats) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.CHARISMA_SCORE, serialize(coreStats.getCharisma())).set(SpongeMCDNDSimpleKeys.CONSTITUTION_SCORE, serialize(coreStats.getConstitution())).set(SpongeMCDNDSimpleKeys.DEXTERITY_SCORE, serialize(coreStats.getDexterity())).set(SpongeMCDNDSimpleKeys.INTELLIGENCE_SCORE, serialize(coreStats.getIntelligence())).set(SpongeMCDNDSimpleKeys.STRENGTH_SCORE, serialize(coreStats.getStrength())).set(SpongeMCDNDSimpleKeys.WISDOM_SCORE, serialize(coreStats.getWisdom()));
+    protected ConfigurationNode serialize(CoreStats coreStats) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.CHARISMA_SCORE).setValue(serialize(coreStats.getCharisma()));
+        mc.getNode(MCDNDSimpleKeys.CONSTITUTION_SCORE).setValue(serialize(coreStats.getConstitution()));
+        mc.getNode(MCDNDSimpleKeys.DEXTERITY_SCORE).setValue(serialize(coreStats.getDexterity()));
+        mc.getNode(MCDNDSimpleKeys.INTELLIGENCE_SCORE).setValue(serialize(coreStats.getIntelligence()));
+        mc.getNode(MCDNDSimpleKeys.STRENGTH_SCORE).setValue(serialize(coreStats.getStrength()));
+        mc.getNode(MCDNDSimpleKeys.WISDOM_SCORE).setValue(serialize(coreStats.getWisdom()));
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(AbilityScore abilityScore) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.PROFICIENT, abilityScore.isProficient()).set(SpongeMCDNDSimpleKeys.SCORE, abilityScore.getScore()).set(SpongeMCDNDSimpleKeys.SHORT_NAME, abilityScore.getShortName()).set(SpongeMCDNDSimpleKeys.NAME, abilityScore.getName());
+    protected ConfigurationNode serialize(AbilityScore abilityScore) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.PROFICIENT).setValue(abilityScore.isProficient());
+        mc.getNode(MCDNDSimpleKeys.SCORE).setValue(abilityScore.getScore());
+        mc.getNode(MCDNDSimpleKeys.SHORT_NAME).setValue(abilityScore.getShortName());
+        mc.getNode(MCDNDSimpleKeys.NAME).setValue(abilityScore.getName());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(Experience experience) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.EXPERIENCE_AMOUNT, experience.getXP()).set(SpongeMCDNDSimpleKeys.OVERALL_LEVEL, experience.getOverallLevel());
+    protected ConfigurationNode serialize(Experience experience) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.EXPERIENCE_AMOUNT).setValue(experience.getXP());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(HitDice hitDice) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.HIT_DICE_MAP, hitDice.getHitDice());
+    protected ConfigurationNode serialize(HitDice hitDice) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.HIT_DICE_MAP).setValue(hitDice.getHitDice());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(Dice dice) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.AMOUNT, dice.getAmount()).set(SpongeMCDNDSimpleKeys.SIDES, dice.getSides());
+    protected ConfigurationNode serialize(Dice dice) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.AMOUNT).setValue(dice.getAmount());
+        mc.getNode(MCDNDSimpleKeys.SIDES).setValue(dice.getSides());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(HitPoints hitPoints) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.CURRENT_HP, hitPoints.getCurrent()).set(SpongeMCDNDSimpleKeys.MAX_HP, hitPoints.getMax()).set(SpongeMCDNDSimpleKeys.TEMP_HP, hitPoints.getTemp());
+    protected ConfigurationNode serialize(HitPoints hitPoints) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.CURRENT_HP).setValue(hitPoints.getCurrent());
+        mc.getNode(MCDNDSimpleKeys.MAX_HP).setValue(hitPoints.getMax());
+        mc.getNode(MCDNDSimpleKeys.TEMP_HP).setValue(hitPoints.getTemp());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(InventoryTab inventoryTab) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.INVENTORY, serialize(inventoryTab.getInventory(), this::serialize)).set(SpongeMCDNDSimpleKeys.INVENTORY_NOTES, inventoryTab.getInventoryNotes()).set(SpongeMCDNDSimpleKeys.WEALTH, serialize(inventoryTab.getWealth())).set(SpongeMCDNDSimpleKeys.WEIGHT_CLASS, serialize(inventoryTab.getWeight()));
+    protected ConfigurationNode serialize(InventoryTab inventoryTab) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.INVENTORY).setValue(serialize(inventoryTab.getInventory(), this::serialize));
+        mc.getNode(MCDNDSimpleKeys.INVENTORY_NOTES).setValue(inventoryTab.getInventoryNotes());
+        mc.getNode(MCDNDSimpleKeys.WEALTH).setValue(serialize(inventoryTab.getWealth()));
+        mc.getNode(MCDNDSimpleKeys.WEIGHT_CLASS).setValue(serialize(inventoryTab.getWeight()));
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(MCDNDItem item) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.CARRIED, item.isCarried()).set(SpongeMCDNDSimpleKeys.WEIGHT_DOUBLE, item.getWeight()).set(SpongeMCDNDSimpleKeys.DESCRIPTION, item.getDescription()).set(SpongeMCDNDSimpleKeys.NAME, item.getName());
+    protected ConfigurationNode serialize(MCDNDItem item) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.CARRIED).setValue(item.isCarried());
+        mc.getNode(MCDNDSimpleKeys.WEIGHT_DOUBLE).setValue(item.getWeight());
+        mc.getNode(MCDNDSimpleKeys.DESCRIPTION).setValue(item.getDescription());
+        mc.getNode(MCDNDSimpleKeys.NAME).setValue(item.getName());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(Wealth wealth) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.COPPER, serialize(wealth.getCopper())).set(SpongeMCDNDSimpleKeys.ELECTRUM, serialize(wealth.getElectrum())).set(SpongeMCDNDSimpleKeys.GOLD, serialize(wealth.getGold())).set(SpongeMCDNDSimpleKeys.PLATINUM, serialize(wealth.getPlatinum())).set(SpongeMCDNDSimpleKeys.SILVER, serialize(wealth.getSilver()));
+    protected ConfigurationNode serialize(Wealth wealth) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.COPPER).setValue(serialize(wealth.getCopper()));
+        mc.getNode(MCDNDSimpleKeys.ELECTRUM).setValue(serialize(wealth.getElectrum()));
+        mc.getNode(MCDNDSimpleKeys.GOLD).setValue(serialize(wealth.getGold()));
+        mc.getNode(MCDNDSimpleKeys.PLATINUM).setValue(serialize(wealth.getPlatinum()));
+        mc.getNode(MCDNDSimpleKeys.SILVER).setValue(serialize(wealth.getSilver()));
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(Coin coin) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.NAME, coin.getName()).set(SpongeMCDNDSimpleKeys.AMOUNT, coin.getAmount()).set(SpongeMCDNDSimpleKeys.SHORT_NAME, coin.getShortName());
+    protected ConfigurationNode serialize(Coin coin) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.NAME).setValue(coin.getName());
+        mc.getNode(MCDNDSimpleKeys.AMOUNT).setValue(coin.getAmount());
+        mc.getNode(MCDNDSimpleKeys.SHORT_NAME).setValue(coin.getShortName());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(Weight weight) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.OTHER, weight.getOther());
+    protected ConfigurationNode serialize(Weight weight) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.OTHER).setValue(weight.getOther());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(SkillsTab skillsTab) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.ACROBATICS, serialize(skillsTab.getAcrobatics())).set(SpongeMCDNDSimpleKeys.ANIMAL_HANDLING, serialize(skillsTab.getAnimalHandling())).set(SpongeMCDNDSimpleKeys.ARCANA, serialize(skillsTab.getArcana())).set(SpongeMCDNDSimpleKeys.ATHLETICS, serialize(skillsTab.getAthletics())).set(SpongeMCDNDSimpleKeys.DECEPTION, serialize(skillsTab.getDeception())).set(SpongeMCDNDSimpleKeys.HISTORY, serialize(skillsTab.getHistory())).set(SpongeMCDNDSimpleKeys.INSIGHT, serialize(skillsTab.getInsight())).set(SpongeMCDNDSimpleKeys.INTIMIDATION, serialize(skillsTab.getIntimidation())).set(SpongeMCDNDSimpleKeys.INVESTIGATION, serialize(skillsTab.getInvestigation())).set(SpongeMCDNDSimpleKeys.MEDICINE, serialize(skillsTab.getMedicine())).set(SpongeMCDNDSimpleKeys.NATURE, serialize(skillsTab.getNature())).set(SpongeMCDNDSimpleKeys.PERFORMANCE, serialize(skillsTab.getPerformance())).set(SpongeMCDNDSimpleKeys.PERCEPTION, serialize(skillsTab.getPerception())).set(SpongeMCDNDSimpleKeys.PERSUASION, serialize(skillsTab.getPersuasion())).set(SpongeMCDNDSimpleKeys.RELIGION, serialize(skillsTab.getReligion())).set(SpongeMCDNDSimpleKeys.SLEIGHT_OF_HAND, serialize(skillsTab.getSleightOfHand())).set(SpongeMCDNDSimpleKeys.STEALTH, serialize(skillsTab.getStealth())).set(SpongeMCDNDSimpleKeys.SURVIVAL, serialize(skillsTab.getSurvival())).set(SpongeMCDNDSimpleKeys.UNSKILLED_CHA, serialize(skillsTab.getUnskilledCHA())).set(SpongeMCDNDSimpleKeys.UNSKILLED_CON, serialize(skillsTab.getUnskilledCON())).set(SpongeMCDNDSimpleKeys.UNSKILLED_DEX, serialize(skillsTab.getUnskilledDEX())).set(SpongeMCDNDSimpleKeys.UNSKILLED_INT, serialize(skillsTab.getUnskilledINT())).set(SpongeMCDNDSimpleKeys.UNSKILLED_STR, serialize(skillsTab.getUnskilledSTR())).set(SpongeMCDNDSimpleKeys.UNSKILLED_WIS, serialize(skillsTab.getUnskilledWIS()));
+    protected ConfigurationNode serialize(SkillsTab skillsTab) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.ACROBATICS).setValue(serialize(skillsTab.getAcrobatics()));
+        mc.getNode(MCDNDSimpleKeys.ANIMAL_HANDLING).setValue(serialize(skillsTab.getAnimalHandling()));
+        mc.getNode(MCDNDSimpleKeys.ARCANA).setValue(serialize(skillsTab.getArcana()));
+        mc.getNode(MCDNDSimpleKeys.ATHLETICS).setValue(serialize(skillsTab.getAthletics()));
+        mc.getNode(MCDNDSimpleKeys.DECEPTION).setValue(serialize(skillsTab.getDeception()));
+        mc.getNode(MCDNDSimpleKeys.HISTORY).setValue(serialize(skillsTab.getHistory()));
+        mc.getNode(MCDNDSimpleKeys.INSIGHT).setValue(serialize(skillsTab.getInsight()));
+        mc.getNode(MCDNDSimpleKeys.INTIMIDATION).setValue(serialize(skillsTab.getIntimidation()));
+        mc.getNode(MCDNDSimpleKeys.INVESTIGATION).setValue(serialize(skillsTab.getInvestigation()));
+        mc.getNode(MCDNDSimpleKeys.MEDICINE).setValue(serialize(skillsTab.getMedicine()));
+        mc.getNode(MCDNDSimpleKeys.NATURE).setValue(serialize(skillsTab.getNature()));
+        mc.getNode(MCDNDSimpleKeys.PERFORMANCE).setValue(serialize(skillsTab.getPerformance()));
+        mc.getNode(MCDNDSimpleKeys.PERCEPTION).setValue(serialize(skillsTab.getPerception()));
+        mc.getNode(MCDNDSimpleKeys.PERSUASION).setValue(serialize(skillsTab.getPersuasion()));
+        mc.getNode(MCDNDSimpleKeys.RELIGION).setValue(serialize(skillsTab.getReligion()));
+        mc.getNode(MCDNDSimpleKeys.SLEIGHT_OF_HAND).setValue(serialize(skillsTab.getSleightOfHand()));
+        mc.getNode(MCDNDSimpleKeys.STEALTH).setValue(serialize(skillsTab.getStealth()));
+        mc.getNode(MCDNDSimpleKeys.SURVIVAL).setValue(serialize(skillsTab.getSurvival()));
+        mc.getNode(MCDNDSimpleKeys.UNSKILLED_CHA).setValue(serialize(skillsTab.getUnskilledCHA()));
+        mc.getNode(MCDNDSimpleKeys.UNSKILLED_CON).setValue(serialize(skillsTab.getUnskilledCON()));
+        mc.getNode(MCDNDSimpleKeys.UNSKILLED_DEX).setValue(serialize(skillsTab.getUnskilledDEX()));
+        mc.getNode(MCDNDSimpleKeys.UNSKILLED_INT).setValue(serialize(skillsTab.getUnskilledINT()));
+        mc.getNode(MCDNDSimpleKeys.UNSKILLED_STR).setValue(serialize(skillsTab.getUnskilledSTR()));
+        mc.getNode(MCDNDSimpleKeys.UNSKILLED_WIS).setValue(serialize(skillsTab.getUnskilledWIS()));
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(Skill skill) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.SKILL_PROFICIENCY, serialize(skill.getSkillProficiency()));
+    protected ConfigurationNode serialize(Skill skill) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.SKILL_PROFICIENCY).setValue(serialize(skill.getSkillProficiency()));
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(SkillProficiency skillProficiency) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.NAME, skillProficiency.getName());
+    protected ConfigurationNode serialize(SkillProficiency skillProficiency) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.NAME).setValue(skillProficiency.getName());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(SpellbookTab spellbookTab) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.INVOCATION_COUNT, spellbookTab.getInvocations()).set(SpongeMCDNDSimpleKeys.SORCERY_POINTS, spellbookTab.getSorceryPointsMax()).set(SpongeMCDNDSimpleKeys.SPELLS, serialize(spellbookTab.getSpells(), this::serialize)).set(SpongeMCDNDSimpleKeys.SPELLCASTER_CLASSES, serialize(spellbookTab.getSpellcasterClasses(), this::serialize));
+    protected ConfigurationNode serialize(SpellbookTab spellbookTab, ClassLevels classLevels) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.INVOCATION_COUNT).setValue(spellbookTab.getInvocations(classLevels));
+        mc.getNode(MCDNDSimpleKeys.SORCERY_POINTS).setValue(spellbookTab.getSorceryPointsMax(classLevels));
+        mc.getNode(MCDNDSimpleKeys.SPELLS).setValue(serialize(spellbookTab.getSpells(), this::serialize));
+        mc.getNode(MCDNDSimpleKeys.SPELLCASTER_CLASSES).setValue(serialize(spellbookTab.getSpellcasterClasses(), this::serialize));
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(Spell spell) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.NEEDS_CONCENTRATION, spell.needsConcentration()).set(SpongeMCDNDSimpleKeys.IS_PREPARED, spell.isPrepared()).set(SpongeMCDNDSimpleKeys.DURATION, spell.getDuration()).set(SpongeMCDNDSimpleKeys.SPELL_LEVEL, spell.getLevel()).set(SpongeMCDNDSimpleKeys.RANGE, spell.getRange()).set(SpongeMCDNDSimpleKeys.SPELL_DAMAGE, serialize(spell.getSpellDamage())).set(SpongeMCDNDSimpleKeys.SPELL_HEALING, serialize(spell.getSpellHealing())).set(SpongeMCDNDSimpleKeys.SPELL_DESCRIPTION, spell.getDescription()).set(SpongeMCDNDSimpleKeys.EFFECTS, spell.getEffects()).set(SpongeMCDNDSimpleKeys.SPELL_SAVE, serialize(spell.getSpellSave())).set(SpongeMCDNDSimpleKeys.SPELLCASTER_CLASS, serialize(spell.getGainedFrom())).set(SpongeMCDNDSimpleKeys.SPELL_TYPE, serialize(spell.getSpellType())).set(SpongeMCDNDSimpleKeys.ATTACK_STAT, spell.getAttackStat()).set(SpongeMCDNDSimpleKeys.CAST_TIME, spell.getCastTime()).set(SpongeMCDNDSimpleKeys.TARGET_AREA, spell.getTargetArea());
+    protected ConfigurationNode serialize(Spell spell) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.NEEDS_CONCENTRATION).setValue(spell.needsConcentration());
+        mc.getNode(MCDNDSimpleKeys.PREPARED).setValue(spell.getPrepared().toString());
+        mc.getNode(MCDNDSimpleKeys.DURATION).setValue(spell.getDuration());
+        mc.getNode(MCDNDSimpleKeys.SPELL_LEVEL).setValue(spell.getLevel());
+        mc.getNode(MCDNDSimpleKeys.RANGE).setValue(spell.getRange());
+        mc.getNode(MCDNDSimpleKeys.SPELL_DAMAGE).setValue(serialize(spell.getSpellDamage()));
+        mc.getNode(MCDNDSimpleKeys.SPELL_HEALING).setValue(serialize(spell.getSpellHealing()));
+        mc.getNode(MCDNDSimpleKeys.SPELL_DESCRIPTION).setValue(spell.getDescription());
+        mc.getNode(MCDNDSimpleKeys.EFFECTS).setValue(spell.getEffects());
+        mc.getNode(MCDNDSimpleKeys.SPELL_SAVE).setValue(serialize(spell.getSpellSave()));
+        mc.getNode(MCDNDSimpleKeys.SPELLCASTER_CLASS).setValue(serialize(spell.getGainedFrom()));
+        mc.getNode(MCDNDSimpleKeys.SPELL_TYPE).setValue(serialize(spell.getSpellType()));
+        mc.getNode(MCDNDSimpleKeys.ATTACK_STAT).setValue(spell.getAttackStat().getName());
+        mc.getNode(MCDNDSimpleKeys.CAST_TIME).setValue(spell.getCastTime());
+        mc.getNode(MCDNDSimpleKeys.TARGET_AREA).setValue(spell.getTargetArea());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(SpellDamage spellDamage) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.CAN_CRIT, spellDamage.canCrit()).set(SpongeMCDNDSimpleKeys.DICE, serialize(spellDamage.getDice())).set(SpongeMCDNDSimpleKeys.BONUS, spellDamage.getBonus()).set(SpongeMCDNDSimpleKeys.DAMAGE_TYPE, spellDamage.getDamageType());
+    protected ConfigurationNode serialize(SpellDamage spellDamage) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.CAN_CRIT).setValue(spellDamage.canCrit());
+        mc.getNode(MCDNDSimpleKeys.DICE).setValue(serialize(spellDamage.getDice()));
+        mc.getNode(MCDNDSimpleKeys.BONUS).setValue(spellDamage.getBonus());
+        mc.getNode(MCDNDSimpleKeys.DAMAGE_TYPE).setValue(spellDamage.getDamageType());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(SpellHealing spellHealing) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.HEAL_AMOUNT, spellHealing.getHealAmount()).set(SpongeMCDNDSimpleKeys.STAT_BONUS, spellHealing.getStatBonus());
+    protected ConfigurationNode serialize(SpellHealing spellHealing) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.HEAL_AMOUNT).setValue(spellHealing.getHealAmount());
+        mc.getNode(MCDNDSimpleKeys.STAT_BONUS).setValue(spellHealing.getStatBonus().getName());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(SpellSave spellSave) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.SAVE_DC_TYPE, serialize(spellSave.getSpellcasterClass())).set(SpongeMCDNDSimpleKeys.ON_SUCCESSFUL_SAVE, spellSave.getOnSuccessfulSave()).set(SpongeMCDNDSimpleKeys.SAVING_STAT, spellSave.getSavingStat());
+    protected ConfigurationNode serialize(SpellSave spellSave) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.SAVE_DC_TYPE).setValue(serialize(spellSave.getSpellcasterClass()));
+        mc.getNode(MCDNDSimpleKeys.ON_SUCCESSFUL_SAVE).setValue(spellSave.getOnSuccessfulSave());
+        mc.getNode(MCDNDSimpleKeys.SAVING_STAT).setValue(spellSave.getSavingStat());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(SaveDCType saveDCType) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.CUSTOM_DC, saveDCType.getSaveDC(null, 0)).set(SpongeMCDNDSimpleKeys.NAME, saveDCType.getName());
+    protected ConfigurationNode serialize(SaveDCType saveDCType) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.CUSTOM_DC).setValue(saveDCType.getSaveDC(null, 0));
+        mc.getNode(MCDNDSimpleKeys.NAME).setValue(saveDCType.getName());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(SpellcasterClass spellcasterClass) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.NAME, spellcasterClass.getName());
+    protected ConfigurationNode serialize(SpellcasterClass spellcasterClass) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.NAME).setValue(spellcasterClass.getName());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(SpellType spellType) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.NAME, spellType.getName());
+    protected ConfigurationNode serialize(SpellType spellType) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.NAME).setValue(spellType.getName());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(WeaponsTab weaponsTab) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.MELEE_WEAPONS, serialize(weaponsTab.getMeleeWeapons(), this::serialize)).set(SpongeMCDNDSimpleKeys.RANGED_WEAPONS, serialize(weaponsTab.getRangedWeapons(), this::serialize));
+    protected ConfigurationNode serialize(WeaponsTab weaponsTab) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.MELEE_WEAPONS).setValue(serialize(weaponsTab.getMeleeWeapons(), this::serialize));
+        mc.getNode(MCDNDSimpleKeys.RANGED_WEAPONS).setValue(serialize(weaponsTab.getRangedWeapons(), this::serialize));
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(AbstractWeapon weapon, DataContainer weaponData) {
-        return weaponData.set(SpongeMCDNDSimpleKeys.IS_PROFICIENT, weapon.isProficient()).set(SpongeMCDNDSimpleKeys.CRIT_DAMAGE_DICE, serialize(weapon.getCritDamageDice())).set(SpongeMCDNDSimpleKeys.DAMAGE_DICE, serialize(weapon.getDamageDice())).set(SpongeMCDNDSimpleKeys.CRIT_MINIMUM, weapon.getCritMin()).set(SpongeMCDNDSimpleKeys.DAMAGE_BONUS, weapon.getDamageBonus()).set(SpongeMCDNDSimpleKeys.MAGIC_BONUS, weapon.getMagicBonus()).set(SpongeMCDNDSimpleKeys.TO_HIT, weapon.getToHit()).set(SpongeMCDNDSimpleKeys.ATTACK_STAT, weapon.getAttackStat()).set(SpongeMCDNDSimpleKeys.NAME, weapon.getName());
+    protected ConfigurationNode serialize(AbstractWeapon weapon, ConfigurationNode weaponData) {
+        weaponData.getNode(MCDNDSimpleKeys.IS_PROFICIENT).setValue(weapon.isProficient());
+        weaponData.getNode(MCDNDSimpleKeys.CRIT_DAMAGE_DICE).setValue(serialize(weapon.getCritDamageDice()));
+        weaponData.getNode(MCDNDSimpleKeys.DAMAGE_DICE).setValue(serialize(weapon.getDamageDice()));
+        weaponData.getNode(MCDNDSimpleKeys.CRIT_MINIMUM).setValue(weapon.getCritMin());
+        weaponData.getNode(MCDNDSimpleKeys.MAGIC_BONUS).setValue(weapon.getMagicBonus());
+        weaponData.getNode(MCDNDSimpleKeys.ATTACK_STAT).setValue(weapon.getAttackStat());
+        weaponData.getNode(MCDNDSimpleKeys.NAME).setValue(weapon.getName());
+        return weaponData;
     }
 
     @Override
-    protected DataContainer serialize(MeleeWeapon meleeWeapon) {
-        return serialize(meleeWeapon, new MemoryDataContainer()).set(SpongeMCDNDSimpleKeys.PLUS_STAT, meleeWeapon.isPlusStat());
+    protected ConfigurationNode serialize(MeleeWeapon meleeWeapon) {
+        ConfigurationNode mc = serialize(meleeWeapon, SimpleConfigurationNode.root());
+        mc.getNode(MCDNDSimpleKeys.PLUS_STAT).setValue(meleeWeapon.isPlusStat());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(RangedWeapon rangedWeapon) {
-        return serialize(rangedWeapon, new MemoryDataContainer()).set(SpongeMCDNDSimpleKeys.AMMO, rangedWeapon.getAmmo());
+    protected ConfigurationNode serialize(RangedWeapon rangedWeapon) {
+        ConfigurationNode mc = serialize(rangedWeapon, SimpleConfigurationNode.root());
+        mc.getNode(MCDNDSimpleKeys.AMMO).setValue(rangedWeapon.getAmmo());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(CharacterSheet characterSheet) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.ARMOR_TAB, serialize(characterSheet.getArmorTab())).set(SpongeMCDNDSimpleKeys.BACKGROUND_TAB, serialize(characterSheet.getBackgroundTab())).set(SpongeMCDNDSimpleKeys.CLASS_TAB, serialize(characterSheet.getClassTab())).set(SpongeMCDNDSimpleKeys.CORE_STATS_TAB, serialize(characterSheet.getCoreStatsTab())).set(SpongeMCDNDSimpleKeys.INVENTORY_TAB, serialize(characterSheet.getInventoryTab())).set(SpongeMCDNDSimpleKeys.SKILLS_TAB, serialize(characterSheet.getSkillsTab())).set(SpongeMCDNDSimpleKeys.SPELL_BOOK_TAB, serialize(characterSheet.getSpellbookTab())).set(SpongeMCDNDSimpleKeys.WEAPONS_TAB, serialize(characterSheet.getWeaponsTab()));
+    protected ConfigurationNode serialize(CharacterSheet characterSheet) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.ARMOR_TAB).setValue(serialize(characterSheet.getArmorTab()));
+        mc.getNode(MCDNDSimpleKeys.BACKGROUND_TAB).setValue(serialize(characterSheet.getBackgroundTab()));
+        mc.getNode(MCDNDSimpleKeys.CLASS_TAB).setValue(serialize(characterSheet.getClassTab()));
+        mc.getNode(MCDNDSimpleKeys.CORE_STATS_TAB).setValue(serialize(characterSheet.getCoreStatsTab()));
+        mc.getNode(MCDNDSimpleKeys.INVENTORY_TAB).setValue(serialize(characterSheet.getInventoryTab()));
+        mc.getNode(MCDNDSimpleKeys.SKILLS_TAB).setValue(serialize(characterSheet.getSkillsTab()));
+        mc.getNode(MCDNDSimpleKeys.SPELL_BOOK_TAB).setValue(serialize(characterSheet.getSpellbookTab(), characterSheet.getClassTab().getClassLevels()));
+        mc.getNode(MCDNDSimpleKeys.WEAPONS_TAB).setValue(serialize(characterSheet.getWeaponsTab()));
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(ArmorType armorType) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.NAME, armorType.getName());
+    protected ConfigurationNode serialize(ArmorType armorType) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.NAME).setValue(armorType.getName());
+        return mc;
     }
 
     @Override
-    protected DataContainer serialize(Recharge recharge) {
-        return new MemoryDataContainer().set(SpongeMCDNDSimpleKeys.NAME, recharge.getName());
+    protected ConfigurationNode serialize(Recharge recharge) {
+        ConfigurationNode mc = SimpleConfigurationNode.root();
+        mc.getNode(MCDNDSimpleKeys.NAME).setValue(recharge.getName());
+        return mc;
     }
 }

@@ -8,6 +8,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.potion.PotionType;
 
 public class HitPointsGUI extends MCDNDSimpleChestGUI {
@@ -21,27 +22,24 @@ public class HitPointsGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
-        set(0, setPotionEffect(createItem(Material.POTION, MenuText.currentHitPoints(hitPoints)), PotionType.REGEN), player -> {
+        set(0, ClickType.LEFT, setPotionEffect(createItem(Material.POTION, MenuText.currentHitPoints(hitPoints)), PotionType.REGEN), player -> {
             new IntegerInputAnvilGUI(player, (p, i) -> {
                 hitPoints.setCurrent(i);
-                player.closeInventory();
-                open();
+                delayedOpen();
             });
         });
-        set(1, setPotionEffect(createItem(Material.POTION, MenuText.maxHitPoints(hitPoints)), PotionType.INSTANT_HEAL), player -> {
+        set(1, ClickType.LEFT, setPotionEffect(createItem(Material.POTION, MenuText.maxHitPoints(hitPoints)), PotionType.INSTANT_HEAL), player -> {
             new IntegerInputAnvilGUI(player, (p, i) -> {
                 hitPoints.setMax(i);
-                player.closeInventory();
-                open();
+                delayedOpen();
             });
         });
-        set(2, setPotionEffect(createItem(Material.POTION, MenuText.tempHitPoints(hitPoints)), PotionType.STRENGTH), player -> {
+        set(2, ClickType.LEFT, setPotionEffect(createItem(Material.POTION, MenuText.tempHitPoints(hitPoints)), PotionType.STRENGTH), player -> {
             new IntegerInputAnvilGUI(player, (p, i) -> {
                 hitPoints.setTemp(i);
-                player.closeInventory();
-                open();
+                delayedOpen();
             });
         });
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

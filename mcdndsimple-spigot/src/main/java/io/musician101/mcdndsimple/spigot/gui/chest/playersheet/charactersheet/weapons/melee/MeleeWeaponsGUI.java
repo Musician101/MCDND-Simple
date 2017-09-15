@@ -1,4 +1,4 @@
-package io.musician101.mcdndsimple.spigot.gui.chest.playersheet.charactersheet.weapons;
+package io.musician101.mcdndsimple.spigot.gui.chest.playersheet.charactersheet.weapons.melee;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
 import io.musician101.mcdndsimple.common.character.BioAndInfo;
@@ -14,6 +14,7 @@ import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSp
 import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class MeleeWeaponsGUI extends MCDNDSimplePagedGUI {
 
@@ -52,6 +53,6 @@ public class MeleeWeaponsGUI extends MCDNDSimplePagedGUI {
             }
         });
 
-        setBackButton(53, Material.BARRIER);
+        setBackButton(53, ClickType.LEFT, Material.BARRIER);
     }
 }

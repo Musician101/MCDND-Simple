@@ -6,7 +6,7 @@ import java.util.List;
 public class Spell {
 
     private List<String> atHigherLevels = new ArrayList<>();
-    private String attackStat = "";
+    private StatBonus attackStat = StatBonus.NONE;
     //Most spells simply state Action or Bonus Action which have actual numerical values
     //but to keep things simple, we'll just leave it as a string.
     private String castTime = "";
@@ -36,11 +36,11 @@ public class Spell {
         this.atHigherLevels = atHigherLevels;
     }
 
-    public String getAttackStat() {
+    public StatBonus getAttackStat() {
         return attackStat;
     }
 
-    public void setAttackStat(String attackStat) {
+    public void setAttackStat(StatBonus attackStat) {
         this.attackStat = attackStat;
     }
 

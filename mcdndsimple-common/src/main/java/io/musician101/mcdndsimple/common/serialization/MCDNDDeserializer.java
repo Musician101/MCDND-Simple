@@ -32,6 +32,7 @@ import io.musician101.mcdndsimple.common.character.spell.SpellHealing;
 import io.musician101.mcdndsimple.common.character.spell.SpellSave;
 import io.musician101.mcdndsimple.common.character.spell.SpellType;
 import io.musician101.mcdndsimple.common.character.spell.SpellcasterClass;
+import io.musician101.mcdndsimple.common.character.spell.StatBonus;
 import io.musician101.mcdndsimple.common.character.tab.ArmorTab;
 import io.musician101.mcdndsimple.common.character.tab.BackgroundTab;
 import io.musician101.mcdndsimple.common.character.tab.ClassTab;
@@ -112,6 +113,8 @@ public abstract class MCDNDDeserializer<S> {
     protected abstract SpellDamage deserializeSpellDamage(S spellDamageData);
 
     protected abstract SpellHealing deserializeSpellHealing(S spellHealingData);
+
+    protected abstract StatBonus deserializeStatBonus(S statBonusData);
 
     protected abstract SpellSave deserializeSpellSave(S spellSaveData);
 

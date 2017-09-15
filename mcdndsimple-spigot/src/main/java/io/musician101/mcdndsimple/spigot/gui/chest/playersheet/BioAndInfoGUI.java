@@ -9,6 +9,7 @@ import io.musician101.musicianlibrary.java.minecraft.spigot.gui.SpigotBookGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
@@ -23,8 +24,8 @@ public class BioAndInfoGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
-        set(0, createItem(Material.PAPER, MenuText.name(bioAndInfo)), player -> new StringInputAnvilGUI(player, (p, s) -> bioAndInfo.setName(s)));
-        set(1, createItem(Material.BOOK, MenuText.BIO), player -> {
+        set(0, ClickType.LEFT, createItem(Material.PAPER, MenuText.name(bioAndInfo)), player -> new StringInputAnvilGUI(player, (p, s) -> bioAndInfo.setName(s)));
+        set(1, ClickType.LEFT, createItem(Material.BOOK, MenuText.BIO), player -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setPages(bioAndInfo.getBio());
@@ -36,6 +37,6 @@ public class BioAndInfoGUI extends MCDNDSimpleChestGUI {
             //TODO need to pass an update to charactersheet
         });
 
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

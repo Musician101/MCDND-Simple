@@ -1,4 +1,4 @@
-package io.musician101.mcdndsimple.spigot.gui.chest.playersheet.charactersheet.weapons;
+package io.musician101.mcdndsimple.spigot.gui.chest.playersheet.charactersheet.weapons.melee;
 
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.Reference.MenuText;
@@ -13,11 +13,14 @@ import io.musician101.mcdndsimple.spigot.SpigotMCDNDSimple;
 import io.musician101.mcdndsimple.spigot.gui.anvil.StringInputAnvilGUI;
 import io.musician101.mcdndsimple.spigot.gui.anvil.number.IntegerInputAnvilGUI;
 import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
+import io.musician101.mcdndsimple.spigot.gui.chest.playersheet.charactersheet.weapons.AttackStatGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class MeleeWeaponGUI extends MCDNDSimpleChestGUI {
 
@@ -41,21 +44,21 @@ public class MeleeWeaponGUI extends MCDNDSimpleChestGUI {
     @Override
     protected void build() {
         boolean isProficient = weapon.isProficient();
-        set(0, createItem(isProficient ? Material.REDSTONE_TORCH_ON : Material.REDSTONE_TORCH_ON, MenuText.isProficient(weapon.isProficient())), player -> {
+        set(0, ClickType.LEFT, createItem(isProficient ? Material.REDSTONE_TORCH_ON : Material.REDSTONE_TORCH_OFF, MenuText.isProficient(weapon.isProficient())), player -> {
             weapon.setIsProficient(!isProficient);
             open();
         });
-        set(1, createItem(Material.PAPER, MenuText.CHANGE_NAME), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(1, ClickType.LEFT, createItem(Material.PAPER, MenuText.CHANGE_NAME), player -> new StringInputAnvilGUI(player, (p, s) -> {
             weapon.setName(s);
             delayedOpen(() -> new MeleeWeaponGUI(player, weapon, bioAndInfo, classLevels, coreStats, experience, meleeBonus, prevGUI));
         }));
-        set(2, createItem(Material.IRON_SWORD, MenuText.ATTACK_STAT), player -> new AttackStatGUI(player, weapon, coreStats, this));
-        set(3, createItem(Material.ENCHANTED_BOOK, MenuText.magicBonus(weapon.getMagicBonus())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(2, ClickType.LEFT, createItem(Material.IRON_SWORD, MenuText.ATTACK_STAT), player -> new AttackStatGUI<>(player, weapon, this));
+        set(3, ClickType.LEFT, createItem(Material.ENCHANTED_BOOK, MenuText.magicBonus(weapon.getMagicBonus())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             weapon.setMagicBonus(i);
             delayedOpen();
         }));
         set(4, createItem(Material.STONE_SWORD, MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience))));
-        set(5, createItem(Material.GOLD_SWORD, MenuText.damageDice(weapon.getDamageDice())), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(5, ClickType.LEFT, createItem(Material.GOLD_SWORD, MenuText.damageDice(weapon.getDamageDice())), player -> new StringInputAnvilGUI(player, (p, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 player.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -66,16 +69,16 @@ public class MeleeWeaponGUI extends MCDNDSimpleChestGUI {
             delayedOpen();
         }));
         boolean plusStat = weapon.isPlusStat();
-        set(6, addGlowIfConditionsMet(createItem(Material.GLOWSTONE, MenuText.PLUS_STAT), () -> plusStat), player -> {
+        set(6, ClickType.LEFT, addGlowIfConditionsMet(createItem(Material.GLOWSTONE, MenuText.PLUS_STAT), () -> plusStat), player -> {
             weapon.setPlusStat(!plusStat);
             open();
         });
         set(7, createItem(Material.ENCHANTED_BOOK, MenuText.damageBonus(weapon.getDamageBonus(coreStats))));
-        set(8, createItem(Material.DIAMOND, MenuText.damageType(weapon.getDamageType())), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(8, ClickType.LEFT, createItem(Material.DIAMOND, MenuText.damageType(weapon.getDamageType())), player -> new StringInputAnvilGUI(player, (p, s) -> {
             weapon.setDamageType(s);
             delayedOpen();
         }));
-        set(9, createItem(Material.DIAMOND_SWORD, MenuText.critDamage(weapon.getCritDamageDice())), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(9, ClickType.LEFT, createItem(Material.DIAMOND_SWORD, MenuText.critDamage(weapon.getCritDamageDice())), player -> new StringInputAnvilGUI(player, (p, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 player.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -85,11 +88,11 @@ public class MeleeWeaponGUI extends MCDNDSimpleChestGUI {
             weapon.setCritDamageDice(dice);
             delayedOpen();
         }));
-        set(10, createItem(Material.SULPHUR, MenuText.critOn(weapon.getCritMin())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(10, ClickType.LEFT, createItem(Material.SULPHUR, MenuText.critOn(weapon.getCritMin())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             weapon.setCritMin(i);
             delayedOpen();
         }));
-        set(11, createItem(Material.REDSTONE_LAMP_ON, MenuText.ROLL_ATTACK), player -> {
+        set(11, ClickType.LEFT, createItem(Material.REDSTONE_LAMP_ON, MenuText.ROLL_ATTACK), player -> {
             String newLine = "\n";
             Dice d20 = new Dice(20);
             int firstAttackRoll = d20.roll().get(0).getValue();
@@ -126,8 +129,8 @@ public class MeleeWeaponGUI extends MCDNDSimpleChestGUI {
                 message.addExtra(new TextComponent("Crit: " + Dice.total(critDice.roll()) + newLine + "Crit (adv roll): " + Dice.total(critDice.roll())));
             }
 
-            player.spigot().sendMessage(message);
+            Bukkit.spigot().broadcast(message);
         });
-        setBackButton(17, Material.BARRIER);
+        setBackButton(17, ClickType.LEFT, Material.BARRIER);
     }
 }

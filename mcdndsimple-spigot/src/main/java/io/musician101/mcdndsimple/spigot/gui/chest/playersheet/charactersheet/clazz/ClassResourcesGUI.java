@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class ClassResourcesGUI extends MCDNDSimplePagedGUI {
 
@@ -24,7 +25,7 @@ public class ClassResourcesGUI extends MCDNDSimplePagedGUI {
     @Override
     protected void build() {
         setContents(classResources, classResource -> createItem(Material.NETHER_STAR, classResource.getName()), (player, classResource) -> p -> new ClassResourceGUI(player, classResource, classResources, this));
-        set(49, createItem(Material.PAPER, MenuText.NEW_CLASS_ACTION), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(49, ClickType.LEFT, createItem(Material.PAPER, MenuText.NEW_CLASS_ACTION), player -> new StringInputAnvilGUI(player, (p, s) -> {
             ClassResource classResource = new ClassResource();
             classResource.setName(s);
             classResources.add(classResource);
@@ -42,6 +43,6 @@ public class ClassResourcesGUI extends MCDNDSimplePagedGUI {
                 new ClassResourcesGUI(player, classResources, page + 1, prevGUI);
             }
         });
-        setBackButton(53, Material.BARRIER);
+        setBackButton(53, ClickType.LEFT, Material.BARRIER);
     }
 }

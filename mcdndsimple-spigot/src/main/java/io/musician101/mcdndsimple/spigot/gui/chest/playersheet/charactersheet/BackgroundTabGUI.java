@@ -11,6 +11,7 @@ import io.musician101.musicianlibrary.java.minecraft.spigot.gui.SpigotBookGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.potion.PotionType;
@@ -26,47 +27,39 @@ public class BackgroundTabGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
-        set(0, createItem(Material.ARROW, MenuText.gender(backgroundTab)), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(0, ClickType.LEFT, createItem(Material.ARROW, MenuText.gender(backgroundTab)), player -> new StringInputAnvilGUI(player, (p, s) -> {
             backgroundTab.setGender(s);
-            player.closeInventory();
-            open();
+            delayedOpen();
         }));
-        set(1, createItem(Material.RAW_FISH, MenuText.age(backgroundTab)), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(1, ClickType.LEFT, createItem(Material.RAW_FISH, MenuText.age(backgroundTab)), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             backgroundTab.setAge(i);
-            player.closeInventory();
-            open();
+            delayedOpen();
         }));
-        set(2, createItem(Material.ARMOR_STAND, MenuText.height(backgroundTab)), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(2, ClickType.LEFT, createItem(Material.ARMOR_STAND, MenuText.height(backgroundTab)), player -> new StringInputAnvilGUI(player, (p, s) -> {
             backgroundTab.setHeight(s);
-            player.closeInventory();
-            open();
+            delayedOpen();
         }));
-        set(3, createItem(Material.IRON_BLOCK, MenuText.weight(backgroundTab)), player -> new DoubleInputAnvilGUI(player, (p, d) -> {
+        set(3, ClickType.LEFT, createItem(Material.IRON_BLOCK, MenuText.weight(backgroundTab)), player -> new DoubleInputAnvilGUI(player, (p, d) -> {
             backgroundTab.setWeight(d);
-            player.closeInventory();
-            open();
+            delayedOpen();
         }));
-        set(4, createItem(Material.SPIDER_EYE, MenuText.eyes(backgroundTab)), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(4, ClickType.LEFT, createItem(Material.SPIDER_EYE, MenuText.eyes(backgroundTab)), player -> new StringInputAnvilGUI(player, (p, s) -> {
             backgroundTab.setEyes(s);
-            player.closeInventory();
-            open();
+            delayedOpen();
         }));
-        set(5, createItem(Material.RABBIT_HIDE, MenuText.hair(backgroundTab)), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(5, ClickType.LEFT, createItem(Material.RABBIT_HIDE, MenuText.hair(backgroundTab)), player -> new StringInputAnvilGUI(player, (p, s) -> {
             backgroundTab.setHair(s);
-            player.closeInventory();
-            open();
+            delayedOpen();
         }));
-        set(6, createItem(Material.LEATHER, MenuText.size(backgroundTab)), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(6, ClickType.LEFT, createItem(Material.LEATHER, MenuText.size(backgroundTab)), player -> new StringInputAnvilGUI(player, (p, s) -> {
             backgroundTab.setSize(s);
-            player.closeInventory();
-            open();
+            delayedOpen();
         }));
-        set(7, setPotionEffect(createItem(Material.POTION, MenuText.vision(backgroundTab)), PotionType.NIGHT_VISION), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(7, ClickType.LEFT, setPotionEffect(createItem(Material.POTION, MenuText.vision(backgroundTab)), PotionType.NIGHT_VISION), player -> new StringInputAnvilGUI(player, (p, s) -> {
             backgroundTab.setVision(s);
-            player.closeInventory();
-            open();
+            delayedOpen();
         }));
-        set(8, createItem(Material.BOOK, MenuText.KNOWN_LANGUAGES), player -> {
+        set(8, ClickType.LEFT, createItem(Material.BOOK, MenuText.KNOWN_LANGUAGES), player -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setPages(backgroundTab.getLanguages());
@@ -76,11 +69,11 @@ public class BackgroundTabGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        set(9, createItem(Material.TOTEM, MenuText.alignment(backgroundTab)), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(9, ClickType.LEFT, createItem(Material.TOTEM, MenuText.alignment(backgroundTab)), player -> new StringInputAnvilGUI(player, (p, s) -> {
             backgroundTab.setAlignment(s);
             open();
         }));
-        set(10, createItem(Material.BOOK, MenuText.BACKGROUND), player -> {
+        set(10, ClickType.LEFT, createItem(Material.BOOK, MenuText.BACKGROUND), player -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setPages(backgroundTab.getBackground());
@@ -90,7 +83,7 @@ public class BackgroundTabGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        set(11, createItem(Material.BOOK, MenuText.RACIAL_TRAITS), player -> {
+        set(11, ClickType.LEFT, createItem(Material.BOOK, MenuText.RACIAL_TRAITS), player -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setPages(backgroundTab.getRacialTraits());
@@ -100,7 +93,7 @@ public class BackgroundTabGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        set(12, createItem(Material.BOOK, MenuText.PERSONALITY_TRAITS), player -> {
+        set(12, ClickType.LEFT, createItem(Material.BOOK, MenuText.PERSONALITY_TRAITS), player -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setPages(backgroundTab.getPersonalityTraits());
@@ -110,7 +103,7 @@ public class BackgroundTabGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        set(13, createItem(Material.BOOK, MenuText.IDEALS), player -> {
+        set(13, ClickType.LEFT, createItem(Material.BOOK, MenuText.IDEALS), player -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setPages(backgroundTab.getIdeals());
@@ -120,7 +113,7 @@ public class BackgroundTabGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        set(14, createItem(Material.BOOK, MenuText.BONDS), player -> {
+        set(14, ClickType.LEFT, createItem(Material.BOOK, MenuText.BONDS), player -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setPages(backgroundTab.getBonds());
@@ -130,7 +123,7 @@ public class BackgroundTabGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        set(15, createItem(Material.BOOK, MenuText.FLAWS), player -> {
+        set(15, ClickType.LEFT, createItem(Material.BOOK, MenuText.FLAWS), player -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setPages(backgroundTab.getFlaws());
@@ -140,7 +133,7 @@ public class BackgroundTabGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        set(16, createItem(Material.BOOK, MenuText.ARMOR_PROFICIENCIES), player -> {
+        set(16, ClickType.LEFT, createItem(Material.BOOK, MenuText.ARMOR_PROFICIENCIES), player -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setPages(backgroundTab.getArmorProficiencies());
@@ -150,7 +143,7 @@ public class BackgroundTabGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        set(17, createItem(Material.BOOK, MenuText.WEAPON_PROFICIENCIES), player -> {
+        set(16, ClickType.LEFT, createItem(Material.BOOK, MenuText.WEAPON_PROFICIENCIES), player -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setPages(backgroundTab.getWeaponProficiencies());
@@ -160,7 +153,7 @@ public class BackgroundTabGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        set(18, createItem(Material.BOOK, MenuText.TOOL_PROFICIENCIES), player -> {
+        set(18, ClickType.LEFT, createItem(Material.BOOK, MenuText.TOOL_PROFICIENCIES), player -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setPages(backgroundTab.getToolProficiencies());
@@ -170,7 +163,7 @@ public class BackgroundTabGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        set(19, createItem(Material.BOOK, MenuText.OTHER_NOTES), player -> {
+        set(19, ClickType.LEFT, createItem(Material.BOOK, MenuText.OTHER_NOTES), player -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
             bookMeta.setPages(backgroundTab.getOtherNotes());
@@ -180,6 +173,6 @@ public class BackgroundTabGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        setBackButton(26, Material.BARRIER);
+        setBackButton(26, ClickType.LEFT, Material.BARRIER);
     }
 }

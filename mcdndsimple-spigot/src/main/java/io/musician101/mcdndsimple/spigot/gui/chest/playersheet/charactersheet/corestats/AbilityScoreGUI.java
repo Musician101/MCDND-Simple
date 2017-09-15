@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class AbilityScoreGUI extends MCDNDSimpleChestGUI {
 
@@ -33,23 +34,23 @@ public class AbilityScoreGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
-        set(0, createItem(Material.PAPER, MenuText.score(score)), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(0, ClickType.LEFT, createItem(Material.PAPER, MenuText.score(score)), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             score.setScore(i);
-            player.closeInventory();
             open();
         }));
         set(1, createItem(Material.SULPHUR, MenuText.mod(score)));
-        set(2, createItem(Material.PAPER, MenuText.proficient(score)), player -> {
+        set(2, ClickType.LEFT, createItem(Material.PAPER, MenuText.proficient(score)), player -> {
             score.setProficient(!score.isProficient());
-            player.closeInventory();
             open();
         });
         set(3, createItem(Material.GLOWSTONE_DUST, MenuText.saveMod(score, classLevels, experience)));
-        set(4, createItem(Material.REDSTONE_LAMP_OFF, MenuText.ROLL_SAVE), player -> {
+        set(4, ClickType.LEFT, createItem(Material.REDSTONE_LAMP_OFF, MenuText.ROLL_SAVE), player -> {
             Dice dice = new Dice(20);
             int saveMod = score.getSaveMod(classLevels, experience);
+            //TODO incomplete
+            Bukkit.spigot().broadcast();
             Stream.of(Messages.savingThrow(score, bioAndInfo, player.getName(), Dice.total(dice.roll(), saveMod), Dice.total(dice.roll(), saveMod))).forEach(Bukkit::broadcastMessage);
         });
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

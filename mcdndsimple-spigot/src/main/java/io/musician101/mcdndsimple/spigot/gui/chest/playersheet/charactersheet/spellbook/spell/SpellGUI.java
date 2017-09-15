@@ -32,6 +32,7 @@ import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.potion.PotionType;
@@ -55,16 +56,16 @@ public class SpellGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
-        set(0, createItem(Material.PAPER, MenuText.CHANGE_NAME), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(0, ClickType.LEFT, createItem(Material.PAPER, MenuText.CHANGE_NAME), player -> new StringInputAnvilGUI(player, (p, s) -> {
             spell.setName(s);
             new SpellGUI(player, spell, bioAndInfo, classLevels, coreStats, experience, prevGUI);
         }));
-        set(1, setDurability(createItem(Material.INK_SACK, MenuText.level(spell.getLevel())), 4), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(1, ClickType.LEFT, setDurability(createItem(Material.INK_SACK, MenuText.level(spell.getLevel())), 4), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             spell.setLevel(i);
             delayedOpen();
         }));
-        set(2, createItem(Material.ENCHANTED_BOOK, MenuText.spellType(spell.getSpellType())), player -> new SpellTypeGUI(player, spell, this));
-        set(3, createItem(Material.WATCH, MenuText.castTime(spell.getCastTime())), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(2, ClickType.LEFT, createItem(Material.ENCHANTED_BOOK, MenuText.spellType(spell.getSpellType())), player -> new SpellTypeGUI(player, spell, this));
+        set(3, ClickType.LEFT, createItem(Material.WATCH, MenuText.castTime(spell.getCastTime())), player -> new StringInputAnvilGUI(player, (p, s) -> {
             spell.setCastTime(s);
             delayedOpen();
         }));
@@ -75,7 +76,7 @@ public class SpellGUI extends MCDNDSimpleChestGUI {
             ncItemStack = addGlow(ncItemStack);
         }
 
-        set(4, ncItemStack, player -> {
+        set(4, ClickType.LEFT, ncItemStack, player -> {
             spell.setNeedsConcentration(!nc);
             open();
         });
@@ -86,7 +87,7 @@ public class SpellGUI extends MCDNDSimpleChestGUI {
             irItemStack = addGlow(irItemStack);
         }
 
-        set(5, irItemStack, player -> {
+        set(5, ClickType.LEFT, irItemStack, player -> {
             spell.setIsRitual(!ir);
             open();
         });
@@ -96,27 +97,27 @@ public class SpellGUI extends MCDNDSimpleChestGUI {
             set(6, ipStack);
         }
         else {
-            set(6, ipStack, player -> new PreparedGUI(player, spell, this));
+            set(6, ClickType.LEFT, ipStack, player -> new PreparedGUI(player, spell, this));
         }
 
-        set(7, createItem(Material.ENCHANTMENT_TABLE, MenuText.gainedFrom(spell.getGainedFrom())), player -> new SpellcasterClassGUI<>(player, spell, Spell::setGainedFrom, spellcasterClass -> spellcasterClass.equals(spell.getGainedFrom()), this));
-        set(8, createItem(Material.LINGERING_POTION, MenuText.TARGET), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(7, ClickType.LEFT, createItem(Material.ENCHANTMENT_TABLE, MenuText.gainedFrom(spell.getGainedFrom())), player -> new SpellcasterClassGUI<>(player, spell, Spell::setGainedFrom, spellcasterClass -> spellcasterClass.equals(spell.getGainedFrom()), this));
+        set(8, ClickType.LEFT, createItem(Material.LINGERING_POTION, MenuText.TARGET), player -> new StringInputAnvilGUI(player, (p, s) -> {
             spell.setTargetArea(s);
             delayedOpen();
         }));
-        set(9, createItem(Material.BOW, MenuText.range(spell.getRange())), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(9, ClickType.LEFT, createItem(Material.BOW, MenuText.range(spell.getRange())), player -> new StringInputAnvilGUI(player, (p, s) -> {
             spell.setRange(s);
             delayedOpen();
         }));
-        set(10, createItem(Material.STRING, MenuText.duration(spell.getDuration())), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(10, ClickType.LEFT, createItem(Material.STRING, MenuText.duration(spell.getDuration())), player -> new StringInputAnvilGUI(player, (p, s) -> {
             spell.setDuration(s);
             delayedOpen();
         }));
-        set(11, createItem(Material.PURPLE_SHULKER_BOX, MenuText.COMPONENTS, spell.getComponents()), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(11, ClickType.LEFT, createItem(Material.PURPLE_SHULKER_BOX, MenuText.COMPONENTS, spell.getComponents()), player -> new StringInputAnvilGUI(player, (p, s) -> {
             spell.setComponents(s);
             delayedOpen();
         }));
-        set(12, createItem(Material.REDSTONE_LAMP_OFF, MenuText.SPELL_INFO), player -> {
+        set(12, ClickType.LEFT, createItem(Material.REDSTONE_LAMP_OFF, MenuText.SPELL_INFO), player -> {
             ClickEvent spellDescriptionClickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, openBookCommand(spell.getDescription()));
 
             String newLine = "\n";
@@ -132,7 +133,7 @@ public class SpellGUI extends MCDNDSimpleChestGUI {
 
             Bukkit.getOnlinePlayers().forEach(p -> p.spigot().sendMessage(message));
         });
-        set(13, createItem(Material.REDSTONE_LAMP_ON, MenuText.CAST_SPELL), player -> {
+        set(13, ClickType.LEFT, createItem(Material.REDSTONE_LAMP_ON, MenuText.CAST_SPELL), player -> {
             MacroOptions macroOptions = spell.getMacroOptions();
             String newLine = "\n";
             TextComponent spellHoverText = new TextComponent(MenuText.spellType(spell.getSpellType()) + newLine + MenuText.spellLevel(spell.getLevel()));
@@ -186,22 +187,22 @@ public class SpellGUI extends MCDNDSimpleChestGUI {
                 SpellHealing spellHealing = spell.getSpellHealing();
                 AbilityScore abilityScore = null;
                 switch (spellHealing.getStatBonus()) {
-                    case "CHA":
+                    case CHA:
                         abilityScore = coreStats.getCharisma();
                         break;
-                    case "CON":
+                    case CON:
                         abilityScore = coreStats.getConstitution();
                         break;
-                    case "DEX":
+                    case DEX:
                         abilityScore = coreStats.getDexterity();
                         break;
-                    case "INT":
+                    case INT:
                         abilityScore = coreStats.getIntelligence();
                         break;
-                    case "STR":
+                    case STR:
                         abilityScore = coreStats.getStrength();
                         break;
-                    case "WIS":
+                    case WIS:
                         abilityScore = coreStats.getWisdom();
                         break;
                 }
@@ -213,22 +214,22 @@ public class SpellGUI extends MCDNDSimpleChestGUI {
                 SpellDamage spellDamage = spell.getSpellDamage();
                 int statBonus = spellDamage.getBonus();
                 switch (spell.getAttackStat()) {
-                    case "CHA":
+                    case CHA:
                         statBonus += coreStats.getCharisma().getMod();
                         break;
-                    case "CON":
+                    case CON:
                         statBonus += coreStats.getConstitution().getMod();
                         break;
-                    case "DEX":
+                    case DEX:
                         statBonus += coreStats.getDexterity().getMod();
                         break;
-                    case "INT":
+                    case INT:
                         statBonus += coreStats.getIntelligence().getMod();
                         break;
-                    case "STR":
+                    case STR:
                         statBonus += coreStats.getStrength().getMod();
                         break;
-                    case "WIS":
+                    case WIS:
                         statBonus += coreStats.getWisdom().getMod();
                         break;
                 }
@@ -272,17 +273,6 @@ public class SpellGUI extends MCDNDSimpleChestGUI {
                 atHigherLevels.addExtra(" to view how the spell behaves at higher levels.");
             }
 
-            //TODO need to do effects
-            TextComponent effects = new TextComponent();
-            if (macroOptions.isEffectsEnabled()) {
-                effects.setText(newLine + "Click ");
-                TextComponent here = new TextComponent("HERE");
-                here.setColor(ChatColor.GREEN);
-                here.setBold(true);
-                here.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, openBookCommand(spell.getEffects())));
-                effects.addExtra(" to view how the spell behaves at higher levels.");
-            }
-
             TextComponent spellComponent = new TextComponent(spell.getName());
             spellComponent.setColor(ChatColor.GREEN);
             spellComponent.setBold(true);
@@ -294,17 +284,17 @@ public class SpellGUI extends MCDNDSimpleChestGUI {
             message.addExtra(spellComponent);
             message.addExtra(atHigherLevels);
             message.addExtra(saveSuccess);
-            message.addExtra(effects);
+            message.addExtra(effect);
 
             Bukkit.getOnlinePlayers().forEach(p -> p.spigot().sendMessage(message));
         });
-        set(14, createItem(Material.REDSTONE_COMPARATOR_OFF, MenuText.SPELL_CAST_MACRO_DISPLAY_OPTIONS), player -> new MacroOptionsGUI(player, spell.getMacroOptions(), this));
-        set(18, createItem(Material.BOOK, MenuText.DESCRIPTION), player -> new SpellDescriptionGUI(player, spell, this));
-        set(19, createItem(Material.DIAMOND_SWORD, MenuText.ATTACK), player -> new SpellAttackGUI(player, coreStats, spell, this));
-        set(20, createItem(Material.SHIELD, MenuText.SAVE), player -> new SpellSaveGUI(player, coreStats, spell.getSpellSave(), this));
-        set(21, setPotionEffect(createItem(Material.POTION, MenuText.HEALING), PotionType.INSTANT_HEAL), player -> new HealingGUI(player, coreStats, spell.getSpellHealing(), this));
-        set(22, createItem(Material.GOLD_SWORD, MenuText.DAMAGE), player -> new SpellDamageGUI(player, spell.getSpellDamage(), this));
-        set(23, createItem(Material.BOOK, MenuText.SPELL_EFFECTS), player -> {
+        set(14, ClickType.LEFT, createItem(Material.REDSTONE_COMPARATOR_OFF, MenuText.SPELL_CAST_MACRO_DISPLAY_OPTIONS), player -> new MacroOptionsGUI(player, spell.getMacroOptions(), this));
+        set(18, ClickType.LEFT, createItem(Material.BOOK, MenuText.DESCRIPTION), player -> new SpellDescriptionGUI(player, spell, this));
+        set(19, ClickType.LEFT, createItem(Material.DIAMOND_SWORD, MenuText.ATTACK), player -> new StatBonusGUI<>(player, spell, Spell::setAttackStat, (spell, statBonus) -> spell.getAttackStat() == statBonus, this));
+        set(20, ClickType.LEFT, createItem(Material.SHIELD, MenuText.SAVE), player -> new SpellSaveGUI(player, coreStats, spell.getSpellSave(), this));
+        set(21, ClickType.LEFT, setPotionEffect(createItem(Material.POTION, MenuText.HEALING), PotionType.INSTANT_HEAL), player -> new HealingGUI(player, spell.getSpellHealing(), this));
+        set(22, ClickType.LEFT, createItem(Material.GOLD_SWORD, MenuText.DAMAGE), player -> new SpellDamageGUI(player, spell.getSpellDamage(), this));
+        set(23, ClickType.LEFT, createItem(Material.BOOK, MenuText.SPELL_EFFECTS), player -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta meta = (BookMeta) book.getItemMeta();
             meta.setTitle(MenuText.SPELL_EFFECTS);
@@ -315,7 +305,7 @@ public class SpellGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        setBackButton(26, Material.BARRIER);
+        setBackButton(26, ClickType.LEFT, Material.BARRIER);
     }
 
     private String openBookCommand(List<String> pages) {

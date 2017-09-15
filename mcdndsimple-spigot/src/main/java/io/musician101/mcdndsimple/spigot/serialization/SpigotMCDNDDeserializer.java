@@ -34,6 +34,7 @@ import io.musician101.mcdndsimple.common.character.spell.SpellHealing;
 import io.musician101.mcdndsimple.common.character.spell.SpellSave;
 import io.musician101.mcdndsimple.common.character.spell.SpellType;
 import io.musician101.mcdndsimple.common.character.spell.SpellcasterClass;
+import io.musician101.mcdndsimple.common.character.spell.StatBonus;
 import io.musician101.mcdndsimple.common.character.tab.ArmorTab;
 import io.musician101.mcdndsimple.common.character.tab.BackgroundTab;
 import io.musician101.mcdndsimple.common.character.tab.ClassTab;
@@ -46,9 +47,11 @@ import io.musician101.mcdndsimple.common.character.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.weapon.RangedWeapon;
 import io.musician101.mcdndsimple.common.character.weapon.WeaponAttackStat;
 import io.musician101.mcdndsimple.common.serialization.MCDNDDeserializer;
+import io.musician101.mcdndsimple.common.serialization.MCDNDSimpleKeys;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.bukkit.configuration.MemoryConfiguration;
 
 public class SpigotMCDNDDeserializer extends MCDNDDeserializer<MemoryConfiguration> {
@@ -60,20 +63,20 @@ public class SpigotMCDNDDeserializer extends MCDNDDeserializer<MemoryConfigurati
     @Override
     public PlayerSheet deserialize(MemoryConfiguration characterSheetData) {
         PlayerSheet playerSheet = new PlayerSheet();
-        playerSheet.setBioAndInfo(deserializeBioAndInfo(getMemoryConfiguration(characterSheetData, SpigotMCDNDSimpleKeys.BIO_AND_INFO)));
-        playerSheet.setCharacterSheet(deserializePlayerSheet(getMemoryConfiguration(characterSheetData, SpigotMCDNDSimpleKeys.PLAYER_SHEET)));
-        playerSheet.setClazz(characterSheetData.getString(SpigotMCDNDSimpleKeys.CLASS, ""));
-        playerSheet.setName(characterSheetData.getString(SpigotMCDNDSimpleKeys.NAME, ""));
-        playerSheet.setRace(characterSheetData.getString(SpigotMCDNDSimpleKeys.RACE, ""));
+        playerSheet.setBioAndInfo(deserializeBioAndInfo(getMemoryConfiguration(characterSheetData, MCDNDSimpleKeys.BIO_AND_INFO)));
+        playerSheet.setCharacterSheet(deserializePlayerSheet(getMemoryConfiguration(characterSheetData, MCDNDSimpleKeys.PLAYER_SHEET)));
+        playerSheet.setClazz(characterSheetData.getString(MCDNDSimpleKeys.CLASS, ""));
+        playerSheet.setName(characterSheetData.getString(MCDNDSimpleKeys.NAME, ""));
+        playerSheet.setRace(characterSheetData.getString(MCDNDSimpleKeys.RACE, ""));
         return playerSheet;
     }
 
     @Override
     protected AbilityScore deserializeAbilityScore(MemoryConfiguration abilityScoreData, AbilityScore defaultScore) {
-        if (containsKey(abilityScoreData, SpigotMCDNDSimpleKeys.NAME) || containsKey(abilityScoreData, SpigotMCDNDSimpleKeys.SHORT_NAME)) {
-            AbilityScore abilityScore = new AbilityScore(abilityScoreData.getString(SpigotMCDNDSimpleKeys.NAME), abilityScoreData.getString(SpigotMCDNDSimpleKeys.SHORT_NAME));
-            abilityScore.setProficient(abilityScoreData.getBoolean(SpigotMCDNDSimpleKeys.IS_PROFICIENT, false));
-            abilityScore.setScore(abilityScoreData.getInt(SpigotMCDNDSimpleKeys.SCORE, 0));
+        if (containsKey(abilityScoreData, MCDNDSimpleKeys.NAME) || containsKey(abilityScoreData, MCDNDSimpleKeys.SHORT_NAME)) {
+            AbilityScore abilityScore = new AbilityScore(abilityScoreData.getString(MCDNDSimpleKeys.NAME), abilityScoreData.getString(MCDNDSimpleKeys.SHORT_NAME));
+            abilityScore.setProficient(abilityScoreData.getBoolean(MCDNDSimpleKeys.IS_PROFICIENT, false));
+            abilityScore.setScore(abilityScoreData.getInt(MCDNDSimpleKeys.SCORE, 0));
             return abilityScore;
         }
 
@@ -83,291 +86,274 @@ public class SpigotMCDNDDeserializer extends MCDNDDeserializer<MemoryConfigurati
     @Override
     protected Armor deserializeArmor(MemoryConfiguration armorData) {
         Armor armor = new Armor();
-        armor.setSpeedPenalty(armorData.getBoolean(SpigotMCDNDSimpleKeys.SPEED_PENALTY, false));
-        armor.setStealthPenalty(armorData.getBoolean(SpigotMCDNDSimpleKeys.STEALTH_PENALTY, false));
-        armor.setIsUnarmored(armorData.getBoolean(SpigotMCDNDSimpleKeys.UNARMORED, false));
-        armor.setIsWorn(armorData.getBoolean(SpigotMCDNDSimpleKeys.WORN, false));
-        armor.setBaseArmorClass(armorData.getInt(SpigotMCDNDSimpleKeys.BASE_ARMOR_CLASS, 0));
-        armor.setMagicBonus(armorData.getInt(SpigotMCDNDSimpleKeys.MAGIC_BONUS, 0));
-        armor.setArmorType(deserializeArmorType(getMemoryConfiguration(armorData, SpigotMCDNDSimpleKeys.ARMOR_TYPE)));
-        armor.setName(armorData.getString(SpigotMCDNDSimpleKeys.NAME, ""));
+        armor.setSpeedPenalty(armorData.getBoolean(MCDNDSimpleKeys.SPEED_PENALTY, false));
+        armor.setStealthPenalty(armorData.getBoolean(MCDNDSimpleKeys.STEALTH_PENALTY, false));
+        armor.setIsUnarmored(armorData.getBoolean(MCDNDSimpleKeys.UNARMORED, false));
+        armor.setIsWorn(armorData.getBoolean(MCDNDSimpleKeys.WORN, false));
+        armor.setBaseArmorClass(armorData.getInt(MCDNDSimpleKeys.BASE_ARMOR_CLASS, 0));
+        armor.setMagicBonus(armorData.getInt(MCDNDSimpleKeys.MAGIC_BONUS, 0));
+        armor.setArmorType(deserializeArmorType(getMemoryConfiguration(armorData, MCDNDSimpleKeys.ARMOR_TYPE)));
+        armor.setName(armorData.getString(MCDNDSimpleKeys.NAME, ""));
         return armor;
     }
 
     @Override
     protected ArmorTab deserializeArmorTab(MemoryConfiguration armorTabData) {
         ArmorTab armorTab = new ArmorTab();
-        armorTab.setArmorClass(armorTabData.getInt(SpigotMCDNDSimpleKeys.ARMOR_CLASS, 0));
-        armorTab.setUnarmoredClass(armorTabData.getInt(SpigotMCDNDSimpleKeys.UNARMORED_ARMOR_CLASS, 0));
-        armorTab.setArmor(getMemoryConfigurationList(armorTabData, SpigotMCDNDSimpleKeys.ARMOR_LIST).stream().map(this::deserializeArmor).collect(Collectors.toList()));
-        armorTab.setUnarmoredBonus(deserializeUnarmoredBonus(getMemoryConfiguration(armorTabData, SpigotMCDNDSimpleKeys.UNARMORED_BONUS)));
+        armorTab.setArmorClass(armorTabData.getInt(MCDNDSimpleKeys.ARMOR_CLASS, 0));
+        armorTab.setUnarmoredClass(armorTabData.getInt(MCDNDSimpleKeys.UNARMORED_ARMOR_CLASS, 0));
+        armorTab.setArmor(getMemoryConfigurationList(armorTabData, MCDNDSimpleKeys.ARMOR_LIST).stream().map(this::deserializeArmor).collect(Collectors.toList()));
+        armorTab.setUnarmoredBonus(deserializeUnarmoredBonus(getMemoryConfiguration(armorTabData, MCDNDSimpleKeys.UNARMORED_BONUS)));
         return armorTab;
     }
 
     @Override
     protected ArmorType deserializeArmorType(MemoryConfiguration armorTypeData) {
-        if (containsKey(armorTypeData, SpigotMCDNDSimpleKeys.NAME)) {
-            for (ArmorType armorType : ArmorType.values()) {
-                if (armorType.getName().equals(armorTypeData.getString(SpigotMCDNDSimpleKeys.NAME))) {
-                    return armorType;
-                }
-            }
-        }
-
-        return ArmorType.NONE;
+        return Stream.of(ArmorType.values()).filter(armorType -> containsKey(armorTypeData, MCDNDSimpleKeys.NAME) && armorType.getName().equals(armorTypeData.getString(MCDNDSimpleKeys.NAME))).findFirst().orElse(ArmorType.NONE);
     }
 
     @Override
     protected BackgroundTab deserializeBackgroundTab(MemoryConfiguration backgroundTabData) {
         BackgroundTab backgroundTab = new BackgroundTab();
-        backgroundTab.setWeight(backgroundTabData.getDouble(SpigotMCDNDSimpleKeys.WEIGHT_DOUBLE, 0));
-        backgroundTab.setAge(backgroundTabData.getInt(SpigotMCDNDSimpleKeys.AGE, 0));
-        backgroundTab.setArmorProficiencies(getStringList(backgroundTabData, SpigotMCDNDSimpleKeys.ARMOR_PROFICIENCIES));
-        backgroundTab.setBackground(getStringList(backgroundTabData, SpigotMCDNDSimpleKeys.BACKGROUND));
-        backgroundTab.setBonds(getStringList(backgroundTabData, SpigotMCDNDSimpleKeys.BONDS));
-        backgroundTab.setFlaws(getStringList(backgroundTabData, SpigotMCDNDSimpleKeys.FLAWS));
-        backgroundTab.setIdeals(getStringList(backgroundTabData, SpigotMCDNDSimpleKeys.IDEALS));
-        backgroundTab.setOtherNotes(getStringList(backgroundTabData, SpigotMCDNDSimpleKeys.OTHER_NOTES));
-        backgroundTab.setPersonalityTraits(getStringList(backgroundTabData, SpigotMCDNDSimpleKeys.PERSONALITY_TRAITS));
-        backgroundTab.setRacialTraits(getStringList(backgroundTabData, SpigotMCDNDSimpleKeys.RACIAL_TRAITS));
-        backgroundTab.setToolProficiencies(getStringList(backgroundTabData, SpigotMCDNDSimpleKeys.TOOL_PROFICIENCIES));
-        backgroundTab.setWeaponProficiencies(getStringList(backgroundTabData, SpigotMCDNDSimpleKeys.WEAPON_PROFICIENCIES));
-        backgroundTab.setAlignment(backgroundTabData.getString(SpigotMCDNDSimpleKeys.ALIGNMENT, ""));
-        backgroundTab.setEyes(backgroundTabData.getString(SpigotMCDNDSimpleKeys.EYES, ""));
-        backgroundTab.setGender(backgroundTabData.getString(SpigotMCDNDSimpleKeys.GENDER, ""));
-        backgroundTab.setHair(backgroundTabData.getString(SpigotMCDNDSimpleKeys.HAIR, ""));
-        backgroundTab.setHeight(backgroundTabData.getString(SpigotMCDNDSimpleKeys.HEIGHT, ""));
-        backgroundTab.setLanguages(backgroundTabData.getStringList(SpigotMCDNDSimpleKeys.LANGUAGES));
-        backgroundTab.setSize(backgroundTabData.getString(SpigotMCDNDSimpleKeys.SIZE, ""));
-        backgroundTab.setVision(backgroundTabData.getString(SpigotMCDNDSimpleKeys.VISION, ""));
+        backgroundTab.setWeight(backgroundTabData.getDouble(MCDNDSimpleKeys.WEIGHT_DOUBLE, 0));
+        backgroundTab.setAge(backgroundTabData.getInt(MCDNDSimpleKeys.AGE, 0));
+        backgroundTab.setArmorProficiencies(getStringList(backgroundTabData, MCDNDSimpleKeys.ARMOR_PROFICIENCIES));
+        backgroundTab.setBackground(getStringList(backgroundTabData, MCDNDSimpleKeys.BACKGROUND));
+        backgroundTab.setBonds(getStringList(backgroundTabData, MCDNDSimpleKeys.BONDS));
+        backgroundTab.setFlaws(getStringList(backgroundTabData, MCDNDSimpleKeys.FLAWS));
+        backgroundTab.setIdeals(getStringList(backgroundTabData, MCDNDSimpleKeys.IDEALS));
+        backgroundTab.setOtherNotes(getStringList(backgroundTabData, MCDNDSimpleKeys.OTHER_NOTES));
+        backgroundTab.setPersonalityTraits(getStringList(backgroundTabData, MCDNDSimpleKeys.PERSONALITY_TRAITS));
+        backgroundTab.setRacialTraits(getStringList(backgroundTabData, MCDNDSimpleKeys.RACIAL_TRAITS));
+        backgroundTab.setToolProficiencies(getStringList(backgroundTabData, MCDNDSimpleKeys.TOOL_PROFICIENCIES));
+        backgroundTab.setWeaponProficiencies(getStringList(backgroundTabData, MCDNDSimpleKeys.WEAPON_PROFICIENCIES));
+        backgroundTab.setAlignment(backgroundTabData.getString(MCDNDSimpleKeys.ALIGNMENT, ""));
+        backgroundTab.setEyes(backgroundTabData.getString(MCDNDSimpleKeys.EYES, ""));
+        backgroundTab.setGender(backgroundTabData.getString(MCDNDSimpleKeys.GENDER, ""));
+        backgroundTab.setHair(backgroundTabData.getString(MCDNDSimpleKeys.HAIR, ""));
+        backgroundTab.setHeight(backgroundTabData.getString(MCDNDSimpleKeys.HEIGHT, ""));
+        backgroundTab.setLanguages(backgroundTabData.getStringList(MCDNDSimpleKeys.LANGUAGES));
+        backgroundTab.setSize(backgroundTabData.getString(MCDNDSimpleKeys.SIZE, ""));
+        backgroundTab.setVision(backgroundTabData.getString(MCDNDSimpleKeys.VISION, ""));
         return backgroundTab;
     }
 
     @Override
     protected BioAndInfo deserializeBioAndInfo(MemoryConfiguration bioAndInfoData) {
         BioAndInfo bioAndInfo = new BioAndInfo();
-        bioAndInfo.setName(bioAndInfoData.getString(SpigotMCDNDSimpleKeys.NAME, ""));
-        bioAndInfo.setBio(getStringList(bioAndInfoData, SpigotMCDNDSimpleKeys.BIO));
+        bioAndInfo.setName(bioAndInfoData.getString(MCDNDSimpleKeys.NAME, ""));
+        bioAndInfo.setBio(getStringList(bioAndInfoData, MCDNDSimpleKeys.BIO));
         return bioAndInfo;
     }
 
     @Override
     protected Bonuses deserializeBonuses(MemoryConfiguration bonusesData) {
         Bonuses bonuses = new Bonuses();
-        bonuses.setMelee(deserializeMeleeBonus(getMemoryConfiguration(bonusesData, SpigotMCDNDSimpleKeys.MELEE_BONUS)));
-        bonuses.setRanged(deserializeRangedBonus(getMemoryConfiguration(bonusesData, SpigotMCDNDSimpleKeys.RANGED_BONUS)));
-        bonuses.setSpellcasting(deserializeSpellcastingBonus(getMemoryConfiguration(bonusesData, SpigotMCDNDSimpleKeys.SPELLCASTING_BONUS)));
-        bonuses.setSaves(deserializeDice(getMemoryConfiguration(bonusesData, SpigotMCDNDSimpleKeys.SAVES)));
-        bonuses.setAbilitiesAndSkills(deserializeDice(getMemoryConfiguration(bonusesData, SpigotMCDNDSimpleKeys.ABILITIES_AND_SKILLS)));
+        bonuses.setMelee(deserializeMeleeBonus(getMemoryConfiguration(bonusesData, MCDNDSimpleKeys.MELEE_BONUS)));
+        bonuses.setRanged(deserializeRangedBonus(getMemoryConfiguration(bonusesData, MCDNDSimpleKeys.RANGED_BONUS)));
+        bonuses.setSpellcasting(deserializeSpellcastingBonus(getMemoryConfiguration(bonusesData, MCDNDSimpleKeys.SPELLCASTING_BONUS)));
+        bonuses.setSaves(deserializeDice(getMemoryConfiguration(bonusesData, MCDNDSimpleKeys.SAVES)));
+        bonuses.setAbilitiesAndSkills(deserializeDice(getMemoryConfiguration(bonusesData, MCDNDSimpleKeys.ABILITIES_AND_SKILLS)));
         return bonuses;
     }
 
     @Override
     protected ClassAction deserializeClassAction(MemoryConfiguration classActionData) {
         ClassAction classAction = new ClassAction();
-        classAction.setMax(classActionData.getInt(SpigotMCDNDSimpleKeys.MAX_USES, 0));
-        classAction.setUsedCharges(classActionData.getInt(SpigotMCDNDSimpleKeys.USES_LEFT, 0));
-        classAction.setRecharge(deserializeRecharge(getMemoryConfiguration(classActionData, SpigotMCDNDSimpleKeys.RECHARGE)));
-        classAction.setGainedFrom(classActionData.getString(SpigotMCDNDSimpleKeys.GAINED_FROM, ""));
-        classAction.setName(classActionData.getString(SpigotMCDNDSimpleKeys.NAME, ""));
+        classAction.setMax(classActionData.getInt(MCDNDSimpleKeys.MAX_USES, 0));
+        classAction.setUsedCharges(classActionData.getInt(MCDNDSimpleKeys.USES_LEFT, 0));
+        classAction.setRecharge(deserializeRecharge(getMemoryConfiguration(classActionData, MCDNDSimpleKeys.RECHARGE)));
+        classAction.setGainedFrom(classActionData.getString(MCDNDSimpleKeys.GAINED_FROM, ""));
+        classAction.setName(classActionData.getString(MCDNDSimpleKeys.NAME, ""));
         return classAction;
     }
 
     @Override
     protected ClassLevels deserializeClassLevels(MemoryConfiguration classLevelsData) {
         ClassLevels classLevels = new ClassLevels();
-        classLevels.setBarbarian(classLevelsData.getInt(SpigotMCDNDSimpleKeys.BARBARIAN_LEVEL, 0));
-        classLevels.setBard(classLevelsData.getInt(SpigotMCDNDSimpleKeys.BARD_LEVEL, 0));
-        classLevels.setCleric(classLevelsData.getInt(SpigotMCDNDSimpleKeys.CLERIC_LEVEL, 0));
-        classLevels.setDruid(classLevelsData.getInt(SpigotMCDNDSimpleKeys.DRUID_LEVEL, 0));
-        classLevels.setFighter(classLevelsData.getInt(SpigotMCDNDSimpleKeys.FIGHTER_LEVEL, 0));
-        classLevels.setMonk(classLevelsData.getInt(SpigotMCDNDSimpleKeys.MONK_LEVEL, 0));
-        classLevels.setPaladin(classLevelsData.getInt(SpigotMCDNDSimpleKeys.PALADIN_LEVEL, 0));
-        classLevels.setRanger(classLevelsData.getInt(SpigotMCDNDSimpleKeys.RANGER_LEVEL, 0));
-        classLevels.setRogue(classLevelsData.getInt(SpigotMCDNDSimpleKeys.ROGUE_LEVEL, 0));
-        classLevels.setSorcerer(classLevelsData.getInt(SpigotMCDNDSimpleKeys.SORCERER_LEVEL, 0));
-        classLevels.setWarlock(classLevelsData.getInt(SpigotMCDNDSimpleKeys.WARLOCK_LEVEL, 0));
-        classLevels.setWizard(classLevelsData.getInt(SpigotMCDNDSimpleKeys.WIZARD_LEVEL, 0));
+        classLevels.setBarbarian(classLevelsData.getInt(MCDNDSimpleKeys.BARBARIAN_LEVEL, 0));
+        classLevels.setBard(classLevelsData.getInt(MCDNDSimpleKeys.BARD_LEVEL, 0));
+        classLevels.setCleric(classLevelsData.getInt(MCDNDSimpleKeys.CLERIC_LEVEL, 0));
+        classLevels.setDruid(classLevelsData.getInt(MCDNDSimpleKeys.DRUID_LEVEL, 0));
+        classLevels.setFighter(classLevelsData.getInt(MCDNDSimpleKeys.FIGHTER_LEVEL, 0));
+        classLevels.setMonk(classLevelsData.getInt(MCDNDSimpleKeys.MONK_LEVEL, 0));
+        classLevels.setPaladin(classLevelsData.getInt(MCDNDSimpleKeys.PALADIN_LEVEL, 0));
+        classLevels.setRanger(classLevelsData.getInt(MCDNDSimpleKeys.RANGER_LEVEL, 0));
+        classLevels.setRogue(classLevelsData.getInt(MCDNDSimpleKeys.ROGUE_LEVEL, 0));
+        classLevels.setSorcerer(classLevelsData.getInt(MCDNDSimpleKeys.SORCERER_LEVEL, 0));
+        classLevels.setWarlock(classLevelsData.getInt(MCDNDSimpleKeys.WARLOCK_LEVEL, 0));
+        classLevels.setWizard(classLevelsData.getInt(MCDNDSimpleKeys.WIZARD_LEVEL, 0));
         return classLevels;
     }
 
     @Override
     protected ClassResource deserializeClassResource(MemoryConfiguration classResourceData) {
         ClassResource classResource = new ClassResource();
-        classResource.setCurrentCharges(classResourceData.getInt(SpigotMCDNDSimpleKeys.USES_LEFT, 0));
-        classResource.setMaxCharges(classResourceData.getInt(SpigotMCDNDSimpleKeys.MAX_USES, 0));
-        classResource.setRecharge(deserializeRecharge(getMemoryConfiguration(classResourceData, SpigotMCDNDSimpleKeys.RECHARGE)));
-        classResource.setName(classResourceData.getString(SpigotMCDNDSimpleKeys.NAME, ""));
+        classResource.setCurrentCharges(classResourceData.getInt(MCDNDSimpleKeys.USES_LEFT, 0));
+        classResource.setMaxCharges(classResourceData.getInt(MCDNDSimpleKeys.MAX_USES, 0));
+        classResource.setRecharge(deserializeRecharge(getMemoryConfiguration(classResourceData, MCDNDSimpleKeys.RECHARGE)));
+        classResource.setName(classResourceData.getString(MCDNDSimpleKeys.NAME, ""));
         return classResource;
     }
 
     @Override
     protected ClassTab deserializeClassTab(MemoryConfiguration classTabData) {
         ClassTab classTab = new ClassTab();
-        classTab.setClassLevels(deserializeClassLevels(getMemoryConfiguration(classTabData, SpigotMCDNDSimpleKeys.CLASS_LEVELS)));
-        classTab.setClassActions(getMemoryConfigurationList(classTabData, SpigotMCDNDSimpleKeys.CLASS_ACTIONS).stream().map(this::deserializeClassAction).collect(Collectors.toList()));
-        classTab.setClassResources(getMemoryConfigurationList(classTabData, SpigotMCDNDSimpleKeys.CLASS_RESOURCES).stream().map(this::deserializeClassResource).collect(Collectors.toList()));
-        classTab.setClassFeatureNotes(getStringList(classTabData, SpigotMCDNDSimpleKeys.CLASS_FEATURE_NOTES));
+        classTab.setClassLevels(deserializeClassLevels(getMemoryConfiguration(classTabData, MCDNDSimpleKeys.CLASS_LEVELS)));
+        classTab.setClassActions(getMemoryConfigurationList(classTabData, MCDNDSimpleKeys.CLASS_ACTIONS).stream().map(this::deserializeClassAction).collect(Collectors.toList()));
+        classTab.setClassResources(getMemoryConfigurationList(classTabData, MCDNDSimpleKeys.CLASS_RESOURCES).stream().map(this::deserializeClassResource).collect(Collectors.toList()));
+        classTab.setClassFeatureNotes(getStringList(classTabData, MCDNDSimpleKeys.CLASS_FEATURE_NOTES));
         return classTab;
     }
 
     @Override
     protected Coin deserializeCoin(MemoryConfiguration coinData, Coin defaultCoin) {
-        Coin coin = new Coin(coinData.getString(SpigotMCDNDSimpleKeys.NAME), coinData.getString(SpigotMCDNDSimpleKeys.SHORT_NAME));
-        coin.setAmount(coinData.getInt(SpigotMCDNDSimpleKeys.AMOUNT, 0));
+        Coin coin = new Coin(coinData.getString(MCDNDSimpleKeys.NAME), coinData.getString(MCDNDSimpleKeys.SHORT_NAME));
+        coin.setAmount(coinData.getInt(MCDNDSimpleKeys.AMOUNT, 0));
         return coin;
     }
 
     @Override
     protected CoreStats deserializeCoreStats(MemoryConfiguration coreStatsData) {
         CoreStats coreStats = new CoreStats();
-        coreStats.setCharisma(deserializeAbilityScore(getMemoryConfiguration(coreStatsData, SpigotMCDNDSimpleKeys.CHARISMA_SCORE), new AbilityScore("Charisma", "CHA")));
-        coreStats.setConstitution(deserializeAbilityScore(getMemoryConfiguration(coreStatsData, SpigotMCDNDSimpleKeys.CONSTITUTION_SCORE), new AbilityScore("Constitution", "CON")));
-        coreStats.setDexterity(deserializeAbilityScore(getMemoryConfiguration(coreStatsData, SpigotMCDNDSimpleKeys.DEXTERITY_SCORE), new AbilityScore("Dexterity", "DEX")));
-        coreStats.setIntelligence(deserializeAbilityScore(getMemoryConfiguration(coreStatsData, SpigotMCDNDSimpleKeys.INTELLIGENCE_SCORE), new AbilityScore("Intelligence", "INT")));
-        coreStats.setStrength(deserializeAbilityScore(getMemoryConfiguration(coreStatsData, SpigotMCDNDSimpleKeys.STRENGTH_SCORE), new AbilityScore("Strength", "STR")));
-        coreStats.setWisdom(deserializeAbilityScore(getMemoryConfiguration(coreStatsData, SpigotMCDNDSimpleKeys.WISDOM_SCORE), new AbilityScore("Wisdom", "WIS")));
+        coreStats.setCharisma(deserializeAbilityScore(getMemoryConfiguration(coreStatsData, MCDNDSimpleKeys.CHARISMA_SCORE), new AbilityScore("Charisma", "CHA")));
+        coreStats.setConstitution(deserializeAbilityScore(getMemoryConfiguration(coreStatsData, MCDNDSimpleKeys.CONSTITUTION_SCORE), new AbilityScore("Constitution", "CON")));
+        coreStats.setDexterity(deserializeAbilityScore(getMemoryConfiguration(coreStatsData, MCDNDSimpleKeys.DEXTERITY_SCORE), new AbilityScore("Dexterity", "DEX")));
+        coreStats.setIntelligence(deserializeAbilityScore(getMemoryConfiguration(coreStatsData, MCDNDSimpleKeys.INTELLIGENCE_SCORE), new AbilityScore("Intelligence", "INT")));
+        coreStats.setStrength(deserializeAbilityScore(getMemoryConfiguration(coreStatsData, MCDNDSimpleKeys.STRENGTH_SCORE), new AbilityScore("Strength", "STR")));
+        coreStats.setWisdom(deserializeAbilityScore(getMemoryConfiguration(coreStatsData, MCDNDSimpleKeys.WISDOM_SCORE), new AbilityScore("Wisdom", "WIS")));
         return coreStats;
     }
 
     @Override
     protected CoreStatsTab deserializeCoreStatsTab(MemoryConfiguration coreStatsTabData) {
         CoreStatsTab coreStatsTab = new CoreStatsTab();
-        coreStatsTab.setBonuses(deserializeBonuses(getMemoryConfiguration(coreStatsTabData, SpigotMCDNDSimpleKeys.BONUSES)));
-        coreStatsTab.setCoreStats(deserializeCoreStats(getMemoryConfiguration(coreStatsTabData, SpigotMCDNDSimpleKeys.CORE_STATS)));
-        coreStatsTab.setExperience(deserializeExperience(getMemoryConfiguration(coreStatsTabData, SpigotMCDNDSimpleKeys.EXPERIENCE)));
-        coreStatsTab.setHitDice(deserializeHitDice(getMemoryConfiguration(coreStatsTabData, SpigotMCDNDSimpleKeys.HIT_DICE)));
-        coreStatsTab.setHitPoints(deserializeHitPoints(getMemoryConfiguration(coreStatsTabData, SpigotMCDNDSimpleKeys.HIT_POINTS)));
-        coreStatsTab.setSpeed(coreStatsTabData.getInt(SpigotMCDNDSimpleKeys.SPEED, 0));
+        coreStatsTab.setBonuses(deserializeBonuses(getMemoryConfiguration(coreStatsTabData, MCDNDSimpleKeys.BONUSES)));
+        coreStatsTab.setCoreStats(deserializeCoreStats(getMemoryConfiguration(coreStatsTabData, MCDNDSimpleKeys.CORE_STATS)));
+        coreStatsTab.setExperience(deserializeExperience(getMemoryConfiguration(coreStatsTabData, MCDNDSimpleKeys.EXPERIENCE)));
+        coreStatsTab.setHitDice(deserializeHitDice(getMemoryConfiguration(coreStatsTabData, MCDNDSimpleKeys.HIT_DICE)));
+        coreStatsTab.setHitPoints(deserializeHitPoints(getMemoryConfiguration(coreStatsTabData, MCDNDSimpleKeys.HIT_POINTS)));
+        coreStatsTab.setSpeed(coreStatsTabData.getInt(MCDNDSimpleKeys.SPEED, 0));
         return coreStatsTab;
     }
 
     @Override
     protected Dice deserializeDice(MemoryConfiguration diceData) {
-        return new Dice(diceData.getInt(SpigotMCDNDSimpleKeys.SIDES, 0), diceData.getInt(SpigotMCDNDSimpleKeys.AMOUNT, 0));
+        return new Dice(diceData.getInt(MCDNDSimpleKeys.SIDES, 0), diceData.getInt(MCDNDSimpleKeys.AMOUNT, 0));
     }
 
     @Override
     protected Experience deserializeExperience(MemoryConfiguration experienceData) {
         Experience experience = new Experience();
-        experience.setExp(experienceData.getInt(SpigotMCDNDSimpleKeys.EXPERIENCE, 0));
+        experience.setExp(experienceData.getInt(MCDNDSimpleKeys.EXPERIENCE, 0));
         return experience;
     }
 
     @Override
     protected HitDice deserializeHitDice(MemoryConfiguration hitDiceData) {
         HitDice hitDice = new HitDice();
-        hitDiceData.getKeys(false).forEach(key -> hitDiceData.getInt(key, 0));
+        hitDice.setHitDice(deserializeDice(hitDiceData));
         return hitDice;
     }
 
     @Override
     protected HitPoints deserializeHitPoints(MemoryConfiguration hitPointsData) {
         HitPoints hitPoints = new HitPoints();
-        hitPoints.setCurrent(hitPointsData.getInt(SpigotMCDNDSimpleKeys.CURRENT_HP, 0));
-        hitPoints.setMax(hitPointsData.getInt(SpigotMCDNDSimpleKeys.MAX_HP, 0));
-        hitPoints.setTemp(hitPointsData.getInt(SpigotMCDNDSimpleKeys.TEMP_HP, 0));
+        hitPoints.setCurrent(hitPointsData.getInt(MCDNDSimpleKeys.CURRENT_HP, 0));
+        hitPoints.setMax(hitPointsData.getInt(MCDNDSimpleKeys.MAX_HP, 0));
+        hitPoints.setTemp(hitPointsData.getInt(MCDNDSimpleKeys.TEMP_HP, 0));
         return hitPoints;
     }
 
     @Override
     protected InventoryTab deserializeInventoryTab(MemoryConfiguration inventoryTabData, CoreStats coreStats) {
         InventoryTab inventoryTab = new InventoryTab();
-        inventoryTab.setInventory(getMemoryConfigurationList(inventoryTabData, SpigotMCDNDSimpleKeys.INVENTORY).stream().map(this::deserializeItem).collect(Collectors.toList()));
-        inventoryTab.setInventoryNotes(getStringList(inventoryTabData, SpigotMCDNDSimpleKeys.INVENTORY_NOTES));
-        inventoryTab.setWealth(deserializeWealth(getMemoryConfiguration(inventoryTabData, SpigotMCDNDSimpleKeys.WEALTH)));
-        inventoryTab.setWeight(deserializeWeight(getMemoryConfiguration(inventoryTabData, SpigotMCDNDSimpleKeys.WEIGHT_CLASS), coreStats, inventoryTab.getInventory(), inventoryTab.getWealth()));
+        inventoryTab.setInventory(getMemoryConfigurationList(inventoryTabData, MCDNDSimpleKeys.INVENTORY).stream().map(this::deserializeItem).collect(Collectors.toList()));
+        inventoryTab.setInventoryNotes(getStringList(inventoryTabData, MCDNDSimpleKeys.INVENTORY_NOTES));
+        inventoryTab.setWealth(deserializeWealth(getMemoryConfiguration(inventoryTabData, MCDNDSimpleKeys.WEALTH)));
+        inventoryTab.setWeight(deserializeWeight(getMemoryConfiguration(inventoryTabData, MCDNDSimpleKeys.WEIGHT_CLASS), coreStats, inventoryTab.getInventory(), inventoryTab.getWealth()));
         return inventoryTab;
     }
 
     @Override
     protected MCDNDItem deserializeItem(MemoryConfiguration itemData) {
         MCDNDItem item = new MCDNDItem();
-        item.setIsCarried(itemData.getBoolean(SpigotMCDNDSimpleKeys.CARRIED));
-        item.setWeight(itemData.getDouble(SpigotMCDNDSimpleKeys.WEIGHT_DOUBLE));
-        item.setDescription(itemData.getStringList(SpigotMCDNDSimpleKeys.DESCRIPTION));
-        item.setName(itemData.getString(SpigotMCDNDSimpleKeys.NAME));
+        item.setIsCarried(itemData.getBoolean(MCDNDSimpleKeys.CARRIED));
+        item.setWeight(itemData.getDouble(MCDNDSimpleKeys.WEIGHT_DOUBLE));
+        item.setDescription(itemData.getStringList(MCDNDSimpleKeys.DESCRIPTION));
+        item.setName(itemData.getString(MCDNDSimpleKeys.NAME));
         return item;
     }
 
     @Override
     protected MeleeBonus deserializeMeleeBonus(MemoryConfiguration meleeBonusData) {
         MeleeBonus meleeBonus = new MeleeBonus();
-        meleeBonus.setAttack(deserializeDice(getMemoryConfiguration(meleeBonusData, SpigotMCDNDSimpleKeys.ATTACK)));
-        meleeBonus.setDamage(deserializeDice(getMemoryConfiguration(meleeBonusData, SpigotMCDNDSimpleKeys.DAMAGE)));
+        meleeBonus.setAttack(deserializeDice(getMemoryConfiguration(meleeBonusData, MCDNDSimpleKeys.ATTACK)));
+        meleeBonus.setDamage(deserializeDice(getMemoryConfiguration(meleeBonusData, MCDNDSimpleKeys.DAMAGE)));
         return meleeBonus;
     }
 
     @Override
     protected MeleeWeapon deserializeMeleeWeapon(MemoryConfiguration meleeWeaponData) {
         MeleeWeapon meleeWeapon = new MeleeWeapon();
-        meleeWeapon.setPlusStat(meleeWeaponData.getBoolean(SpigotMCDNDSimpleKeys.PLUS_STAT, false));
-        meleeWeapon.setIsProficient(meleeWeaponData.getBoolean(SpigotMCDNDSimpleKeys.IS_PROFICIENT, false));
-        meleeWeapon.setCritDamageDice(deserializeDice(getMemoryConfiguration(meleeWeaponData, SpigotMCDNDSimpleKeys.CRIT_DAMAGE_DICE)));
-        meleeWeapon.setDamageDice(deserializeDice(getMemoryConfiguration(meleeWeaponData, SpigotMCDNDSimpleKeys.DAMAGE_DICE)));
-        meleeWeapon.setCritMin(meleeWeaponData.getInt(SpigotMCDNDSimpleKeys.CRIT_MINIMUM, 0));
-        meleeWeapon.setMagicBonus(meleeWeaponData.getInt(SpigotMCDNDSimpleKeys.MAGIC_BONUS, 0));
-        meleeWeapon.setAttackStat(deserializeWeaponAttackStat(getMemoryConfiguration(meleeWeaponData, SpigotMCDNDSimpleKeys.ATTACK_STAT)));
-        meleeWeapon.setName(meleeWeaponData.getString(SpigotMCDNDSimpleKeys.NAME, ""));
+        meleeWeapon.setPlusStat(meleeWeaponData.getBoolean(MCDNDSimpleKeys.PLUS_STAT, false));
+        meleeWeapon.setIsProficient(meleeWeaponData.getBoolean(MCDNDSimpleKeys.IS_PROFICIENT, false));
+        meleeWeapon.setCritDamageDice(deserializeDice(getMemoryConfiguration(meleeWeaponData, MCDNDSimpleKeys.CRIT_DAMAGE_DICE)));
+        meleeWeapon.setDamageDice(deserializeDice(getMemoryConfiguration(meleeWeaponData, MCDNDSimpleKeys.DAMAGE_DICE)));
+        meleeWeapon.setCritMin(meleeWeaponData.getInt(MCDNDSimpleKeys.CRIT_MINIMUM, 0));
+        meleeWeapon.setMagicBonus(meleeWeaponData.getInt(MCDNDSimpleKeys.MAGIC_BONUS, 0));
+        meleeWeapon.setAttackStat(deserializeWeaponAttackStat(getMemoryConfiguration(meleeWeaponData, MCDNDSimpleKeys.ATTACK_STAT)));
+        meleeWeapon.setName(meleeWeaponData.getString(MCDNDSimpleKeys.NAME, ""));
         return meleeWeapon;
     }
 
     @Override
     protected CharacterSheet deserializePlayerSheet(MemoryConfiguration playerSheetData) {
         CharacterSheet characterSheet = new CharacterSheet();
-        characterSheet.setArmorTab(deserializeArmorTab(getMemoryConfiguration(playerSheetData, SpigotMCDNDSimpleKeys.ARMOR_TAB)));
-        characterSheet.setBackgroundTab(deserializeBackgroundTab(getMemoryConfiguration(playerSheetData, SpigotMCDNDSimpleKeys.BACKGROUND_TAB)));
-        characterSheet.setClassTab(deserializeClassTab(getMemoryConfiguration(playerSheetData, SpigotMCDNDSimpleKeys.CLASS_TAB)));
-        characterSheet.setCoreStatsTab(deserializeCoreStatsTab(getMemoryConfiguration(playerSheetData, SpigotMCDNDSimpleKeys.CORE_STATS_TAB)));
-        characterSheet.setInventoryTab(deserializeInventoryTab(getMemoryConfiguration(playerSheetData, SpigotMCDNDSimpleKeys.INVENTORY_TAB), characterSheet.getCoreStatsTab().getCoreStats()));
-        characterSheet.setSkillsTab(deserializeSkillsTab(getMemoryConfiguration(playerSheetData, SpigotMCDNDSimpleKeys.SKILLS_TAB), characterSheet.getCoreStatsTab().getCoreStats()));
-        characterSheet.setSpellbookTab(deserializeSpellbookTab(getMemoryConfiguration(playerSheetData, SpigotMCDNDSimpleKeys.SPELL_BOOK_TAB), characterSheet.getClassTab().getClassLevels()));
-        characterSheet.setWeaponsTab(deserializeWeaponsTab(getMemoryConfiguration(playerSheetData, SpigotMCDNDSimpleKeys.WEAPONS_TAB)));
+        characterSheet.setArmorTab(deserializeArmorTab(getMemoryConfiguration(playerSheetData, MCDNDSimpleKeys.ARMOR_TAB)));
+        characterSheet.setBackgroundTab(deserializeBackgroundTab(getMemoryConfiguration(playerSheetData, MCDNDSimpleKeys.BACKGROUND_TAB)));
+        characterSheet.setClassTab(deserializeClassTab(getMemoryConfiguration(playerSheetData, MCDNDSimpleKeys.CLASS_TAB)));
+        characterSheet.setCoreStatsTab(deserializeCoreStatsTab(getMemoryConfiguration(playerSheetData, MCDNDSimpleKeys.CORE_STATS_TAB)));
+        characterSheet.setInventoryTab(deserializeInventoryTab(getMemoryConfiguration(playerSheetData, MCDNDSimpleKeys.INVENTORY_TAB), characterSheet.getCoreStatsTab().getCoreStats()));
+        characterSheet.setSkillsTab(deserializeSkillsTab(getMemoryConfiguration(playerSheetData, MCDNDSimpleKeys.SKILLS_TAB), characterSheet.getCoreStatsTab().getCoreStats()));
+        characterSheet.setSpellbookTab(deserializeSpellbookTab(getMemoryConfiguration(playerSheetData, MCDNDSimpleKeys.SPELL_BOOK_TAB), characterSheet.getClassTab().getClassLevels()));
+        characterSheet.setWeaponsTab(deserializeWeaponsTab(getMemoryConfiguration(playerSheetData, MCDNDSimpleKeys.WEAPONS_TAB)));
         return characterSheet;
     }
 
     @Override
     protected RangedBonus deserializeRangedBonus(MemoryConfiguration rangedBonusData) {
         RangedBonus rangedBonus = new RangedBonus();
-        rangedBonus.setAttack(deserializeDice(getMemoryConfiguration(rangedBonusData, SpigotMCDNDSimpleKeys.ATTACK)));
-        rangedBonus.setDamage(deserializeDice(getMemoryConfiguration(rangedBonusData, SpigotMCDNDSimpleKeys.DAMAGE)));
+        rangedBonus.setAttack(deserializeDice(getMemoryConfiguration(rangedBonusData, MCDNDSimpleKeys.ATTACK)));
+        rangedBonus.setDamage(deserializeDice(getMemoryConfiguration(rangedBonusData, MCDNDSimpleKeys.DAMAGE)));
         return rangedBonus;
     }
 
     @Override
     protected RangedWeapon deserializeRangedWeapon(MemoryConfiguration rangedWeaponData) {
         RangedWeapon rangedWeapon = new RangedWeapon();
-        rangedWeapon.setAmmo(rangedWeaponData.getInt(SpigotMCDNDSimpleKeys.PLUS_STAT, 0));
-        rangedWeapon.setIsProficient(rangedWeaponData.getBoolean(SpigotMCDNDSimpleKeys.IS_PROFICIENT, false));
-        rangedWeapon.setCritDamageDice(deserializeDice(getMemoryConfiguration(rangedWeaponData, SpigotMCDNDSimpleKeys.CRIT_DAMAGE_DICE)));
-        rangedWeapon.setDamageDice(deserializeDice(getMemoryConfiguration(rangedWeaponData, SpigotMCDNDSimpleKeys.DAMAGE_DICE)));
-        rangedWeapon.setCritMin(rangedWeaponData.getInt(SpigotMCDNDSimpleKeys.CRIT_MINIMUM, 0));
-        rangedWeapon.setMagicBonus(rangedWeaponData.getInt(SpigotMCDNDSimpleKeys.MAGIC_BONUS, 0));
-        rangedWeapon.setAttackStat(deserializeWeaponAttackStat(getMemoryConfiguration(rangedWeaponData, SpigotMCDNDSimpleKeys.ATTACK_STAT)));
-        rangedWeapon.setName(rangedWeaponData.getString(SpigotMCDNDSimpleKeys.NAME, ""));
+        rangedWeapon.setAmmo(rangedWeaponData.getInt(MCDNDSimpleKeys.PLUS_STAT, 0));
+        rangedWeapon.setIsProficient(rangedWeaponData.getBoolean(MCDNDSimpleKeys.IS_PROFICIENT, false));
+        rangedWeapon.setCritDamageDice(deserializeDice(getMemoryConfiguration(rangedWeaponData, MCDNDSimpleKeys.CRIT_DAMAGE_DICE)));
+        rangedWeapon.setDamageDice(deserializeDice(getMemoryConfiguration(rangedWeaponData, MCDNDSimpleKeys.DAMAGE_DICE)));
+        rangedWeapon.setCritMin(rangedWeaponData.getInt(MCDNDSimpleKeys.CRIT_MINIMUM, 0));
+        rangedWeapon.setMagicBonus(rangedWeaponData.getInt(MCDNDSimpleKeys.MAGIC_BONUS, 0));
+        rangedWeapon.setAttackStat(deserializeWeaponAttackStat(getMemoryConfiguration(rangedWeaponData, MCDNDSimpleKeys.ATTACK_STAT)));
+        rangedWeapon.setName(rangedWeaponData.getString(MCDNDSimpleKeys.NAME, ""));
         return rangedWeapon;
     }
 
     @Override
     protected Recharge deserializeRecharge(MemoryConfiguration rechargeData) {
-        if (containsKey(rechargeData, SpigotMCDNDSimpleKeys.NAME)) {
-            for (Recharge recharge : Recharge.values()) {
-                if (recharge.getName().equals(rechargeData.getString(SpigotMCDNDSimpleKeys.NAME))) {
-                    return recharge;
-                }
-            }
-        }
-
-        return Recharge.NONE;
+        return Stream.of(Recharge.values()).filter(recharge -> containsKey(rechargeData, MCDNDSimpleKeys.NAME) && recharge.getName().equals(rechargeData.getString(MCDNDSimpleKeys.NAME))).findFirst().orElse(Recharge.OTHER);
     }
 
     @Override
-    protected SaveDCType deserializeSaveDCType(MemoryConfiguration spellData)
-    {
-        if (containsKey(spellData, SpigotMCDNDSimpleKeys.NAME)) {
-            String name = spellData.getString(SpigotMCDNDSimpleKeys.NAME);
+    protected SaveDCType deserializeSaveDCType(MemoryConfiguration spellData) {
+        if (containsKey(spellData, MCDNDSimpleKeys.NAME)) {
+            String name = spellData.getString(MCDNDSimpleKeys.NAME);
             if ("Custom DC".equals(name)) {
-                return SaveDCTypes.custom(spellData.getInt(SpigotMCDNDSimpleKeys.CUSTOM_DC, 0));
+                return SaveDCTypes.custom(spellData.getInt(MCDNDSimpleKeys.CUSTOM_DC, 0));
             }
             else if ("Arcane Trickster DC".equals(name)) {
                 return SaveDCTypes.ARCANE_TRICKSTER;
@@ -403,15 +389,7 @@ public class SpigotMCDNDDeserializer extends MCDNDDeserializer<MemoryConfigurati
 
     @Override
     protected SkillProficiency deserializeSkillProficiency(MemoryConfiguration skillsProficiencyData) {
-        if (containsKey(skillsProficiencyData, SpigotMCDNDSimpleKeys.NAME)) {
-            for (SkillProficiency skillProficiency : SkillProficiency.values()) {
-                if (skillsProficiencyData.getString(SpigotMCDNDSimpleKeys.NAME).equals(skillProficiency.getName())) {
-                    return skillProficiency;
-                }
-            }
-        }
-
-        return SkillProficiency.NONE;
+        return Stream.of(SkillProficiency.values()).filter(statBonus -> containsKey(skillsProficiencyData, MCDNDSimpleKeys.NAME) && statBonus.getName().equals(skillsProficiencyData.getString(MCDNDSimpleKeys.NAME))).findFirst().orElse(SkillProficiency.NONE);
     }
 
     @Override
@@ -424,158 +402,129 @@ public class SpigotMCDNDDeserializer extends MCDNDDeserializer<MemoryConfigurati
     @Override
     protected Spell deserializeSpell(MemoryConfiguration spellData) {
         Spell spell = new Spell();
-        spell.setNeedsConcentration(spellData.getBoolean(SpigotMCDNDSimpleKeys.NEEDS_CONCENTRATION, false));
-        spell.setPrepared(Prepared.valueOf(spellData.getString(SpigotMCDNDSimpleKeys.PREPARED, "NO")));
-        spell.setDuration(spellData.getString(SpigotMCDNDSimpleKeys.DURATION, ""));
-        spell.setLevel(spellData.getInt(SpigotMCDNDSimpleKeys.SPELL_LEVEL, 0));
-        spell.setRange(spellData.getString(SpigotMCDNDSimpleKeys.RANGE, ""));
-        spell.setSpellDamage(deserializeSpellDamage(getMemoryConfiguration(spellData, SpigotMCDNDSimpleKeys.SPELL_DAMAGE)));
-        spell.setDescription(getStringList(spellData, SpigotMCDNDSimpleKeys.SPELL_DESCRIPTION));
-        spell.setEffects(getStringList(spellData, SpigotMCDNDSimpleKeys.EFFECTS));
-        spell.setSpellSave(deserializeSpellSave(getMemoryConfiguration(spellData, SpigotMCDNDSimpleKeys.SPELL_SAVE)));
-        spell.setGainedFrom(deserializeSpellcasterClass(getMemoryConfiguration(spellData, SpigotMCDNDSimpleKeys.SPELLCASTER_CLASS)));
-        spell.setSpellType(deserializeSpellType(getMemoryConfiguration(spellData, SpigotMCDNDSimpleKeys.SPELL_TYPE)));
-        spell.setSpellHealing(deserializeSpellHealing(getMemoryConfiguration(spellData, SpigotMCDNDSimpleKeys.SPELL_HEALING)));
-        spell.setAttackStat(spellData.getString(SpigotMCDNDSimpleKeys.ATTACK_STAT, ""));
-        spell.setCastTime(spellData.getString(SpigotMCDNDSimpleKeys.CAST_TIME, ""));
-        spell.setTargetArea(spellData.getString(SpigotMCDNDSimpleKeys.TARGET_AREA, ""));
+        spell.setNeedsConcentration(spellData.getBoolean(MCDNDSimpleKeys.NEEDS_CONCENTRATION, false));
+        spell.setPrepared(Prepared.valueOf(spellData.getString(MCDNDSimpleKeys.PREPARED, "NO")));
+        spell.setDuration(spellData.getString(MCDNDSimpleKeys.DURATION, ""));
+        spell.setLevel(spellData.getInt(MCDNDSimpleKeys.SPELL_LEVEL, 0));
+        spell.setRange(spellData.getString(MCDNDSimpleKeys.RANGE, ""));
+        spell.setSpellDamage(deserializeSpellDamage(getMemoryConfiguration(spellData, MCDNDSimpleKeys.SPELL_DAMAGE)));
+        spell.setDescription(getStringList(spellData, MCDNDSimpleKeys.SPELL_DESCRIPTION));
+        spell.setEffects(getStringList(spellData, MCDNDSimpleKeys.EFFECTS));
+        spell.setSpellSave(deserializeSpellSave(getMemoryConfiguration(spellData, MCDNDSimpleKeys.SPELL_SAVE)));
+        spell.setGainedFrom(deserializeSpellcasterClass(getMemoryConfiguration(spellData, MCDNDSimpleKeys.SPELLCASTER_CLASS)));
+        spell.setSpellType(deserializeSpellType(getMemoryConfiguration(spellData, MCDNDSimpleKeys.SPELL_TYPE)));
+        spell.setSpellHealing(deserializeSpellHealing(getMemoryConfiguration(spellData, MCDNDSimpleKeys.SPELL_HEALING)));
+        spell.setAttackStat(deserializeStatBonus(getMemoryConfiguration(spellData, MCDNDSimpleKeys.ATTACK_STAT)));
+        spell.setCastTime(spellData.getString(MCDNDSimpleKeys.CAST_TIME, ""));
+        spell.setTargetArea(spellData.getString(MCDNDSimpleKeys.TARGET_AREA, ""));
         return spell;
     }
 
     @Override
     protected SpellDamage deserializeSpellDamage(MemoryConfiguration spellDamageData) {
         SpellDamage spellDamage = new SpellDamage();
-        spellDamage.setCanCrit(spellDamageData.getBoolean(SpigotMCDNDSimpleKeys.CAN_CRIT, false));
-        spellDamage.setDice(deserializeDice(getMemoryConfiguration(spellDamageData, SpigotMCDNDSimpleKeys.DICE)));
-        spellDamageData.getInt(SpigotMCDNDSimpleKeys.BONUS, 0);
-        spellDamage.setDamageType(spellDamageData.getString(SpigotMCDNDSimpleKeys.DAMAGE_TYPE, ""));
+        spellDamage.setCanCrit(spellDamageData.getBoolean(MCDNDSimpleKeys.CAN_CRIT, false));
+        spellDamage.setDice(deserializeDice(getMemoryConfiguration(spellDamageData, MCDNDSimpleKeys.DICE)));
+        spellDamageData.getInt(MCDNDSimpleKeys.BONUS, 0);
+        spellDamage.setDamageType(spellDamageData.getString(MCDNDSimpleKeys.DAMAGE_TYPE, ""));
         return spellDamage;
     }
 
     @Override
     protected SpellHealing deserializeSpellHealing(MemoryConfiguration spellHealingData) {
         SpellHealing spellHealing = new SpellHealing();
-        deserializeDice(getMemoryConfiguration(spellHealingData, SpigotMCDNDSimpleKeys.HEAL_AMOUNT));
-        spellHealing.setHealAmount(deserializeDice(getMemoryConfiguration(spellHealingData, SpigotMCDNDSimpleKeys.HEAL_AMOUNT)));
-        spellHealing.setStatBonus(spellHealingData.getString(SpigotMCDNDSimpleKeys.STAT_BONUS, ""));
+        deserializeDice(getMemoryConfiguration(spellHealingData, MCDNDSimpleKeys.HEAL_AMOUNT));
+        spellHealing.setHealAmount(deserializeDice(getMemoryConfiguration(spellHealingData, MCDNDSimpleKeys.HEAL_AMOUNT)));
+        spellHealing.setStatBonus(deserializeStatBonus(getMemoryConfiguration(spellHealingData, MCDNDSimpleKeys.STAT_BONUS)));
         return spellHealing;
+    }
+
+    @Override
+    protected StatBonus deserializeStatBonus(MemoryConfiguration statBonusData) {
+        return Stream.of(StatBonus.values()).filter(statBonus -> containsKey(statBonusData, MCDNDSimpleKeys.NAME) && statBonus.getName().equals(statBonusData.getString(MCDNDSimpleKeys.NAME))).findFirst().orElse(StatBonus.NONE);
     }
 
     @Override
     protected SpellSave deserializeSpellSave(MemoryConfiguration spellSaveData) {
         SpellSave spellSave = new SpellSave();
-        spellSave.setSaveDCType(deserializeSpellcasterClass(getMemoryConfiguration(spellSaveData, SpigotMCDNDSimpleKeys.SAVE_DC_TYPE)));
+        spellSave.setSaveDCType(deserializeSpellcasterClass(getMemoryConfiguration(spellSaveData, MCDNDSimpleKeys.SAVE_DC_TYPE)));
 
-        spellSave.setOnSuccessfulSave(getStringList(spellSaveData, SpigotMCDNDSimpleKeys.SAVE_DC_TYPE));
-        spellSave.setSavingStat(spellSaveData.getString(SpigotMCDNDSimpleKeys.SAVING_STAT, ""));
+        spellSave.setOnSuccessfulSave(getStringList(spellSaveData, MCDNDSimpleKeys.SAVE_DC_TYPE));
+        spellSave.setSavingStat(spellSaveData.getString(MCDNDSimpleKeys.SAVING_STAT, ""));
         return spellSave;
     }
 
     @Override
     protected SpellType deserializeSpellType(MemoryConfiguration spellTypeData) {
-        if (containsKey(spellTypeData, SpigotMCDNDSimpleKeys.NAME)) {
-            for (SpellType spellType : SpellType.values()) {
-                if (spellType.getName().equals(spellTypeData.getString(SpigotMCDNDSimpleKeys.NAME))) {
-                    return spellType;
-                }
-            }
-        }
-
-        return SpellType.OTHER;
+        return Stream.of(SpellType.values()).filter(spellType -> containsKey(spellTypeData, MCDNDSimpleKeys.NAME) && spellType.getName().equals(spellTypeData.getString(MCDNDSimpleKeys.NAME))).findFirst().orElse(SpellType.OTHER);
     }
 
     @Override
     protected SpellbookTab deserializeSpellbookTab(MemoryConfiguration spellbookTabData, ClassLevels classLevels) {
         SpellbookTab spellbookTab = new SpellbookTab();
-        spellbookTab.setSpells(getMemoryConfigurationList(spellbookTabData, SpigotMCDNDSimpleKeys.SPELLS).stream().map(this::deserializeSpell).collect(Collectors.toList()));
-        spellbookTab.setSpellcasterClasses(getMemoryConfigurationList(spellbookTabData, SpigotMCDNDSimpleKeys.SPELLCASTER_CLASSES).stream().map(this::deserializeSpellcasterClass).collect(Collectors.toList()));
+        spellbookTab.setSpells(getMemoryConfigurationList(spellbookTabData, MCDNDSimpleKeys.SPELLS).stream().map(this::deserializeSpell).collect(Collectors.toList()));
+        spellbookTab.setSpellcasterClasses(getMemoryConfigurationList(spellbookTabData, MCDNDSimpleKeys.SPELLCASTER_CLASSES).stream().map(this::deserializeSpellcasterClass).collect(Collectors.toList()));
         return spellbookTab;
     }
 
     @Override
     protected SpellcasterClass deserializeSpellcasterClass(MemoryConfiguration spellcasterClassData) {
-        if (containsKey(spellcasterClassData, SpigotMCDNDSimpleKeys.NAME)) {
-            for (SpellcasterClass spellcasterClass : SpellcasterClass.values()) {
-                if (spellcasterClassData.getString(SpigotMCDNDSimpleKeys.NAME).equals(spellcasterClass.getName())) {
-                    return spellcasterClass;
-                }
-            }
-        }
-
-        return SpellcasterClass.OTHER;
+        return Stream.of(SpellcasterClass.values()).filter(spellcasterClass -> containsKey(spellcasterClassData, MCDNDSimpleKeys.NAME) && spellcasterClass.getName().equals(spellcasterClassData.getString(MCDNDSimpleKeys.NAME))).findFirst().orElse(SpellcasterClass.OTHER);
     }
 
     @Override
     protected SpellcastingBonus deserializeSpellcastingBonus(MemoryConfiguration spellcastingBonusData) {
         SpellcastingBonus spellcastingBonus = new SpellcastingBonus();
-        spellcastingBonus.setAttack(deserializeDice(getMemoryConfiguration(spellcastingBonusData, SpigotMCDNDSimpleKeys.ATTACK)));
-        spellcastingBonus.setDamage(deserializeDice(getMemoryConfiguration(spellcastingBonusData, SpigotMCDNDSimpleKeys.DAMAGE)));
-        spellcastingBonus.setSaveDC(deserializeDice(getMemoryConfiguration(spellcastingBonusData, SpigotMCDNDSimpleKeys.SAVE_DC)));
+        spellcastingBonus.setAttack(deserializeDice(getMemoryConfiguration(spellcastingBonusData, MCDNDSimpleKeys.ATTACK)));
+        spellcastingBonus.setDamage(deserializeDice(getMemoryConfiguration(spellcastingBonusData, MCDNDSimpleKeys.DAMAGE)));
+        spellcastingBonus.setSaveDC(deserializeDice(getMemoryConfiguration(spellcastingBonusData, MCDNDSimpleKeys.SAVE_DC)));
         return spellcastingBonus;
     }
 
     @Override
     protected UnarmoredBonus deserializeUnarmoredBonus(MemoryConfiguration unarmoredBonusData) {
-        if (containsKey(unarmoredBonusData, SpigotMCDNDSimpleKeys.NAME)) {
-            for (UnarmoredBonus unarmoredBonus : UnarmoredBonus.values()) {
-                if (unarmoredBonusData.getString(SpigotMCDNDSimpleKeys.NAME).equals(unarmoredBonus.getName())) {
-                    return unarmoredBonus;
-                }
-            }
-        }
-
-        return UnarmoredBonus.NONE;
+        return Stream.of(UnarmoredBonus.values()).filter(unarmoredBonus -> containsKey(unarmoredBonusData, MCDNDSimpleKeys.NAME) && unarmoredBonus.getName().equals(unarmoredBonusData.getString(MCDNDSimpleKeys.NAME))).findFirst().orElse(UnarmoredBonus.NONE);
     }
 
     @Override
     protected Wealth deserializeWealth(MemoryConfiguration wealthData) {
         Wealth wealth = new Wealth();
-        wealth.setCopper(deserializeCoin(getMemoryConfiguration(wealthData, SpigotMCDNDSimpleKeys.COPPER), new Coin("Copper", "CP")));
-        wealth.setElectrum(deserializeCoin(getMemoryConfiguration(wealthData, SpigotMCDNDSimpleKeys.ELECTRUM), new Coin("Electrum", "EP")));
-        wealth.setGold(deserializeCoin(getMemoryConfiguration(wealthData, SpigotMCDNDSimpleKeys.GOLD), new Coin("Gold", "GP")));
-        wealth.setPlatinum(deserializeCoin(getMemoryConfiguration(wealthData, SpigotMCDNDSimpleKeys.PLATINUM), new Coin("Platinum", "PP")));
-        wealth.setPlatinum(deserializeCoin(getMemoryConfiguration(wealthData, SpigotMCDNDSimpleKeys.SILVER), new Coin("Silver", "SP")));
+        wealth.setCopper(deserializeCoin(getMemoryConfiguration(wealthData, MCDNDSimpleKeys.COPPER), new Coin("Copper", "CP")));
+        wealth.setElectrum(deserializeCoin(getMemoryConfiguration(wealthData, MCDNDSimpleKeys.ELECTRUM), new Coin("Electrum", "EP")));
+        wealth.setGold(deserializeCoin(getMemoryConfiguration(wealthData, MCDNDSimpleKeys.GOLD), new Coin("Gold", "GP")));
+        wealth.setPlatinum(deserializeCoin(getMemoryConfiguration(wealthData, MCDNDSimpleKeys.PLATINUM), new Coin("Platinum", "PP")));
+        wealth.setPlatinum(deserializeCoin(getMemoryConfiguration(wealthData, MCDNDSimpleKeys.SILVER), new Coin("Silver", "SP")));
         return wealth;
     }
 
     @Override
     protected WeaponAttackStat deserializeWeaponAttackStat(MemoryConfiguration weaponAttackStatData) {
-        if (containsKey(weaponAttackStatData, SpigotMCDNDSimpleKeys.ATTACK_STAT)) {
-            for (WeaponAttackStat weaponAttackStat : WeaponAttackStat.values()) {
-                if (weaponAttackStatData.getString(SpigotMCDNDSimpleKeys.NAME).equals(weaponAttackStat.getName())) {
-                    return weaponAttackStat;
-                }
-            }
-        }
-
-        return WeaponAttackStat.STR;
+        return Stream.of(WeaponAttackStat.values()).filter(weaponAttackStatus -> containsKey(weaponAttackStatData, MCDNDSimpleKeys.NAME) && weaponAttackStatus.getName().equals(weaponAttackStatData.getString(MCDNDSimpleKeys.NAME))).findFirst().orElse(WeaponAttackStat.STR);
     }
 
     @Override
     protected WeaponsTab deserializeWeaponsTab(MemoryConfiguration weaponsTabData) {
         WeaponsTab weaponsTab = new WeaponsTab();
-        weaponsTab.setMeleeWeapons(getMemoryConfigurationList(weaponsTabData, SpigotMCDNDSimpleKeys.MELEE_WEAPONS).stream().map(this::deserializeMeleeWeapon).collect(Collectors.toList()));
-        weaponsTab.setRangedWeapons(getMemoryConfigurationList(weaponsTabData, SpigotMCDNDSimpleKeys.RANGED_WEAPONS).stream().map(this::deserializeRangedWeapon).collect(Collectors.toList()));
+        weaponsTab.setMeleeWeapons(getMemoryConfigurationList(weaponsTabData, MCDNDSimpleKeys.MELEE_WEAPONS).stream().map(this::deserializeMeleeWeapon).collect(Collectors.toList()));
+        weaponsTab.setRangedWeapons(getMemoryConfigurationList(weaponsTabData, MCDNDSimpleKeys.RANGED_WEAPONS).stream().map(this::deserializeRangedWeapon).collect(Collectors.toList()));
         return weaponsTab;
     }
 
     @Override
     protected Weight deserializeWeight(MemoryConfiguration weightData, CoreStats coreStats, List<MCDNDItem> inventory, Wealth wealth) {
         Weight weight = new Weight();
-        weight.setOther(weightData.getDouble(SpigotMCDNDSimpleKeys.OTHER, 0));
+        weight.setOther(weightData.getDouble(MCDNDSimpleKeys.OTHER, 0));
         weight.setInventoryWeight(inventory);
         weight.setCoinWeight(wealth);
         weight.setCarryingMax(coreStats);
         return weight;
     }
 
-    private MemoryConfiguration getMemoryConfiguration(MemoryConfiguration memoryConfiguration, String key)
-    {
+    private MemoryConfiguration getMemoryConfiguration(MemoryConfiguration memoryConfiguration, String key) {
         return containsKey(memoryConfiguration, key) ? (MemoryConfiguration) memoryConfiguration.getConfigurationSection(key) : new MemoryConfiguration();
     }
 
-    private List<MemoryConfiguration> getMemoryConfigurationList(MemoryConfiguration memoryConfiguration, String key)
-    {
+    private List<MemoryConfiguration> getMemoryConfigurationList(MemoryConfiguration memoryConfiguration, String key) {
         if (containsKey(memoryConfiguration, key)) {
             return memoryConfiguration.getMapList(key).stream().map(map -> {
                 MemoryConfiguration mc = new MemoryConfiguration();
@@ -587,8 +536,7 @@ public class SpigotMCDNDDeserializer extends MCDNDDeserializer<MemoryConfigurati
         return new ArrayList<>();
     }
 
-    private List<String> getStringList(MemoryConfiguration memoryConfiguration, String key)
-    {
+    private List<String> getStringList(MemoryConfiguration memoryConfiguration, String key) {
         return containsKey(memoryConfiguration, key) ? memoryConfiguration.getStringList(key) : new ArrayList<>();
     }
 }

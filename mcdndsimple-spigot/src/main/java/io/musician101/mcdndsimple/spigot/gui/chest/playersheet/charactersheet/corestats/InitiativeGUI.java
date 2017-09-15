@@ -15,6 +15,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class InitiativeGUI extends MCDNDSimpleChestGUI {
 
@@ -31,7 +32,7 @@ public class InitiativeGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
-        set(0, createItem(Material.GLOWSTONE_DUST, MenuText.BONUS), player -> {
+        set(0, ClickType.LEFT, createItem(Material.GLOWSTONE_DUST, MenuText.BONUS), player -> {
             new IntegerInputAnvilGUI(player, (p, i) -> {
                 initiative.setBonus(i);
                 player.closeInventory();
@@ -39,7 +40,7 @@ public class InitiativeGUI extends MCDNDSimpleChestGUI {
             });
         });
         set(1, createItem(Material.GLOWSTONE, MenuText.totalInitiative(initiative, dex)));
-        set(2, createItem(Material.REDSTONE_LAMP_OFF, MenuText.ROLL_INITIATIVE), player -> {
+        set(2, ClickType.LEFT, createItem(Material.REDSTONE_LAMP_OFF, MenuText.ROLL_INITIATIVE), player -> {
             player.closeInventory();
             int baseResult = new Dice(20).roll().get(0).getValue();
             String resultMsg = Integer.toString(baseResult + initiative.getInitiative(dex));
@@ -52,6 +53,6 @@ public class InitiativeGUI extends MCDNDSimpleChestGUI {
 
             Stream.of(Messages.initiative(bioAndInfo, player.getName(), resultMsg)).forEach(Bukkit::broadcastMessage);
         });
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

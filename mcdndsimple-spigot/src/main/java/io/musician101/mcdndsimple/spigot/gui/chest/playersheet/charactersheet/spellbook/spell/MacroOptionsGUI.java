@@ -7,6 +7,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 public class MacroOptionsGUI extends MCDNDSimpleChestGUI {
@@ -26,7 +27,7 @@ public class MacroOptionsGUI extends MCDNDSimpleChestGUI {
             infoBlock = addGlow(infoBlock);
         }
 
-        set(0, infoBlock, player -> {
+        set(0, ClickType.LEFT, infoBlock, player -> {
             macroOptions.setInfoBlockEnabled(!infoBlockEnabled);
             open();
         });
@@ -37,7 +38,7 @@ public class MacroOptionsGUI extends MCDNDSimpleChestGUI {
             description = addGlow(infoBlock);
         }
 
-        set(1, description, player -> {
+        set(1, ClickType.LEFT, description, player -> {
             macroOptions.setInfoBlockEnabled(!descriptionEnabled);
             open();
         });
@@ -48,7 +49,7 @@ public class MacroOptionsGUI extends MCDNDSimpleChestGUI {
             atHigherLevels = addGlow(infoBlock);
         }
 
-        set(2, atHigherLevels, player -> {
+        set(2, ClickType.LEFT, atHigherLevels, player -> {
             macroOptions.setInfoBlockEnabled(!atHigherLevelsEnabled);
             open();
         });
@@ -59,7 +60,7 @@ public class MacroOptionsGUI extends MCDNDSimpleChestGUI {
             attackRoll = addGlow(infoBlock);
         }
 
-        set(3, attackRoll, player -> {
+        set(3, ClickType.LEFT, attackRoll, player -> {
             macroOptions.setInfoBlockEnabled(!attackRollEnabled);
             open();
         });
@@ -70,7 +71,7 @@ public class MacroOptionsGUI extends MCDNDSimpleChestGUI {
             secondAttackRoll = addGlow(infoBlock);
         }
 
-        set(4, secondAttackRoll, player -> {
+        set(4, ClickType.LEFT, secondAttackRoll, player -> {
             macroOptions.setInfoBlockEnabled(!secondAttackRollEnabled);
             open();
         });
@@ -81,7 +82,7 @@ public class MacroOptionsGUI extends MCDNDSimpleChestGUI {
             savingThrow = addGlow(infoBlock);
         }
 
-        set(5, savingThrow, player -> {
+        set(5, ClickType.LEFT, savingThrow, player -> {
             macroOptions.setInfoBlockEnabled(!savingThrowEnabled);
             open();
         });
@@ -92,7 +93,7 @@ public class MacroOptionsGUI extends MCDNDSimpleChestGUI {
             healing = addGlow(infoBlock);
         }
 
-        set(6, healing, player -> {
+        set(6, ClickType.LEFT, healing, player -> {
             macroOptions.setInfoBlockEnabled(!healingEnabled);
             open();
         });
@@ -103,7 +104,7 @@ public class MacroOptionsGUI extends MCDNDSimpleChestGUI {
             damage = addGlow(infoBlock);
         }
 
-        set(7, damage, player -> {
+        set(7, ClickType.LEFT, damage, player -> {
             macroOptions.setInfoBlockEnabled(!damageEnabled);
             open();
         });
@@ -114,11 +115,11 @@ public class MacroOptionsGUI extends MCDNDSimpleChestGUI {
             effects = addGlow(infoBlock);
         }
 
-        set(8, effects, player -> {
+        set(8, ClickType.LEFT, effects, player -> {
             macroOptions.setInfoBlockEnabled(!effectsEnabled);
             open();
         });
 
-        setBackButton(13, Material.BARRIER);
+        setBackButton(13, ClickType.LEFT, Material.BARRIER);
     }
 }

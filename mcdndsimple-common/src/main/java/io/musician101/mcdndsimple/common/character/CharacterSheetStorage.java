@@ -1,20 +1,21 @@
 package io.musician101.mcdndsimple.common.character;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import io.musician101.mcdndsimple.common.serialization.MCDNDDeserializer;
 import io.musician101.mcdndsimple.common.serialization.MCDNDSerializer;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
-public abstract class CharacterSheetStorage<M extends MCDNDSerializer<S>, N extends MCDNDDeserializer<S>, S> {
+public abstract class CharacterSheetStorage<S extends MCDNDSerializer<C>, D extends MCDNDDeserializer<C>, C> {
 
-    protected final Map<UUID, PlayerSheet> map = new HashMap<>();
+    protected final Multimap<PlayerSheet, UUID> playerSheets = ArrayListMultimap.create();
     protected final File storageDir;
-    protected N deserializer;
-    protected M serializer;
+    protected D deserializer;
+    protected S serializer;
 
-    protected CharacterSheetStorage(File storageDir, M serializer, N deserializer) {
+    protected CharacterSheetStorage(File storageDir, S serializer, D deserializer) {
         this.storageDir = storageDir;
         this.serializer = serializer;
         this.deserializer = deserializer;
@@ -22,32 +23,36 @@ public abstract class CharacterSheetStorage<M extends MCDNDSerializer<S>, N exte
     }
 
     public void createNewCharacterSheet(UUID uuid) {
-        if (!map.containsKey(uuid)) {
-            map.put(uuid, new PlayerSheet());
+        if (!playerSheets.containsKey(uuid)) {
+            playerSheets.put(new PlayerSheet(), uuid);
         }
     }
 
-    protected PlayerSheet deserialize(S data) {
+    protected PlayerSheet deserialize(C data) {
         return deserializer.deserialize(data);
     }
 
-    public PlayerSheet getCharacterSheet(UUID uuid) {
-        return map.containsKey(uuid) ? map.get(uuid) : map.put(uuid, new PlayerSheet());
+    public Optional<PlayerSheet> getCharacterSheet(UUID uuid, String character) {
+        return playerSheets.keys().stream().filter(playerSheet -> character.equalsIgnoreCase(playerSheet.getName()) && playerSheets.get(playerSheet).contains(uuid)).findFirst();
     }
 
-    public Map<UUID, PlayerSheet> getCharacterSheets() {
-        return map;
+    public Multimap<PlayerSheet, UUID> getCharacterSheets() {
+        return playerSheets;
     }
 
     public abstract void load();
 
-    public void removeCharacterSheet(UUID uuid) {
-        map.remove(uuid);
+    public void removePlayerSheet(PlayerSheet playerSheet) {
+        playerSheets.removeAll(playerSheet);
+    }
+
+    public void removeFromPlayerSheet(UUID uuid, PlayerSheet playerSheet) {
+        playerSheets.remove(playerSheet, uuid);
     }
 
     public abstract void save();
 
-    protected S serialize(PlayerSheet playerSheet) {
+    protected C serialize(PlayerSheet playerSheet) {
         return serializer.serialize(playerSheet);
     }
 }

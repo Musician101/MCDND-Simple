@@ -13,6 +13,7 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class ClassResourceGUI extends MCDNDSimpleChestGUI {
 
@@ -27,23 +28,20 @@ public class ClassResourceGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
-        set(0, createItem(Material.NAME_TAG, classResource.getName()), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(0, ClickType.LEFT, createItem(Material.NAME_TAG, classResource.getName()), player -> new StringInputAnvilGUI(player, (p, s) -> {
             classResource.setName(s);
-            player.closeInventory();
             open();
         }));
-        set(1, createItem(Material.BED, MenuText.recharge(classResource.getRecharge())), player -> new RechargeGUI<>(player, classResource, () -> new ClassResourceGUI(player, classResource, classResources, prevGUI), this));
-        set(2, createItem(Material.REDSTONE_TORCH_OFF, MenuText.current(classResource.getUsesLeft())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(1, ClickType.LEFT, createItem(Material.BED, MenuText.recharge(classResource.getRecharge())), player -> new RechargeGUI<>(player, classResource, () -> new ClassResourceGUI(player, classResource, classResources, prevGUI), this));
+        set(2, ClickType.LEFT, createItem(Material.REDSTONE_TORCH_OFF, MenuText.current(classResource.getUsesLeft())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             classResource.setCurrentCharges(i);
-            player.closeInventory();
             open();
         }));
-        set(2, createItem(Material.REDSTONE_TORCH_ON, MenuText.maxUses(classResource.getMaxUses())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(3, ClickType.LEFT, createItem(Material.REDSTONE_TORCH_ON, MenuText.maxUses(classResource.getMaxUses())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             classResource.setMaxCharges(i);
-            player.closeInventory();
             open();
         }));
-        set(3, createItem(Material.ENDER_CHEST, MenuText.DELETE), player -> {
+        set(4, ClickType.LEFT, createItem(Material.ENDER_CHEST, MenuText.DELETE), player -> {
             classResources.remove(classResource);
             if (prevGUI != null) {
                 prevGUI.open();
@@ -53,6 +51,6 @@ public class ClassResourceGUI extends MCDNDSimpleChestGUI {
                 player.sendMessage(ChatColor.GREEN + Messages.CLASS_RESOURCE_DELETED);
             }
         });
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

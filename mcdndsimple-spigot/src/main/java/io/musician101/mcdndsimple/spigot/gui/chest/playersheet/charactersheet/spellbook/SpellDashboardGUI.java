@@ -12,6 +12,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 public class SpellDashboardGUI extends MCDNDSimpleChestGUI {
@@ -56,21 +57,21 @@ public class SpellDashboardGUI extends MCDNDSimpleChestGUI {
         set(2, cleric());
         set(3, druid());
         set(4, eldritchKnight());
-        set(7, createItem(Material.LINGERING_POTION, MenuText.SORCERY_POINTS, MenuText.sorceryPoints(spellbookTab.getSorceryPointsUsed(), spellbookTab.getSorceryPointsMax(classLevels))), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(7, ClickType.LEFT, createItem(Material.LINGERING_POTION, MenuText.SORCERY_POINTS, MenuText.sorceryPoints(spellbookTab.getSorceryPointsUsed(), spellbookTab.getSorceryPointsMax(classLevels))), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             spellbookTab.setSorceryPointsUsed(i);
             delayedOpen();
         }));
-        set(8, createItem(Material.ENCHANTMENT_TABLE, MenuText.SPELL_SLOTS), player -> new SpellSlotsGUI(player, spellbookTab.getSpellSlots(), this));
+        set(8, ClickType.LEFT, createItem(Material.ENCHANTMENT_TABLE, MenuText.SPELL_SLOTS), player -> new SpellSlotsGUI(player, spellbookTab.getSpellSlots(), this));
         set(9, paladin());
         set(10, ranger());
         set(11, sorcerer());
         set(12, warlock());
         set(13, wizard());
-        set(17, createItem(Material.ENCHANTMENT_TABLE, MenuText.SPELL_SLOTS, MenuText.spellSlots(spellbookTab.getWarlockSpellSlotsUsed(), getWarlockSlots(), getWarlockSpellAmount())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+        set(16, ClickType.LEFT, createItem(Material.ENCHANTMENT_TABLE, MenuText.SPELL_SLOTS, MenuText.spellSlots(spellbookTab.getWarlockSpellSlotsUsed(), getWarlockSlots(), getWarlockSpellAmount())), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             spellbookTab.setWarlockSpellSlotsUsed(i);
             delayedOpen();
         }));
-        setBackButton(26, Material.BARRIER);
+        setBackButton(26, ClickType.LEFT, Material.BARRIER);
     }
 
     private ItemStack cleric() {

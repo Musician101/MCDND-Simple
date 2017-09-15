@@ -8,6 +8,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.playersheet.charactersheet.Ch
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class PlayerSheetGUI extends MCDNDSimpleChestGUI {
 
@@ -20,8 +21,8 @@ public class PlayerSheetGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
-        set(0, createItem(Material.BOOK, MenuText.BIO_AND_INFO), player -> new BioAndInfoGUI(player, playerSheet.getBioAndInfo(), this));
-        set(1, createItem(Material.DIAMOND_SWORD, MenuText.CHARACTER_SHEET), player -> new CharacterSheetGUI(player, playerSheet.getBioAndInfo(), playerSheet.getCharacterSheet(), this));
-        setBackButton(8, Material.BARRIER);
+        set(0, ClickType.LEFT, createItem(Material.BOOK, MenuText.BIO_AND_INFO), player -> new BioAndInfoGUI(player, playerSheet.getBioAndInfo(), this));
+        set(1, ClickType.LEFT, createItem(Material.DIAMOND_SWORD, MenuText.CHARACTER_SHEET), player -> new CharacterSheetGUI(player, playerSheet.getBioAndInfo(), playerSheet.getCharacterSheet(), this));
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

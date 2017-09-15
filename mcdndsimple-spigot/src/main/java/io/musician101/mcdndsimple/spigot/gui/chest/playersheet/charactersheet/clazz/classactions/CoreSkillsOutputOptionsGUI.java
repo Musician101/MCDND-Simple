@@ -7,6 +7,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionType;
 
@@ -21,14 +22,14 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
+        //TODO need to go through and use the addGlowIfConditionsMet
         ItemStack acrobatics = createItem(Material.LEATHER_BOOTS, MenuText.ACROBATICS);
         if (coreSkillsOutputOptions.isAcrobaticsEnabled()) {
             acrobatics = addGlow(acrobatics);
         }
 
-        set(0, acrobatics, player -> {
+        set(0, ClickType.LEFT, acrobatics, player -> {
             coreSkillsOutputOptions.setAcrobaticsEnabled(!coreSkillsOutputOptions.isAcrobaticsEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -37,9 +38,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             animalHandling = addGlow(animalHandling);
         }
 
-        set(1, animalHandling, player -> {
+        set(1, ClickType.LEFT, animalHandling, player -> {
             coreSkillsOutputOptions.setAnimalHandlingEnabled(!coreSkillsOutputOptions.isAnimalHandlingEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -48,9 +48,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             arcana = addGlow(arcana);
         }
 
-        set(2, arcana, player -> {
+        set(2, ClickType.LEFT, arcana, player -> {
             coreSkillsOutputOptions.setArcanaEnabled(!coreSkillsOutputOptions.isArcanaEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -59,9 +58,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             athletics = addGlow(athletics);
         }
 
-        set(3, athletics, player -> {
+        set(3, ClickType.LEFT, athletics, player -> {
             coreSkillsOutputOptions.setAthleticsEnabled(!coreSkillsOutputOptions.isAthleticsEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -70,9 +68,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             deception = addGlow(deception);
         }
 
-        set(4, deception, player -> {
+        set(4, ClickType.LEFT, deception, player -> {
             coreSkillsOutputOptions.setDeceptionEnabled(!coreSkillsOutputOptions.isDeceptionEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -81,9 +78,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             history = addGlow(history);
         }
 
-        set(5, history, player -> {
+        set(5, ClickType.LEFT, history, player -> {
             coreSkillsOutputOptions.setHistoryEnabled(!coreSkillsOutputOptions.isHistoryEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -92,9 +88,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             insight = addGlow(insight);
         }
 
-        set(6, insight, player -> {
+        set(6, ClickType.LEFT, insight, player -> {
             coreSkillsOutputOptions.setInsightEnabled(!coreSkillsOutputOptions.isInsightEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -103,9 +98,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             intimidation = addGlow(intimidation);
         }
 
-        set(7, intimidation, player -> {
+        set(7, ClickType.LEFT, intimidation, player -> {
             coreSkillsOutputOptions.setIntimidationEnabled(!coreSkillsOutputOptions.isIntimidationEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -114,9 +108,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             investigation = addGlow(investigation);
         }
 
-        set(8, investigation, player -> {
+        set(8, ClickType.LEFT, investigation, player -> {
             coreSkillsOutputOptions.setInvestigationEnabled(!coreSkillsOutputOptions.isInvestigationEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -125,9 +118,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             medicine = addGlow(medicine);
         }
 
-        set(9, medicine, player -> {
+        set(9, ClickType.LEFT, medicine, player -> {
             coreSkillsOutputOptions.setMedicineEnabled(!coreSkillsOutputOptions.isMedicineEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -136,9 +128,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             nature = addGlow(nature);
         }
 
-        set(10, nature, player -> {
+        set(10, ClickType.LEFT, nature, player -> {
             coreSkillsOutputOptions.setNatureEnabled(!coreSkillsOutputOptions.isNatureEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -147,9 +138,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             perception = addGlow(perception);
         }
 
-        set(11, perception, player -> {
+        set(11, ClickType.LEFT, perception, player -> {
             coreSkillsOutputOptions.setPerceptionEnabled(!coreSkillsOutputOptions.isPerceptionEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -158,9 +148,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             performance = addGlow(performance);
         }
 
-        set(12, performance, player -> {
+        set(12, ClickType.LEFT, performance, player -> {
             coreSkillsOutputOptions.setPerformanceEnabled(!coreSkillsOutputOptions.isPerformanceEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -169,9 +158,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             persuasion = addGlow(persuasion);
         }
 
-        set(13, persuasion, player -> {
+        set(13, ClickType.LEFT, persuasion, player -> {
             coreSkillsOutputOptions.setPersuasionEnabled(!coreSkillsOutputOptions.isPersuasionEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -180,9 +168,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             religion = addGlow(religion);
         }
 
-        set(14, religion, player -> {
+        set(14, ClickType.LEFT, religion, player -> {
             coreSkillsOutputOptions.setReligionEnabled(!coreSkillsOutputOptions.isReligionEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -191,9 +178,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             sleightOfHand = addGlow(sleightOfHand);
         }
 
-        set(15, sleightOfHand, player -> {
+        set(15, ClickType.LEFT, sleightOfHand, player -> {
             coreSkillsOutputOptions.setSleightOfHandEnabled(!coreSkillsOutputOptions.isSleightOfHandEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -202,9 +188,8 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             stealth = addGlow(stealth);
         }
 
-        set(16, stealth, player -> {
+        set(16, ClickType.LEFT, stealth, player -> {
             coreSkillsOutputOptions.setStealthEnabled(!coreSkillsOutputOptions.isStealthEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -213,12 +198,11 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
             survival = addGlow(survival);
         }
 
-        set(17, survival, player -> {
+        set(17, ClickType.LEFT, survival, player -> {
             coreSkillsOutputOptions.setSurvivalEnabled(!coreSkillsOutputOptions.isSurvivalEnabled());
-            player.closeInventory();
             open();
         });
 
-        setBackButton(22, Material.BARRIER);
+        setBackButton(22, ClickType.LEFT, Material.BARRIER);
     }
 }

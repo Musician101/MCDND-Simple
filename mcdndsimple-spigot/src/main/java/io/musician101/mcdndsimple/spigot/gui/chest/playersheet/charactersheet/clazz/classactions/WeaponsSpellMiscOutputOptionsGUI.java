@@ -7,6 +7,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionType;
 
@@ -26,9 +27,8 @@ public class WeaponsSpellMiscOutputOptionsGUI extends MCDNDSimpleChestGUI {
             initiative = addGlow(initiative);
         }
 
-        set(0, initiative, player -> {
+        set(0, ClickType.LEFT, initiative, player -> {
             weaponsSpellMiscOutputOptions.setInitiativeEnabled(!weaponsSpellMiscOutputOptions.isInitiativeEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -37,9 +37,8 @@ public class WeaponsSpellMiscOutputOptionsGUI extends MCDNDSimpleChestGUI {
             hitDice = addGlow(hitDice);
         }
 
-        set(1, hitDice, player -> {
+        set(1, ClickType.LEFT, hitDice, player -> {
             weaponsSpellMiscOutputOptions.setHitDiceEnabled(!weaponsSpellMiscOutputOptions.isHitDiceEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -48,9 +47,8 @@ public class WeaponsSpellMiscOutputOptionsGUI extends MCDNDSimpleChestGUI {
             meleeWeapons = addGlow(meleeWeapons);
         }
 
-        set(2, meleeWeapons, player -> {
+        set(2, ClickType.LEFT, meleeWeapons, player -> {
             weaponsSpellMiscOutputOptions.setMeleeWeaponsEnabled(!weaponsSpellMiscOutputOptions.isMeleeWeaponsEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -59,9 +57,8 @@ public class WeaponsSpellMiscOutputOptionsGUI extends MCDNDSimpleChestGUI {
             rangedWeapons = addGlow(rangedWeapons);
         }
 
-        set(3, rangedWeapons, player -> {
+        set(3, ClickType.LEFT, rangedWeapons, player -> {
             weaponsSpellMiscOutputOptions.setRangedWeaponsEnabled(!weaponsSpellMiscOutputOptions.isRangedWeaponsEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -70,9 +67,8 @@ public class WeaponsSpellMiscOutputOptionsGUI extends MCDNDSimpleChestGUI {
             spellInfo = addGlow(spellInfo);
         }
 
-        set(4, spellInfo, player -> {
+        set(4, ClickType.LEFT, spellInfo, player -> {
             weaponsSpellMiscOutputOptions.setSpellInfoEnabled(!weaponsSpellMiscOutputOptions.isSpellInfoEnabled());
-            player.closeInventory();
             open();
         });
 
@@ -81,12 +77,11 @@ public class WeaponsSpellMiscOutputOptionsGUI extends MCDNDSimpleChestGUI {
             spellCast = addGlow(spellCast);
         }
 
-        set(5, spellCast, player -> {
+        set(5, ClickType.LEFT, spellCast, player -> {
             weaponsSpellMiscOutputOptions.setSpellCastEnabled(!weaponsSpellMiscOutputOptions.isSpellCastEnabled());
-            player.closeInventory();
             open();
         });
 
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

@@ -9,6 +9,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class WeightGUI extends MCDNDSimpleChestGUI {
 
@@ -25,9 +26,8 @@ public class WeightGUI extends MCDNDSimpleChestGUI {
     protected void build() {
         set(0, createItem(Material.CHEST, MenuText.inventoryWeight(weight.getInventory())));
         set(1, createItem(Material.EMERALD, MenuText.coinWeight(weight.getCoin())));
-        set(2, createItem(Material.STICK, MenuText.otherWeight(weight.getOther())), player -> new DoubleInputAnvilGUI(player, (p, d) -> {
+        set(2, ClickType.LEFT, createItem(Material.STICK, MenuText.otherWeight(weight.getOther())), player -> new DoubleInputAnvilGUI(player, (p, d) -> {
             weight.setOther(d);
-            player.closeInventory();
             open();
         }));
         set(3, createItem(Material.STONE, MenuText.totalWeight(weight)));
@@ -35,6 +35,6 @@ public class WeightGUI extends MCDNDSimpleChestGUI {
         set(5, createItem(Material.PISTON_BASE, MenuText.pushDragLift(weight.getPushDragLift())));
         set(6, createItem(Material.STONE, MenuText.encumbered(weight.getEncumbered(coreStats))));
         set(7, createItem(Material.OBSIDIAN, MenuText.heavilyEncumbered(weight.getHeavilyEncumbered(coreStats))));
-        setBackButton(8, Material.BARRIER);
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

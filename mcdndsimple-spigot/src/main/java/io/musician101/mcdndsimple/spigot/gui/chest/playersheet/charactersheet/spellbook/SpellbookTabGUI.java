@@ -11,6 +11,7 @@ import io.musician101.mcdndsimple.spigot.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSpigotChestGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class SpellbookTabGUI extends MCDNDSimpleChestGUI {
 
@@ -31,8 +32,8 @@ public class SpellbookTabGUI extends MCDNDSimpleChestGUI {
 
     @Override
     protected void build() {
-        set(0, createItem(Material.BOOK_AND_QUILL, MenuText.SPELL_DASHBOARD), player -> new SpellDashboardGUI(player, classLevels, coreStats, experience, spellbookTab, this));
-        set(1, createItem(Material.ENCHANTED_BOOK, MenuText.SPELLS), player -> new SpellBookGUI(player, spellbookTab.getSpells(), bioAndInfo, classLevels, coreStats, experience, this));
-        setBackButton(8, Material.BARRIER);
+        set(0, ClickType.LEFT, createItem(Material.BOOK_AND_QUILL, MenuText.SPELL_DASHBOARD), player -> new SpellDashboardGUI(player, classLevels, coreStats, experience, spellbookTab, this));
+        set(1, ClickType.LEFT, createItem(Material.ENCHANTED_BOOK, MenuText.SPELLS), player -> new SpellBookGUI(player, spellbookTab.getSpells(), bioAndInfo, classLevels, coreStats, experience, this));
+        setBackButton(8, ClickType.LEFT, Material.BARRIER);
     }
 }

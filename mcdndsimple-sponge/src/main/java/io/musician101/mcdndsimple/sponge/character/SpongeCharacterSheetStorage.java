@@ -1,23 +1,20 @@
 package io.musician101.mcdndsimple.sponge.character;
 
 import io.musician101.mcdndsimple.common.character.CharacterSheetStorage;
-import io.musician101.mcdndsimple.common.character.PlayerSheet;
+import io.musician101.mcdndsimple.common.serialization.MCDNDSimpleKeys;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.serialization.SpongeMCDNDDeserializer;
 import io.musician101.mcdndsimple.sponge.serialization.SpongeMCDNDSerializer;
 import java.io.File;
 import java.io.IOException;
-import java.util.Map.Entry;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import ninja.leaping.configurate.ConfigurationNode;
-import ninja.leaping.configurate.commented.CommentedConfigurationNode;
+import ninja.leaping.configurate.SimpleConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
-import ninja.leaping.configurate.loader.ConfigurationLoader;
 import org.slf4j.Logger;
-import org.spongepowered.api.data.DataContainer;
-import org.spongepowered.api.data.persistence.DataTranslators;
 
-public class SpongeCharacterSheetStorage extends CharacterSheetStorage<SpongeMCDNDSerializer, SpongeMCDNDDeserializer, DataContainer> {
+public class SpongeCharacterSheetStorage extends CharacterSheetStorage<SpongeMCDNDSerializer, SpongeMCDNDDeserializer, ConfigurationNode> {
 
     public SpongeCharacterSheetStorage(File storageDir) {
         super(storageDir, new SpongeMCDNDSerializer(), new SpongeMCDNDDeserializer());
@@ -25,28 +22,25 @@ public class SpongeCharacterSheetStorage extends CharacterSheetStorage<SpongeMCD
 
     @Override
     public void load() {
-        //noinspection ResultOfMethodCallIgnored
         storageDir.mkdirs();
         File[] files = storageDir.listFiles();
-        Logger logger = SpongeMCDNDSimple.getPluginContainer().getLogger();
+        Logger logger = SpongeMCDNDSimple.instance().getLogger();
         if (files == null) {
             logger.warn("An error occurred while loading player character data.");
             return;
         }
 
         for (File file : files) {
-            if (file.isDirectory() || !file.getName().endsWith(".cfg")) {
+            if (file.isDirectory() || !file.getName().endsWith(".conf")) {
                 continue;
             }
 
             try {
-                ConfigurationLoader<CommentedConfigurationNode> loader = HoconConfigurationLoader.builder().setFile(file).build();
+                HoconConfigurationLoader loader = HoconConfigurationLoader.builder().setFile(file).build();
                 ConfigurationNode cn = loader.load();
-                UUID uuid = UUID.fromString(file.getName().replace(".cfg", ""));
-                map.put(uuid, deserialize(DataTranslators.CONFIGURATION_NODE.translate(cn)));
+                playerSheets.putAll(deserialize(cn), cn.getList(object -> UUID.fromString(object.toString())));
             }
-            catch (IOException e)
-            {
+            catch (IOException e) {
                 logger.warn("An error occurred while loading " + file.getName());
             }
         }
@@ -54,17 +48,23 @@ public class SpongeCharacterSheetStorage extends CharacterSheetStorage<SpongeMCD
 
     @Override
     public void save() {
-        for (Entry<UUID, PlayerSheet> entry : map.entrySet()) {
-            File file = new File(storageDir, entry.getKey().toString() + ".cfg");
+        playerSheets.keys().forEach(playerSheet -> {
+            File file = new File(storageDir, playerSheet.getName() + ".conf");
             try {
-                ConfigurationNode cn = DataTranslators.CONFIGURATION_NODE.translate(serialize(entry.getValue()));
-                ConfigurationLoader<CommentedConfigurationNode> loader = HoconConfigurationLoader.builder().setFile(file).build();
+                if (!file.exists()) {
+                    file.getParentFile().mkdirs();
+                    file.createNewFile();
+                }
+
+                ConfigurationNode cn = SimpleConfigurationNode.root();
+                cn.getNode(MCDNDSimpleKeys.PLAYER_SHEET).setValue(cn);
+                cn.getNode(MCDNDSimpleKeys.CONTROLLERS).setValue(playerSheets.get(playerSheet).stream().map(UUID::toString).collect(Collectors.toList()));
+                HoconConfigurationLoader loader = HoconConfigurationLoader.builder().setFile(file).build();
                 loader.save(cn);
             }
-            catch (IOException e)
-            {
-                SpongeMCDNDSimple.getPluginContainer().getLogger().warn("An error occurred while saving " + file.getName());
+            catch (IOException e) {
+                SpongeMCDNDSimple.instance().getLogger().warn("An error occurred while saving " + file.getName());
             }
-        }
+        });
     }
 }

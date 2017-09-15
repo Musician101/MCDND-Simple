@@ -9,6 +9,7 @@ import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.AbstractSp
 import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class ArmorListGUI extends MCDNDSimplePagedGUI {
 
@@ -36,6 +37,6 @@ public class ArmorListGUI extends MCDNDSimplePagedGUI {
             }
         });
 
-        setBackButton(53, Material.BARRIER);
+        setBackButton(53, ClickType.LEFT, Material.BARRIER);
     }
 }

@@ -34,11 +34,17 @@ public class Reference {
 
         public static final String CALLBACK_DESC = "An internal command for running code from clickable text in chat.";
         public static final String CALLBACK_NAME = "callback";
-        public static final String CHARACTER = "character";
+        public static final String CHARACTER_NAME = "character";
         public static final String SPELL_NAME = "spell";
         public static final String UUID = "UUID";
         public static final String VIEW_SPELL_DESCRIPTION_DESC = "View the description of a spell from a character's spell book.";
         public static final String VIEW_SPELL_DESCRIPTION_NAME = "viewspelldescription";
+        public static final String CHARACTER_DESC = "Edit a character's sheet.";
+        public static final String NAME = "name";
+        public static final String PLAYER_SHEET_NAME = "playersheet";
+        public static final String PLAYER_SHEET_DESC = "Open up the player sheet for a character.";
+        public static final String BIO_AND_INFO_NAME = "bioandinfo";
+        public static final String BIO_AND_INFO_DESC = "Open up the Bio and Info for a character.";
 
         private Commands() {
 
@@ -191,6 +197,15 @@ public class Reference {
         public static final String WEAPON_PROFICIENCIES = "Weapon Proficiencies";
         public static final String WEIGHT = "Weight";
         public static final String WIZARD = "Wizard";
+        public static final String SPELL_SLOT_1 = "Spell Slot 1";
+        public static final String SPELL_SLOT_2 = "Spell Slot 2";
+        public static final String SPELL_SLOT_3 = "Spell Slot 3";
+        public static final String SPELL_SLOT_4 = "Spell Slot 4";
+        public static final String SPELL_SLOT_5 = "Spell Slot 5";
+        public static final String SPELL_SLOT_6 = "Spell Slot 6";
+        public static final String SPELL_SLOT_7 = "Spell Slot 7";
+        public static final String SPELL_SLOT_8 = "Spell Slot 8";
+        public static final String SPELL_SLOT_9 = "Spell Slot 9";
 
         private MenuText() {
 
@@ -545,16 +560,26 @@ public class Reference {
         public static String xpForNextLevel(Experience experience, ClassLevels classLevels) {
             return "XP for next level: " + experience.getXPForNextLevel(classLevels);
         }
+
+        public static String ammo(int ammo) {
+            return "Ammo: " + ammo;
+        }
+
+        public static String armorType(Armor armor) {
+            return "Armor Type: " + armor.getArmorType().getName();
+        }
     }
 
     public static class Messages {
 
-        public static final String CLASS_ACTION_DELETED = "Class action deleted.";
-        public static final String CLASS_RESOURCE_DELETED = "Class resource deleted.";
-        public static final String ITEM_DELETED = "Item deleted.";
-        public static final String NO_PERMISSION = "You do not have permission to run this command.";
-        public static final String PLAYER_ONLY = "Only a player can run this command.";
         public static final String PREFIX = "[MCDNDS] ";
+        public static final String CLASS_ACTION_DELETED = PREFIX + "Class action deleted.";
+        public static final String CLASS_RESOURCE_DELETED = PREFIX + "Class resource deleted.";
+        public static final String ITEM_DELETED = PREFIX + "Item deleted.";
+        public static final String NO_PERMISSION = PREFIX + "You do not have permission to run this command.";
+        public static final String PLAYER_ONLY = PREFIX + "Only a player can run this command.";
+        public static final String LOAD_COMPLETE = "Let the adventures begin...";
+        public static final String CHARACTER_DNE = PREFIX + "That character does not exist or you do not have access to that character.";
 
         private Messages() {
 
@@ -584,6 +609,7 @@ public class Reference {
 
         private static final String BASE = "mcdnd.";
         public static final String CALLBACK = BASE + Commands.CALLBACK_NAME;
+        public static final String CHARACTER = BASE + Commands.PLAYER_SHEET_NAME;
 
         private Permissions() {
 

@@ -16,6 +16,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 public class SpellsGUI extends MCDNDSimplePagedGUI {
 
@@ -47,9 +48,7 @@ public class SpellsGUI extends MCDNDSimplePagedGUI {
 
     @Override
     protected void build() {
-        setContents(spells.stream().filter(spell -> spell.getLevel() == level).collect(Collectors.toList()), ItemRepresentation::spell, (player, spell) -> {
-            return p -> new SpellGUI(player, spell, bioAndInfo, classLevels, coreStats, experience, this);
-        });
-        setBackButton(53, Material.BARRIER);
+        setContents(spells.stream().filter(spell -> spell.getLevel() == level).collect(Collectors.toList()), ItemRepresentation::spell, (player, spell) -> p -> new SpellGUI(player, spell, bioAndInfo, classLevels, coreStats, experience, this));
+        setBackButton(53, ClickType.LEFT, Material.BARRIER);
     }
 }

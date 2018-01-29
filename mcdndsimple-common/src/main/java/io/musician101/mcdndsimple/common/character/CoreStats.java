@@ -1,5 +1,7 @@
 package io.musician101.mcdndsimple.common.character;
 
+import io.musician101.mcdndsimple.common.character.player.AbilityScore;
+
 public class CoreStats {
 
     private AbilityScore charisma = new AbilityScore("Charisma", "cha");

@@ -3,16 +3,14 @@ package io.musician101.mcdndsimple.spigot.command;
 import io.musician101.mcdndsimple.common.Reference.Commands;
 import io.musician101.mcdndsimple.common.Reference.Messages;
 import io.musician101.mcdndsimple.common.Reference.Permissions;
-import io.musician101.mcdndsimple.common.character.PlayerSheet;
 import io.musician101.mcdndsimple.spigot.SpigotMCDNDSimple;
-import io.musician101.mcdndsimple.spigot.gui.chest.playersheet.PlayerSheetGUI;
+import io.musician101.mcdndsimple.spigot.gui.SpigotChestGUIs;
 import io.musician101.musicianlibrary.java.minecraft.spigot.command.SpigotCommand;
 import io.musician101.musicianlibrary.java.minecraft.spigot.command.SpigotCommandArgument;
 import io.musician101.musicianlibrary.java.minecraft.spigot.command.SpigotCommandPermissions;
 import io.musician101.musicianlibrary.java.minecraft.spigot.command.SpigotCommandUsage;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
 import org.bukkit.ChatColor;
@@ -26,7 +24,7 @@ public class MCDNDSimpleCommands {
     }
 
     public static List<SpigotCommand<SpigotMCDNDSimple>> commands() {
-        return Arrays.asList(callback(), character());
+        return Arrays.asList(callback(), character(), createCharacter());
     }
 
     private static SpigotCommand<SpigotMCDNDSimple> callback() {
@@ -48,25 +46,77 @@ public class MCDNDSimpleCommands {
                     }
 
                     return false;
-                }).build();
+                }).build(SpigotMCDNDSimple.instance());
     }
 
     private static SpigotCommand<SpigotMCDNDSimple> character() {
-        return SpigotCommand.<SpigotMCDNDSimple>builder().name(Commands.PLAYER_SHEET_NAME).description(Commands.CHARACTER_DESC).usage(SpigotCommandUsage.builder().minArgs(1).addArgument(SpigotCommandArgument.of(Commands.NAME)).build())
+        return SpigotCommand.<SpigotMCDNDSimple>builder().name(Commands.CHARACTER_NAME).description(Commands.CHARACTER_DESC).usage(SpigotCommandUsage.of(SpigotCommandArgument.of(Commands.NAME)))
                 .permissions(SpigotCommandPermissions.builder().isPlayerOnly(true).permissionNode(Permissions.CHARACTER).noPermissionMessage(ChatColor.RED + Messages.NO_PERMISSION).playerOnlyMessage(ChatColor.RED + Messages.PLAYER_ONLY).build())
                 .function((sender, args) -> {
                     Player player = (Player) sender;
-                    return getPlayerSheet(player, args.get(0)).map(playerSheet -> {
-                        new PlayerSheetGUI(player, playerSheet, null);
-                        return true;
-                    }).orElseGet(() -> {
-                        player.sendMessage(ChatColor.RED + Messages.CHARACTER_DNE);
-                        return false;
-                    });
-                }).build();
+                    if (!args.isEmpty()) {
+                        return SpigotMCDNDSimple.instance().getCharacterSheetStorage().getCharacter(player.getUniqueId(), args.get(0)).map(playerSheet -> {
+                            SpigotChestGUIs.INSTANCE.playerSheet(player, playerSheet, null);
+                            return true;
+                        }).orElseGet(() -> {
+                            player.sendMessage(ChatColor.RED + Messages.CHARACTER_DNE);
+                            return false;
+                        });
+                    }
+
+                    //TODO need guis for opening up multiple characters
+                    return false;
+                }).build(SpigotMCDNDSimple.instance());
     }
 
-    private static Optional<PlayerSheet> getPlayerSheet(Player player, String characterName) {
-        return SpigotMCDNDSimple.instance().getCharacterSheetStorage().getCharacterSheet(player.getUniqueId(), characterName);
+    private static SpigotCommand<SpigotMCDNDSimple> createCharacter() {
+        return SpigotCommand.<SpigotMCDNDSimple>builder().name(Commands.CREATE_COMMAND).description(Commands.CREATE_COMMAND_DESC).usage(SpigotCommandUsage.builder().minArgs(2).addArgument(SpigotCommandArgument.of(Commands.CREATE_ARGUMENT)).addArgument(SpigotCommandArgument.of(Commands.NAME)).build())
+                .permissions(SpigotCommandPermissions.builder().isPlayerOnly(true).permissionNode(Permissions.DM).noPermissionMessage(ChatColor.RED + Messages.NO_PERMISSION).playerOnlyMessage(ChatColor.RED + Messages.PLAYER_ONLY).build())
+                .function((sender, args) -> {
+                    Player player = (Player) sender;
+                    String characterName = args.get(1);
+                    SpigotMCDNDSimple plugin = SpigotMCDNDSimple.instance();
+                    if (args.get(0).equals(Commands.PC)) {
+                        return plugin.getCharacterSheetStorage().createNewCharacter(player.getUniqueId(), characterName).map(playerSheet -> {
+                            player.sendMessage(ChatColor.GREEN + Messages.CHARACTER_CREATED);
+                            return true;
+                        }).orElseGet(() -> {
+                            player.sendMessage(ChatColor.RED + Messages.CHARACTER_ALREADY_EXISTS);
+                            return false;
+                        });
+                    }
+                    else if (args.get(0).equals(Commands.NPC_NAME)) {
+                        return plugin.getNPCStorage().createNewCharacter(player.getUniqueId(), characterName).map(npc -> {
+                            player.sendMessage(ChatColor.GREEN + Messages.CHARACTER_CREATED);
+                            return true;
+                        }).orElseGet(() -> {
+                            player.sendMessage(ChatColor.RED + Messages.CHARACTER_ALREADY_EXISTS);
+                            return false;
+                        });
+                    }
+
+                    return false;
+                }).build(SpigotMCDNDSimple.instance());
+    }
+
+    private static SpigotCommand<SpigotMCDNDSimple> npc() {
+        return SpigotCommand.<SpigotMCDNDSimple>builder().name(Commands.NPC_NAME).description(Commands.NPC_DESC).usage(SpigotCommandUsage.of(SpigotCommandArgument.of(Commands.NAME)))
+                .permissions(SpigotCommandPermissions.builder().permissionNode(Permissions.NPC).isPlayerOnly(true).playerOnlyMessage(ChatColor.RED + Messages.PLAYER_ONLY).noPermissionMessage(ChatColor.RED + Messages.NO_PERMISSION).build())
+                .function((sender, args) -> {
+                    Player player = (Player) sender;
+                    if (!args.isEmpty()) {
+                        return SpigotMCDNDSimple.instance().getNPCStorage().getCharacter(player.getUniqueId(), args.get(0)).map(npc -> {
+                            //TODO incomplete
+                            //new NPCSheetGUI(player, npc, null);
+                            return true;
+                        }).orElseGet(() -> {
+                            player.sendMessage(ChatColor.RED + Messages.CHARACTER_DNE);
+                            return false;
+                        });
+                    }
+
+                    //TODO need guis for opening up multiple characters
+                    return false;
+                }).build(SpigotMCDNDSimple.instance());
     }
 }

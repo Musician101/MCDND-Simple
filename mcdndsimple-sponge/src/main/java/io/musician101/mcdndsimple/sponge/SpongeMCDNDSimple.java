@@ -2,8 +2,8 @@ package io.musician101.mcdndsimple.sponge;
 
 import com.google.inject.Inject;
 import io.musician101.mcdndsimple.common.Reference.Commands;
-import io.musician101.mcdndsimple.common.character.PlayerSheet;
-import io.musician101.mcdndsimple.sponge.character.SpongeCharacterSheetStorage;
+import io.musician101.mcdndsimple.common.character.player.PlayerSheet;
+import io.musician101.mcdndsimple.sponge.character.SpongePlayerSheetStorage;
 import io.musician101.mcdndsimple.sponge.command.args.CharacterSheetCommandElement;
 import io.musician101.mcdndsimple.sponge.gui.chest.playersheet.PlayerSheetGUI;
 import io.musician101.musicianlibrary.java.minecraft.config.AbstractConfig;
@@ -34,13 +34,13 @@ public class SpongeMCDNDSimple extends AbstractSpongePlugin<AbstractConfig> {
     @Inject
     private PluginContainer pluginContainer;
 
-    private SpongeCharacterSheetStorage characterSheetStorage;
+    private SpongePlayerSheetStorage characterSheetStorage;
 
     public static SpongeMCDNDSimple instance() {
         return instance;
     }
 
-    public SpongeCharacterSheetStorage getCharacterSheetStorage() {
+    public SpongePlayerSheetStorage getCharacterSheetStorage() {
         return characterSheetStorage;
     }
 
@@ -56,7 +56,7 @@ public class SpongeMCDNDSimple extends AbstractSpongePlugin<AbstractConfig> {
 
     @Listener
     public void preInit(GamePreInitializationEvent event) {
-        characterSheetStorage = new SpongeCharacterSheetStorage(new File(configDir, "character_storage"));
+        characterSheetStorage = new SpongePlayerSheetStorage(new File(configDir, "character_storage"));
     }
 
     @Listener

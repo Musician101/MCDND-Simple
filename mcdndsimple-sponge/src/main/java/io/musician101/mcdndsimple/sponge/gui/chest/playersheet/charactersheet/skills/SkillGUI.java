@@ -2,8 +2,8 @@ package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.s
 
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.skill.Skill;
+import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
+import io.musician101.mcdndsimple.common.character.player.skill.PlayerSkill;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.anvil.number.IntegerInputAnvilGUI;
 import io.musician101.mcdndsimple.sponge.gui.chest.MCDNDSimpleChestGUI;
@@ -22,10 +22,10 @@ import org.spongepowered.api.text.serializer.TextSerializers;
 public class SkillGUI extends MCDNDSimpleChestGUI {
 
     private final BioAndInfo bioAndInfo;
-    private final Skill skill;
+    private final PlayerSkill skill;
     private final Dice skillBonus;
 
-    public SkillGUI(Player player, BioAndInfo bioAndInfo, Dice skillBonus, Skill skill, AbstractSpongeChestGUI<AbstractConfig, SpongeMCDNDSimple> prevGUI) {
+    public SkillGUI(Player player, BioAndInfo bioAndInfo, Dice skillBonus, PlayerSkill skill, AbstractSpongeChestGUI<AbstractConfig, SpongeMCDNDSimple> prevGUI) {
         super(player, skill.getName(), 9, prevGUI);
         this.skill = skill;
         this.bioAndInfo = bioAndInfo;

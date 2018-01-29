@@ -1,8 +1,8 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.spellbook.spell;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.spell.Spell;
-import io.musician101.mcdndsimple.common.character.spell.SpellType;
+import io.musician101.mcdndsimple.common.character.player.spell.Spell;
+import io.musician101.mcdndsimple.common.character.player.spell.SpellType;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.config.AbstractConfig;

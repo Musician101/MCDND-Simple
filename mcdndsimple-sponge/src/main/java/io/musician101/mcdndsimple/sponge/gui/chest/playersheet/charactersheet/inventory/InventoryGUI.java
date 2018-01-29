@@ -1,7 +1,7 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.inventory;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.MCDNDItem;
+import io.musician101.mcdndsimple.common.character.player.MCDNDItem;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.chest.MCDNDSimplePagedGUI;
 import io.musician101.musicianlibrary.java.minecraft.config.AbstractConfig;

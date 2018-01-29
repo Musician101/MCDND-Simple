@@ -1,11 +1,11 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.spellbook.spell;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.ClassLevels;
+import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
+import io.musician101.mcdndsimple.common.character.player.ClassLevels;
 import io.musician101.mcdndsimple.common.character.CoreStats;
-import io.musician101.mcdndsimple.common.character.Experience;
-import io.musician101.mcdndsimple.common.character.spell.Spell;
+import io.musician101.mcdndsimple.common.character.player.Experience;
+import io.musician101.mcdndsimple.common.character.player.spell.Spell;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.chest.MCDNDSimplePagedGUI;
 import io.musician101.mcdndsimple.sponge.util.ItemRepresentation;

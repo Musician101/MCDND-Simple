@@ -1,11 +1,11 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.CharacterSheet;
-import io.musician101.mcdndsimple.common.character.bonus.Bonuses;
-import io.musician101.mcdndsimple.common.character.tab.ClassTab;
-import io.musician101.mcdndsimple.common.character.tab.CoreStatsTab;
+import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
+import io.musician101.mcdndsimple.common.character.player.CharacterSheet;
+import io.musician101.mcdndsimple.common.character.player.bonus.Bonuses;
+import io.musician101.mcdndsimple.common.character.player.tab.ClassTab;
+import io.musician101.mcdndsimple.common.character.player.tab.CoreStatsTab;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.armor.ArmorTabGUI;

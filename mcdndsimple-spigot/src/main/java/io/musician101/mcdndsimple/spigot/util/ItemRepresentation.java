@@ -1,21 +1,19 @@
 package io.musician101.mcdndsimple.spigot.util;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.ClassLevels;
 import io.musician101.mcdndsimple.common.character.CoreStats;
-import io.musician101.mcdndsimple.common.character.Experience;
-import io.musician101.mcdndsimple.common.character.UnarmoredBonus;
-import io.musician101.mcdndsimple.common.character.equipment.armor.Armor;
-import io.musician101.mcdndsimple.common.character.equipment.armor.ArmorType;
-import io.musician101.mcdndsimple.common.character.spell.Spell;
-import io.musician101.mcdndsimple.common.character.weapon.MeleeWeapon;
-import io.musician101.mcdndsimple.common.character.weapon.RangedWeapon;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import io.musician101.mcdndsimple.common.character.player.ClassLevels;
+import io.musician101.mcdndsimple.common.character.player.Experience;
+import io.musician101.mcdndsimple.common.character.player.UnarmoredBonus;
+import io.musician101.mcdndsimple.common.character.player.equipment.armor.Armor;
+import io.musician101.mcdndsimple.common.character.player.equipment.armor.ArmorType;
+import io.musician101.mcdndsimple.common.character.player.spell.Spell;
+import io.musician101.mcdndsimple.common.character.player.weapon.MeleeWeapon;
+import io.musician101.mcdndsimple.common.character.player.weapon.RangedWeapon;
+import io.musician101.mcdndsimple.common.character.player.weapon.WeaponAttackStat;
+import io.musician101.musicianlibrary.java.minecraft.spigot.gui.SpigotIconBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class ItemRepresentation {
 
@@ -23,18 +21,43 @@ public class ItemRepresentation {
 
     }
 
-    public static ItemStack armor(Armor armor) {
-        ItemStack itemStack = new ItemStack(getArmorMaterial(armor.getArmorType()));
-        setName(itemStack, armor.getName());
-        setLore(itemStack, Arrays.asList("Armor Class: " + armor.getBaseArmorClass(), "Armor Type: " + armor.getArmorType().getName(), "Magic Bonus: " + armor.getMagicBonus(), "Speed Penalty: " + armor.hasSpeedPenalty(), "Stealth Penalty: " + armor.hasStealthPenalty(), "Unarmored?: " + armor.isUnarmored(), "Worn?: " + armor.isWorn()));
+    public static ItemStack weaponAttackStat(WeaponAttackStat stat) {
+        SpigotIconBuilder builder;
+        switch (stat) {
+            case CHA:
+                builder = SpigotIconBuilder.builder(Material.SKULL_ITEM).durability(3);
+                break;
+            case CON:
+                builder = SpigotIconBuilder.builder(Material.GOLDEN_APPLE);
+                break;
+            case DEX:
+                builder = SpigotIconBuilder.builder(Material.BOW);
+                break;
+            case FINESSE:
+                builder = SpigotIconBuilder.builder(Material.DIAMOND_SWORD);
+                break;
+            case INT:
+                builder = SpigotIconBuilder.builder(Material.BOOK_AND_QUILL);
+                break;
+            case STR:
+                builder = SpigotIconBuilder.builder(Material.IRON_SWORD);
+                break;
+            case WIS:
+                builder = SpigotIconBuilder.builder(Material.ENCHANTED_BOOK);
+                break;
+                default:
+                    return SpigotIconBuilder.builder(Material.BARRIER).name("I'M AN ERROR! PLEASE REPORT ME!").build();
+        }
 
-        return itemStack;
+        return builder.name(stat.getName()).build();
+    }
+
+    public static ItemStack armor(Armor armor) {
+        return SpigotIconBuilder.builder(getArmorMaterial(armor.getArmorType())).name(armor.getName()).description(MenuText.armorClass(armor), MenuText.armorType(armor), MenuText.magicBonus(armor), MenuText.hasSpeedPenalty(armor), MenuText.hasStealthPenalty(armor), MenuText.isUnarmored(armor), MenuText.isWorn(armor)).build();
     }
 
     public static ItemStack armorType(ArmorType armorType) {
-        ItemStack itemStack = new ItemStack(getArmorMaterial(armorType));
-        setName(itemStack, armorType.getName());
-        return itemStack;
+        return SpigotIconBuilder.of(getArmorMaterial(armorType), armorType.getName());
     }
 
     private static Material getArmorMaterial(ArmorType armorType) {
@@ -53,66 +76,22 @@ public class ItemRepresentation {
     }
 
     public static ItemStack meleeWeapon(MeleeWeapon weapon, ClassLevels classLevels, CoreStats coreStats, Experience experience) {
-        ItemStack itemStack = new ItemStack(Material.DIAMOND_SWORD);
-        setName(itemStack, weapon.getName());
-        List<String> lore = new ArrayList<>();
-        lore.add(MenuText.isProficient(weapon.isProficient()));
-        lore.add(MenuText.attackStat(weapon.getAttackStat()));
-        lore.add(MenuText.magicBonus(weapon.getMagicBonus()));
-        lore.add(MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)));
-        lore.add(MenuText.damageDice(weapon.getDamageDice()));
-        lore.add(MenuText.damageBonus(weapon.getDamageBonus(coreStats)));
-        lore.add(MenuText.damageType(weapon.getDamageType()));
-        lore.add(MenuText.critDamage(weapon.getCritDamageDice()));
-        lore.add(MenuText.critOn(weapon.getCritMin()));
-        setLore(itemStack, lore);
-        return itemStack;
+        return SpigotIconBuilder.builder(Material.DIAMOND_SWORD).name(weapon.getName()).description(MenuText.isProficient(weapon.isProficient()), MenuText.attackStat(weapon.getAttackStat()), MenuText.magicBonus(weapon), MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)), MenuText.plusStat(weapon.isPlusStat()), MenuText.damageDice(weapon.getDamageDice()), MenuText.damageBonus(weapon.getDamageBonus(coreStats)), MenuText.damageType(weapon.getDamageType()), MenuText.critDamage(weapon.getCritDamageDice()), MenuText.critOn(weapon.getCritMin())).build();
     }
 
     public static ItemStack rangedWeapon(RangedWeapon weapon, ClassLevels classLevels, CoreStats coreStats, Experience experience) {
-        ItemStack itemStack = new ItemStack(Material.BOW);
-        setName(itemStack, weapon.getName());
-        List<String> lore = new ArrayList<>();
-        lore.add(MenuText.isProficient(weapon.isProficient()));
-        lore.add(MenuText.attackStat(weapon.getAttackStat()));
-        lore.add(MenuText.magicBonus(weapon.getMagicBonus()));
-        lore.add(MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)));
-        lore.add(MenuText.damageDice(weapon.getDamageDice()));
-        lore.add(MenuText.damageBonus(weapon.getDamageBonus(coreStats)));
-        lore.add(MenuText.damageType(weapon.getDamageType()));
-        lore.add(MenuText.critDamage(weapon.getCritDamageDice()));
-        lore.add(MenuText.critOn(weapon.getCritMin()));
-        lore.add(MenuText.ammo(weapon.getAmmo()));
-        setLore(itemStack, lore);
-        return itemStack;
-    }
-
-    private static void setLore(ItemStack itemStack, List<String> lore) {
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setLore(lore);
-        itemStack.setItemMeta(itemMeta);
-    }
-
-    private static void setName(ItemStack itemStack, String name) {
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(name);
-        itemStack.setItemMeta(itemMeta);
+        return SpigotIconBuilder.builder(Material.BOW).name(weapon.getName()).description(MenuText.isProficient(weapon.isProficient()), MenuText.attackStat(weapon.getAttackStat()), MenuText.magicBonus(weapon), MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)), MenuText.damageDice(weapon.getDamageDice()), MenuText.damageBonus(weapon.getDamageBonus(coreStats)), MenuText.damageType(weapon.getDamageType()), MenuText.critDamage(weapon.getCritDamageDice()), MenuText.critOn(weapon.getCritMin())).build();
     }
 
     public static ItemStack spell(Spell spell) {
-        ItemStack itemStack = new ItemStack(Material.ENCHANTED_BOOK);
-        setName(itemStack, spell.getName());
-        List<String> lore = new ArrayList<>();
-        lore.add(MenuText.spellLevel(spell.getLevel()));
-        lore.add(MenuText.spellType(spell.getSpellType()));
-        lore.add(MenuText.gainedFrom(spell.getGainedFrom()));
-        lore.add(MenuText.components(spell.getComponents()));
-        lore.add(MenuText.castTime(spell.getCastTime()));
-        lore.add(MenuText.duration(spell.getDuration()));
-        lore.add(MenuText.target(spell.getTargetArea()));
-        lore.add(MenuText.range(spell.getRange()));
-        setLore(itemStack, lore);
-        return itemStack;
+        return SpigotIconBuilder.builder(Material.ENCHANTED_BOOK).name(spell.getName()).description(MenuText.spellLevel(spell.getLevel()),
+        MenuText.spellType(spell.getSpellType()),
+        MenuText.gainedFrom(spell.getGainedFrom()),
+        MenuText.components(spell.getComponents()),
+        MenuText.castTime(spell.getCastTime()),
+        MenuText.duration(spell.getDuration()),
+        MenuText.target(spell.getTargetArea()),
+        MenuText.range(spell.getRange())).build();
     }
 
     public static ItemStack unarmoredBonus(UnarmoredBonus unarmoredBonus) {
@@ -135,8 +114,6 @@ public class ItemRepresentation {
             }
         }
 
-        ItemStack itemStack = new ItemStack(material);
-        setName(itemStack, unarmoredBonus.getName());
-        return itemStack;
+        return SpigotIconBuilder.of(material, unarmoredBonus.getName());
     }
 }

@@ -1,7 +1,7 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.clazz.classactions;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.outputoption.WeaponsSpellMiscOutputOptions;
+import io.musician101.mcdndsimple.common.character.player.outputoption.WeaponsSpellMiscOutputOptions;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.config.AbstractConfig;
@@ -18,7 +18,7 @@ public class WeaponsSpellMiscOutputOptionsGUI extends MCDNDSimpleChestGUI {
     private final WeaponsSpellMiscOutputOptions weaponsSpellMiscOutputOptions;
 
     public WeaponsSpellMiscOutputOptionsGUI(Player player, WeaponsSpellMiscOutputOptions weaponsSpellMiscOutputOptions, AbstractSpongeChestGUI<AbstractConfig, SpongeMCDNDSimple> prevGUI) {
-        super(player, MenuText.WEAPONS_SPELL_MISC, 9, prevGUI);
+        super(player, MenuText.WEAPONS_SPELL_MISC_OUTPUT_OPTIONS, 9, prevGUI);
         this.weaponsSpellMiscOutputOptions = weaponsSpellMiscOutputOptions;
     }
 

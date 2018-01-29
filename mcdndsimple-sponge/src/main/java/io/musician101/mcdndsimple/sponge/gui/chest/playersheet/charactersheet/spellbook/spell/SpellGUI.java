@@ -2,17 +2,17 @@ package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.s
 
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.AbilityScore;
-import io.musician101.mcdndsimple.common.character.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.ClassLevels;
+import io.musician101.mcdndsimple.common.character.player.AbilityScore;
+import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
+import io.musician101.mcdndsimple.common.character.player.ClassLevels;
 import io.musician101.mcdndsimple.common.character.CoreStats;
-import io.musician101.mcdndsimple.common.character.Experience;
-import io.musician101.mcdndsimple.common.character.spell.MacroOptions;
-import io.musician101.mcdndsimple.common.character.spell.Spell;
-import io.musician101.mcdndsimple.common.character.spell.SpellDamage;
-import io.musician101.mcdndsimple.common.character.spell.SpellHealing;
-import io.musician101.mcdndsimple.common.character.spell.SpellSave;
-import io.musician101.mcdndsimple.common.character.spell.StatBonus;
+import io.musician101.mcdndsimple.common.character.player.Experience;
+import io.musician101.mcdndsimple.common.character.player.spell.MacroOptions;
+import io.musician101.mcdndsimple.common.character.player.spell.Spell;
+import io.musician101.mcdndsimple.common.character.player.spell.SpellDamage;
+import io.musician101.mcdndsimple.common.character.player.spell.SpellHealing;
+import io.musician101.mcdndsimple.common.character.player.spell.SpellSave;
+import io.musician101.mcdndsimple.common.character.player.spell.StatBonus;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.anvil.StringInputAnvilGUI;
 import io.musician101.mcdndsimple.sponge.gui.anvil.number.IntegerInputAnvilGUI;

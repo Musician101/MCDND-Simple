@@ -1,7 +1,7 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.clazz.classactions;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.outputoption.CoreSkillsOutputOptions;
+import io.musician101.mcdndsimple.common.character.player.outputoption.CoreSkillsOutputOptions;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.config.AbstractConfig;
@@ -17,7 +17,7 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
     private final CoreSkillsOutputOptions coreSkillsOutputOptions;
 
     public CoreSkillsOutputOptionsGUI(Player player, CoreSkillsOutputOptions coreSkillsOutputOptions, AbstractSpongeChestGUI<AbstractConfig, SpongeMCDNDSimple> prevGUI) {
-        super(player, MenuText.CORE_SKILLS, 27, prevGUI);
+        super(player, MenuText.CORE_SKILLS_OUTPUT_SKILLS, 27, prevGUI);
         this.coreSkillsOutputOptions = coreSkillsOutputOptions;
     }
 

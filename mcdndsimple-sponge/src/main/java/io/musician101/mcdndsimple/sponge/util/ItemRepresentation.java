@@ -1,15 +1,15 @@
 package io.musician101.mcdndsimple.sponge.util;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.ClassLevels;
+import io.musician101.mcdndsimple.common.character.player.ClassLevels;
 import io.musician101.mcdndsimple.common.character.CoreStats;
-import io.musician101.mcdndsimple.common.character.Experience;
-import io.musician101.mcdndsimple.common.character.UnarmoredBonus;
-import io.musician101.mcdndsimple.common.character.equipment.armor.Armor;
-import io.musician101.mcdndsimple.common.character.equipment.armor.ArmorType;
-import io.musician101.mcdndsimple.common.character.spell.Spell;
-import io.musician101.mcdndsimple.common.character.weapon.MeleeWeapon;
-import io.musician101.mcdndsimple.common.character.weapon.RangedWeapon;
+import io.musician101.mcdndsimple.common.character.player.Experience;
+import io.musician101.mcdndsimple.common.character.player.UnarmoredBonus;
+import io.musician101.mcdndsimple.common.character.player.equipment.armor.Armor;
+import io.musician101.mcdndsimple.common.character.player.equipment.armor.ArmorType;
+import io.musician101.mcdndsimple.common.character.player.spell.Spell;
+import io.musician101.mcdndsimple.common.character.player.weapon.MeleeWeapon;
+import io.musician101.mcdndsimple.common.character.player.weapon.RangedWeapon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

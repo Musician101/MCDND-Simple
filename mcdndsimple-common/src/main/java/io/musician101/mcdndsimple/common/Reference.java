@@ -1,28 +1,34 @@
 package io.musician101.mcdndsimple.common;
 
-import io.musician101.mcdndsimple.common.character.AbilityScore;
-import io.musician101.mcdndsimple.common.character.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.ClassLevels;
-import io.musician101.mcdndsimple.common.character.Experience;
-import io.musician101.mcdndsimple.common.character.HitDice;
+import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.HitPoints;
-import io.musician101.mcdndsimple.common.character.MCDNDItem;
-import io.musician101.mcdndsimple.common.character.Recharge;
-import io.musician101.mcdndsimple.common.character.Weight;
-import io.musician101.mcdndsimple.common.character.equipment.armor.Armor;
-import io.musician101.mcdndsimple.common.character.equipment.currency.Coin;
-import io.musician101.mcdndsimple.common.character.equipment.currency.Wealth;
-import io.musician101.mcdndsimple.common.character.skill.Skill;
-import io.musician101.mcdndsimple.common.character.spell.Prepared;
-import io.musician101.mcdndsimple.common.character.spell.SpellType;
-import io.musician101.mcdndsimple.common.character.spell.SpellcasterClass;
-import io.musician101.mcdndsimple.common.character.tab.ArmorTab;
-import io.musician101.mcdndsimple.common.character.tab.BackgroundTab;
-import io.musician101.mcdndsimple.common.character.tab.CoreStatsTab;
-import io.musician101.mcdndsimple.common.character.tab.Initiative;
-import io.musician101.mcdndsimple.common.character.weapon.WeaponAttackStat;
+import io.musician101.mcdndsimple.common.character.player.AbilityScore;
+import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
+import io.musician101.mcdndsimple.common.character.player.ClassLevels;
+import io.musician101.mcdndsimple.common.character.player.Experience;
+import io.musician101.mcdndsimple.common.character.player.HitDice;
+import io.musician101.mcdndsimple.common.character.player.MCDNDItem;
+import io.musician101.mcdndsimple.common.character.player.Recharge;
+import io.musician101.mcdndsimple.common.character.player.Weight;
+import io.musician101.mcdndsimple.common.character.player.equipment.armor.Armor;
+import io.musician101.mcdndsimple.common.character.player.equipment.currency.Coin;
+import io.musician101.mcdndsimple.common.character.player.equipment.currency.Wealth;
+import io.musician101.mcdndsimple.common.character.player.skill.PlayerSkill;
+import io.musician101.mcdndsimple.common.character.player.spell.Prepared;
+import io.musician101.mcdndsimple.common.character.player.spell.Spell;
+import io.musician101.mcdndsimple.common.character.player.spell.SpellDamage;
+import io.musician101.mcdndsimple.common.character.player.spell.SpellType;
+import io.musician101.mcdndsimple.common.character.player.spell.SpellcasterClass;
+import io.musician101.mcdndsimple.common.character.player.tab.ArmorTab;
+import io.musician101.mcdndsimple.common.character.player.tab.BackgroundTab;
+import io.musician101.mcdndsimple.common.character.player.tab.CoreStatsTab;
+import io.musician101.mcdndsimple.common.character.player.tab.Initiative;
+import io.musician101.mcdndsimple.common.character.player.tab.SpellbookTab;
+import io.musician101.mcdndsimple.common.character.player.weapon.AbstractWeapon;
+import io.musician101.mcdndsimple.common.character.player.weapon.WeaponAttackStat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Reference {
 
@@ -37,14 +43,16 @@ public class Reference {
         public static final String CHARACTER_NAME = "character";
         public static final String SPELL_NAME = "spell";
         public static final String UUID = "UUID";
-        public static final String VIEW_SPELL_DESCRIPTION_DESC = "View the description of a spell from a character's spell book.";
-        public static final String VIEW_SPELL_DESCRIPTION_NAME = "viewspelldescription";
         public static final String CHARACTER_DESC = "Edit a character's sheet.";
         public static final String NAME = "name";
         public static final String PLAYER_SHEET_NAME = "playersheet";
         public static final String PLAYER_SHEET_DESC = "Open up the player sheet for a character.";
-        public static final String BIO_AND_INFO_NAME = "bioandinfo";
-        public static final String BIO_AND_INFO_DESC = "Open up the Bio and Info for a character.";
+        public static final String CREATE_COMMAND = "create";
+        public static final String CREATE_COMMAND_DESC = "Create a PC or NPC_NAME.";
+        public static final String NPC_DESC = "Open up the player sheet for an NPC.";
+        public static final String NPC_NAME = "npc";
+        public static final String PC = "pc";
+        public static final String CREATE_ARGUMENT = NPC_NAME + " | " + PC;
 
         private Commands() {
 
@@ -76,7 +84,6 @@ public class Reference {
         public static final String CANTRIPS = "Cantrips";
         public static final String CAN_CRIT = "Can Crit?";
         public static final String CAST_SPELL = "Cast Spell";
-        public static final String CHANGE_NAME = "Change Name";
         public static final String CHARACTER_SHEET = "Character Sheet";
         public static final String CHARISMA = "Charisma";
         public static final String CLASS = "Class";
@@ -89,7 +96,7 @@ public class Reference {
         public static final String COIN_CARRIED = "Coin Carried";
         public static final String COMPONENTS = "Components";
         public static final String CONSTITUTION = "Constitution";
-        public static final String CORE_SKILLS = "Core Skills";
+        public static final String CORE_SKILLS_OUTPUT_SKILLS = "Core Skills Output Options";
         public static final String CORE_STATS = "Core Stats";
         public static final String D10_DESC = "Fighter, Paladin, Ranger";
         public static final String D12_DESC = "Barbarian";
@@ -193,7 +200,7 @@ public class Reference {
         public static final String UNARMORED_BONUS = "Unarmored Bonus";
         public static final String WARLOCK = "Warlock";
         public static final String WEAPONS = "Weapons";
-        public static final String WEAPONS_SPELL_MISC = "Weapons/Spell/Misc";
+        public static final String WEAPONS_SPELL_MISC_OUTPUT_OPTIONS = "Weapons/Spell/Misc Output Options";
         public static final String WEAPON_PROFICIENCIES = "Weapon Proficiencies";
         public static final String WEIGHT = "Weight";
         public static final String WIZARD = "Wizard";
@@ -206,9 +213,26 @@ public class Reference {
         public static final String SPELL_SLOT_7 = "Spell Slot 7";
         public static final String SPELL_SLOT_8 = "Spell Slot 8";
         public static final String SPELL_SLOT_9 = "Spell Slot 9";
+        public static final String RECHARGE = "Recharge";
+        public static final String SAVING_THROW_OUTPUT_OPTIONS = "Saving Throw Output Options";
+        public static final String WISDOM = "Wisdom";
+        public static final String NEW_ITEM = "New Item";
+        public static final String SECOND_ATTACK = "Second Attack";
+        public static final String SAVING_THROW = "Saving Throw";
+        public static final String EFFECTS = "Effects";
+        public static final String NEW_MELEE_WEAPON = "New Melee Weapon";
+        public static final String NEW_RANGED_WEAPON = "New Ranged Weapon";
 
         private MenuText() {
 
+        }
+
+        public static String armorClass(Armor armor) {
+            return "Armor Class: " + armor.getBaseArmorClass();
+        }
+
+        public static String plusStat(boolean plusStat) {
+            return PLUS_STAT + " " + (plusStat ? "Yes" : "No");
         }
 
         public static String age(BackgroundTab backgroundTab) {
@@ -231,7 +255,7 @@ public class Reference {
             return "Base AC: " + armor.getBaseArmorClass();
         }
 
-        public static String bonus(Skill skill) {
+        public static String bonus(PlayerSkill skill) {
             return BONUS + ": " + skill.getBonus();
         }
 
@@ -397,8 +421,12 @@ public class Reference {
             return "Level: " + level;
         }
 
-        public static String magicBonus(int magicBonus) {
-            return "Magic Bonus: " + magicBonus;
+        public static String magicBonus(Armor armor) {
+            return "Magic Bonus: " + armor.getMagicBonus();
+        }
+
+        public static String magicBonus(AbstractWeapon weapon) {
+            return "Magic Bonus: " + weapon.getMagicBonus();
         }
 
         public static String maxHitPoints(HitPoints hitPoints) {
@@ -477,8 +505,8 @@ public class Reference {
             return "Size: " + backgroundTab.getSize();
         }
 
-        public static String[] sorceryPoints(int sorceryPointsUsed, int sorceryPointsMax) {
-            return new String[]{"Sorcerer Specific", "Used: " + sorceryPointsUsed, "Max: " + sorceryPointsMax};
+        public static String[] sorceryPoints(ClassLevels classLevels, SpellbookTab spellbookTab) {
+            return new String[]{"Sorcerer Specific", "Used: " + spellbookTab.getSorceryPointsUsed(), "Max: " + spellbookTab.getSorceryPointsMax(classLevels)};
         }
 
         public static String speed(CoreStatsTab coreStatsTab) {
@@ -493,12 +521,82 @@ public class Reference {
             return new String[]{"Warlock Specific", "Used: " + spellSlotsUsed, "Max: " + maxSpellSlots, "Level: " + spellLevel};
         }
 
+        public static String[] spellSlots(ClassLevels classLevels, SpellbookTab spellbookTab) {
+            return new String[]{"Warlock Specific", "Used: " + spellbookTab.getWarlockSpellSlotsUsed(), "Max: " + warlockSlots(classLevels), "Level: " + warlockSpellAmount(classLevels)};
+        }
+
+        private static int warlockSpellAmount(ClassLevels classLevels) {
+            switch (classLevels.getWarlock()) {
+                case 1:
+                    return 1;
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                    return 2;
+                case 11:
+                case 12:
+                case 13:
+                case 14:
+                case 15:
+                case 16:
+                    return 3;
+                case 17:
+                case 18:
+                case 19:
+                case 20:
+                    return 4;
+                default:
+                    return 0;
+            }
+        }
+
+        private static int warlockSlots(ClassLevels classLevels) {
+            SpellcasterClass sc = SpellcasterClass.WARLOCK;
+            int level = classLevels.getWarlock();
+            switch (level) {
+                case 1:
+                case 2:
+                    return sc.get1stLevelAmount(classLevels);
+                case 3:
+                case 4:
+                    return sc.get2ndLevelAmount(classLevels);
+                case 5:
+                case 6:
+                    return sc.get3rdLevelAmount(classLevels);
+                case 7:
+                case 8:
+                    return sc.get4thLevelAmount(classLevels);
+                case 9:
+                case 10:
+                case 11:
+                case 12:
+                case 13:
+                case 14:
+                case 15:
+                case 16:
+                case 17:
+                case 18:
+                case 19:
+                case 20:
+                    return sc.get5thLevelAmount(classLevels);
+                default:
+                    return 0;
+
+            }
+        }
+
         public static String spellType(SpellType spellType) {
             return "Spell Type: " + spellType.getName();
         }
 
-        public static String[] spellcastingTable(int cantrips, int spells, int preparedSpells, int saveDC) {
-            return new String[]{"Cantrips Known: " + cantrips, "Spells Known: " + spells, "Can Prepare: " + preparedSpells, "Save DC: " + saveDC};
+        public static String[] spellcastingTable(ClassLevels classLevels, CoreStats coreStats, Experience experience, SpellcasterClass spellcasterClass) {
+            return new String[]{"Cantrips Known: " + spellcasterClass.getCantripsAmount(classLevels), "Spells Known: " + spellcasterClass.getSpellsAmount(classLevels), "Can Prepare: " + spellcasterClass.getPreparedSpells(coreStats, classLevels), "Save DC: " + spellcasterClass.getSpellSaveDC(classLevels, coreStats, experience)};
         }
 
         public static String target(String targetArea) {
@@ -517,12 +615,16 @@ public class Reference {
             return "Total: " + ((wealth.getCopper().getAmount() / 100) + (wealth.getSilver().getAmount() / 10) + (wealth.getElectrum().getAmount() / 2) + wealth.getGold().getAmount() + (wealth.getPlatinum().getAmount() * 10));
         }
 
-        public static String total(Skill skill) {
+        public static String total(PlayerSkill skill) {
             return "Total: " + skill.getTotal();
         }
 
         public static String total(int amount) {
             return "Total: " + amount;
+        }
+
+        public static String total(int level, List<Spell> spells) {
+            return "Total: " + spells.stream().filter(spell -> spell.getLevel() == level).collect(Collectors.toList()).size();
         }
 
         public static String totalAC(Armor armor) {
@@ -533,8 +635,8 @@ public class Reference {
             return "Total: " + initiative.getInitiative(dex);
         }
 
-        public static String totalWeight(Weight weight) {
-            return "Total: " + (weight.getInventory() + weight.getCoin() + weight.getOther());
+        public static String totalWeight(List<MCDNDItem> items, Wealth wealth, Weight weight) {
+            return "Total: " + (weight.getInventory(items) + weight.getCoin(wealth) + weight.getOther());
         }
 
         public static String unarmoredAC(ArmorTab armorTab) {
@@ -568,6 +670,10 @@ public class Reference {
         public static String armorType(Armor armor) {
             return "Armor Type: " + armor.getArmorType().getName();
         }
+
+        public static String otherBonus(SpellDamage spellDamage) {
+            return "Other Bonus: " + spellDamage.getBonus();
+        }
     }
 
     public static class Messages {
@@ -580,6 +686,9 @@ public class Reference {
         public static final String PLAYER_ONLY = PREFIX + "Only a player can run this command.";
         public static final String LOAD_COMPLETE = "Let the adventures begin...";
         public static final String CHARACTER_DNE = PREFIX + "That character does not exist or you do not have access to that character.";
+        public static final String CHARACTER_ALREADY_EXISTS = PREFIX + "That character already exists.";
+        public static final String CHARACTER_CREATED = PREFIX + "Character created.";
+        public static final String ARMOR_DELETED = PREFIX + "Armor delted.";
 
         private Messages() {
 
@@ -610,6 +719,8 @@ public class Reference {
         private static final String BASE = "mcdnd.";
         public static final String CALLBACK = BASE + Commands.CALLBACK_NAME;
         public static final String CHARACTER = BASE + Commands.PLAYER_SHEET_NAME;
+        public static final String DM = BASE + "dm";
+        public static final String NPC = BASE + Commands.NPC_NAME;
 
         private Permissions() {
 

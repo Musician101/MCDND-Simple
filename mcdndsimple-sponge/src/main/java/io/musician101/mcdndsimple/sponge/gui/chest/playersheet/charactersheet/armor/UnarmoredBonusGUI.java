@@ -1,8 +1,8 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.armor;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.UnarmoredBonus;
-import io.musician101.mcdndsimple.common.character.tab.ArmorTab;
+import io.musician101.mcdndsimple.common.character.player.UnarmoredBonus;
+import io.musician101.mcdndsimple.common.character.player.tab.ArmorTab;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.mcdndsimple.sponge.util.ItemRepresentation;

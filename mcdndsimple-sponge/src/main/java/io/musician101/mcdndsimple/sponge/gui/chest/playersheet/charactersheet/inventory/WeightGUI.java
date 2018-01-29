@@ -2,7 +2,7 @@ package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.i
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
 import io.musician101.mcdndsimple.common.character.CoreStats;
-import io.musician101.mcdndsimple.common.character.Weight;
+import io.musician101.mcdndsimple.common.character.player.Weight;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.anvil.number.DoubleInputAnvilGUI;
 import io.musician101.mcdndsimple.sponge.gui.chest.MCDNDSimpleChestGUI;

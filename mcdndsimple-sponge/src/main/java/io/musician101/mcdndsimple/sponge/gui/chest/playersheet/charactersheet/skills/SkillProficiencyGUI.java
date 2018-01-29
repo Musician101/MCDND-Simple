@@ -1,8 +1,8 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.skills;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.skill.Skill;
-import io.musician101.mcdndsimple.common.character.skill.SkillProficiency;
+import io.musician101.mcdndsimple.common.character.player.skill.PlayerSkill;
+import io.musician101.mcdndsimple.common.character.player.skill.SkillProficiency;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.config.AbstractConfig;
@@ -15,9 +15,9 @@ import org.spongepowered.api.text.Text;
 
 public class SkillProficiencyGUI extends MCDNDSimpleChestGUI {
 
-    private final Skill skill;
+    private final PlayerSkill skill;
 
-    public SkillProficiencyGUI(Player player, Skill skill, AbstractSpongeChestGUI<AbstractConfig, SpongeMCDNDSimple> prevGUI) {
+    public SkillProficiencyGUI(Player player, PlayerSkill skill, AbstractSpongeChestGUI<AbstractConfig, SpongeMCDNDSimple> prevGUI) {
         super(player, MenuText.PROFICIENT, 9, prevGUI);
         this.skill = skill;
     }

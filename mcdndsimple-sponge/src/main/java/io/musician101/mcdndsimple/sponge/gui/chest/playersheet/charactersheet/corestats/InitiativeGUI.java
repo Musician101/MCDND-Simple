@@ -3,9 +3,9 @@ package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.c
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.Reference.MenuText;
 import io.musician101.mcdndsimple.common.Reference.Messages;
-import io.musician101.mcdndsimple.common.character.AbilityScore;
-import io.musician101.mcdndsimple.common.character.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.tab.Initiative;
+import io.musician101.mcdndsimple.common.character.player.AbilityScore;
+import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
+import io.musician101.mcdndsimple.common.character.player.tab.Initiative;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.anvil.number.IntegerInputAnvilGUI;
 import io.musician101.mcdndsimple.sponge.gui.chest.MCDNDSimpleChestGUI;

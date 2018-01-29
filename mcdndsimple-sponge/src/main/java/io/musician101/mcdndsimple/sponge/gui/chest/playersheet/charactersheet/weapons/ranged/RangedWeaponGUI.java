@@ -3,12 +3,12 @@ package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.w
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.Reference.MenuText;
 import io.musician101.mcdndsimple.common.Reference.Messages;
-import io.musician101.mcdndsimple.common.character.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.ClassLevels;
+import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
+import io.musician101.mcdndsimple.common.character.player.ClassLevels;
 import io.musician101.mcdndsimple.common.character.CoreStats;
-import io.musician101.mcdndsimple.common.character.Experience;
-import io.musician101.mcdndsimple.common.character.bonus.RangedBonus;
-import io.musician101.mcdndsimple.common.character.weapon.RangedWeapon;
+import io.musician101.mcdndsimple.common.character.player.Experience;
+import io.musician101.mcdndsimple.common.character.player.bonus.RangedBonus;
+import io.musician101.mcdndsimple.common.character.player.weapon.RangedWeapon;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.anvil.StringInputAnvilGUI;
 import io.musician101.mcdndsimple.sponge.gui.anvil.number.IntegerInputAnvilGUI;

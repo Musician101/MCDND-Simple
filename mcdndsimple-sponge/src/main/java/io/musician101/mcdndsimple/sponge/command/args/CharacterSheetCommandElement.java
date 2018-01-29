@@ -27,7 +27,7 @@ public class CharacterSheetCommandElement extends CommandElement {
     @Override
     protected Object parseValue(@Nonnull CommandSource source, @Nonnull CommandArgs args) throws ArgumentParseException {
         if (source instanceof Player) {
-            return SpongeMCDNDSimple.instance().getCharacterSheetStorage().getCharacterSheet(((Player) source).getUniqueId(), args.peek()).orElseThrow(() -> args.createError(Text.of(TextColors.RED, Messages.CHARACTER_DNE)));
+            return SpongeMCDNDSimple.instance().getCharacterSheetStorage().getPlayerSheet(((Player) source).getUniqueId(), args.peek()).orElseThrow(() -> args.createError(Text.of(TextColors.RED, Messages.CHARACTER_DNE)));
         }
 
         throw args.createError(Text.of(TextColors.RED, Messages.PLAYER_ONLY));
@@ -38,7 +38,7 @@ public class CharacterSheetCommandElement extends CommandElement {
     public List<String> complete(@Nonnull CommandSource src, @Nonnull CommandArgs args, @Nonnull CommandContext context) {
         if (src instanceof Player) {
             List<String> list = new ArrayList<>();
-            SpongeMCDNDSimple.instance().getCharacterSheetStorage().getCharacterSheets().forEach((key, value) -> {
+            SpongeMCDNDSimple.instance().getCharacterSheetStorage().getPlayerSheets().forEach((key, value) -> {
                 if (((Player) src).getUniqueId().equals(value)) {
                     list.add(key.getName());
                 }

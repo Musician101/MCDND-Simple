@@ -14,7 +14,6 @@ import org.spongepowered.api.event.item.inventory.ClickInventoryEvent;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.text.Text;
 
-
 public class SkillsTabGUI extends MCDNDSimpleChestGUI {
 
     private final BioAndInfo bioAndInfo;

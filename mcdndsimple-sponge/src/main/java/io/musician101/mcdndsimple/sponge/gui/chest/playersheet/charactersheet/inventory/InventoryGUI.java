@@ -13,7 +13,6 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.text.Text;
 
-
 public class InventoryGUI extends MCDNDSimplePagedGUI {
 
     private final List<MCDNDItem> items;

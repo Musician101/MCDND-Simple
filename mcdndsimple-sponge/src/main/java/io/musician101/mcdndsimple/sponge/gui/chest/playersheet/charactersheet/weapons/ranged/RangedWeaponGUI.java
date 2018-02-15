@@ -3,11 +3,11 @@ package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.w
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.Reference.MenuText;
 import io.musician101.mcdndsimple.common.Reference.Messages;
-import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.CoreStats;
+import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.bonus.RangedBonus;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.player.weapon.RangedWeapon;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.anvil.StringInputAnvilGUI;
@@ -72,8 +72,8 @@ public class RangedWeaponGUI extends MCDNDSimpleChestGUI {
         }));
         set(6, ClickInventoryEvent.class, createItem(ItemTypes.ARROW, Text.of(MenuText.ammo(weapon.getAmmo()))), player -> {
             new IntegerInputAnvilGUI(player, (p, i) -> {
-               weapon.setAmmo(i);
-               delayedOpen();
+                weapon.setAmmo(i);
+                delayedOpen();
             });
         });
         set(7, createItem(ItemTypes.ENCHANTED_BOOK, Text.of(MenuText.damageBonus(weapon.getDamageBonus(coreStats)))));

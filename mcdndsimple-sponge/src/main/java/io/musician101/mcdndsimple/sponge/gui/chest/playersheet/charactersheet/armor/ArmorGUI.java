@@ -15,7 +15,6 @@ import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.text.Text;
 
-
 public class ArmorGUI extends MCDNDSimpleChestGUI {
 
     private final Armor armor;

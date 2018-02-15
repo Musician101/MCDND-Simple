@@ -11,7 +11,6 @@ import org.spongepowered.api.event.item.inventory.ClickInventoryEvent;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.text.Text;
 
-
 public class OutputOptionsGUI extends MCDNDSimpleChestGUI {
 
     private final OutputOptions outputOptions;

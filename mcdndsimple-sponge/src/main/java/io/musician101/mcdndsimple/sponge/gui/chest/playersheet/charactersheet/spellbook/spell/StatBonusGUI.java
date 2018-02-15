@@ -17,12 +17,11 @@ import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.text.Text;
 
-
 public class StatBonusGUI<T> extends MCDNDSimpleChestGUI {
 
+    private final BiPredicate<T, StatBonus> glowApplier;
     private final T value;
     private final BiConsumer<T, StatBonus> valueSetter;
-    private final BiPredicate<T, StatBonus> glowApplier;
 
     public StatBonusGUI(Player player, T value, BiConsumer<T, StatBonus> valueSetter, BiPredicate<T, StatBonus> glowApplier, AbstractSpongeChestGUI<AbstractConfig, SpongeMCDNDSimple> prevGUI) {
         super(player, MenuText.STAT_BONUS, 9, prevGUI);

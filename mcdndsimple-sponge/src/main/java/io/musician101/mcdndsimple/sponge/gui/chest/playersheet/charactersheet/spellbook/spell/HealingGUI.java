@@ -15,7 +15,6 @@ import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
-
 public class HealingGUI extends MCDNDSimpleChestGUI {
 
     private final SpellHealing spellHealing;

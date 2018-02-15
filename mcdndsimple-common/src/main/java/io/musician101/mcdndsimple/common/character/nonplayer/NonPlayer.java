@@ -26,28 +26,28 @@ public class NonPlayer extends AbstractPlayer {
         return nonPlayerActions;
     }
 
-    public NonPlayerSheet getNonPlayerSheet() {
-        return nonPlayerSheet;
-    }
-
-    public NonPlayerSkills getSkills() {
-        return nonPlayerSkills;
-    }
-
-    public TraitsBackground getTraitsBackground() {
-        return traitsBackground;
-    }
-
     public void setNonPlayerActions(NonPlayerActions nonPlayerActions) {
         this.nonPlayerActions = nonPlayerActions;
+    }
+
+    public NonPlayerSheet getNonPlayerSheet() {
+        return nonPlayerSheet;
     }
 
     public void setNonPlayerSheet(NonPlayerSheet NonPlayerSheet) {
         this.nonPlayerSheet = NonPlayerSheet;
     }
 
+    public NonPlayerSkills getSkills() {
+        return nonPlayerSkills;
+    }
+
     public void setSkills(NonPlayerSkills nonPlayerSkills) {
         this.nonPlayerSkills = nonPlayerSkills;
+    }
+
+    public TraitsBackground getTraitsBackground() {
+        return traitsBackground;
     }
 
     public void setTraitsBackground(TraitsBackground traitsBackground) {

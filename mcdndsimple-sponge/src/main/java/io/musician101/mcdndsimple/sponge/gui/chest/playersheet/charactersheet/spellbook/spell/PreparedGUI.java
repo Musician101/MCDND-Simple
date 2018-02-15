@@ -12,7 +12,6 @@ import org.spongepowered.api.event.item.inventory.ClickInventoryEvent;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.text.Text;
 
-
 public class PreparedGUI extends MCDNDSimpleChestGUI {
 
     private final Spell spell;

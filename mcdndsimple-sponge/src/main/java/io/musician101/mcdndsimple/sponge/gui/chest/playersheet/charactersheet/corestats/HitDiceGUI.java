@@ -20,7 +20,6 @@ import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.text.Text;
 
-
 public class HitDiceGUI extends MCDNDSimpleChestGUI {
 
     private final BioAndInfo bioAndInfo;

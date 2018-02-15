@@ -41,7 +41,9 @@ public abstract class PlayerSheetStorage extends CharacterStorage<PlayerSheet> {
     public static class Serializer implements CharacterStorage.Serializer<PlayerSheet> {
 
         @AdapterType
-        public static final TypeToken<Entry<PlayerSheet, List<UUID>>> ENTRY_CLASS = new TypeToken<Entry<PlayerSheet, List<UUID>>>(){};
+        public static final TypeToken<Entry<PlayerSheet, List<UUID>>> ENTRY_CLASS = new TypeToken<Entry<PlayerSheet, List<UUID>>>() {
+
+        };
 
         @Override
         public Entry<PlayerSheet, List<UUID>> deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {

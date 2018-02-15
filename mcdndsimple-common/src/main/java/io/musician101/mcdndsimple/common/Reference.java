@@ -40,19 +40,19 @@ public class Reference {
 
         public static final String CALLBACK_DESC = "An internal command for running code from clickable text in chat.";
         public static final String CALLBACK_NAME = "callback";
-        public static final String CHARACTER_NAME = "character";
-        public static final String SPELL_NAME = "spell";
-        public static final String UUID = "UUID";
         public static final String CHARACTER_DESC = "Edit a character's sheet.";
-        public static final String NAME = "name";
-        public static final String PLAYER_SHEET_NAME = "playersheet";
-        public static final String PLAYER_SHEET_DESC = "Open up the player sheet for a character.";
+        public static final String CHARACTER_NAME = "character";
         public static final String CREATE_COMMAND = "create";
         public static final String CREATE_COMMAND_DESC = "Create a PC or NPC_NAME.";
+        public static final String NAME = "name";
         public static final String NPC_DESC = "Open up the player sheet for an NPC.";
         public static final String NPC_NAME = "npc";
         public static final String PC = "pc";
         public static final String CREATE_ARGUMENT = NPC_NAME + " | " + PC;
+        public static final String PLAYER_SHEET_DESC = "Open up the player sheet for a character.";
+        public static final String PLAYER_SHEET_NAME = "playersheet";
+        public static final String SPELL_NAME = "spell";
+        public static final String UUID = "UUID";
 
         private Commands() {
 
@@ -113,6 +113,7 @@ public class Reference {
         public static final String DESCRIPTION = "Description";
         public static final String DEXTERITY = "Dexterity";
         public static final String DRUID = "Druid";
+        public static final String EFFECTS = "Effects";
         public static final String FIGHTER = "Fighter";
         public static final String FINESSE = "Finesse";
         public static final String FLAWS = "Flaws";
@@ -139,6 +140,9 @@ public class Reference {
         public static final String MONK = "Monk";
         public static final String NATURE = "Nature";
         public static final String NEW_CLASS_ACTION = "New Class Action";
+        public static final String NEW_ITEM = "New Item";
+        public static final String NEW_MELEE_WEAPON = "New Melee Weapon";
+        public static final String NEW_RANGED_WEAPON = "New Ranged Weapon";
         public static final String NEXT_PAGE = "Next Page";
         /**
          * @deprecated need to use a tiny bit more often in some cases
@@ -163,6 +167,7 @@ public class Reference {
         public static final String RANGED_BONUSES = "Ranged Bonuses";
         public static final String RANGED_WEAPONS = "Ranged Weapons";
         public static final String RANGER = "Ranger";
+        public static final String RECHARGE = "Recharge";
         public static final String RELIGION = "Religion";
         public static final String RENAME = "Rename";
         public static final String ROGUE = "Rogue";
@@ -174,9 +179,12 @@ public class Reference {
         public static final String SAVE_DC = "Save DC";
         public static final String SAVE_DC_ROLLS = "Save DC Rolls";
         public static final String SAVING_STAT = "Saving Stat";
+        public static final String SAVING_THROW = "Saving Throw";
         public static final String SAVING_THROWS = "Saving Throws";
         public static final String SAVING_THROW_BONUSES = "Saving Throw Rolls";
+        public static final String SAVING_THROW_OUTPUT_OPTIONS = "Saving Throw Output Options";
         public static final String SCHOOL = "School";
+        public static final String SECOND_ATTACK = "Second Attack";
         public static final String SKILLS = "Skills";
         public static final String SLEIGHT_OF_HAND = "Sleight of Hand";
         public static final String SORCERER = "Sorcerer";
@@ -191,6 +199,15 @@ public class Reference {
         public static final String SPELL_EFFECTS = "Spell Effects";
         public static final String SPELL_INFO = "Spell Info";
         public static final String SPELL_SLOTS = "Spell Slots";
+        public static final String SPELL_SLOT_1 = "Spell Slot 1";
+        public static final String SPELL_SLOT_2 = "Spell Slot 2";
+        public static final String SPELL_SLOT_3 = "Spell Slot 3";
+        public static final String SPELL_SLOT_4 = "Spell Slot 4";
+        public static final String SPELL_SLOT_5 = "Spell Slot 5";
+        public static final String SPELL_SLOT_6 = "Spell Slot 6";
+        public static final String SPELL_SLOT_7 = "Spell Slot 7";
+        public static final String SPELL_SLOT_8 = "Spell Slot 8";
+        public static final String SPELL_SLOT_9 = "Spell Slot 9";
         public static final String STAT_BONUS = "Stat Bonus";
         public static final String STEALTH = "Stealth";
         public static final String STRENGTH = "Strength";
@@ -204,36 +221,11 @@ public class Reference {
         public static final String WEAPONS_SPELL_MISC_OUTPUT_OPTIONS = "Weapons/Spell/Misc Output Options";
         public static final String WEAPON_PROFICIENCIES = "Weapon Proficiencies";
         public static final String WEIGHT = "Weight";
-        public static final String WIZARD = "Wizard";
-        public static final String SPELL_SLOT_1 = "Spell Slot 1";
-        public static final String SPELL_SLOT_2 = "Spell Slot 2";
-        public static final String SPELL_SLOT_3 = "Spell Slot 3";
-        public static final String SPELL_SLOT_4 = "Spell Slot 4";
-        public static final String SPELL_SLOT_5 = "Spell Slot 5";
-        public static final String SPELL_SLOT_6 = "Spell Slot 6";
-        public static final String SPELL_SLOT_7 = "Spell Slot 7";
-        public static final String SPELL_SLOT_8 = "Spell Slot 8";
-        public static final String SPELL_SLOT_9 = "Spell Slot 9";
-        public static final String RECHARGE = "Recharge";
-        public static final String SAVING_THROW_OUTPUT_OPTIONS = "Saving Throw Output Options";
         public static final String WISDOM = "Wisdom";
-        public static final String NEW_ITEM = "New Item";
-        public static final String SECOND_ATTACK = "Second Attack";
-        public static final String SAVING_THROW = "Saving Throw";
-        public static final String EFFECTS = "Effects";
-        public static final String NEW_MELEE_WEAPON = "New Melee Weapon";
-        public static final String NEW_RANGED_WEAPON = "New Ranged Weapon";
+        public static final String WIZARD = "Wizard";
 
         private MenuText() {
 
-        }
-
-        public static String armorClass(Armor armor) {
-            return "Armor Class: " + armor.getBaseArmorClass();
-        }
-
-        public static String plusStat(boolean plusStat) {
-            return PLUS_STAT + " " + (plusStat ? "Yes" : "No");
         }
 
         public static String age(BackgroundTab backgroundTab) {
@@ -242,6 +234,18 @@ public class Reference {
 
         public static String alignment(BackgroundTab backgroundTab) {
             return "Alignment: " + backgroundTab.getAlignment();
+        }
+
+        public static String ammo(int ammo) {
+            return "Ammo: " + ammo;
+        }
+
+        public static String armorClass(Armor armor) {
+            return "Armor Class: " + armor.getBaseArmorClass();
+        }
+
+        public static String armorType(Armor armor) {
+            return "Armor Type: " + armor.getArmorType().getName();
         }
 
         public static String armoredAC(ArmorTab armorTab) {
@@ -290,10 +294,6 @@ public class Reference {
 
         public static String components(String components) {
             return "Components: " + components;
-        }
-
-        public static String hasComponents(List<String> components) {
-            return "Has Components: " + (components.isEmpty() ? "No" : "Yes");
         }
 
         public static String concentration(boolean needsConcentration) {
@@ -366,6 +366,10 @@ public class Reference {
 
         public static String hair(BackgroundTab backgroundTab) {
             return "Hair: " + backgroundTab.getHair();
+        }
+
+        public static String hasComponents(List<String> components) {
+            return "Has Components: " + (components.isEmpty() ? "No" : "Yes");
         }
 
         public static String hasSpeedPenalty(Armor armor) {
@@ -450,12 +454,20 @@ public class Reference {
             return "".equals(bioAndInfo.getName()) ? "Not Set" : bioAndInfo.getName();
         }
 
+        public static String otherBonus(SpellDamage spellDamage) {
+            return "Other Bonus: " + spellDamage.getBonus();
+        }
+
         public static String otherWeight(double weight) {
             return "Other: " + weight;
         }
 
         public static String overallLevel(Experience experience, ClassLevels classLevels) {
             return "Overall Level: " + experience.getOverallLevel(classLevels);
+        }
+
+        public static String plusStat(boolean plusStat) {
+            return PLUS_STAT + " " + (plusStat ? "Yes" : "No");
         }
 
         public static String prepared(Prepared prepared) {
@@ -530,72 +542,6 @@ public class Reference {
             return new String[]{"Warlock Specific", "Used: " + spellbookTab.getWarlockSpellSlotsUsed(), "Max: " + warlockSlots(classLevels), "Level: " + warlockSpellAmount(classLevels)};
         }
 
-        private static int warlockSpellAmount(ClassLevels classLevels) {
-            switch (classLevels.getWarlock()) {
-                case 1:
-                    return 1;
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                case 10:
-                    return 2;
-                case 11:
-                case 12:
-                case 13:
-                case 14:
-                case 15:
-                case 16:
-                    return 3;
-                case 17:
-                case 18:
-                case 19:
-                case 20:
-                    return 4;
-                default:
-                    return 0;
-            }
-        }
-
-        private static int warlockSlots(ClassLevels classLevels) {
-            SpellcasterClass sc = SpellcasterClass.WARLOCK;
-            int level = classLevels.getWarlock();
-            switch (level) {
-                case 1:
-                case 2:
-                    return sc.get1stLevelAmount(classLevels);
-                case 3:
-                case 4:
-                    return sc.get2ndLevelAmount(classLevels);
-                case 5:
-                case 6:
-                    return sc.get3rdLevelAmount(classLevels);
-                case 7:
-                case 8:
-                    return sc.get4thLevelAmount(classLevels);
-                case 9:
-                case 10:
-                case 11:
-                case 12:
-                case 13:
-                case 14:
-                case 15:
-                case 16:
-                case 17:
-                case 18:
-                case 19:
-                case 20:
-                    return sc.get5thLevelAmount(classLevels);
-                default:
-                    return 0;
-
-            }
-        }
-
         public static String spellType(SpellType spellType) {
             return "Spell Type: " + spellType.getName();
         }
@@ -656,6 +602,72 @@ public class Reference {
             return "Vision: " + backgroundTab.getVision();
         }
 
+        private static int warlockSlots(ClassLevels classLevels) {
+            SpellcasterClass sc = SpellcasterClass.WARLOCK;
+            int level = classLevels.getWarlock();
+            switch (level) {
+                case 1:
+                case 2:
+                    return sc.get1stLevelAmount(classLevels);
+                case 3:
+                case 4:
+                    return sc.get2ndLevelAmount(classLevels);
+                case 5:
+                case 6:
+                    return sc.get3rdLevelAmount(classLevels);
+                case 7:
+                case 8:
+                    return sc.get4thLevelAmount(classLevels);
+                case 9:
+                case 10:
+                case 11:
+                case 12:
+                case 13:
+                case 14:
+                case 15:
+                case 16:
+                case 17:
+                case 18:
+                case 19:
+                case 20:
+                    return sc.get5thLevelAmount(classLevels);
+                default:
+                    return 0;
+
+            }
+        }
+
+        private static int warlockSpellAmount(ClassLevels classLevels) {
+            switch (classLevels.getWarlock()) {
+                case 1:
+                    return 1;
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                    return 2;
+                case 11:
+                case 12:
+                case 13:
+                case 14:
+                case 15:
+                case 16:
+                    return 3;
+                case 17:
+                case 18:
+                case 19:
+                case 20:
+                    return 4;
+                default:
+                    return 0;
+            }
+        }
+
         public static String weight(BackgroundTab backgroundTab) {
             return "Weight: " + backgroundTab.getWeight();
         }
@@ -667,29 +679,17 @@ public class Reference {
         public static String xpForNextLevel(Experience experience, ClassLevels classLevels) {
             return "XP for next level: " + experience.getXPForNextLevel(classLevels);
         }
-
-        public static String ammo(int ammo) {
-            return "Ammo: " + ammo;
-        }
-
-        public static String armorType(Armor armor) {
-            return "Armor Type: " + armor.getArmorType().getName();
-        }
-
-        public static String otherBonus(SpellDamage spellDamage) {
-            return "Other Bonus: " + spellDamage.getBonus();
-        }
     }
 
     public static class Messages {
 
+        public static final String LOAD_COMPLETE = "Let the adventures begin...";
         public static final String PREFIX = "[MCDNDS] ";
         public static final String CLASS_ACTION_DELETED = PREFIX + "Class action deleted.";
         public static final String CLASS_RESOURCE_DELETED = PREFIX + "Class resource deleted.";
         public static final String ITEM_DELETED = PREFIX + "Item deleted.";
         public static final String NO_PERMISSION = PREFIX + "You do not have permission to run this command.";
         public static final String PLAYER_ONLY = PREFIX + "Only a player can run this command.";
-        public static final String LOAD_COMPLETE = "Let the adventures begin...";
         public static final String CHARACTER_DNE = PREFIX + "That character does not exist or you do not have access to that character.";
         public static final String CHARACTER_ALREADY_EXISTS = PREFIX + "That character already exists.";
         public static final String CHARACTER_CREATED = PREFIX + "Character created.";

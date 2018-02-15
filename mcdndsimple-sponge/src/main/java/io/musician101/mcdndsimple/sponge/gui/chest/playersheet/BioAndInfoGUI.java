@@ -17,7 +17,6 @@ import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.text.LiteralText;
 import org.spongepowered.api.text.Text;
 
-
 public class BioAndInfoGUI extends MCDNDSimpleChestGUI {
 
     private final BioAndInfo bioAndInfo;

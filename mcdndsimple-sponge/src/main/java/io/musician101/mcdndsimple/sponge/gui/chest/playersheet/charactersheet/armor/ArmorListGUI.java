@@ -12,7 +12,6 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.item.inventory.ClickInventoryEvent;
 import org.spongepowered.api.item.ItemTypes;
 
-
 public class ArmorListGUI extends MCDNDSimplePagedGUI {
 
     private final List<Armor> armorList;

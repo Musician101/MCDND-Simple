@@ -63,71 +63,60 @@ public class BackgroundTabGUI extends MCDNDSimpleChestGUI {
             backgroundTab.setVision(s);
             delayedOpen();
         }));
-        set(8, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.KNOWN_LANGUAGES)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager()
-                .addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getLanguages().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
-                    backgroundTab.setLanguages(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
-                    open();
-                }));
+        set(8, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.KNOWN_LANGUAGES)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager().addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getLanguages().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
+            backgroundTab.setLanguages(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
+            open();
+        }));
         set(9, ClickInventoryEvent.class, createItem(ItemTypes.TOTEM_OF_UNDYING, Text.of(MenuText.alignment(backgroundTab))), player -> new StringInputAnvilGUI(player, (p, s) -> {
             backgroundTab.setAlignment(s);
             open();
         }));
-        set(10, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.BACKGROUND)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager()
-                .addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getBackground().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
-                    backgroundTab.setBackground(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
-                    open();
-                }));
-        set(11, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.RACIAL_TRAITS)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager()
-                .addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getRacialTraits().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
-                    backgroundTab.setRacialTraits(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
-                    open();
-                }));
+        set(10, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.BACKGROUND)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager().addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getBackground().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
+            backgroundTab.setBackground(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
+            open();
+        }));
+        set(11, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.RACIAL_TRAITS)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager().addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getRacialTraits().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
+            backgroundTab.setRacialTraits(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
+            open();
+        }));
         set(12, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.PERSONALITY_TRAITS)), player -> {
-            SpongeMusicianLibrary.instance().getSpongeBookGUIManager()
-                    .addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getPersonalityTraits().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
-                        backgroundTab.setPersonalityTraits(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
-                        open();
-                    });
+            SpongeMusicianLibrary.instance().getSpongeBookGUIManager().addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getPersonalityTraits().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
+                backgroundTab.setPersonalityTraits(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
+                open();
+            });
         });
         set(13, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.IDEALS)), player -> {
-            SpongeMusicianLibrary.instance().getSpongeBookGUIManager()
-                    .addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getIdeals().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
-                        backgroundTab.setIdeals(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
-                        open();
-                    });
+            SpongeMusicianLibrary.instance().getSpongeBookGUIManager().addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getIdeals().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
+                backgroundTab.setIdeals(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
+                open();
+            });
         });
         set(14, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.BONDS)), player -> {
-            SpongeMusicianLibrary.instance().getSpongeBookGUIManager()
-                    .addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getBonds().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
-                        backgroundTab.setBonds(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
-                        open();
-                    });
+            SpongeMusicianLibrary.instance().getSpongeBookGUIManager().addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getBonds().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
+                backgroundTab.setBonds(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
+                open();
+            });
         });
-        set(15, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.FLAWS)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager()
-                .addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getFlaws().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
-                    backgroundTab.setFlaws(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
-                    open();
-                }));
-        set(16, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.ARMOR_PROFICIENCIES)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager()
-                .addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getArmorProficiencies().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
-                    backgroundTab.setArmorProficiencies(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
-                    open();
-                }));
-        set(16, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.WEAPON_PROFICIENCIES)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager()
-                .addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getWeaponProficiencies().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
-                    backgroundTab.setWeaponProficiencies(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
-                    open();
-                }));
-        set(18, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.TOOL_PROFICIENCIES)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager()
-                .addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getToolProficiencies().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
-                    backgroundTab.setToolProficiencies(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
-                    open();
-                }));
-        set(19, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.OTHER_NOTES)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager()
-                .addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getOtherNotes().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
-                    backgroundTab.setOtherNotes(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
-                    open();
-                }));
+        set(15, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.FLAWS)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager().addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getFlaws().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
+            backgroundTab.setFlaws(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
+            open();
+        }));
+        set(16, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.ARMOR_PROFICIENCIES)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager().addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getArmorProficiencies().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
+            backgroundTab.setArmorProficiencies(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
+            open();
+        }));
+        set(16, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.WEAPON_PROFICIENCIES)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager().addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getWeaponProficiencies().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
+            backgroundTab.setWeaponProficiencies(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
+            open();
+        }));
+        set(18, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.TOOL_PROFICIENCIES)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager().addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getToolProficiencies().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
+            backgroundTab.setToolProficiencies(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
+            open();
+        }));
+        set(19, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.OTHER_NOTES)), player -> SpongeMusicianLibrary.instance().getSpongeBookGUIManager().addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.BOOK_PAGES, backgroundTab.getOtherNotes().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
+            backgroundTab.setOtherNotes(pages.stream().map(LiteralText.class::cast).map(LiteralText::getContent).collect(Collectors.toList()));
+            open();
+        }));
         setBackButton(26, ClickInventoryEvent.class, ItemTypes.BARRIER);
     }
 }

@@ -30,6 +30,8 @@ public abstract class CharacterStorage<T extends AbstractPlayer> {
         return data;
     }
 
+    public abstract void load();
+
     public void remove(T value) {
         data.removeAll(value);
     }
@@ -37,8 +39,6 @@ public abstract class CharacterStorage<T extends AbstractPlayer> {
     public void removeFrom(T value, UUID uuid) {
         data.remove(value, uuid);
     }
-
-    public abstract void load();
 
     public abstract void save();
 

@@ -18,7 +18,6 @@ import org.spongepowered.api.text.Text.Builder;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
-
 public class SkillGUI extends MCDNDSimpleChestGUI {
 
     private final BioAndInfo bioAndInfo;

@@ -16,19 +16,19 @@ import java.util.List;
 @JsonKey(key = Keys.NON_PLAYER_ACTIONS, typeAdapter = NonPlayerActions.Serializer.class)
 public class NonPlayerActions {
 
-    private String multiAttack = "None";
     private List<NonPlayerAction> actions = new ArrayList<>();
+    private String multiAttack = "None";
 
     public List<NonPlayerAction> getActions() {
         return actions;
     }
 
-    public String getMultiAttack() {
-        return multiAttack;
-    }
-
     public void setActions(List<NonPlayerAction> actions) {
         this.actions = actions;
+    }
+
+    public String getMultiAttack() {
+        return multiAttack;
     }
 
     public void setMultiAttack(String multiAttack) {

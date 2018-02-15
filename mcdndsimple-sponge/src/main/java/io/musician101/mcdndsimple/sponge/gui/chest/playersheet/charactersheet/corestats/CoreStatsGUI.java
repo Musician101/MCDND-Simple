@@ -1,11 +1,11 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.corestats;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
+import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.AbilityScore;
 import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
-import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.Experience;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.chest.MCDNDSimpleChestGUI;
 import io.musician101.musicianlibrary.java.minecraft.config.AbstractConfig;
@@ -16,7 +16,6 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.item.inventory.ClickInventoryEvent;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.text.Text;
-
 
 public class CoreStatsGUI extends MCDNDSimpleChestGUI {
 

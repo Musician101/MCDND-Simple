@@ -51,6 +51,14 @@ public abstract class AbstractWeapon {
         this.critMin = critMin;
     }
 
+    public Dice getDamage() {
+        return damage;
+    }
+
+    public void setDamage(Dice damage) {
+        this.damage = damage;
+    }
+
     public int getDamageBonus(CoreStats coreStats) {
         if (attackStat.equals(WeaponAttackStat.FINESSE)) {
             return Math.max(coreStats.getStrength().getMod(), coreStats.getDexterity().getMod());
@@ -75,14 +83,6 @@ public abstract class AbstractWeapon {
         }
 
         return 0;
-    }
-
-    public Dice getDamage() {
-        return damage;
-    }
-
-    public void setDamage(Dice damage) {
-        this.damage = damage;
     }
 
     public String getDamageType() {

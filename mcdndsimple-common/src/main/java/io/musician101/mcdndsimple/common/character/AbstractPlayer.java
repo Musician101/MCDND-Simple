@@ -26,22 +26,22 @@ public abstract class AbstractPlayer {
         return clazz;
     }
 
+    public void setClazz(@Nonnull String clazz) {
+        this.clazz = clazz;
+    }
+
     @Nonnull
     public String getName() {
         return name;
     }
 
+    public void setName(@Nonnull String name) {
+        this.name = name;
+    }
+
     @Nonnull
     public String getRace() {
         return race;
-    }
-
-    public void setClazz(@Nonnull String clazz) {
-        this.clazz = clazz;
-    }
-
-    public void setName(@Nonnull String name) {
-        this.name = name;
     }
 
     public void setRace(@Nonnull String race) {

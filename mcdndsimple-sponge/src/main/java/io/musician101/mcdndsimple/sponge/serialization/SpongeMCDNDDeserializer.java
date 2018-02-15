@@ -1,16 +1,13 @@
 package io.musician101.mcdndsimple.sponge.serialization;
 
 import io.musician101.mcdndsimple.common.Dice;
+import io.musician101.mcdndsimple.common.character.CoreStats;
+import io.musician101.mcdndsimple.common.character.HitPoints;
 import io.musician101.mcdndsimple.common.character.player.AbilityScore;
 import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
 import io.musician101.mcdndsimple.common.character.player.CharacterSheet;
-import io.musician101.mcdndsimple.common.character.player.clazz.ClassAction;
-import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
-import io.musician101.mcdndsimple.common.character.player.clazz.ClassResource;
-import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.HitDice;
-import io.musician101.mcdndsimple.common.character.HitPoints;
 import io.musician101.mcdndsimple.common.character.player.MCDNDItem;
 import io.musician101.mcdndsimple.common.character.player.PlayerSheet;
 import io.musician101.mcdndsimple.common.character.player.Recharge;
@@ -20,6 +17,9 @@ import io.musician101.mcdndsimple.common.character.player.bonus.Bonuses;
 import io.musician101.mcdndsimple.common.character.player.bonus.MeleeBonus;
 import io.musician101.mcdndsimple.common.character.player.bonus.RangedBonus;
 import io.musician101.mcdndsimple.common.character.player.bonus.SpellcastingBonus;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassAction;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassResource;
 import io.musician101.mcdndsimple.common.character.player.equipment.armor.Armor;
 import io.musician101.mcdndsimple.common.character.player.equipment.armor.ArmorType;
 import io.musician101.mcdndsimple.common.character.player.equipment.currency.Coin;
@@ -56,17 +56,6 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<ConfigurationNode
 
     private boolean containsKey(ConfigurationNode configurationNode, String key) {
         return configurationNode.getNode(key).isVirtual();
-    }
-
-    @Override
-    public PlayerSheet deserializePC(ConfigurationNode playerData) {
-        PlayerSheet playerSheet = new PlayerSheet();
-        playerSheet.setBioAndInfo(deserializeBioAndInfo(playerData.getNode(playerData, JsonUtils.BIO_AND_INFO)));
-        playerSheet.setCharacterSheet(deserializePlayerSheet(playerData.getNode(playerData, JsonUtils.PLAYER_SHEET)));
-        playerSheet.setClazz(playerData.getNode(JsonUtils.CLASS).getString(""));
-        playerSheet.setName(playerData.getNode(JsonUtils.NAME).getString(""));
-        playerSheet.setRace(playerData.getNode(JsonUtils.RACE).getString(""));
-        return playerSheet;
     }
 
     @Override
@@ -306,6 +295,17 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<ConfigurationNode
     }
 
     @Override
+    public PlayerSheet deserializePC(ConfigurationNode playerData) {
+        PlayerSheet playerSheet = new PlayerSheet();
+        playerSheet.setBioAndInfo(deserializeBioAndInfo(playerData.getNode(playerData, JsonUtils.BIO_AND_INFO)));
+        playerSheet.setCharacterSheet(deserializePlayerSheet(playerData.getNode(playerData, JsonUtils.PLAYER_SHEET)));
+        playerSheet.setClazz(playerData.getNode(JsonUtils.CLASS).getString(""));
+        playerSheet.setName(playerData.getNode(JsonUtils.NAME).getString(""));
+        playerSheet.setRace(playerData.getNode(JsonUtils.RACE).getString(""));
+        return playerSheet;
+    }
+
+    @Override
     protected CharacterSheet deserializePlayerSheet(ConfigurationNode playerSheetData) {
         CharacterSheet characterSheet = new CharacterSheet();
         characterSheet.setArmorTab(deserializeArmorTab(playerSheetData.getNode(playerSheetData, JsonUtils.ARMOR_TAB)));
@@ -438,11 +438,6 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<ConfigurationNode
     }
 
     @Override
-    protected StatBonus deserializeStatBonus(ConfigurationNode statBonusData) {
-        return Stream.of(StatBonus.values()).filter(statBonus -> containsKey(statBonusData, JsonUtils.NAME) && statBonus.getName().equals(statBonusData.getNode(JsonUtils.NAME).getString())).findFirst().orElse(StatBonus.NONE);
-    }
-
-    @Override
     protected SpellSave deserializeSpellSave(ConfigurationNode spellSaveData) {
         SpellSave spellSave = new SpellSave();
         spellSave.setSaveDCType(deserializeSpellcasterClass(spellSaveData.getNode(spellSaveData, JsonUtils.SAVE_DC_TYPE)));
@@ -477,6 +472,11 @@ public class SpongeMCDNDDeserializer extends MCDNDDeserializer<ConfigurationNode
         spellcastingBonus.setDamage(deserializeDice(spellcastingBonusData.getNode(spellcastingBonusData, JsonUtils.DAMAGE)));
         spellcastingBonus.setSaveDC(deserializeDice(spellcastingBonusData.getNode(spellcastingBonusData, JsonUtils.SAVE_DC)));
         return spellcastingBonus;
+    }
+
+    @Override
+    protected StatBonus deserializeStatBonus(ConfigurationNode statBonusData) {
+        return Stream.of(StatBonus.values()).filter(statBonus -> containsKey(statBonusData, JsonUtils.NAME) && statBonus.getName().equals(statBonusData.getNode(JsonUtils.NAME).getString())).findFirst().orElse(StatBonus.NONE);
     }
 
     @Override

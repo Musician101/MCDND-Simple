@@ -2,11 +2,11 @@ package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.s
 
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.Reference.MenuText;
+import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.AbilityScore;
 import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
-import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.Experience;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.player.spell.MacroOptions;
 import io.musician101.mcdndsimple.common.character.player.spell.Spell;
 import io.musician101.mcdndsimple.common.character.player.spell.SpellDamage;
@@ -39,7 +39,6 @@ import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
 import org.spongepowered.api.text.serializer.TextSerializers;
-
 
 public class SpellGUI extends MCDNDSimpleChestGUI {
 
@@ -243,12 +242,12 @@ public class SpellGUI extends MCDNDSimpleChestGUI {
             Sponge.getServer().getOnlinePlayers().forEach(p -> p.sendMessage(finalMessage));
         });
         set(14, ClickInventoryEvent.class, createItem(ItemTypes.COMPARATOR, Text.of(MenuText.SPELL_CAST_MACRO_DISPLAY_OPTIONS)), player -> new MacroOptionsGUI(player, spell.getMacroOptions(), this));
-        set(18, ClickInventoryEvent.class,createItem(ItemTypes.BOOK, Text.of(MenuText.DESCRIPTION)), player -> new SpellDescriptionGUI(player, spell, this));
-        set(19, ClickInventoryEvent.class,createItem(ItemTypes.DIAMOND_SWORD, Text.of(MenuText.ATTACK)), player -> new StatBonusGUI<>(player, spell, Spell::setAttackStat, (spell, statBonus) -> spell.getAttackStat() == statBonus, this));
-        set(20, ClickInventoryEvent.class,createItem(ItemTypes.SHIELD, Text.of(MenuText.SAVE)), player -> new SpellSaveGUI(player, coreStats, spell.getSpellSave(), this));
-        set(21, ClickInventoryEvent.class,setPotionEffect(createItem(ItemTypes.POTION, Text.of(MenuText.HEALING)), PotionEffectTypes.INSTANT_HEALTH), player -> new HealingGUI(player, spell.getSpellHealing(), this));
-        set(22, ClickInventoryEvent.class,createItem(ItemTypes.GOLDEN_SWORD, Text.of(MenuText.DAMAGE)), player -> new SpellDamageGUI(player, spell.getSpellDamage(), this));
-        set(23, ClickInventoryEvent.class,createItem(ItemTypes.BOOK, Text.of(MenuText.SPELL_EFFECTS)), player -> {
+        set(18, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.DESCRIPTION)), player -> new SpellDescriptionGUI(player, spell, this));
+        set(19, ClickInventoryEvent.class, createItem(ItemTypes.DIAMOND_SWORD, Text.of(MenuText.ATTACK)), player -> new StatBonusGUI<>(player, spell, Spell::setAttackStat, (spell, statBonus) -> spell.getAttackStat() == statBonus, this));
+        set(20, ClickInventoryEvent.class, createItem(ItemTypes.SHIELD, Text.of(MenuText.SAVE)), player -> new SpellSaveGUI(player, coreStats, spell.getSpellSave(), this));
+        set(21, ClickInventoryEvent.class, setPotionEffect(createItem(ItemTypes.POTION, Text.of(MenuText.HEALING)), PotionEffectTypes.INSTANT_HEALTH), player -> new HealingGUI(player, spell.getSpellHealing(), this));
+        set(22, ClickInventoryEvent.class, createItem(ItemTypes.GOLDEN_SWORD, Text.of(MenuText.DAMAGE)), player -> new SpellDamageGUI(player, spell.getSpellDamage(), this));
+        set(23, ClickInventoryEvent.class, createItem(ItemTypes.BOOK, Text.of(MenuText.SPELL_EFFECTS)), player -> {
             SpongeMusicianLibrary.instance().getSpongeBookGUIManager().addPlayer(player, ItemStack.builder().itemType(ItemTypes.WRITABLE_BOOK).add(Keys.ITEM_LORE, spell.getEffects().stream().map(Text::of).collect(Collectors.toList())).build(), pages -> {
                 spell.setEffects(pages.stream().map(TextSerializers.PLAIN::serialize).collect(Collectors.toList()));
                 open();

@@ -14,8 +14,8 @@ public class SpigotMCDNDSimple extends AbstractSpigotPlugin<AbstractConfig, Spig
     //TODO need to check that all of the list GUIs have the ability to delete objects
     //TODO need to check deprecated methods for other things
     private CallbackTracker callbackTracker;
-    private SpigotNonPlayerSheetStorage npcStorage;
     private SpigotPlayerSheetStorage characterSheetStorage;
+    private SpigotNonPlayerSheetStorage npcStorage;
 
     public static SpigotMCDNDSimple instance() {
         return getPlugin(SpigotMCDNDSimple.class);

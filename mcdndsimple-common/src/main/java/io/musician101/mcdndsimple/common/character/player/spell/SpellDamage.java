@@ -18,8 +18,8 @@ public class SpellDamage {
 
     private int bonus = 0;
     private boolean canCrit = true;
-    private String damageType = "";
     private Dice damage = new Dice(0);
+    private String damageType = "";
 
     public boolean canCrit() {
         return canCrit;
@@ -33,20 +33,20 @@ public class SpellDamage {
         this.bonus = bonus;
     }
 
-    public String getDamageType() {
-        return damageType;
-    }
-
-    public void setDamageType(String damageType) {
-        this.damageType = damageType;
-    }
-
     public Dice getDamage() {
         return damage;
     }
 
     public void setDamage(Dice damage) {
         this.damage = damage;
+    }
+
+    public String getDamageType() {
+        return damageType;
+    }
+
+    public void setDamageType(String damageType) {
+        this.damageType = damageType;
     }
 
     public void setCanCrit(boolean canCrit) {

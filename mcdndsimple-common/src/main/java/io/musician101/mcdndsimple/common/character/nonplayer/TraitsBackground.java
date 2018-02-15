@@ -17,46 +17,46 @@ import java.util.List;
 @JsonKey(key = Keys.TRAITS_BACKGROUND, typeAdapter = TraitsBackground.Serializer.class)
 public class TraitsBackground {
 
-    private List<String> traits = new ArrayList<>(Collections.singletonList("None"));
     private String conditionImmunity = "None";
     private String damageImmunity = "None";
     private String damageResistance = "None";
     private String damageVulnerability = "None";
+    private List<String> traits = new ArrayList<>(Collections.singletonList("None"));
 
     public String getConditionImmunity() {
         return conditionImmunity;
-    }
-
-    public String getDamageImmunity() {
-        return damageImmunity;
-    }
-
-    public String getDamageResistance() {
-        return damageResistance;
-    }
-
-    public String getDamageVulnerability() {
-        return damageVulnerability;
-    }
-
-    public List<String> getTraits() {
-        return traits;
     }
 
     public void setConditionImmunity(String conditionImmunity) {
         this.conditionImmunity = conditionImmunity;
     }
 
+    public String getDamageImmunity() {
+        return damageImmunity;
+    }
+
     public void setDamageImmunity(String damageImmunity) {
         this.damageImmunity = damageImmunity;
+    }
+
+    public String getDamageResistance() {
+        return damageResistance;
     }
 
     public void setDamageResistance(String damageResistance) {
         this.damageResistance = damageResistance;
     }
 
+    public String getDamageVulnerability() {
+        return damageVulnerability;
+    }
+
     public void setDamageVulnerability(String damageVulnerability) {
         this.damageVulnerability = damageVulnerability;
+    }
+
+    public List<String> getTraits() {
+        return traits;
     }
 
     public void setTraits(List<String> traits) {

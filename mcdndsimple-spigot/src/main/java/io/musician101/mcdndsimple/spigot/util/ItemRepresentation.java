@@ -2,9 +2,9 @@ package io.musician101.mcdndsimple.spigot.util;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
 import io.musician101.mcdndsimple.common.character.CoreStats;
-import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.UnarmoredBonus;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.player.equipment.armor.Armor;
 import io.musician101.mcdndsimple.common.character.player.equipment.armor.ArmorType;
 import io.musician101.mcdndsimple.common.character.player.spell.Spell;
@@ -19,37 +19,6 @@ public class ItemRepresentation {
 
     private ItemRepresentation() {
 
-    }
-
-    public static ItemStack weaponAttackStat(WeaponAttackStat stat) {
-        SpigotIconBuilder builder;
-        switch (stat) {
-            case CHA:
-                builder = SpigotIconBuilder.builder(Material.SKULL_ITEM).durability(3);
-                break;
-            case CON:
-                builder = SpigotIconBuilder.builder(Material.GOLDEN_APPLE);
-                break;
-            case DEX:
-                builder = SpigotIconBuilder.builder(Material.BOW);
-                break;
-            case FINESSE:
-                builder = SpigotIconBuilder.builder(Material.DIAMOND_SWORD);
-                break;
-            case INT:
-                builder = SpigotIconBuilder.builder(Material.BOOK_AND_QUILL);
-                break;
-            case STR:
-                builder = SpigotIconBuilder.builder(Material.IRON_SWORD);
-                break;
-            case WIS:
-                builder = SpigotIconBuilder.builder(Material.ENCHANTED_BOOK);
-                break;
-                default:
-                    return SpigotIconBuilder.builder(Material.BARRIER).name("I'M AN ERROR! PLEASE REPORT ME!").build();
-        }
-
-        return builder.name(stat.getName()).build();
     }
 
     public static ItemStack armor(Armor armor) {
@@ -84,14 +53,7 @@ public class ItemRepresentation {
     }
 
     public static ItemStack spell(Spell spell) {
-        return SpigotIconBuilder.builder(Material.ENCHANTED_BOOK).name(spell.getName()).description(MenuText.spellLevel(spell.getLevel()),
-        MenuText.spellType(spell.getSpellType()),
-        MenuText.gainedFrom(spell.getGainedFrom()),
-        MenuText.hasComponents(spell.getComponents()),
-        MenuText.castTime(spell.getCastTime()),
-        MenuText.duration(spell.getDuration()),
-        MenuText.target(spell.getTargetArea()),
-        MenuText.range(spell.getRange())).build();
+        return SpigotIconBuilder.builder(Material.ENCHANTED_BOOK).name(spell.getName()).description(MenuText.spellLevel(spell.getLevel()), MenuText.spellType(spell.getSpellType()), MenuText.gainedFrom(spell.getGainedFrom()), MenuText.hasComponents(spell.getComponents()), MenuText.castTime(spell.getCastTime()), MenuText.duration(spell.getDuration()), MenuText.target(spell.getTargetArea()), MenuText.range(spell.getRange())).build();
     }
 
     public static ItemStack unarmoredBonus(UnarmoredBonus unarmoredBonus) {
@@ -115,5 +77,36 @@ public class ItemRepresentation {
         }
 
         return SpigotIconBuilder.of(material, unarmoredBonus.getName());
+    }
+
+    public static ItemStack weaponAttackStat(WeaponAttackStat stat) {
+        SpigotIconBuilder builder;
+        switch (stat) {
+            case CHA:
+                builder = SpigotIconBuilder.builder(Material.SKULL_ITEM).durability(3);
+                break;
+            case CON:
+                builder = SpigotIconBuilder.builder(Material.GOLDEN_APPLE);
+                break;
+            case DEX:
+                builder = SpigotIconBuilder.builder(Material.BOW);
+                break;
+            case FINESSE:
+                builder = SpigotIconBuilder.builder(Material.DIAMOND_SWORD);
+                break;
+            case INT:
+                builder = SpigotIconBuilder.builder(Material.BOOK_AND_QUILL);
+                break;
+            case STR:
+                builder = SpigotIconBuilder.builder(Material.IRON_SWORD);
+                break;
+            case WIS:
+                builder = SpigotIconBuilder.builder(Material.ENCHANTED_BOOK);
+                break;
+            default:
+                return SpigotIconBuilder.builder(Material.BARRIER).name("I'M AN ERROR! PLEASE REPORT ME!").build();
+        }
+
+        return builder.name(stat.getName()).build();
     }
 }

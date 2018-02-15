@@ -1,11 +1,11 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.weapons.ranged;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.CoreStats;
+import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.bonus.RangedBonus;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.player.weapon.RangedWeapon;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.chest.MCDNDSimplePagedGUI;
@@ -38,8 +38,7 @@ public class RangedWeaponsGUI extends MCDNDSimplePagedGUI {
 
     @Override
     protected void build() {
-        setContents(weapons, rangedWeapon -> ItemRepresentation.rangedWeapon(rangedWeapon, classLevels, coreStats, experience), (player, weapon) -> p -> new RangedWeaponGUI(p, weapon, bioAndInfo, classLevels, coreStats, experience, rangedBonus,
-                prevGUI));
+        setContents(weapons, rangedWeapon -> ItemRepresentation.rangedWeapon(rangedWeapon, classLevels, coreStats, experience), (player, weapon) -> p -> new RangedWeaponGUI(p, weapon, bioAndInfo, classLevels, coreStats, experience, rangedBonus, prevGUI));
         int maxPage = new Double(Math.ceil(weapons.size() / 45)).intValue();
         setJumpToPage(45, maxPage, (player, page) -> new RangedWeaponsGUI(player, weapons, page, bioAndInfo, classLevels, coreStats, experience, rangedBonus, prevGUI));
         setPageNavigation(48, MenuText.PREVIOUS_PAGE, player -> {

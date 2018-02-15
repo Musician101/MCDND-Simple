@@ -16,49 +16,77 @@ import java.util.List;
 
 public class NonPlayerSheet {
 
-    private boolean dmOutputOnly = true;
-    private CoreStats coreStats = new CoreStats();
-    private double challengeRating = 0D;
-    private int armorClass = 10;
-    private int climbSpeed = 0;
-    private int flySpeed = 0;
-    private int speed = 0;
-    private int swimSpeed = 0;
-    private int xp = 0;
-    private NonPlayerHitPoints health = new NonPlayerHitPoints();
-    private String armorClassNote = "";
     private String alignment = "";
+    private int armorClass = 10;
+    private String armorClassNote = "";
+    private double challengeRating = 0D;
+    private int climbSpeed = 0;
+    private CoreStats coreStats = new CoreStats();
+    private boolean dmOutputOnly = true;
+    private int flySpeed = 0;
+    private NonPlayerHitPoints health = new NonPlayerHitPoints();
     private List<String> languages = new ArrayList<>();
     private List<String> senses = new ArrayList<>();
     private String size = "";
+    private int speed = 0;
+    private int swimSpeed = 0;
     private String typeRace = "";
+    private int xp = 0;
 
     public String getAlignment() {
         return alignment;
+    }
+
+    public void setAlignment(String alignment) {
+        this.alignment = alignment;
     }
 
     public int getArmorClass() {
         return armorClass;
     }
 
+    public void setArmorClass(int armorClass) {
+        this.armorClass = armorClass;
+    }
+
     public String getArmorClassNote() {
         return armorClassNote;
+    }
+
+    public void setArmorClassNote(String armorClassNote) {
+        this.armorClassNote = armorClassNote;
     }
 
     public double getChallengeRating() {
         return challengeRating;
     }
 
+    public void setChallengeRating(double challengeRating) {
+        this.challengeRating = challengeRating;
+    }
+
     public int getClimbSpeed() {
         return climbSpeed;
+    }
+
+    public void setClimbSpeed(int climbSpeed) {
+        this.climbSpeed = climbSpeed;
     }
 
     public CoreStats getCoreStats() {
         return coreStats;
     }
 
+    public void setCoreStats(CoreStats coreStats) {
+        this.coreStats = coreStats;
+    }
+
     public int getFlySpeed() {
         return flySpeed;
+    }
+
+    public void setFlySpeed(int flySpeed) {
+        this.flySpeed = flySpeed;
     }
 
     public NonPlayerHitPoints getHealth() {
@@ -69,24 +97,48 @@ public class NonPlayerSheet {
         return languages;
     }
 
+    public void setLanguages(List<String> languages) {
+        this.languages = languages;
+    }
+
     public List<String> getSenses() {
         return senses;
+    }
+
+    public void setSenses(List<String> senses) {
+        this.senses = senses;
     }
 
     public String getSize() {
         return size;
     }
 
+    public void setSize(String size) {
+        this.size = size;
+    }
+
     public int getSpeed() {
         return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
     public int getSwimSpeed() {
         return swimSpeed;
     }
 
+    public void setSwimSpeed(int swimSpeed) {
+        this.swimSpeed = swimSpeed;
+    }
+
     public String getTypeRace() {
         return typeRace;
+    }
+
+    public void setTypeRace(String typeRace) {
+        this.typeRace = typeRace;
     }
 
     public int getXP() {
@@ -97,64 +149,12 @@ public class NonPlayerSheet {
         return dmOutputOnly;
     }
 
-    public void setAlignment(String alignment) {
-        this.alignment = alignment;
-    }
-
-    public void setArmorClass(int armorClass) {
-        this.armorClass = armorClass;
-    }
-
-    public void setArmorClassNote(String armorClassNote) {
-        this.armorClassNote = armorClassNote;
-    }
-
-    public void setChallengeRating(double challengeRating) {
-        this.challengeRating = challengeRating;
-    }
-
-    public void setClimbSpeed(int climbSpeed) {
-        this.climbSpeed = climbSpeed;
-    }
-
-    public void setCoreStats(CoreStats coreStats) {
-        this.coreStats = coreStats;
-    }
-
     public void setDMOutputOnly(boolean dmOutputOnly) {
         this.dmOutputOnly = dmOutputOnly;
     }
 
-    public void setFlySpeed(int flySpeed) {
-        this.flySpeed = flySpeed;
-    }
-
     public void setHitPoints(NonPlayerHitPoints health) {
         this.health = health;
-    }
-
-    public void setLanguages(List<String> languages) {
-        this.languages = languages;
-    }
-
-    public void setSenses(List<String> senses) {
-        this.senses = senses;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public void setSwimSpeed(int swimSpeed) {
-        this.swimSpeed = swimSpeed;
-    }
-
-    public void setTypeRace(String typeRace) {
-        this.typeRace = typeRace;
     }
 
     public void setXp(int xp) {

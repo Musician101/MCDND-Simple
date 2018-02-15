@@ -1,10 +1,10 @@
 package io.musician101.mcdndsimple.sponge.util;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.UnarmoredBonus;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.player.equipment.armor.Armor;
 import io.musician101.mcdndsimple.common.character.player.equipment.armor.ArmorType;
 import io.musician101.mcdndsimple.common.character.player.spell.Spell;

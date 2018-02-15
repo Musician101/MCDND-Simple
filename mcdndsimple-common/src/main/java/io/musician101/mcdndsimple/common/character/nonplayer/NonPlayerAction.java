@@ -17,50 +17,50 @@ import java.util.List;
 @TypeOf(NonPlayerAction.Serializer.class)
 public class NonPlayerAction {
 
-    private boolean isMultiAttack = false;
+    private NonPlayerActionType actionType = NonPlayerActionType.NORMAL;
     private List<String> description = new ArrayList<>();
     private List<String> effect = new ArrayList<>();
-    private NonPlayerActionType actionType = NonPlayerActionType.NORMAL;
+    private boolean isMultiAttack = false;
     private String name = "";
 
     public NonPlayerActionType getActionType() {
         return actionType;
     }
 
-    public List<String> getDescription() {
-        return description;
-    }
-
-    public List<String> getEffect() {
-        return effect;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public boolean isMultiAttack() {
-        return isMultiAttack;
-    }
-
     public void setActionType(NonPlayerActionType actionType) {
         this.actionType = actionType;
+    }
+
+    public List<String> getDescription() {
+        return description;
     }
 
     public void setDescription(List<String> description) {
         this.description = description;
     }
 
+    public List<String> getEffect() {
+        return effect;
+    }
+
     public void setEffect(List<String> effect) {
         this.effect = effect;
     }
 
-    public void setIsMultiAttack(boolean multiAttack) {
-        this.isMultiAttack = multiAttack;
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isMultiAttack() {
+        return isMultiAttack;
+    }
+
+    public void setIsMultiAttack(boolean multiAttack) {
+        this.isMultiAttack = multiAttack;
     }
 
     public static class Serializer implements JsonDeserializer<NonPlayerAction>, JsonSerializer<NonPlayerAction> {

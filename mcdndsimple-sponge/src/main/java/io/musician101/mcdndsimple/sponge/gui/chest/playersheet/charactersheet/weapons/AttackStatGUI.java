@@ -13,7 +13,6 @@ import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.text.Text;
 
-
 public class AttackStatGUI<W extends AbstractWeapon> extends MCDNDSimpleChestGUI {
 
     private final W weapon;

@@ -13,7 +13,6 @@ public class SpellsKnown {
                     return 4;
                 }
 
-
                 if (level >= 1 && level <= 3) {
                     return 2;
                 }

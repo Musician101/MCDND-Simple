@@ -14,7 +14,6 @@ import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.text.Text;
 
-
 public class SpellcasterClassGUI<T> extends MCDNDSimpleChestGUI {
 
     private final Predicate<SpellcasterClass> glowApplier;

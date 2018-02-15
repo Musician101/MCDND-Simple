@@ -16,7 +16,6 @@ import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
-
 public class MeleeBonusGUI extends MCDNDSimpleChestGUI {
 
     private final MeleeBonus meleeBonus;

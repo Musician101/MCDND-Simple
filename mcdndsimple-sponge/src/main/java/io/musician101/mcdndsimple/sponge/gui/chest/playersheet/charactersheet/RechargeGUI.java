@@ -12,7 +12,6 @@ import org.spongepowered.api.event.item.inventory.ClickInventoryEvent;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.text.Text;
 
-
 public class RechargeGUI<R extends Rechargeable> extends MCDNDSimpleChestGUI {
 
     private final Recharge recharge;

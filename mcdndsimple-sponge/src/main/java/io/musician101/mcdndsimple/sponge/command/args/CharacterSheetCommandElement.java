@@ -23,16 +23,6 @@ public class CharacterSheetCommandElement extends CommandElement {
         super(Text.of(Commands.NAME));
     }
 
-    @Nullable
-    @Override
-    protected Object parseValue(@Nonnull CommandSource source, @Nonnull CommandArgs args) throws ArgumentParseException {
-        if (source instanceof Player) {
-            return SpongeMCDNDSimple.instance().getCharacterSheetStorage().getPlayerSheet(((Player) source).getUniqueId(), args.peek()).orElseThrow(() -> args.createError(Text.of(TextColors.RED, Messages.CHARACTER_DNE)));
-        }
-
-        throw args.createError(Text.of(TextColors.RED, Messages.PLAYER_ONLY));
-    }
-
     @Nonnull
     @Override
     public List<String> complete(@Nonnull CommandSource src, @Nonnull CommandArgs args, @Nonnull CommandContext context) {
@@ -47,5 +37,15 @@ public class CharacterSheetCommandElement extends CommandElement {
         }
 
         return Collections.emptyList();
+    }
+
+    @Nullable
+    @Override
+    protected Object parseValue(@Nonnull CommandSource source, @Nonnull CommandArgs args) throws ArgumentParseException {
+        if (source instanceof Player) {
+            return SpongeMCDNDSimple.instance().getCharacterSheetStorage().getPlayerSheet(((Player) source).getUniqueId(), args.peek()).orElseThrow(() -> args.createError(Text.of(TextColors.RED, Messages.CHARACTER_DNE)));
+        }
+
+        throw args.createError(Text.of(TextColors.RED, Messages.PLAYER_ONLY));
     }
 }

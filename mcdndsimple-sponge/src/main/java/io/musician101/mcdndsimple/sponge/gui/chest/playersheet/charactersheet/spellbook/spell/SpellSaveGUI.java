@@ -19,7 +19,6 @@ import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
-
 public class SpellSaveGUI extends MCDNDSimpleChestGUI {
 
     private final CoreStats coreStats;

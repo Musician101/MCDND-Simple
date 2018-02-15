@@ -16,7 +16,6 @@ import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
-
 public class SpellDamageGUI extends MCDNDSimpleChestGUI {
 
     private final SpellDamage spellDamage;

@@ -38,20 +38,20 @@ public class SpellSave {
         this.onSuccessfulSave = onSuccessfulSave;
     }
 
-    public StatBonus getSavingStat() {
-        return savingStat;
-    }
-
-    public void setSavingStat(StatBonus savingStat) {
-        this.savingStat = savingStat;
-    }
-
     public SpellcasterClass getSaveDCType() {
         return spellcasterClass;
     }
 
     public void setSaveDCType(SpellcasterClass spellcasterClass) {
         this.spellcasterClass = spellcasterClass;
+    }
+
+    public StatBonus getSavingStat() {
+        return savingStat;
+    }
+
+    public void setSavingStat(StatBonus savingStat) {
+        this.savingStat = savingStat;
     }
 
     public static class Serializer implements JsonDeserializer<SpellSave>, JsonSerializer<SpellSave> {

@@ -35,8 +35,7 @@ public class ClassResourceGUI extends MCDNDSimpleChestGUI {
             open();
         }));
         //TODO looking into BookGUI shenanigans
-        set(1, ClickInventoryEvent.class, createItem(ItemTypes.BED, Text.of(MenuText.recharge(classResource.getRecharge()))), player -> new RechargeGUI<>(player, classResource, () -> new ClassResourceGUI(player, classResource, classResources,
-                prevGUI), this));
+        set(1, ClickInventoryEvent.class, createItem(ItemTypes.BED, Text.of(MenuText.recharge(classResource.getRecharge()))), player -> new RechargeGUI<>(player, classResource, () -> new ClassResourceGUI(player, classResource, classResources, prevGUI), this));
         set(2, ClickInventoryEvent.class, createItem(ItemTypes.REDSTONE_TORCH, Text.of(MenuText.current(classResource.getUsesLeft()))), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             classResource.setCurrentCharges(i);
             open();

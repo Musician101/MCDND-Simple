@@ -8,8 +8,8 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.character.player.AbilityScore;
-import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.player.Experience;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
@@ -28,10 +28,6 @@ public enum SkillProficiency {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public int getBonus(AbilityScore abilityScore, ClassLevels classLevels, Experience experience) {
         switch (this) {
             case EXPERTISE:
@@ -43,6 +39,10 @@ public enum SkillProficiency {
             default:
                 return 0;
         }
+    }
+
+    public String getName() {
+        return name;
     }
 
     public static class Serializer implements JsonDeserializer<SkillProficiency>, JsonSerializer<SkillProficiency> {

@@ -1,16 +1,13 @@
 package io.musician101.mcdndsimple.sponge.serialization;
 
 import io.musician101.mcdndsimple.common.Dice;
+import io.musician101.mcdndsimple.common.character.CoreStats;
+import io.musician101.mcdndsimple.common.character.HitPoints;
 import io.musician101.mcdndsimple.common.character.player.AbilityScore;
 import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
 import io.musician101.mcdndsimple.common.character.player.CharacterSheet;
-import io.musician101.mcdndsimple.common.character.player.clazz.ClassAction;
-import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
-import io.musician101.mcdndsimple.common.character.player.clazz.ClassResource;
-import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.HitDice;
-import io.musician101.mcdndsimple.common.character.HitPoints;
 import io.musician101.mcdndsimple.common.character.player.MCDNDItem;
 import io.musician101.mcdndsimple.common.character.player.PlayerSheet;
 import io.musician101.mcdndsimple.common.character.player.Recharge;
@@ -20,6 +17,9 @@ import io.musician101.mcdndsimple.common.character.player.bonus.Bonuses;
 import io.musician101.mcdndsimple.common.character.player.bonus.MeleeBonus;
 import io.musician101.mcdndsimple.common.character.player.bonus.RangedBonus;
 import io.musician101.mcdndsimple.common.character.player.bonus.SpellcastingBonus;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassAction;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassResource;
 import io.musician101.mcdndsimple.common.character.player.equipment.armor.Armor;
 import io.musician101.mcdndsimple.common.character.player.equipment.armor.ArmorType;
 import io.musician101.mcdndsimple.common.character.player.equipment.currency.Coin;

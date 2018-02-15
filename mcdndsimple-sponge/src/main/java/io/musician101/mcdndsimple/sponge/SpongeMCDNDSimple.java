@@ -27,17 +27,20 @@ import org.spongepowered.api.plugin.PluginContainer;
 public class SpongeMCDNDSimple extends AbstractSpongePlugin<AbstractConfig> {
 
     private static SpongeMCDNDSimple instance;
-
+    private SpongePlayerSheetStorage characterSheetStorage;
     @ConfigDir(sharedRoot = false)
     @Inject
     private File configDir;
     @Inject
     private PluginContainer pluginContainer;
 
-    private SpongePlayerSheetStorage characterSheetStorage;
-
     public static SpongeMCDNDSimple instance() {
         return instance;
+    }
+
+    @Listener
+    public void construct(GameConstructionEvent event) {
+        instance = this;
     }
 
     public SpongePlayerSheetStorage getCharacterSheetStorage() {
@@ -50,21 +53,16 @@ public class SpongeMCDNDSimple extends AbstractSpongePlugin<AbstractConfig> {
     }
 
     @Listener
-    public void construct(GameConstructionEvent event) {
-        instance = this;
-    }
-
-    @Listener
-    public void preInit(GamePreInitializationEvent event) {
-        characterSheetStorage = new SpongePlayerSheetStorage(new File(configDir, "character_storage"));
-    }
-
-    @Listener
     public void init(GameInitializationEvent event) {
         Sponge.getCommandManager().register(this, CommandSpec.builder().arguments(new CharacterSheetCommandElement()).executor((src, args) -> args.<PlayerSheet>getOne(Commands.NAME).map(playerSheet -> {
             new PlayerSheetGUI((Player) src, playerSheet, null);
             return CommandResult.success();
         }).orElse(CommandResult.empty())).build(), "character");
+    }
+
+    @Listener
+    public void preInit(GamePreInitializationEvent event) {
+        characterSheetStorage = new SpongePlayerSheetStorage(new File(configDir, "character_storage"));
     }
 
     @Listener

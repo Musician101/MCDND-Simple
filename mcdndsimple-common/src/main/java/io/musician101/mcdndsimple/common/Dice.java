@@ -3,6 +3,7 @@ package io.musician101.mcdndsimple.common;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
@@ -13,6 +14,7 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Random;
 
 @JsonKeys(keys = {Keys.ABILITIES_AND_SKILLS, Keys.ATTACK, Keys.DAMAGE, Keys.HEAL_AMOUNT, Keys.HIT_DICE, Keys.SAVES}, typeAdapter = Dice.Serializer.class)
@@ -83,14 +85,24 @@ public class Dice {
 
         return list;
     }
-
-    @Deprecated
+    
     public static class Serializer implements JsonDeserializer<Dice>, JsonSerializer<Dice> {
 
         @Override
         public Dice deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
-            //TODO incomplete
-            return null;
+            JsonObject jsonObject = json.getAsJsonObject();
+            Optional<Integer> amount = Keys.AMOUNT.deserializeFromParent(jsonObject, context);
+            Optional<Integer> sides = Keys.SIDES.deserializeFromParent(jsonObject, context);
+            String errorStart = "Could not parse dice! ";
+            if (!amount.isPresent()) {
+                throw new JsonParseException(errorStart + "Dice amount missing!");
+            }
+
+            if (!sides.isPresent()) {
+                throw new JsonParseException(errorStart + "Dice sides amount missing!");
+            }
+
+            return new Dice(amount.get(), sides.get());
         }
 
         @Override

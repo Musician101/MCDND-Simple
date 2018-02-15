@@ -270,6 +270,8 @@ public class Keys {
     public static final JsonKeyImpl<JsonPrimitive, Integer> WIZARD = integerKey("wizard");
     public static final JsonKeyImpl<JsonPrimitive, Boolean> WORN = booleanKey("worn");
     public static final JsonKeyImpl<JsonPrimitive, Integer> XP = integerKey("xp");
+    public static final JsonKeyImpl<JsonPrimitive, Integer> AMOUNT = integerKey("amount");
+    public static final JsonKeyImpl<JsonPrimitive, Integer> SIDES = integerKey("sides");
 
     private Keys() {
 

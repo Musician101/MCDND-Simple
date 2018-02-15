@@ -31,14 +31,16 @@ public class ItemRepresentation {
 
     private static Material getArmorMaterial(ArmorType armorType) {
         Material material = Material.GOLD_CHESTPLATE;
-        if (armorType == ArmorType.LIGHT) {
-            material = Material.LEATHER_CHESTPLATE;
-        }
-        else if (armorType == ArmorType.MEDIUM) {
-            material = Material.IRON_CHESTPLATE;
-        }
-        else if (armorType == ArmorType.HEAVY) {
-            material = Material.DIAMOND_CHESTPLATE;
+        switch (armorType) {
+            case LIGHT:
+                material = Material.LEATHER_CHESTPLATE;
+                break;
+            case MEDIUM:
+                material = Material.IRON_CHESTPLATE;
+                break;
+            case HEAVY:
+                material = Material.DIAMOND_CHESTPLATE;
+                break;
         }
 
         return material;

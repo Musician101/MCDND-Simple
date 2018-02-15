@@ -217,6 +217,16 @@ public class Spell {
             Keys.COMPONENTS.deserializeFromParent(jsonObject, context).ifPresent(spell::setComponents);
             Keys.DESCRIPTION.deserializeFromParent(jsonObject, context).ifPresent(spell::setDescription);
             Keys.EFFECTS.deserializeFromParent(jsonObject, context).ifPresent(spell::setEffects);
+            Keys.CAST_TIME.deserializeFromParent(jsonObject, context).ifPresent(spell::setCastTime);
+            Keys.DURATION.deserializeFromParent(jsonObject, context).ifPresent(spell::setDuration);
+            Keys.NAME.deserializeFromParent(jsonObject, context).ifPresent(spell::setName);
+            Keys.RANGE.deserializeFromParent(jsonObject, context).ifPresent(spell::setRange);
+            Keys.TARGET_AREA.deserializeFromParent(jsonObject, context).ifPresent(spell::setTargetArea);
+            handleAnnotatedKeys(jsonObject, context, spell);
+            return spell;
+        }
+
+        private void handleAnnotatedKeys(JsonObject jsonObject, JsonDeserializationContext context, Spell spell) throws JsonParseException {
             JsonKeyProcessor.<JsonObject, MacroOptions>getJsonKey(Keys.MACRO_OPTIONS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(spell::setMacroOptions));
             JsonKeyProcessor.<JsonPrimitive, Prepared>getJsonKey(Keys.PREPARED).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(spell::setPrepared));
             JsonKeyProcessor.<JsonPrimitive, SpellcasterClass>getJsonKey(Keys.GAINED_FROM).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(spell::setGainedFrom));
@@ -225,12 +235,6 @@ public class Spell {
             JsonKeyProcessor.<JsonObject, SpellSave>getJsonKey(Keys.SPELL_SAVE).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(spell::setSpellSave));
             JsonKeyProcessor.<JsonPrimitive, SpellType>getJsonKey(Keys.SPELL_TYPE).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(spell::setSpellType));
             JsonKeyProcessor.<JsonPrimitive, StatBonus>getJsonKey(Keys.ATTACK_STAT).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(spell::setAttackStat));
-            Keys.CAST_TIME.deserializeFromParent(jsonObject, context).ifPresent(spell::setCastTime);
-            Keys.DURATION.deserializeFromParent(jsonObject, context).ifPresent(spell::setDuration);
-            Keys.NAME.deserializeFromParent(jsonObject, context).ifPresent(spell::setName);
-            Keys.RANGE.deserializeFromParent(jsonObject, context).ifPresent(spell::setRange);
-            Keys.TARGET_AREA.deserializeFromParent(jsonObject, context).ifPresent(spell::setTargetArea);
-            return spell;
         }
 
         @Override

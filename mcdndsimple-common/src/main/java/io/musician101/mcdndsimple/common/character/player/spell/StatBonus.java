@@ -23,7 +23,7 @@ public enum StatBonus {
     STR,
     WIS;
 
-    private String name;
+    private final String name;
 
     StatBonus() {
         this(null);

@@ -14,11 +14,11 @@ import java.lang.reflect.Type;
 @JsonKey(key = Keys.WEALTH, typeAdapter = Wealth.Serializer.class)
 public class Wealth {
 
-    private Coin copper = new Coin("Copper", "CP");
-    private Coin electrum = new Coin("Electrum", "EP");
-    private Coin gold = new Coin("Gold", "GP");
-    private Coin platinum = new Coin("Platinum", "PP");
-    private Coin silver = new Coin("Silver", "SP");
+    private final Coin copper = new Coin("Copper", "CP");
+    private final Coin electrum = new Coin("Electrum", "EP");
+    private final Coin gold = new Coin("Gold", "GP");
+    private final Coin platinum = new Coin("Platinum", "PP");
+    private final Coin silver = new Coin("Silver", "SP");
 
     public Coin getCopper() {
         return copper;

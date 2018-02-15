@@ -85,7 +85,7 @@ public class Dice {
 
         return list;
     }
-    
+
     public static class Serializer implements JsonDeserializer<Dice>, JsonSerializer<Dice> {
 
         @Override

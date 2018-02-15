@@ -17,7 +17,7 @@ import java.util.Map;
 @JsonKey(key = Keys.HIT_DICE, typeAdapter = HitDice.Serializer.class)
 public class HitDice {
 
-    private Map<Integer, Integer> hitDiceMap = new HashMap<>();
+    private final Map<Integer, Integer> hitDiceMap = new HashMap<>();
 
     public HitDice() {
         hitDiceMap.put(6, 0);

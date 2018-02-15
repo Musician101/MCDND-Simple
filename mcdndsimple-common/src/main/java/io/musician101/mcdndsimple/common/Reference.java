@@ -4,12 +4,12 @@ import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.HitPoints;
 import io.musician101.mcdndsimple.common.character.player.AbilityScore;
 import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.player.ClassLevels;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.HitDice;
 import io.musician101.mcdndsimple.common.character.player.MCDNDItem;
 import io.musician101.mcdndsimple.common.character.player.Recharge;
 import io.musician101.mcdndsimple.common.character.player.Weight;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.player.equipment.armor.Armor;
 import io.musician101.mcdndsimple.common.character.player.equipment.currency.Coin;
 import io.musician101.mcdndsimple.common.character.player.equipment.currency.Wealth;
@@ -96,6 +96,7 @@ public class Reference {
         public static final String COIN_CARRIED = "Coin Carried";
         public static final String COMPONENTS = "Components";
         public static final String CONSTITUTION = "Constitution";
+        //TODO rename to CORE_SKILLS_OUTPUT_OPTIONS
         public static final String CORE_SKILLS_OUTPUT_SKILLS = "Core Skills Output Options";
         public static final String CORE_STATS = "Core Stats";
         public static final String D10_DESC = "Fighter, Paladin, Ranger";
@@ -289,6 +290,10 @@ public class Reference {
 
         public static String components(String components) {
             return "Components: " + components;
+        }
+
+        public static String hasComponents(List<String> components) {
+            return "Has Components: " + (components.isEmpty() ? "No" : "Yes");
         }
 
         public static String concentration(boolean needsConcentration) {
@@ -615,8 +620,8 @@ public class Reference {
             return "Total: " + ((wealth.getCopper().getAmount() / 100) + (wealth.getSilver().getAmount() / 10) + (wealth.getElectrum().getAmount() / 2) + wealth.getGold().getAmount() + (wealth.getPlatinum().getAmount() * 10));
         }
 
-        public static String total(PlayerSkill skill) {
-            return "Total: " + skill.getTotal();
+        public static String total(AbilityScore abilityScore, ClassLevels classLevels, Experience experience, PlayerSkill skill) {
+            return "Total: " + skill.getTotal(abilityScore, classLevels, experience);
         }
 
         public static String total(int amount) {

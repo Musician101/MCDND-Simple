@@ -4,7 +4,7 @@ import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.Reference.MenuText;
 import io.musician101.mcdndsimple.common.Reference.Messages;
 import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.player.ClassLevels;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.bonus.MeleeBonus;
@@ -60,17 +60,17 @@ public class MeleeWeaponGUI extends MCDNDSimpleChestGUI {
             delayedOpen();
         }));
         set(4, createItem(ItemTypes.STONE_SWORD, Text.of(MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)))));
-        set(5, ClickInventoryEvent.class, createItem(ItemTypes.GOLDEN_SWORD, Text.of(MenuText.damageDice(weapon.getDamageDice()))), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(5, ClickInventoryEvent.class, createItem(ItemTypes.GOLDEN_SWORD, Text.of(MenuText.damageDice(weapon.getDamage()))), player -> new StringInputAnvilGUI(player, (p, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 player.sendMessage(Text.of(TextColors.RED, Messages.malformedDiceInput(s)));
                 return;
             }
 
-            weapon.setDamageDice(dice);
+            weapon.setDamage(dice);
             delayedOpen();
         }));
-        boolean plusStat = weapon.isPlusStat();
+        boolean plusStat = weapon.plusStat();
         set(6, ClickInventoryEvent.class, addGlowIfConditionsMet(createItem(ItemTypes.GLOWSTONE, Text.of(MenuText.PLUS_STAT)), () -> plusStat), player -> {
             weapon.setPlusStat(!plusStat);
             open();
@@ -80,14 +80,14 @@ public class MeleeWeaponGUI extends MCDNDSimpleChestGUI {
             weapon.setDamageType(s);
             delayedOpen();
         }));
-        set(9, ClickInventoryEvent.class, createItem(ItemTypes.DIAMOND_SWORD, Text.of(MenuText.critDamage(weapon.getCritDamageDice()))), player -> new StringInputAnvilGUI(player, (p, s) -> {
+        set(9, ClickInventoryEvent.class, createItem(ItemTypes.DIAMOND_SWORD, Text.of(MenuText.critDamage(weapon.getCritDamage()))), player -> new StringInputAnvilGUI(player, (p, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 player.sendMessage(Text.of(TextColors.RED, Messages.malformedDiceInput(s)));
                 return;
             }
 
-            weapon.setCritDamageDice(dice);
+            weapon.setCritDamage(dice);
             delayedOpen();
         }));
         set(10, ClickInventoryEvent.class, createItem(ItemTypes.GUNPOWDER, Text.of(MenuText.critOn(weapon.getCritMin()))), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
@@ -123,10 +123,10 @@ public class MeleeWeaponGUI extends MCDNDSimpleChestGUI {
             attackText.append(Text.of(" vs AC" + newLine));
             message.append(attackText.build());
 
-            int damage = Dice.total(weapon.getDamageDice().roll()) + weapon.getDamageBonus(coreStats) + Dice.total(meleeBonus.getDamage().roll());
+            int damage = Dice.total(weapon.getDamage().roll()) + weapon.getDamageBonus(coreStats) + Dice.total(meleeBonus.getDamage().roll());
             message.append(Text.of("Damage: " + damage + " " + weapon.getDamageType()));
             if (firstAttackRoll >= weapon.getCritMin()) {
-                Dice critDice = weapon.getCritDamageDice();
+                Dice critDice = weapon.getCritDamage();
                 message.append(Text.of("Crit: " + Dice.total(critDice.roll()) + newLine + "Crit (adv roll): " + Dice.total(critDice.roll())));
             }
 

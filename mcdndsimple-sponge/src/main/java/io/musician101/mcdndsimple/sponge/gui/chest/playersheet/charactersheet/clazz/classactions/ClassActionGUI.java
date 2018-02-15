@@ -2,7 +2,7 @@ package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.c
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
 import io.musician101.mcdndsimple.common.Reference.Messages;
-import io.musician101.mcdndsimple.common.character.player.ClassAction;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassAction;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.anvil.StringInputAnvilGUI;
 import io.musician101.mcdndsimple.sponge.gui.anvil.number.IntegerInputAnvilGUI;
@@ -39,12 +39,12 @@ public class ClassActionGUI extends MCDNDSimpleChestGUI {
             classAction.setName(s);
             new ClassActionGUI(player, classAction, classActions, prevGUI);
         }));
-        set(1, ClickInventoryEvent.class, createItem(ItemTypes.REDSTONE_TORCH, Text.of(MenuText.used(classAction.getUsedCharges()))), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
-            classAction.setUsedCharges(i);
+        set(1, ClickInventoryEvent.class, createItem(ItemTypes.REDSTONE_TORCH, Text.of(MenuText.used(classAction.getUsed()))), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+            classAction.setUsed(i);
             open();
         }));
-        set(2, ClickInventoryEvent.class, createItem(ItemTypes.REDSTONE_TORCH, Text.of(MenuText.maxUses(classAction.getMax()))), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
-            classAction.setMax(i);
+        set(2, ClickInventoryEvent.class, createItem(ItemTypes.REDSTONE_TORCH, Text.of(MenuText.maxUses(classAction.getMaxUses()))), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
+            classAction.setMaxUses(i);
             open();
         }));
         set(3, ClickInventoryEvent.class, createItem(ItemTypes.BED, Text.of(MenuText.recharge(classAction.getRecharge()))), player -> new RechargeGUI<>(player, classAction, () -> new ClassActionGUI(player, classAction, classActions, prevGUI), this));

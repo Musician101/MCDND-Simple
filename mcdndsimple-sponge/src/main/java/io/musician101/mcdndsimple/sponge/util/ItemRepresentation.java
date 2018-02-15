@@ -1,7 +1,7 @@
 package io.musician101.mcdndsimple.sponge.util;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.player.ClassLevels;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.UnarmoredBonus;
@@ -62,10 +62,10 @@ public class ItemRepresentation {
         lore.add(MenuText.attackStat(weapon.getAttackStat()));
         lore.add(MenuText.magicBonus(weapon.getMagicBonus()));
         lore.add(MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)));
-        lore.add(MenuText.damageDice(weapon.getDamageDice()));
+        lore.add(MenuText.damageDice(weapon.getDamage()));
         lore.add(MenuText.damageBonus(weapon.getDamageBonus(coreStats)));
         lore.add(MenuText.damageType(weapon.getDamageType()));
-        lore.add(MenuText.critDamage(weapon.getCritDamageDice()));
+        lore.add(MenuText.critDamage(weapon.getCritDamage()));
         lore.add(MenuText.critOn(weapon.getCritMin()));
         return ItemStack.builder().itemType(ItemTypes.DIAMOND_SWORD).add(Keys.DISPLAY_NAME, Text.of(weapon.getName())).add(Keys.ITEM_LORE, lore.stream().map(Text::of).collect(Collectors.toList())).build();
     }
@@ -76,10 +76,10 @@ public class ItemRepresentation {
         lore.add(MenuText.attackStat(weapon.getAttackStat()));
         lore.add(MenuText.magicBonus(weapon.getMagicBonus()));
         lore.add(MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)));
-        lore.add(MenuText.damageDice(weapon.getDamageDice()));
+        lore.add(MenuText.damageDice(weapon.getDamage()));
         lore.add(MenuText.damageBonus(weapon.getDamageBonus(coreStats)));
         lore.add(MenuText.damageType(weapon.getDamageType()));
-        lore.add(MenuText.critDamage(weapon.getCritDamageDice()));
+        lore.add(MenuText.critDamage(weapon.getCritDamage()));
         lore.add(MenuText.critOn(weapon.getCritMin()));
         lore.add(MenuText.ammo(weapon.getAmmo()));
         return ItemStack.builder().itemType(ItemTypes.BOW).add(Keys.DISPLAY_NAME, Text.of(weapon.getName())).add(Keys.ITEM_LORE, lore.stream().map(Text::of).collect(Collectors.toList())).build();

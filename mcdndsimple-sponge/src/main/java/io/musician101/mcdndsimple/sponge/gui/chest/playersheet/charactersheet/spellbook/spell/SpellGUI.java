@@ -4,7 +4,7 @@ import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.Reference.MenuText;
 import io.musician101.mcdndsimple.common.character.player.AbilityScore;
 import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.player.ClassLevels;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.spell.MacroOptions;
@@ -212,7 +212,7 @@ public class SpellGUI extends MCDNDSimpleChestGUI {
                         break;
                 }
 
-                Dice dice = spellDamage.getDice();
+                Dice dice = spellDamage.getDamage();
                 Builder builder = Text.of(Text.NEW_LINE, Text.of("Damage: " + Dice.total(dice.roll(), statBonus) + " " + spellDamage.getDamageType())).toBuilder();
                 if (spellDamage.canCrit()) {
                     builder.append(Text.NEW_LINE, Text.of("Crit: Additional " + Dice.total(dice.roll()) + " damage"));
@@ -223,7 +223,7 @@ public class SpellGUI extends MCDNDSimpleChestGUI {
 
             if (macroOptions.isSavingThrowEnabled()) {
                 SpellSave spellSave = spell.getSpellSave();
-                message.append(Text.of(Text.NEW_LINE, "Save: DC " + spellSave.getSpellcasterClass().getSpellSaveDC(classLevels, coreStats, experience) + " " + spellSave.getSavingStat(), Text.NEW_LINE, Text.of("Click "), Text.builder("HERE").color(TextColors.GREEN).style(TextStyles.BOLD).onClick(openBookCommand(spellSave.getOnSuccessfulSave())).build(), Text.of(" to view the effect of a successful save of this spell.")));
+                message.append(Text.of(Text.NEW_LINE, "Save: DC " + spellSave.getSaveDCType().getSpellSaveDC(classLevels, coreStats, experience) + " " + spellSave.getSavingStat(), Text.NEW_LINE, Text.of("Click "), Text.builder("HERE").color(TextColors.GREEN).style(TextStyles.BOLD).onClick(openBookCommand(spellSave.getOnSuccessfulSave())).build(), Text.of(" to view the effect of a successful save of this spell.")));
             }
 
             if (macroOptions.isEffectsEnabled()) {

@@ -2,23 +2,21 @@ package io.musician101.mcdndsimple.common.character;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import io.musician101.mcdndsimple.common.serialization.MCDNDDeserializer;
-import io.musician101.mcdndsimple.common.serialization.MCDNDSerializer;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonSerializer;
 import java.io.File;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class CharacterStorage<C, D extends MCDNDDeserializer<C>, S extends MCDNDSerializer<C>, T extends AbstractPlayer> {
+public abstract class CharacterStorage<T extends AbstractPlayer> {
 
     protected final Multimap<T, UUID> data = ArrayListMultimap.create();
     protected final File storageDir;
-    protected final D deserializer;
-    protected final S serializer;
 
-    protected CharacterStorage(File storageDir, S serializer, D deserializer) {
+    protected CharacterStorage(File storageDir) {
         this.storageDir = storageDir;
-        this.serializer = serializer;
-        this.deserializer = deserializer;
         load();
     }
 
@@ -44,7 +42,7 @@ public abstract class CharacterStorage<C, D extends MCDNDDeserializer<C>, S exte
 
     public abstract void save();
 
-    protected  abstract T deserialize(C data);
+    protected interface Serializer<T extends AbstractPlayer> extends JsonDeserializer<Entry<T, List<UUID>>>, JsonSerializer<Entry<T, List<UUID>>> {
 
-    protected abstract C serialize(T t);
+    }
 }

@@ -1,7 +1,6 @@
 package io.musician101.mcdndsimple.sponge.character;
 
 import io.musician101.mcdndsimple.common.character.player.PlayerSheetStorage;
-import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.serialization.SpongeMCDNDDeserializer;
 import io.musician101.mcdndsimple.sponge.serialization.SpongeMCDNDSerializer;
@@ -38,7 +37,7 @@ public class SpongePlayerSheetStorage extends PlayerSheetStorage<SpongeMCDNDSeri
             try {
                 HoconConfigurationLoader loader = HoconConfigurationLoader.builder().setFile(file).build();
                 ConfigurationNode cn = loader.load();
-                playerSheets.putAll(deserialize(cn.getNode(Keys.PLAYER_SHEET)), cn.getNode(Keys.CONTROLLERS).getList(object -> UUID.fromString(object.toString())));
+                playerSheets.putAll(deserialize(cn.getNode(JsonUtils.PLAYER_SHEET)), cn.getNode(JsonUtils.CONTROLLERS).getList(object -> UUID.fromString(object.toString())));
             }
             catch (IOException e) {
                 logger.warn("An error occurred while loading " + file.getName());
@@ -57,8 +56,8 @@ public class SpongePlayerSheetStorage extends PlayerSheetStorage<SpongeMCDNDSeri
                 }
 
                 ConfigurationNode cn = SimpleConfigurationNode.root();
-                cn.getNode(Keys.PLAYER_SHEET).setValue(serialize(playerSheet));
-                cn.getNode(Keys.CONTROLLERS).setValue(playerSheets.get(playerSheet).stream().map(UUID::toString).collect(Collectors.toList()));
+                cn.getNode(JsonUtils.PLAYER_SHEET).setValue(serialize(playerSheet));
+                cn.getNode(JsonUtils.CONTROLLERS).setValue(playerSheets.get(playerSheet).stream().map(UUID::toString).collect(Collectors.toList()));
                 HoconConfigurationLoader loader = HoconConfigurationLoader.builder().setFile(file).build();
                 loader.save(cn);
             }

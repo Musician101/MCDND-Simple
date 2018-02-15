@@ -1,4 +1,6 @@
-package io.musician101.mcdndsimple.common.character.player;
+package io.musician101.mcdndsimple.common.character.player.clazz;
+
+import io.musician101.mcdndsimple.common.character.player.Rechargeable;
 
 public class ClassResource extends Rechargeable {
 

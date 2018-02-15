@@ -1,16 +1,27 @@
 package io.musician101.mcdndsimple.common.character.player.weapon;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.Dice;
-import io.musician101.mcdndsimple.common.character.player.ClassLevels;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.Experience;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
+import io.musician101.mcdndsimple.common.serialization.Keys;
+import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
+import java.lang.reflect.Type;
 
 public abstract class AbstractWeapon {
 
     private WeaponAttackStat attackStat;
-    private Dice critDamageDice = new Dice(0);
+    private Dice critDamage = new Dice(0);
     private int critMin = 20;
-    private Dice damageDice = new Dice(0);
+    private Dice damage = new Dice(0);
     private String damageType = "";
     private boolean isProficient = true;
     private int magicBonus = 0;
@@ -24,12 +35,12 @@ public abstract class AbstractWeapon {
         this.attackStat = attackStat;
     }
 
-    public Dice getCritDamageDice() {
-        return critDamageDice;
+    public Dice getCritDamage() {
+        return critDamage;
     }
 
-    public void setCritDamageDice(Dice critDamageDice) {
-        this.critDamageDice = critDamageDice;
+    public void setCritDamage(Dice critDamage) {
+        this.critDamage = critDamage;
     }
 
     public int getCritMin() {
@@ -66,12 +77,12 @@ public abstract class AbstractWeapon {
         return 0;
     }
 
-    public Dice getDamageDice() {
-        return damageDice;
+    public Dice getDamage() {
+        return damage;
     }
 
-    public void setDamageDice(Dice damageDice) {
-        this.damageDice = damageDice;
+    public void setDamage(Dice damage) {
+        this.damage = damage;
     }
 
     public String getDamageType() {
@@ -131,5 +142,45 @@ public abstract class AbstractWeapon {
 
     public void setIsProficient(boolean proficient) {
         isProficient = proficient;
+    }
+
+    static class Serializer<W extends AbstractWeapon> implements JsonDeserializer<W>, JsonSerializer<W> {
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public W deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+            W weapon;
+            try {
+                weapon = ((Class<W>) type).newInstance();
+            }
+            catch (InstantiationException | IllegalAccessException e) {
+                throw new JsonParseException(e);
+            }
+
+            JsonObject jsonObject = json.getAsJsonObject();
+            JsonKeyProcessor.<JsonPrimitive, WeaponAttackStat>getJsonKey(Keys.ATTACK_STAT).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(weapon::setAttackStat));
+            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.CRIT_DAMAGE).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(weapon::setCritDamage));
+            Keys.CRIT_MINIMUM.deserializeFromParent(jsonObject, context).ifPresent(weapon::setCritMin);
+            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.DAMAGE).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(weapon::setDamage));
+            Keys.DAMAGE_TYPE.deserializeFromParent(jsonObject, context).ifPresent(weapon::setDamageType);
+            Keys.IS_PROFICIENT.deserializeFromParent(jsonObject, context).ifPresent(weapon::setIsProficient);
+            Keys.MAGIC_BONUS.deserializeFromParent(jsonObject, context).ifPresent(weapon::setMagicBonus);
+            Keys.NAME.deserializeFromParent(jsonObject, context).ifPresent(weapon::setName);
+            return weapon;
+        }
+
+        @Override
+        public JsonElement serialize(W src, Type type, JsonSerializationContext context) {
+            JsonObject jsonObject = new JsonObject();
+            JsonKeyProcessor.<JsonPrimitive, WeaponAttackStat>getJsonKey(Keys.ATTACK_STAT).ifPresent(jsonKey -> jsonKey.serialize(src.getAttackStat(), jsonObject, context));
+            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.CRIT_DAMAGE).ifPresent(jsonKey -> jsonKey.serialize(src.getCritDamage(), jsonObject, context));
+            Keys.CRIT_MINIMUM.serialize(src.getCritMin(), jsonObject, context);
+            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.DAMAGE).ifPresent(jsonKey -> jsonKey.serialize(src.getDamage(), jsonObject, context));
+            Keys.DAMAGE_TYPE.serialize(src.getDamageType(), jsonObject, context);
+            Keys.IS_PROFICIENT.serialize(src.isProficient(), jsonObject, context);
+            Keys.MAGIC_BONUS.serialize(src.getMagicBonus(), jsonObject, context);
+            Keys.NAME.serialize(src.getName(), jsonObject, context);
+            return jsonObject;
+        }
     }
 }

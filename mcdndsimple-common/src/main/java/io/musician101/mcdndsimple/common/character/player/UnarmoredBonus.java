@@ -1,7 +1,19 @@
 package io.musician101.mcdndsimple.common.character.player;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import io.musician101.mcdndsimple.common.serialization.Keys;
+import io.musician101.musicianlibrary.java.json.JsonKey;
+import java.lang.reflect.Type;
 import java.util.function.BiFunction;
+import java.util.stream.Stream;
 
+@JsonKey(key = Keys.UNARMORED_BONUS, typeAdapter = UnarmoredBonus.Serializer.class)
 public enum UnarmoredBonus {
     BARBARIAN("Barbarian"),
     DRACONIC_RESILIENCE("Draconic Resilience (Sorcerer Subclass)", (dexMod, secondMod) -> 13 + dexMod),
@@ -26,5 +38,18 @@ public enum UnarmoredBonus {
 
     public String getName() {
         return name;
+    }
+
+    public static class Serializer implements JsonDeserializer<UnarmoredBonus>, JsonSerializer<UnarmoredBonus> {
+
+        @Override
+        public UnarmoredBonus deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+            return Stream.of(UnarmoredBonus.values()).filter(UnarmoredBonus -> UnarmoredBonus.getName().equals(json.getAsString())).findFirst().orElse(UnarmoredBonus.NONE);
+        }
+
+        @Override
+        public JsonElement serialize(UnarmoredBonus src, Type type, JsonSerializationContext context) {
+            return new JsonPrimitive(src.getName());
+        }
     }
 }

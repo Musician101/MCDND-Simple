@@ -2,7 +2,7 @@ package io.musician101.mcdndsimple.spigot.util;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
 import io.musician101.mcdndsimple.common.character.CoreStats;
-import io.musician101.mcdndsimple.common.character.player.ClassLevels;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.UnarmoredBonus;
 import io.musician101.mcdndsimple.common.character.player.equipment.armor.Armor;
@@ -76,18 +76,18 @@ public class ItemRepresentation {
     }
 
     public static ItemStack meleeWeapon(MeleeWeapon weapon, ClassLevels classLevels, CoreStats coreStats, Experience experience) {
-        return SpigotIconBuilder.builder(Material.DIAMOND_SWORD).name(weapon.getName()).description(MenuText.isProficient(weapon.isProficient()), MenuText.attackStat(weapon.getAttackStat()), MenuText.magicBonus(weapon), MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)), MenuText.plusStat(weapon.isPlusStat()), MenuText.damageDice(weapon.getDamageDice()), MenuText.damageBonus(weapon.getDamageBonus(coreStats)), MenuText.damageType(weapon.getDamageType()), MenuText.critDamage(weapon.getCritDamageDice()), MenuText.critOn(weapon.getCritMin())).build();
+        return SpigotIconBuilder.builder(Material.DIAMOND_SWORD).name(weapon.getName()).description(MenuText.isProficient(weapon.isProficient()), MenuText.attackStat(weapon.getAttackStat()), MenuText.magicBonus(weapon), MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)), MenuText.plusStat(weapon.plusStat()), MenuText.damageDice(weapon.getDamage()), MenuText.damageBonus(weapon.getDamageBonus(coreStats)), MenuText.damageType(weapon.getDamageType()), MenuText.critDamage(weapon.getCritDamage()), MenuText.critOn(weapon.getCritMin())).build();
     }
 
     public static ItemStack rangedWeapon(RangedWeapon weapon, ClassLevels classLevels, CoreStats coreStats, Experience experience) {
-        return SpigotIconBuilder.builder(Material.BOW).name(weapon.getName()).description(MenuText.isProficient(weapon.isProficient()), MenuText.attackStat(weapon.getAttackStat()), MenuText.magicBonus(weapon), MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)), MenuText.damageDice(weapon.getDamageDice()), MenuText.damageBonus(weapon.getDamageBonus(coreStats)), MenuText.damageType(weapon.getDamageType()), MenuText.critDamage(weapon.getCritDamageDice()), MenuText.critOn(weapon.getCritMin())).build();
+        return SpigotIconBuilder.builder(Material.BOW).name(weapon.getName()).description(MenuText.isProficient(weapon.isProficient()), MenuText.attackStat(weapon.getAttackStat()), MenuText.magicBonus(weapon), MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)), MenuText.damageDice(weapon.getDamage()), MenuText.damageBonus(weapon.getDamageBonus(coreStats)), MenuText.damageType(weapon.getDamageType()), MenuText.critDamage(weapon.getCritDamage()), MenuText.critOn(weapon.getCritMin())).build();
     }
 
     public static ItemStack spell(Spell spell) {
         return SpigotIconBuilder.builder(Material.ENCHANTED_BOOK).name(spell.getName()).description(MenuText.spellLevel(spell.getLevel()),
         MenuText.spellType(spell.getSpellType()),
         MenuText.gainedFrom(spell.getGainedFrom()),
-        MenuText.components(spell.getComponents()),
+        MenuText.hasComponents(spell.getComponents()),
         MenuText.castTime(spell.getCastTime()),
         MenuText.duration(spell.getDuration()),
         MenuText.target(spell.getTargetArea()),

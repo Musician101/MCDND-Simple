@@ -1,6 +1,7 @@
 package io.musician101.mcdndsimple.common.character.player;
 
 import com.google.common.collect.ImmutableMap;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 
 public class Experience {
 

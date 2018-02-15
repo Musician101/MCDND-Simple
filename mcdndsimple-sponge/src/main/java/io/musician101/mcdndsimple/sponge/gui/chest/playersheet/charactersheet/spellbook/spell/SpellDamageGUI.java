@@ -40,7 +40,7 @@ public class SpellDamageGUI extends MCDNDSimpleChestGUI {
                 return;
             }
 
-            spellDamage.setDice(dice);
+            spellDamage.setDamage(dice);
             delayedOpen();
         }));
         set(2, ClickInventoryEvent.class, createItem(ItemTypes.STICK, Text.of(MenuText.OTHER_BONUS)), player -> new IntegerInputAnvilGUI(player, (p, i) -> {

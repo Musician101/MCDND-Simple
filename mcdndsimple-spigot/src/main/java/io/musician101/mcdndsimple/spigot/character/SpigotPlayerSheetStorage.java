@@ -1,23 +1,23 @@
 package io.musician101.mcdndsimple.spigot.character;
 
+import io.musician101.mcdndsimple.common.character.player.PlayerSheet;
 import io.musician101.mcdndsimple.common.character.player.PlayerSheetStorage;
-import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.mcdndsimple.spigot.SpigotMCDNDSimple;
-import io.musician101.mcdndsimple.spigot.serialization.SpigotMCDNDDeserializer;
-import io.musician101.mcdndsimple.spigot.serialization.SpigotMCDNDSerializer;
+import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.MemoryConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
-public class SpigotPlayerSheetStorage extends PlayerSheetStorage<MemoryConfiguration, SpigotMCDNDDeserializer, SpigotMCDNDSerializer> {
+public class SpigotPlayerSheetStorage extends PlayerSheetStorage {
 
     public SpigotPlayerSheetStorage(File storageDir) {
-        super(storageDir, new SpigotMCDNDSerializer(), new SpigotMCDNDDeserializer());
+        super(storageDir);
     }
 
     @Override
@@ -31,16 +31,15 @@ public class SpigotPlayerSheetStorage extends PlayerSheetStorage<MemoryConfigura
         }
 
         for (File file : files) {
-            if (file.isDirectory() || !file.getName().endsWith(".yml")) {
+            if (file.isDirectory() || !file.getName().endsWith(".pc")) {
                 continue;
             }
 
             try {
-                YamlConfiguration yaml = new YamlConfiguration();
-                yaml.load(file);
-                data.putAll(deserialize(yaml), yaml.getStringList(Keys.CONTROLLERS).stream().map(UUID::fromString).collect(Collectors.toList()));
+                SimpleEntry<PlayerSheet, List<UUID>> entry = JsonKeyProcessor.GSON.fromJson(new FileReader(file), PlayerSheetStorage.Serializer.ENTRY_CLASS.getType());
+                data.putAll(entry.getKey(), entry.getValue());
             }
-            catch (InvalidConfigurationException | IOException e) {
+            catch (FileNotFoundException e) {
                 logger.warning("An error occurred while loading " + file.getName());
             }
         }
@@ -49,17 +48,14 @@ public class SpigotPlayerSheetStorage extends PlayerSheetStorage<MemoryConfigura
     @Override
     public void save() {
         data.keys().forEach(playerSheet -> {
-            File file = new File(storageDir, playerSheet.getName() + ".conf");
+            File file = new File(storageDir, playerSheet.getName() + ".pc");
             try {
                 if (!file.exists()) {
                     file.getParentFile().mkdirs();
                     file.createNewFile();
                 }
 
-                YamlConfiguration yaml = new YamlConfiguration();
-                yaml.set(Keys.PLAYER_SHEET, serialize(playerSheet));
-                yaml.set(Keys.CONTROLLERS, data.get(playerSheet).stream().map(UUID::toString).collect(Collectors.toList()));
-                yaml.save(file);
+                JsonKeyProcessor.GSON.toJson(new SimpleEntry<>(playerSheet, data.get(playerSheet)), new FileWriter(file));
             }
             catch (IOException e) {
                 SpigotMCDNDSimple.instance().getLogger().warning("An error occurred while saving " + file.getName());

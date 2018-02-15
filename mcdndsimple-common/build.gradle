@@ -3,7 +3,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.google.guava:guava:18.0'
+    compile 'io.musician101:musicianlibrary-common:3.0-SNAPSHOT'
 }
 
 processResources {

@@ -34,7 +34,7 @@ public class SpellSaveGUI extends MCDNDSimpleChestGUI {
     @Override
     protected void build() {
         set(0, ClickInventoryEvent.class, createItem(ItemTypes.SHIELD, Text.of(MenuText.SAVING_STAT)), player -> new SpellSavingStatGUI(player, coreStats, spellSave, this));
-        set(1, ClickInventoryEvent.class, createItem(ItemTypes.ENCHANTING_TABLE, Text.of(MenuText.SAVE_DC)), player -> new SpellcasterClassGUI<>(player, spellSave, SpellSave::setSaveDCType, spellcasterClass -> spellcasterClass.equals(spellSave.getSpellcasterClass()), this));
+        set(1, ClickInventoryEvent.class, createItem(ItemTypes.ENCHANTING_TABLE, Text.of(MenuText.SAVE_DC)), player -> new SpellcasterClassGUI<>(player, spellSave, SpellSave::setSaveDCType, spellcasterClass -> spellcasterClass.equals(spellSave.getSaveDCType()), this));
         set(2, ClickInventoryEvent.class, createItem(ItemTypes.ENCHANTED_BOOK, Text.of(MenuText.customDC(spellSave.getCustomDC()))), player -> new IntegerInputAnvilGUI(player, (p, i) -> {
             spellSave.setCustomDC(i);
             delayedOpen();

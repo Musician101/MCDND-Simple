@@ -5,7 +5,7 @@ import io.musician101.mcdndsimple.common.Reference.MenuText;
 import io.musician101.mcdndsimple.common.Reference.Messages;
 import io.musician101.mcdndsimple.common.character.player.AbilityScore;
 import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
-import io.musician101.mcdndsimple.common.character.player.ClassLevels;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.anvil.number.IntegerInputAnvilGUI;
@@ -45,7 +45,7 @@ public class AbilityScoreGUI extends MCDNDSimpleChestGUI {
         }));
         set(1, createItem(ItemTypes.GUNPOWDER, Text.of(MenuText.mod(score))));
         set(2, ClickInventoryEvent.class, createItem(ItemTypes.PAPER, Text.of(MenuText.proficient(score))), player -> {
-            score.setProficient(!score.isProficient());
+            score.setIsProficient(!score.isProficient());
             open();
         });
         set(3, createItem(ItemTypes.GLOWSTONE_DUST, Text.of(MenuText.saveMod(score, classLevels, experience))));

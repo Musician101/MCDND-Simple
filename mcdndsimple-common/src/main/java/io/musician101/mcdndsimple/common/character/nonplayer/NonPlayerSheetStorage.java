@@ -1,23 +1,35 @@
 package io.musician101.mcdndsimple.common.character.nonplayer;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.reflect.TypeToken;
 import io.musician101.mcdndsimple.common.character.CharacterStorage;
-import io.musician101.mcdndsimple.common.serialization.MCDNDDeserializer;
-import io.musician101.mcdndsimple.common.serialization.MCDNDSerializer;
+import io.musician101.mcdndsimple.common.serialization.Keys;
+import io.musician101.musicianlibrary.java.json.adapter.AdapterOf;
+import io.musician101.musicianlibrary.java.json.adapter.AdapterType;
 import java.io.File;
+import java.lang.reflect.Type;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class NonPlayerSheetStorage<C, D extends MCDNDDeserializer<C>, S extends MCDNDSerializer<C>> extends CharacterStorage<C, D, S, NonPlayerSheet> {
+public abstract class NonPlayerSheetStorage extends CharacterStorage<NonPlayer> {
 
-    public NonPlayerSheetStorage(File storageDir, S serializer, D deserializer) {
-        super(storageDir, serializer, deserializer);
+    public NonPlayerSheetStorage(File storageDir) {
+        super(storageDir);
         load();
     }
 
     @Override
-    public Optional<NonPlayerSheet> createNewCharacter(UUID uuid, String name) {
+    public Optional<NonPlayer> createNewCharacter(UUID uuid, String name) {
         if (!getCharacter(uuid, name).isPresent()) {
-            NonPlayerSheet nonPlayerSheet = new NonPlayerSheet();
+            NonPlayer nonPlayerSheet = new NonPlayer();
             nonPlayerSheet.setName(name);
             return Optional.of(nonPlayerSheet);
         }
@@ -25,13 +37,25 @@ public abstract class NonPlayerSheetStorage<C, D extends MCDNDDeserializer<C>, S
         return Optional.empty();
     }
 
-    @Override
-    protected NonPlayerSheet deserialize(C data) {
-        return deserializer.deserializeNPC(data);
-    }
+    @AdapterOf
+    public static class Serializer implements CharacterStorage.Serializer<NonPlayer> {
 
-    @Override
-    protected C serialize(NonPlayerSheet nonPlayerSheet) {
-        return serializer.serialize(nonPlayerSheet);
+        @AdapterType
+        public static final TypeToken<Entry<NonPlayer, List<UUID>>> ENTRY_CLASS = new TypeToken<Entry<NonPlayer, List<UUID>>>(){};
+
+        @Override
+        public Entry<NonPlayer, List<UUID>> deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+            JsonObject jsonObject = json.getAsJsonObject();
+            List<UUID> controllers = Keys.CONTROLLERS.deserializeFromParent(jsonObject, context).orElse(Collections.emptyList());
+            NonPlayer nonPlayerSheet = context.deserialize(jsonObject, NonPlayer.class);
+            return new SimpleEntry<>(nonPlayerSheet, controllers);
+        }
+
+        @Override
+        public JsonElement serialize(Entry<NonPlayer, List<UUID>> src, Type type, JsonSerializationContext context) {
+            JsonObject jsonObject = context.serialize(src.getKey()).getAsJsonObject();
+            Keys.CONTROLLERS.serialize(src.getValue(), jsonObject, context);
+            return jsonObject;
+        }
     }
 }

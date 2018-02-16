@@ -53,7 +53,7 @@ import io.musician101.mcdndsimple.common.character.player.tab.InventoryTab;
 import io.musician101.mcdndsimple.common.character.player.tab.SkillsTab;
 import io.musician101.mcdndsimple.common.character.player.tab.SpellbookTab;
 import io.musician101.mcdndsimple.common.character.player.tab.WeaponsTab;
-import io.musician101.mcdndsimple.common.character.player.weapon.AbstractWeapon;
+import io.musician101.mcdndsimple.common.character.player.weapon.Weapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.RangedWeapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.WeaponAttackStat;
@@ -185,7 +185,7 @@ public class SpigotChestGUIs {
         }, (p, i) -> armorType(player, armor, i, prevGUI), ArmorType.values()).build();
     }
 
-    public void attackStat(@Nonnull Player player, int page, @Nonnull AbstractWeapon weapon, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
+    public void attackStat(@Nonnull Player player, int page, @Nonnull Weapon weapon, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
         paged(MenuText.ATTACK_STAT, player, prevGUI, page, attackStat -> SpigotIconBuilder.builder(ItemRepresentation.weaponAttackStat(attackStat)).addGlow(attackStat == weapon.getAttackStat()).build(), attackStat -> (g, p) -> {
             weapon.setAttackStat(attackStat);
             attackStat(p, page, weapon, prevGUI);

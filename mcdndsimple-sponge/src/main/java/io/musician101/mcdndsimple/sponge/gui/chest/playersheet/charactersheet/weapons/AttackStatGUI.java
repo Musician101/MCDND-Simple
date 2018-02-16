@@ -1,7 +1,7 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.weapons;
 
 import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.character.player.weapon.AbstractWeapon;
+import io.musician101.mcdndsimple.common.character.player.weapon.Weapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.WeaponAttackStat;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.chest.MCDNDSimpleChestGUI;
@@ -13,7 +13,7 @@ import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.text.Text;
 
-public class AttackStatGUI<W extends AbstractWeapon> extends MCDNDSimpleChestGUI {
+public class AttackStatGUI<W extends Weapon> extends MCDNDSimpleChestGUI {
 
     private final W weapon;
 

@@ -10,7 +10,7 @@ import io.musician101.musicianlibrary.java.json.adapter.TypeOf;
 import java.lang.reflect.Type;
 
 @TypeOf(MeleeWeapon.Serializer.class)
-public class MeleeWeapon extends AbstractWeapon {
+public class MeleeWeapon extends Weapon {
 
     private boolean plusStat = true;
 
@@ -26,7 +26,7 @@ public class MeleeWeapon extends AbstractWeapon {
         this.plusStat = plusStat;
     }
 
-    public static class Serializer extends AbstractWeapon.Serializer<MeleeWeapon> {
+    public static class Serializer extends Weapon.Serializer<MeleeWeapon> {
 
         @Override
         public MeleeWeapon deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {

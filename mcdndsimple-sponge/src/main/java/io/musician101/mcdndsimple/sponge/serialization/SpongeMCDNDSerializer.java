@@ -40,7 +40,7 @@ import io.musician101.mcdndsimple.common.character.player.tab.InventoryTab;
 import io.musician101.mcdndsimple.common.character.player.tab.SkillsTab;
 import io.musician101.mcdndsimple.common.character.player.tab.SpellbookTab;
 import io.musician101.mcdndsimple.common.character.player.tab.WeaponsTab;
-import io.musician101.mcdndsimple.common.character.player.weapon.AbstractWeapon;
+import io.musician101.mcdndsimple.common.character.player.weapon.Weapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.RangedWeapon;
 import ninja.leaping.configurate.ConfigurationNode;
@@ -455,7 +455,7 @@ public class SpongeMCDNDSerializer extends MCDNDSerializer<ConfigurationNode> {
     }
 
     @Override
-    protected ConfigurationNode serialize(AbstractWeapon weapon, ConfigurationNode weaponData) {
+    protected ConfigurationNode serialize(Weapon weapon, ConfigurationNode weaponData) {
         weaponData.getNode(JsonUtils.IS_PROFICIENT).setValue(weapon.isProficient());
         weaponData.getNode(JsonUtils.CRIT_DAMAGE_DICE).setValue(serialize(weapon.getCritDamage()));
         weaponData.getNode(JsonUtils.DAMAGE_DICE).setValue(serialize(weapon.getDamage()));

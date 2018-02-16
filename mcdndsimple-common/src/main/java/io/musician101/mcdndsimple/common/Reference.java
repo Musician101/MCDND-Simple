@@ -26,7 +26,7 @@ import io.musician101.mcdndsimple.common.character.player.tab.BackgroundTab;
 import io.musician101.mcdndsimple.common.character.player.tab.CoreStatsTab;
 import io.musician101.mcdndsimple.common.character.player.tab.Initiative;
 import io.musician101.mcdndsimple.common.character.player.tab.SpellbookTab;
-import io.musician101.mcdndsimple.common.character.player.weapon.AbstractWeapon;
+import io.musician101.mcdndsimple.common.character.player.weapon.Weapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.RangedWeapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.WeaponAttackStat;
@@ -324,12 +324,12 @@ public class Reference {
         }
 
         @Nonnull
-        public static String critDamage(@Nonnull AbstractWeapon critDamageDice) {
+        public static String critDamage(@Nonnull Weapon critDamageDice) {
             return "Crit Damage: " + critDamageDice.getCritDamage().getAmount() + "d" + critDamageDice.getCritDamage().getSides();
         }
 
         @Nonnull
-        public static String critOn(AbstractWeapon weapon) {
+        public static String critOn(Weapon weapon) {
             return "Crit On: " + weapon.getCritMin();
         }
 
@@ -359,7 +359,7 @@ public class Reference {
         }
 
         @Nonnull
-        public static String damageBonus(@Nonnull AbstractWeapon weapon, @Nonnull CoreStats coreStats) {
+        public static String damageBonus(@Nonnull Weapon weapon, @Nonnull CoreStats coreStats) {
             return "Damage Bonus: " + weapon.getDamageBonus(coreStats);
         }
 
@@ -466,7 +466,7 @@ public class Reference {
         }
 
         @Nonnull
-        public static String isProficient(AbstractWeapon weapon) {
+        public static String isProficient(Weapon weapon) {
             return "Proficient? " + (weapon.isProficient() ? "Yes" : "No");
         }
 
@@ -491,7 +491,7 @@ public class Reference {
         }
 
         @Nonnull
-        public static String magicBonus(@Nonnull AbstractWeapon weapon) {
+        public static String magicBonus(@Nonnull Weapon weapon) {
             return "Magic Bonus: " + weapon.getMagicBonus();
         }
 

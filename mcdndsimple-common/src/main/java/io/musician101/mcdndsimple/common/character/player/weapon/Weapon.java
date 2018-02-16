@@ -17,8 +17,7 @@ import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
 import javax.annotation.Nonnull;
 
-//TODO rename to Weapon
-public abstract class AbstractWeapon {
+public abstract class Weapon {
 
     @Nonnull
     private WeaponAttackStat attackStat;
@@ -34,7 +33,7 @@ public abstract class AbstractWeapon {
     @Nonnull
     private String name = "";
 
-    protected AbstractWeapon(@Nonnull WeaponAttackStat defaultAttackStat) {
+    protected Weapon(@Nonnull WeaponAttackStat defaultAttackStat) {
         this.attackStat = defaultAttackStat;
     }
 
@@ -160,7 +159,7 @@ public abstract class AbstractWeapon {
         isProficient = proficient;
     }
 
-    static class Serializer<W extends AbstractWeapon> implements JsonDeserializer<W>, JsonSerializer<W> {
+    static class Serializer<W extends Weapon> implements JsonDeserializer<W>, JsonSerializer<W> {
 
         @SuppressWarnings("unchecked")
         @Override

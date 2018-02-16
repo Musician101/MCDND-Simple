@@ -272,6 +272,9 @@ public class Keys {
     public static final JsonKeyImpl<JsonPrimitive, Integer> XP = integerKey("xp");
     public static final JsonKeyImpl<JsonPrimitive, Integer> AMOUNT = integerKey("amount");
     public static final JsonKeyImpl<JsonPrimitive, Integer> SIDES = integerKey("sides");
+    public static final String DEATH_SAVING_THROWS = "death_saving_throws";
+    public static final JsonKeyImpl<JsonPrimitive, Integer> FAIL_COUNT = integerKey("fail_count");
+    public static final JsonKeyImpl<JsonPrimitive, Integer> SUCCESS_COUNT = integerKey("success_count");
 
     private Keys() {
 

@@ -102,6 +102,7 @@ public class CoreStatsTab {
             JsonKeyProcessor.<JsonObject, Bonuses>getJsonKey(Keys.BONUSES).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setBonuses));
             Keys.INSPIRATION.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setHasInspiration);
             JsonKeyProcessor.<JsonObject, CoreStats>getJsonKey(Keys.CORE_STATS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setCoreStats));
+            JsonKeyProcessor.<JsonObject, DeathSavingThrows>getJsonKey(Keys.DEATH_SAVING_THROWS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setDeathSavingThrows));
             Keys.EXPERIENCE.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab.getExperience()::setExp);
             JsonKeyProcessor.<JsonObject, HitDice>getJsonKey(Keys.HIT_DICE).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setHitDice));
             JsonKeyProcessor.<JsonObject, HitPoints>getJsonKey(Keys.HIT_POINTS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setHitPoints));
@@ -116,6 +117,7 @@ public class CoreStatsTab {
             JsonKeyProcessor.<JsonObject, Bonuses>getJsonKey(Keys.BONUSES).ifPresent(jsonKey -> jsonKey.serialize(src.getBonuses(), jsonObject, context));
             Keys.INSPIRATION.serialize(src.hasInspiration(), jsonObject, context);
             JsonKeyProcessor.<JsonObject, CoreStats>getJsonKey(Keys.CORE_STATS).ifPresent(jsonKey -> jsonKey.serialize(src.getCoreStats(), jsonObject, context));
+            JsonKeyProcessor.<JsonObject, DeathSavingThrows>getJsonKey(Keys.DEATH_SAVING_THROWS).ifPresent(jsonKey -> jsonKey.serialize(src.getDeathSavingThrows(), jsonObject, context));
             Keys.EXPERIENCE.serialize(src.getExperience().getXP(), jsonObject, context);
             JsonKeyProcessor.<JsonObject, HitDice>getJsonKey(Keys.HIT_DICE).ifPresent(jsonKey -> jsonKey.serialize(src.getHitDice(), jsonObject, context));
             JsonKeyProcessor.<JsonObject, HitPoints>getJsonKey(Keys.HIT_POINTS).ifPresent(jsonKey -> jsonKey.serialize(src.getHitPoints(), jsonObject, context));

@@ -107,7 +107,10 @@ public class Dice {
 
         @Override
         public JsonElement serialize(Dice src, Type type, JsonSerializationContext context) {
-            return null;
+            JsonObject jsonObject = new JsonObject();
+            Keys.AMOUNT.serialize(src.getAmount(), jsonObject, context);
+            Keys.SIDES.serialize(src.getSides(), jsonObject, context);
+            return jsonObject;
         }
     }
 }

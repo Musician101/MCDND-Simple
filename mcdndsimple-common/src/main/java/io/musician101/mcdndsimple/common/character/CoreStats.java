@@ -28,48 +28,24 @@ public class CoreStats {
         return charisma;
     }
 
-    public void setCharisma(AbilityScore charisma) {
-        this.charisma = charisma;
-    }
-
     public AbilityScore getConstitution() {
         return constitution;
-    }
-
-    public void setConstitution(AbilityScore constitution) {
-        this.constitution = constitution;
     }
 
     public AbilityScore getDexterity() {
         return dexterity;
     }
 
-    public void setDexterity(AbilityScore dexterity) {
-        this.dexterity = dexterity;
-    }
-
     public AbilityScore getIntelligence() {
         return intelligence;
-    }
-
-    public void setIntelligence(AbilityScore intelligence) {
-        this.intelligence = intelligence;
     }
 
     public AbilityScore getStrength() {
         return strength;
     }
 
-    public void setStrength(AbilityScore strength) {
-        this.strength = strength;
-    }
-
     public AbilityScore getWisdom() {
         return wisdom;
-    }
-
-    public void setWisdom(AbilityScore wisdom) {
-        this.wisdom = wisdom;
     }
 
     public static class Serializer implements JsonDeserializer<CoreStats>, JsonSerializer<CoreStats> {
@@ -78,18 +54,29 @@ public class CoreStats {
         public CoreStats deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             CoreStats coreStats = new CoreStats();
-            JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.CHARISMA).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStats::setCharisma));
-            JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.CONSTITUTION).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStats::setConstitution));
-            JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.DEXTERITY).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStats::setDexterity));
-            JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.INTELLIGENCE).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStats::setIntelligence));
-            JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.STRENGTH).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStats::setStrength));
-            JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.WISDOM).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStats::setWisdom));
+            deserialize(coreStats.getCharisma(), jsonObject.getAsJsonObject(Keys.CHARISMA), context);
+            deserialize(coreStats.getConstitution(), jsonObject.getAsJsonObject(Keys.CONSTITUTION), context);
+            deserialize(coreStats.getDexterity(), jsonObject.getAsJsonObject(Keys.DEXTERITY), context);
+            deserialize(coreStats.getIntelligence(), jsonObject.getAsJsonObject(Keys.INTELLIGENCE), context);
+            deserialize(coreStats.getStrength(), jsonObject.getAsJsonObject(Keys.STRENGTH), context);
+            deserialize(coreStats.getWisdom(), jsonObject.getAsJsonObject(Keys.WISDOM), context);
             return coreStats;
+        }
+
+        private void deserialize(AbilityScore abilityScore, JsonObject jsonObject, JsonDeserializationContext context) {
+            Keys.IS_PROFICIENT.deserializeFromParent(jsonObject, context).ifPresent(abilityScore::setIsProficient);
+            Keys.SCORE.deserializeFromParent(jsonObject, context).ifPresent(abilityScore::setScore);
         }
 
         @Override
         public JsonElement serialize(CoreStats src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
+            serialize(src.getCharisma(), jsonObject.getAsJsonObject(Keys.CHARISMA), context);
+            serialize(src.getConstitution(), jsonObject.getAsJsonObject(Keys.CONSTITUTION), context);
+            serialize(src.getDexterity(), jsonObject.getAsJsonObject(Keys.DEXTERITY), context);
+            serialize(src.getIntelligence(), jsonObject.getAsJsonObject(Keys.INTELLIGENCE), context);
+            serialize(src.getStrength(), jsonObject.getAsJsonObject(Keys.STRENGTH), context);
+            serialize(src.getWisdom(), jsonObject.getAsJsonObject(Keys.WISDOM), context);
             JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.CHARISMA).ifPresent(jsonKey -> jsonKey.serialize(src.getCharisma(), jsonObject, context));
             JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.CONSTITUTION).ifPresent(jsonKey -> jsonKey.serialize(src.getConstitution(), jsonObject, context));
             JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.DEXTERITY).ifPresent(jsonKey -> jsonKey.serialize(src.getDexterity(), jsonObject, context));
@@ -97,6 +84,11 @@ public class CoreStats {
             JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.STRENGTH).ifPresent(jsonKey -> jsonKey.serialize(src.getIntelligence(), jsonObject, context));
             JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.WISDOM).ifPresent(jsonKey -> jsonKey.serialize(src.getWisdom(), jsonObject, context));
             return jsonObject;
+        }
+
+        private void serialize(AbilityScore abilityScore, JsonObject jsonObject, JsonSerializationContext context) {
+            Keys.IS_PROFICIENT.serialize(abilityScore.isProficient(), jsonObject, context);
+            Keys.SCORE.serialize(abilityScore.getScore(), jsonObject, context);
         }
     }
 }

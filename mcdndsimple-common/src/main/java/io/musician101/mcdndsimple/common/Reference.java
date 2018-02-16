@@ -10,6 +10,7 @@ import io.musician101.mcdndsimple.common.character.player.MCDNDItem;
 import io.musician101.mcdndsimple.common.character.player.Recharge;
 import io.musician101.mcdndsimple.common.character.player.Weight;
 import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
+import io.musician101.mcdndsimple.common.character.player.clazz.ClassResource;
 import io.musician101.mcdndsimple.common.character.player.equipment.armor.Armor;
 import io.musician101.mcdndsimple.common.character.player.equipment.currency.Coin;
 import io.musician101.mcdndsimple.common.character.player.equipment.currency.Wealth;
@@ -17,6 +18,7 @@ import io.musician101.mcdndsimple.common.character.player.skill.PlayerSkill;
 import io.musician101.mcdndsimple.common.character.player.spell.Prepared;
 import io.musician101.mcdndsimple.common.character.player.spell.Spell;
 import io.musician101.mcdndsimple.common.character.player.spell.SpellDamage;
+import io.musician101.mcdndsimple.common.character.player.spell.SpellSave;
 import io.musician101.mcdndsimple.common.character.player.spell.SpellType;
 import io.musician101.mcdndsimple.common.character.player.spell.SpellcasterClass;
 import io.musician101.mcdndsimple.common.character.player.tab.ArmorTab;
@@ -25,10 +27,13 @@ import io.musician101.mcdndsimple.common.character.player.tab.CoreStatsTab;
 import io.musician101.mcdndsimple.common.character.player.tab.Initiative;
 import io.musician101.mcdndsimple.common.character.player.tab.SpellbookTab;
 import io.musician101.mcdndsimple.common.character.player.weapon.AbstractWeapon;
+import io.musician101.mcdndsimple.common.character.player.weapon.MeleeWeapon;
+import io.musician101.mcdndsimple.common.character.player.weapon.RangedWeapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.WeaponAttackStat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 
 public class Reference {
 
@@ -228,381 +233,464 @@ public class Reference {
 
         }
 
-        public static String age(BackgroundTab backgroundTab) {
+        @Nonnull
+        public static String age(@Nonnull BackgroundTab backgroundTab) {
             return "Age: " + backgroundTab.getAge();
         }
 
-        public static String alignment(BackgroundTab backgroundTab) {
+        @Nonnull
+        public static String alignment(@Nonnull BackgroundTab backgroundTab) {
             return "Alignment: " + backgroundTab.getAlignment();
         }
 
-        public static String ammo(int ammo) {
-            return "Ammo: " + ammo;
+        @Nonnull
+        public static String ammo(@Nonnull RangedWeapon weapon) {
+            return "Ammo: " + weapon.getAmmo();
         }
 
-        public static String armorClass(Armor armor) {
+        @Nonnull
+        public static String armorClass(@Nonnull Armor armor) {
             return "Armor Class: " + armor.getBaseArmorClass();
         }
 
-        public static String armorType(Armor armor) {
+        @Nonnull
+        public static String armorType(@Nonnull Armor armor) {
             return "Armor Type: " + armor.getArmorType().getName();
         }
 
-        public static String armoredAC(ArmorTab armorTab) {
-            return "AC (armored): " + armorTab.getArmorClass();
+        @Nonnull
+        public static String armoredAC(@Nonnull ArmorTab armorTab) {
+            return "AC (@Nonnull Armored): " + armorTab.getArmorClass();
         }
 
-        public static String attackStat(WeaponAttackStat attackStat) {
+        @Nonnull
+        public static String attackStat(@Nonnull WeaponAttackStat attackStat) {
             return "Attack Stat: " + attackStat.getName();
         }
 
-        public static String baseAC(Armor armor) {
+        @Nonnull
+        public static String baseAC(@Nonnull Armor armor) {
             return "Base AC: " + armor.getBaseArmorClass();
         }
 
-        public static String bonus(PlayerSkill skill) {
+        @Nonnull
+        public static String bonus(@Nonnull PlayerSkill skill) {
             return BONUS + ": " + skill.getBonus();
         }
 
-        public static String carried(MCDNDItem item) {
+        @Nonnull
+        public static String carried(@Nonnull MCDNDItem item) {
             return item.isCarried() ? "Carried" : "Not Carried";
         }
 
-        public static String carryingMax(double carryingMax) {
-            return "Carrying Max: " + carryingMax;
+        @Nonnull
+        public static String carryingMax(@Nonnull CoreStats coreStats, @Nonnull Weight weight) {
+            return "Carrying Max: " + weight.getCarryingMax(coreStats);
         }
 
-        public static String castTime(String castTime) {
+        @Nonnull
+        public static String castTime(@Nonnull String castTime) {
             return "Cast Time: " + castTime;
         }
 
-        public static String clazz(SpellcasterClass spellcasterClass) {
+        @Nonnull
+        public static String clazz(@Nonnull SpellcasterClass spellcasterClass) {
             return "Class: " + spellcasterClass.getName();
         }
 
-        public static String coin(Coin coin) {
+        @Nonnull
+        public static String coin(@Nonnull Coin coin) {
             return coin.getShortName() + ": " + coin.getAmount();
         }
 
-        public static String[] coinCarriedDescription(Wealth wealth) {
+        @Nonnull
+        public static String[] coinCarriedDescription(@Nonnull Wealth wealth) {
             return new String[]{coin(wealth.getCopper()), coin(wealth.getSilver()), coin(wealth.getElectrum()), coin(wealth.getElectrum()), coin(wealth.getGold()), coin(wealth.getPlatinum())};
         }
 
-        public static String coinWeight(double weight) {
-            return "Coin: " + weight;
+        @Nonnull
+        public static String coinWeight(@Nonnull Wealth wealth, @Nonnull Weight weight) {
+            return "Coin: " + weight.getCoin(wealth);
         }
 
-        public static String components(String components) {
-            return "Components: " + components;
+        @Nonnull
+        public static String components(@Nonnull Spell spell) {
+            return "Components: " + (spell.getComponents().isEmpty() ? "No" : "Yes");
         }
 
-        public static String concentration(boolean needsConcentration) {
-            return "Needs Concentration? " + (needsConcentration ? "Yes" : "No");
+        @Nonnull
+        public static String concentration(@Nonnull Spell spell) {
+            return "Needs Concentration? " + (spell.needsConcentration() ? "Yes" : "No");
         }
 
-        public static String critDamage(Dice critDamageDice) {
-            return "Crit Damage: " + critDamageDice.getAmount() + "d" + critDamageDice.getSides();
+        @Nonnull
+        public static String critDamage(@Nonnull AbstractWeapon critDamageDice) {
+            return "Crit Damage: " + critDamageDice.getCritDamage().getAmount() + "d" + critDamageDice.getCritDamage().getSides();
         }
 
-        public static String critOn(int critMin) {
-            return "Crit On: " + critMin;
+        @Nonnull
+        public static String critOn(AbstractWeapon weapon) {
+            return "Crit On: " + weapon.getCritMin();
         }
 
-        public static String current(ArmorTab armorTab) {
+        @Nonnull
+        public static String current(@Nonnull ArmorTab armorTab) {
             return "Current: " + armorTab.getUnarmoredBonus().getName();
         }
 
-        public static String current(int usesLeft) {
-            return "Current: " + usesLeft;
+        @Nonnull
+        public static String current(@Nonnull ClassResource classResource) {
+            return "Current: " + classResource.getUsesLeft();
         }
 
-        public static String currentHitPoints(HitPoints hitPoints) {
+        @Nonnull
+        public static String currentHitPoints(@Nonnull HitPoints hitPoints) {
             return "Current: " + hitPoints.getCurrent();
         }
 
-        public static String currentXP(Experience experience) {
+        @Nonnull
+        public static String currentXP(@Nonnull Experience experience) {
             return "Current XP: " + experience.getXP();
         }
 
-        public static String customDC(int customDC) {
-            return "Custom DC: " + customDC;
+        @Nonnull
+        public static String customDC(@Nonnull SpellSave spellSave) {
+            return "Custom DC: " + spellSave.getCustomDC();
         }
 
-        public static String damageBonus(int damageBonus) {
-            return "Damage Bonus: " + damageBonus;
+        @Nonnull
+        public static String damageBonus(@Nonnull AbstractWeapon weapon, @Nonnull CoreStats coreStats) {
+            return "Damage Bonus: " + weapon.getDamageBonus(coreStats);
         }
 
-        public static String damageDice(Dice damageDice) {
+        @Nonnull
+        public static String damageDice(@Nonnull Dice damageDice) {
             return "Damage Dice: " + damageDice.getAmount() + "d" + damageDice.getSides();
         }
 
-        public static String damageType(String damageType) {
+        @Nonnull
+        public static String damageType(@Nonnull String damageType) {
             return "Damage Type: " + damageType;
         }
 
-        public static String duration(String duration) {
-            return "Duration: " + duration;
+        @Nonnull
+        public static String duration(@Nonnull Spell spell) {
+            return "Duration: " + spell.getDuration();
         }
 
-        public static String encumbered(double encumbered) {
-            return "Encumbered: " + encumbered;
+        @Nonnull
+        public static String encumbered(@Nonnull CoreStats coreStats, @Nonnull Weight weight) {
+            return "Encumbered: " + weight.getEncumbered(coreStats);
         }
 
-        public static String[] experience(Experience experience, ClassLevels classLevels) {
+        @Nonnull
+        public static String[] experience(@Nonnull Experience experience, @Nonnull ClassLevels classLevels) {
             return new String[]{overallLevel(experience, classLevels), proficiencyBonus(experience, classLevels), currentXP(experience), xpForNextLevel(experience, classLevels)};
         }
 
-        public static String eyes(BackgroundTab backgroundTab) {
+        @Nonnull
+        public static String eyes(@Nonnull BackgroundTab backgroundTab) {
             return "Eyes: " + backgroundTab.getEyes();
         }
 
-        public static String gainedFrom(SpellcasterClass spellcasterClass) {
+        @Nonnull
+        public static String gainedFrom(@Nonnull SpellcasterClass spellcasterClass) {
             return "Gained from " + spellcasterClass.getName();
         }
 
-        public static String gender(BackgroundTab backgroundTab) {
+        @Nonnull
+        public static String gender(@Nonnull BackgroundTab backgroundTab) {
             return "Gender: " + backgroundTab.getGender();
         }
 
-        public static String hair(BackgroundTab backgroundTab) {
+        @Nonnull
+        public static String hair(@Nonnull BackgroundTab backgroundTab) {
             return "Hair: " + backgroundTab.getHair();
         }
 
-        public static String hasComponents(List<String> components) {
+        @Nonnull
+        public static String hasComponents(@Nonnull List<String> components) {
             return "Has Components: " + (components.isEmpty() ? "No" : "Yes");
         }
 
-        public static String hasSpeedPenalty(Armor armor) {
+        @Nonnull
+        public static String hasSpeedPenalty(@Nonnull Armor armor) {
             return (armor.hasSpeedPenalty() ? "" : "No ") + "Speed Penalty";
         }
 
-        public static String hasStealthPenalty(Armor armor) {
+        @Nonnull
+        public static String hasStealthPenalty(@Nonnull Armor armor) {
             return (armor.hasStealthPenalty() ? "" : "No ") + "Stealth Penalty";
         }
 
-        public static String healAmount(Dice healAmount) {
+        @Nonnull
+        public static String healAmount(@Nonnull Dice healAmount) {
             return "Heal Amount: " + healAmount.getAmount() + "d" + healAmount.getSides();
         }
 
-        public static String heavilyEncumbered(double heavilyEncumbered) {
-            return "Heavily Encumbered: " + heavilyEncumbered;
+        @Nonnull
+        public static String heavilyEncumbered(@Nonnull CoreStats coreStats, @Nonnull Weight weight) {
+            return "Heavily Encumbered: " + weight.getHeavilyEncumbered(coreStats);
         }
 
-        public static String height(BackgroundTab backgroundTab) {
+        @Nonnull
+        public static String height(@Nonnull BackgroundTab backgroundTab) {
             return "Height: " + backgroundTab.getHeight();
         }
 
-        public static String[] hitDice(HitDice hitDice) {
+        @Nonnull
+        public static String[] hitDice(@Nonnull HitDice hitDice) {
             List<String> list = new ArrayList<>();
             hitDice.getHitDice().forEach((sides, amount) -> list.add(amount + " x d" + sides));
             return list.toArray(new String[0]);
         }
 
-        public static String[] hitPoints(HitPoints hitPoints) {
+        @Nonnull
+        public static String[] hitPoints(@Nonnull HitPoints hitPoints) {
             return new String[]{"HP: " + hitPoints.getMax() + " / " + hitPoints.getMax(), "Temp HP: " + hitPoints.getTemp()};
         }
 
-        public static String initiative(Initiative initiative, AbilityScore dex) {
+        @Nonnull
+        public static String initiative(@Nonnull Initiative initiative, @Nonnull AbilityScore dex) {
             return INITIATIVE + ": " + initiative.getInitiative(dex);
         }
 
-        public static String inventoryWeight(double weight) {
-            return INVENTORY + ": " + weight;
+        @Nonnull
+        public static String inventoryWeight(@Nonnull List<MCDNDItem> items, @Nonnull Weight weight) {
+            return INVENTORY + ": " + weight.getInventory(items);
         }
 
-        public static String isProficient(boolean proficient) {
-            return "Proficient? " + (proficient ? "Yes" : "No");
+        @Nonnull
+        public static String isProficient(AbstractWeapon weapon) {
+            return "Proficient? " + (weapon.isProficient() ? "Yes" : "No");
         }
 
-        public static String isUnarmored(Armor armor) {
+        @Nonnull
+        public static String isUnarmored(@Nonnull Armor armor) {
             return "Is" + (armor.isUnarmored() ? " " : " Not ") + "Unarmored";
         }
 
-        public static String isWorn(Armor armor) {
+        @Nonnull
+        public static String isWorn(@Nonnull Armor armor) {
             return "Is" + (armor.isWorn() ? " " : " Not ") + "Worn";
         }
 
-        public static String[] itemDesc(MCDNDItem item) {
+        @Nonnull
+        public static String[] itemDesc(@Nonnull MCDNDItem item) {
             return new String[]{"Carried? " + (item.isCarried() ? "Yes" : "No"), "Quantity: " + item.getQuantity(), "Weight: " + item.getWeight(), "Description: " + item.getDescription()};
         }
 
-        public static String level(int level) {
-            return "Level: " + level;
-        }
-
-        public static String magicBonus(Armor armor) {
+        @Nonnull
+        public static String magicBonus(@Nonnull Armor armor) {
             return "Magic Bonus: " + armor.getMagicBonus();
         }
 
-        public static String magicBonus(AbstractWeapon weapon) {
+        @Nonnull
+        public static String magicBonus(@Nonnull AbstractWeapon weapon) {
             return "Magic Bonus: " + weapon.getMagicBonus();
         }
 
-        public static String maxHitPoints(HitPoints hitPoints) {
+        @Nonnull
+        public static String maxHitPoints(@Nonnull HitPoints hitPoints) {
             return "Max: " + hitPoints.getMax();
         }
 
+        @Nonnull
         public static String maxUses(int max) {
             return "Max Uses: " + max;
         }
 
-        public static String mod(AbilityScore score) {
+        @Nonnull
+        public static String mod(@Nonnull AbilityScore score) {
             return "Mod: " + score.getMod();
         }
 
-        public static String name(BioAndInfo bioAndInfo) {
+        @Nonnull
+        public static String name(@Nonnull BioAndInfo bioAndInfo) {
             return "".equals(bioAndInfo.getName()) ? "Not Set" : bioAndInfo.getName();
         }
 
-        public static String otherBonus(SpellDamage spellDamage) {
+        @Nonnull
+        public static String otherBonus(@Nonnull SpellDamage spellDamage) {
             return "Other Bonus: " + spellDamage.getBonus();
         }
 
-        public static String otherWeight(double weight) {
-            return "Other: " + weight;
+        @Nonnull
+        public static String otherWeight(Weight weight) {
+            return "Other: " + weight.getOther();
         }
 
-        public static String overallLevel(Experience experience, ClassLevels classLevels) {
+        @Nonnull
+        public static String overallLevel(@Nonnull Experience experience, @Nonnull ClassLevels classLevels) {
             return "Overall Level: " + experience.getOverallLevel(classLevels);
         }
 
-        public static String plusStat(boolean plusStat) {
-            return PLUS_STAT + " " + (plusStat ? "Yes" : "No");
+        @Nonnull
+        public static String plusStat(MeleeWeapon weapon) {
+            return PLUS_STAT + " " + (weapon.plusStat() ? "Yes" : "No");
         }
 
-        public static String prepared(Prepared prepared) {
+        @Nonnull
+        public static String prepared(@Nonnull Prepared prepared) {
             return "Prepared? " + prepared.getName();
         }
 
-        public static String proficiencyBonus(Experience experience, ClassLevels classLevels) {
+        @Nonnull
+        public static String proficiencyBonus(@Nonnull Experience experience, @Nonnull ClassLevels classLevels) {
             return "Proficiency Bonus: " + experience.getProficiencyBonus(classLevels);
         }
 
-        public static String proficient(AbilityScore score) {
+        @Nonnull
+        public static String proficient(@Nonnull AbilityScore score) {
             return "Proficient? " + (score.isProficient() ? "Yes" : "No");
         }
 
-        public static String pushDragLift(double pushDragLift) {
-            return "Push/Drag/Lift: " + pushDragLift;
+        @Nonnull
+        public static String pushDragLift(@Nonnull CoreStats coreStats, @Nonnull Weight weight) {
+            return "Push/Drag/Lift: " + weight.getPushDragLift(coreStats);
         }
 
-        public static String quantity(MCDNDItem item) {
+        @Nonnull
+        public static String quantity(@Nonnull MCDNDItem item) {
             return "Quantity: " + item.getQuantity();
         }
 
-        public static String range(String range) {
-            return "Range: " + range;
+        @Nonnull
+        public static String range(@Nonnull Spell spell) {
+            return "Range: " + spell.getRange();
         }
 
+        @Nonnull
         public static String recharge(Recharge recharge) {
             return "Recharge: " + recharge.getName();
         }
 
-        public static String ritual(boolean isRitual) {
-            return "Ritual? " + (isRitual ? "Yes" : "No");
+        @Nonnull
+        public static String ritual(@Nonnull Spell spell) {
+            return "Ritual? " + (spell.isRitual() ? "Yes" : "No");
         }
 
+        @Nonnull
         public static String rollHitDie(int sides) {
             return "Roll d" + sides + "(s)";
         }
 
-        public static String saveMod(AbilityScore score, ClassLevels classLevels, Experience experience) {
+        @Nonnull
+        public static String saveMod(@Nonnull AbilityScore score, @Nonnull ClassLevels classLevels, @Nonnull Experience experience) {
             return "Save Mod: " + score.getSaveMod(classLevels, experience);
         }
 
-        public static String score(AbilityScore score) {
+        @Nonnull
+        public static String score(@Nonnull AbilityScore score) {
             return "Score: " + score.getScore();
         }
 
-        public static String[] scoreLore(AbilityScore score, ClassLevels classLevels, Experience experience) {
+        @Nonnull
+        public static String[] scoreLore(@Nonnull AbilityScore score, @Nonnull ClassLevels classLevels, @Nonnull Experience experience) {
             return new String[]{score(score), mod(score), proficient(score), saveMod(score, classLevels, experience)};
         }
 
-        public static String size(BackgroundTab backgroundTab) {
+        @Nonnull
+        public static String size(@Nonnull BackgroundTab backgroundTab) {
             return "Size: " + backgroundTab.getSize();
         }
 
-        public static String[] sorceryPoints(ClassLevels classLevels, SpellbookTab spellbookTab) {
+        @Nonnull
+        public static String[] sorceryPoints(@Nonnull ClassLevels classLevels, @Nonnull SpellbookTab spellbookTab) {
             return new String[]{"Sorcerer Specific", "Used: " + spellbookTab.getSorceryPointsUsed(), "Max: " + spellbookTab.getSorceryPointsMax(classLevels)};
         }
 
-        public static String speed(CoreStatsTab coreStatsTab) {
+        @Nonnull
+        public static String speed(@Nonnull CoreStatsTab coreStatsTab) {
             return "Speed: " + coreStatsTab.getSpeed();
         }
 
+        @Nonnull
         public static String spellLevel(int level) {
             return "Spell Level: " + (level == 0 ? "Cantrip" : "Level " + level);
         }
 
-        public static String[] spellSlots(int spellSlotsUsed, int maxSpellSlots, int spellLevel) {
-            return new String[]{"Warlock Specific", "Used: " + spellSlotsUsed, "Max: " + maxSpellSlots, "Level: " + spellLevel};
-        }
-
-        public static String[] spellSlots(ClassLevels classLevels, SpellbookTab spellbookTab) {
+        @Nonnull
+        public static String[] spellSlots(@Nonnull ClassLevels classLevels, @Nonnull SpellbookTab spellbookTab) {
             return new String[]{"Warlock Specific", "Used: " + spellbookTab.getWarlockSpellSlotsUsed(), "Max: " + warlockSlots(classLevels), "Level: " + warlockSpellAmount(classLevels)};
         }
 
-        public static String spellType(SpellType spellType) {
+        @Nonnull
+        public static String spellType(@Nonnull SpellType spellType) {
             return "Spell Type: " + spellType.getName();
         }
 
-        public static String[] spellcastingTable(ClassLevels classLevels, CoreStats coreStats, Experience experience, SpellcasterClass spellcasterClass) {
+        @Nonnull
+        public static String[] spellcastingTable(@Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nonnull SpellcasterClass spellcasterClass) {
             return new String[]{"Cantrips Known: " + spellcasterClass.getCantripsAmount(classLevels), "Spells Known: " + spellcasterClass.getSpellsAmount(classLevels), "Can Prepare: " + spellcasterClass.getPreparedSpells(coreStats, classLevels), "Save DC: " + spellcasterClass.getSpellSaveDC(classLevels, coreStats, experience)};
         }
 
-        public static String target(String targetArea) {
+        @Nonnull
+        public static String target(@Nonnull String targetArea) {
             return "Target/AoE: " + targetArea;
         }
 
-        public static String tempHitPoints(HitPoints hitPoints) {
+        @Nonnull
+        public static String tempHitPoints(@Nonnull HitPoints hitPoints) {
             return "Temp: " + hitPoints.getTemp();
         }
 
+        @Nonnull
         public static String toHit(int toHit) {
             return "To Hit: " + toHit;
         }
 
-        public static String total(Wealth wealth) {
+        @Nonnull
+        public static String total(@Nonnull Wealth wealth) {
             return "Total: " + ((wealth.getCopper().getAmount() / 100) + (wealth.getSilver().getAmount() / 10) + (wealth.getElectrum().getAmount() / 2) + wealth.getGold().getAmount() + (wealth.getPlatinum().getAmount() * 10));
         }
 
-        public static String total(AbilityScore abilityScore, ClassLevels classLevels, Experience experience, PlayerSkill skill) {
+        @Nonnull
+        public static String total(@Nonnull AbilityScore abilityScore, @Nonnull ClassLevels classLevels, @Nonnull Experience experience, @Nonnull PlayerSkill skill) {
             return "Total: " + skill.getTotal(abilityScore, classLevels, experience);
         }
 
+        @Nonnull
         public static String total(int amount) {
             return "Total: " + amount;
         }
 
-        public static String total(int level, List<Spell> spells) {
+        @Nonnull
+        public static String total(int level, @Nonnull List<Spell> spells) {
             return "Total: " + spells.stream().filter(spell -> spell.getLevel() == level).collect(Collectors.toList()).size();
         }
 
-        public static String totalAC(Armor armor) {
+        @Nonnull
+        public static String totalAC(@Nonnull Armor armor) {
             return "Total AC: " + armor.getTotalArmorClass();
         }
 
-        public static String totalInitiative(Initiative initiative, AbilityScore dex) {
+        @Nonnull
+        public static String totalInitiative(@Nonnull Initiative initiative, @Nonnull AbilityScore dex) {
             return "Total: " + initiative.getInitiative(dex);
         }
 
-        public static String totalWeight(List<MCDNDItem> items, Wealth wealth, Weight weight) {
+        @Nonnull
+        public static String totalWeight(@Nonnull List<MCDNDItem> items, @Nonnull Wealth wealth, @Nonnull Weight weight) {
             return "Total: " + (weight.getInventory(items) + weight.getCoin(wealth) + weight.getOther());
         }
 
-        public static String unarmoredAC(ArmorTab armorTab) {
+        @Nonnull
+        public static String unarmoredAC(@Nonnull ArmorTab armorTab) {
             return "Armor Class (unarmored)" + armorTab.getUnarmoredClass();
         }
 
+        @Nonnull
         public static String used(int used) {
             return "Used: " + used;
         }
 
-        public static String vision(BackgroundTab backgroundTab) {
+        @Nonnull
+        public static String vision(@Nonnull BackgroundTab backgroundTab) {
             return "Vision: " + backgroundTab.getVision();
         }
 
-        private static int warlockSlots(ClassLevels classLevels) {
+        private static int warlockSlots(@Nonnull ClassLevels classLevels) {
             SpellcasterClass sc = SpellcasterClass.WARLOCK;
             int level = classLevels.getWarlock();
             switch (level) {
@@ -637,7 +725,7 @@ public class Reference {
             }
         }
 
-        private static int warlockSpellAmount(ClassLevels classLevels) {
+        private static int warlockSpellAmount(@Nonnull ClassLevels classLevels) {
             switch (classLevels.getWarlock()) {
                 case 1:
                     return 1;
@@ -668,15 +756,18 @@ public class Reference {
             }
         }
 
-        public static String weight(BackgroundTab backgroundTab) {
+        @Nonnull
+        public static String weight(@Nonnull BackgroundTab backgroundTab) {
             return "Weight: " + backgroundTab.getWeight();
         }
 
-        public static String weight(MCDNDItem item) {
+        @Nonnull
+        public static String weight(@Nonnull MCDNDItem item) {
             return "Weight: " + item.getWeight();
         }
 
-        public static String xpForNextLevel(Experience experience, ClassLevels classLevels) {
+        @Nonnull
+        public static String xpForNextLevel(@Nonnull Experience experience, @Nonnull ClassLevels classLevels) {
             return "XP for next level: " + experience.getXPForNextLevel(classLevels);
         }
     }
@@ -693,29 +784,25 @@ public class Reference {
         public static final String CHARACTER_DNE = PREFIX + "That character does not exist or you do not have access to that character.";
         public static final String CHARACTER_ALREADY_EXISTS = PREFIX + "That character already exists.";
         public static final String CHARACTER_CREATED = PREFIX + "Character created.";
-        public static final String ARMOR_DELETED = PREFIX + "Armor delted.";
+        public static final String ARMOR_DELETED = PREFIX + "Armor deleted.";
 
         private Messages() {
 
         }
 
-        public static String[] initiative(BioAndInfo bioAndInfo, String name, String result) {
+        @Nonnull
+        public static String[] initiative(@Nonnull BioAndInfo bioAndInfo, @Nonnull String name, @Nonnull String result) {
             return new String[]{name + " (as " + bioAndInfo.getName() + ") has rolled for Initiative.", "The result is " + result};
         }
 
-        public static String malformedDiceInput(String diceInput) {
+        @Nonnull
+        public static String malformedDiceInput(@Nonnull String diceInput) {
             return "Invalid dice input: " + diceInput;
         }
 
-        public static String[] rolledHitDice(BioAndInfo bioAndInfo, String name, int result, Dice dice) {
+        @Nonnull
+        public static String[] rolledHitDice(@Nonnull BioAndInfo bioAndInfo, @Nonnull String name, int result, @Nonnull Dice dice) {
             return new String[]{name + " (as " + bioAndInfo.getName() + ") has expended a hit die " + dice.getAmount() + "d" + dice.getAmount() + ".", "The result was " + result + "."};
-        }
-
-        //TODO need to format for crit and crit miss
-        //TODO this need to include bonuses
-        @Deprecated
-        public static String[] savingThrow(AbilityScore score, BioAndInfo bioAndInfo, String name, int first, int second) {
-            return new String[]{name + " (as " + bioAndInfo.getName() + ") has rolled a " + score.getName() + " saving throw.", "The results are: " + first + " | " + second};
         }
     }
 

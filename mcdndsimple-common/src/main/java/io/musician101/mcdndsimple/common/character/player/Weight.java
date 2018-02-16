@@ -3,28 +3,29 @@ package io.musician101.mcdndsimple.common.character.player;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.equipment.currency.Wealth;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 public class Weight {
 
     private double other = 0.0;
 
-    public double getCarryingMax(CoreStats coreStats) {
+    public double getCarryingMax(@Nonnull CoreStats coreStats) {
         return coreStats.getStrength().getScore() * 15D;
     }
 
-    public double getCoin(Wealth wealth) {
+    public double getCoin(@Nonnull Wealth wealth) {
         return wealth.getCopper().getWeight() + wealth.getElectrum().getWeight() + wealth.getGold().getWeight() + wealth.getPlatinum().getWeight() + wealth.getSilver().getWeight();
     }
 
-    public double getEncumbered(CoreStats coreStats) {
+    public double getEncumbered(@Nonnull CoreStats coreStats) {
         return coreStats.getStrength().getScore() * 5D;
     }
 
-    public double getHeavilyEncumbered(CoreStats coreStats) {
+    public double getHeavilyEncumbered(@Nonnull CoreStats coreStats) {
         return coreStats.getStrength().getScore() * 10D;
     }
 
-    public double getInventory(List<MCDNDItem> items) {
+    public double getInventory(@Nonnull List<MCDNDItem> items) {
         double inventoryWeight = 0.0;
         for (MCDNDItem item : items) {
             inventoryWeight = +item.getWeight();
@@ -41,20 +42,19 @@ public class Weight {
         this.other = other;
     }
 
-    //TODO need to add FindBugs to common module
-    public double getPushDragLift(CoreStats coreStats) {
+    public double getPushDragLift(@Nonnull CoreStats coreStats) {
         return getCarryingMax(coreStats) * 2;
     }
 
-    public double getWeight(List<MCDNDItem> items, Wealth wealth) {
+    public double getWeight(@Nonnull List<MCDNDItem> items, @Nonnull Wealth wealth) {
         return getInventory(items) + getCoin(wealth) + other;
     }
 
-    public boolean isEncumbered(CoreStats coreStats, List<MCDNDItem> items, Wealth wealth) {
+    public boolean isEncumbered(@Nonnull CoreStats coreStats, @Nonnull List<MCDNDItem> items, @Nonnull Wealth wealth) {
         return getWeight(items, wealth) <= getEncumbered(coreStats);
     }
 
-    public boolean isHeavilyEncumbered(CoreStats coreStats, List<MCDNDItem> items, Wealth wealth) {
+    public boolean isHeavilyEncumbered(@Nonnull CoreStats coreStats, @Nonnull List<MCDNDItem> items, @Nonnull Wealth wealth) {
         return getWeight(items, wealth) <= getHeavilyEncumbered(coreStats);
     }
 }

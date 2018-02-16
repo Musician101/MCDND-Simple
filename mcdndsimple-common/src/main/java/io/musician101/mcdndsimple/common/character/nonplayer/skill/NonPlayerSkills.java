@@ -10,127 +10,176 @@ import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.NON_PLAYER_SKILLS, typeAdapter = NonPlayerSkills.Serializer.class)
 public class NonPlayerSkills {
 
+    @Nonnull
     private final NonPlayerSkill acrobatics = new NonPlayerSkill("Acrobatics (Dex)");
+    @Nonnull
     private final NonPlayerSkill animalHandling = new NonPlayerSkill("Animal Handling (Wis)");
+    @Nonnull
     private final NonPlayerSkill arcana = new NonPlayerSkill("Arcana (Int)");
+    @Nonnull
     private final NonPlayerSkill athletics = new NonPlayerSkill("Athletics (Str)");
+    @Nonnull
     private final NonPlayerSkill deception = new NonPlayerSkill("Deception (Cha)");
+    @Nonnull
     private final NonPlayerSkill history = new NonPlayerSkill("history (Int)");
+    @Nonnull
     private final NonPlayerSkill insight = new NonPlayerSkill("Insight (Wis)");
+    @Nonnull
     private final NonPlayerSkill intimidation = new NonPlayerSkill("Intimidation (Cha)");
+    @Nonnull
     private final NonPlayerSkill investigation = new NonPlayerSkill("Investigation (Int)");
+    @Nonnull
     private final NonPlayerSkill medicine = new NonPlayerSkill("Medicine (Wis)");
+    @Nonnull
     private final NonPlayerSkill nature = new NonPlayerSkill("Nature (Int)");
+    @Nonnull
     private final NonPlayerSkill perception = new NonPlayerSkill("Perception (Wis)");
+    @Nonnull
     private final NonPlayerSkill performance = new NonPlayerSkill("Performance (Cha)");
+    @Nonnull
     private final NonPlayerSkill persuasion = new NonPlayerSkill("Persuasion (Cha)");
+    @Nonnull
     private final NonPlayerSkill religion = new NonPlayerSkill("Religion (Int)");
+    @Nonnull
     private final NonPlayerSkill sleightOfHand = new NonPlayerSkill("Sleight of Hand (Dex)");
+    @Nonnull
     private final NonPlayerSkill stealth = new NonPlayerSkill("Stealth (Dex)");
+    @Nonnull
     private final NonPlayerSkill survival = new NonPlayerSkill("Survival (Wis)");
+    @Nonnull
     private final NonPlayerSkill unskilledCHA = new NonPlayerSkill("Unskilled CHA");
+    @Nonnull
     private final NonPlayerSkill unskilledCON = new NonPlayerSkill("Unskilled CON");
+    @Nonnull
     private final NonPlayerSkill unskilledDEX = new NonPlayerSkill("Unskilled DEX");
+    @Nonnull
     private final NonPlayerSkill unskilledINT = new NonPlayerSkill("Unskilled INT");
+    @Nonnull
     private final NonPlayerSkill unskilledSTR = new NonPlayerSkill("Unskilled STR");
+    @Nonnull
     private final NonPlayerSkill unskilledWIS = new NonPlayerSkill("Unskilled WIS");
 
+    @Nonnull
     public NonPlayerSkill getAcrobatics() {
         return acrobatics;
     }
 
+    @Nonnull
     public NonPlayerSkill getAnimalHandling() {
         return animalHandling;
     }
 
+    @Nonnull
     public NonPlayerSkill getArcana() {
         return arcana;
     }
 
+    @Nonnull
     public NonPlayerSkill getAthletics() {
         return athletics;
     }
 
+    @Nonnull
     public NonPlayerSkill getDeception() {
         return deception;
     }
 
+    @Nonnull
     public NonPlayerSkill getHistory() {
         return history;
     }
 
+    @Nonnull
     public NonPlayerSkill getInsight() {
         return insight;
     }
 
+    @Nonnull
     public NonPlayerSkill getIntimidation() {
         return intimidation;
     }
 
+    @Nonnull
     public NonPlayerSkill getInvestigation() {
         return investigation;
     }
 
+    @Nonnull
     public NonPlayerSkill getMedicine() {
         return medicine;
     }
 
+    @Nonnull
     public NonPlayerSkill getNature() {
         return nature;
     }
 
+    @Nonnull
     public NonPlayerSkill getPerception() {
         return perception;
     }
 
+    @Nonnull
     public NonPlayerSkill getPerformance() {
         return performance;
     }
 
+    @Nonnull
     public NonPlayerSkill getPersuasion() {
         return persuasion;
     }
 
+    @Nonnull
     public NonPlayerSkill getReligion() {
         return religion;
     }
 
+    @Nonnull
     public NonPlayerSkill getSleightOfHand() {
         return sleightOfHand;
     }
 
+    @Nonnull
     public NonPlayerSkill getStealth() {
         return stealth;
     }
 
+    @Nonnull
     public NonPlayerSkill getSurvival() {
         return survival;
     }
 
+    @Nonnull
     public NonPlayerSkill getUnskilledCHA() {
         return unskilledCHA;
     }
 
+    @Nonnull
     public NonPlayerSkill getUnskilledCON() {
         return unskilledCON;
     }
 
+    @Nonnull
     public NonPlayerSkill getUnskilledDEX() {
         return unskilledDEX;
     }
 
+    @Nonnull
     public NonPlayerSkill getUnskilledINT() {
         return unskilledINT;
     }
 
+    @Nonnull
     public NonPlayerSkill getUnskilledSTR() {
         return unskilledSTR;
     }
 
+    @Nonnull
     public NonPlayerSkill getUnskilledWIS() {
         return unskilledWIS;
     }

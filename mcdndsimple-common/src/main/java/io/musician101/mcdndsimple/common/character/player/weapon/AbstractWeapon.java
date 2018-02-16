@@ -15,31 +15,44 @@ import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
+import javax.annotation.Nonnull;
 
+//TODO rename to Weapon
 public abstract class AbstractWeapon {
 
+    @Nonnull
     private WeaponAttackStat attackStat;
+    @Nonnull
     private Dice critDamage = new Dice(0);
     private int critMin = 20;
+    @Nonnull
     private Dice damage = new Dice(0);
+    @Nonnull
     private String damageType = "";
     private boolean isProficient = true;
     private int magicBonus = 0;
+    @Nonnull
     private String name = "";
 
+    protected AbstractWeapon(@Nonnull WeaponAttackStat defaultAttackStat) {
+        this.attackStat = defaultAttackStat;
+    }
+
+    @Nonnull
     public WeaponAttackStat getAttackStat() {
         return attackStat;
     }
 
-    public void setAttackStat(WeaponAttackStat attackStat) {
+    public void setAttackStat(@Nonnull WeaponAttackStat attackStat) {
         this.attackStat = attackStat;
     }
 
+    @Nonnull
     public Dice getCritDamage() {
         return critDamage;
     }
 
-    public void setCritDamage(Dice critDamage) {
+    public void setCritDamage(@Nonnull Dice critDamage) {
         this.critDamage = critDamage;
     }
 
@@ -51,15 +64,16 @@ public abstract class AbstractWeapon {
         this.critMin = critMin;
     }
 
+    @Nonnull
     public Dice getDamage() {
         return damage;
     }
 
-    public void setDamage(Dice damage) {
+    public void setDamage(@Nonnull Dice damage) {
         this.damage = damage;
     }
 
-    public int getDamageBonus(CoreStats coreStats) {
+    public int getDamageBonus(@Nonnull CoreStats coreStats) {
         if (attackStat.equals(WeaponAttackStat.FINESSE)) {
             return Math.max(coreStats.getStrength().getMod(), coreStats.getDexterity().getMod());
         }
@@ -85,11 +99,12 @@ public abstract class AbstractWeapon {
         return 0;
     }
 
+    @Nonnull
     public String getDamageType() {
         return damageType;
     }
 
-    public void setDamageType(String damageType) {
+    public void setDamageType(@Nonnull String damageType) {
         this.damageType = damageType;
     }
 
@@ -101,15 +116,16 @@ public abstract class AbstractWeapon {
         this.magicBonus = magicBonus;
     }
 
+    @Nonnull
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@Nonnull String name) {
         this.name = name;
     }
 
-    public int getToHit(ClassLevels classLevels, CoreStats coreStats, Experience experience) {
+    public int getToHit(@Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience) {
         int toHit = experience.getProficiencyBonus(classLevels);
         if (attackStat.equals(WeaponAttackStat.FINESSE)) {
             toHit = +Math.max(coreStats.getStrength().getMod(), coreStats.getDexterity().getMod());

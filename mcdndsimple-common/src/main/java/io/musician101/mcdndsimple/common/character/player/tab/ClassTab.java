@@ -16,61 +16,72 @@ import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.CLASS_TAB, typeAdapter = ClassTab.Serializer.class)
 public class ClassTab {
 
+    @Nonnull
     private List<ClassAction> classActions = new ArrayList<>();
+    @Nonnull
     private List<String> classFeatureNotes = new ArrayList<>();
+    @Nonnull
     private ClassLevels classLevels = new ClassLevels();
+    @Nonnull
     private List<ClassResource> classResources = new ArrayList<>();
+    @Nonnull
     private List<String> otherNotes = new ArrayList<>();
 
-    public void addClassAction(ClassAction classAction) {
+    public void addClassAction(@Nonnull ClassAction classAction) {
         classActions.add(classAction);
     }
 
-    public void addClassResource(ClassResource classResource) {
+    public void addClassResource(@Nonnull ClassResource classResource) {
         classResources.add(classResource);
     }
 
+    @Nonnull
     public List<ClassAction> getClassActions() {
         return classActions;
     }
 
-    public void setClassActions(List<ClassAction> classActions) {
+    public void setClassActions(@Nonnull List<ClassAction> classActions) {
         this.classActions = classActions;
     }
 
+    @Nonnull
     public List<String> getClassFeatureNotes() {
         return classFeatureNotes;
     }
 
-    public void setClassFeatureNotes(List<String> classFeatureNotes) {
+    public void setClassFeatureNotes(@Nonnull List<String> classFeatureNotes) {
         this.classFeatureNotes = classFeatureNotes;
     }
 
+    @Nonnull
     public ClassLevels getClassLevels() {
         return classLevels;
     }
 
-    public void setClassLevels(ClassLevels classLevels) {
+    public void setClassLevels(@Nonnull ClassLevels classLevels) {
         this.classLevels = classLevels;
     }
 
+    @Nonnull
     public List<ClassResource> getClassResources() {
         return classResources;
     }
 
-    public void setClassResources(List<ClassResource> classResources) {
+    public void setClassResources(@Nonnull List<ClassResource> classResources) {
         this.classResources = classResources;
     }
 
+    @Nonnull
     public List<String> getOtherNotes() {
         return otherNotes;
     }
 
-    public void setOtherNotes(List<String> otherNotes) {
+    public void setOtherNotes(@Nonnull List<String> otherNotes) {
         this.otherNotes = otherNotes;
     }
 

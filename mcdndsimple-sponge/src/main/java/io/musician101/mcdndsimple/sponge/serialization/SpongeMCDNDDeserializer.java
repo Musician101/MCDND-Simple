@@ -26,8 +26,6 @@ import io.musician101.mcdndsimple.common.character.player.equipment.currency.Coi
 import io.musician101.mcdndsimple.common.character.player.equipment.currency.Wealth;
 import io.musician101.mcdndsimple.common.character.player.skill.SkillProficiency;
 import io.musician101.mcdndsimple.common.character.player.spell.Prepared;
-import io.musician101.mcdndsimple.common.character.player.spell.SaveDCType;
-import io.musician101.mcdndsimple.common.character.player.spell.SaveDCTypes;
 import io.musician101.mcdndsimple.common.character.player.spell.Spell;
 import io.musician101.mcdndsimple.common.character.player.spell.SpellDamage;
 import io.musician101.mcdndsimple.common.character.player.spell.SpellHealing;

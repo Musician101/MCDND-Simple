@@ -12,26 +12,31 @@ import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.NON_PLAYER_ACTIONS, typeAdapter = NonPlayerActions.Serializer.class)
 public class NonPlayerActions {
 
+    @Nonnull
     private List<NonPlayerAction> actions = new ArrayList<>();
+    @Nonnull
     private String multiAttack = "None";
 
+    @Nonnull
     public List<NonPlayerAction> getActions() {
         return actions;
     }
 
-    public void setActions(List<NonPlayerAction> actions) {
+    public void setActions(@Nonnull List<NonPlayerAction> actions) {
         this.actions = actions;
     }
 
+    @Nonnull
     public String getMultiAttack() {
         return multiAttack;
     }
 
-    public void setMultiAttack(String multiAttack) {
+    public void setMultiAttack(@Nonnull String multiAttack) {
         this.multiAttack = multiAttack;
     }
 

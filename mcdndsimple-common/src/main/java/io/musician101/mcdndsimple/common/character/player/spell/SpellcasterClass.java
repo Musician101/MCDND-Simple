@@ -14,6 +14,7 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKeys;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
+import javax.annotation.Nonnull;
 
 @JsonKeys(keys = {Keys.SPELLCASTER_CLASS, Keys.GAINED_FROM}, typeAdapter = SpellcasterClass.Serializer.class)
 public enum SpellcasterClass {
@@ -29,13 +30,14 @@ public enum SpellcasterClass {
     WARLOCK("Warlock"),
     WIZARD("Wizard");
 
+    @Nonnull
     private final String name;
 
-    SpellcasterClass(String name) {
+    SpellcasterClass(@Nonnull String name) {
         this.name = name;
     }
 
-    public int get1stLevelAmount(ClassLevels classLevels) {
+    public int get1stLevelAmount(@Nonnull ClassLevels classLevels) {
         switch (this) {
             case ARCANE_TRICKSTER:
                 switch (classLevels.getRogue()) {
@@ -167,7 +169,7 @@ public enum SpellcasterClass {
         }
     }
 
-    public int get2ndLevelAmount(ClassLevels classLevels) {
+    public int get2ndLevelAmount(@Nonnull ClassLevels classLevels) {
         switch (this) {
             case ARCANE_TRICKSTER:
                 switch (classLevels.getRogue()) {
@@ -301,7 +303,7 @@ public enum SpellcasterClass {
         }
     }
 
-    public int get3rdLevelAmount(ClassLevels classLevels) {
+    public int get3rdLevelAmount(@Nonnull ClassLevels classLevels) {
         switch (this) {
             case ARCANE_TRICKSTER:
                 switch (classLevels.getRogue()) {
@@ -448,7 +450,7 @@ public enum SpellcasterClass {
         return 0;
     }
 
-    public int get4thLevelAmount(ClassLevels classLevels) {
+    public int get4thLevelAmount(@Nonnull ClassLevels classLevels) {
         switch (this) {
             case ARCANE_TRICKSTER:
                 switch (classLevels.getRogue()) {
@@ -598,7 +600,7 @@ public enum SpellcasterClass {
         }
     }
 
-    public int get5thLevelAmount(ClassLevels classLevels) {
+    public int get5thLevelAmount(@Nonnull ClassLevels classLevels) {
         switch (this) {
             case BARD:
                 switch (classLevels.getBard()) {
@@ -742,7 +744,7 @@ public enum SpellcasterClass {
         return 0;
     }
 
-    public int get6thLevelAmount(ClassLevels classLevels) {
+    public int get6thLevelAmount(@Nonnull ClassLevels classLevels) {
         switch (this) {
             case BARD:
                 switch (classLevels.getBard()) {
@@ -860,7 +862,7 @@ public enum SpellcasterClass {
         }
     }
 
-    public int get7thLevelAmount(ClassLevels classLevels) {
+    public int get7thLevelAmount(@Nonnull ClassLevels classLevels) {
         switch (this) {
             case BARD:
                 switch (classLevels.getBard()) {
@@ -968,7 +970,7 @@ public enum SpellcasterClass {
         }
     }
 
-    public int get8thLevelAmount(ClassLevels classLevels) {
+    public int get8thLevelAmount(@Nonnull ClassLevels classLevels) {
         switch (this) {
             case BARD:
                 switch (classLevels.getBard()) {
@@ -1061,7 +1063,7 @@ public enum SpellcasterClass {
         }
     }
 
-    public int get9thLevelAmount(ClassLevels classLevels) {
+    public int get9thLevelAmount(@Nonnull ClassLevels classLevels) {
         switch (this) {
             case BARD:
                 switch (classLevels.getBard()) {
@@ -1144,7 +1146,7 @@ public enum SpellcasterClass {
         }
     }
 
-    public int getCantripsAmount(ClassLevels classLevels) {
+    public int getCantripsAmount(@Nonnull ClassLevels classLevels) {
         switch (this) {
             case ARCANE_TRICKSTER:
                 switch (classLevels.getRogue()) {
@@ -1327,11 +1329,12 @@ public enum SpellcasterClass {
         }
     }
 
+    @Nonnull
     public String getName() {
         return name;
     }
 
-    public int getPreparedSpells(CoreStats coreStats, ClassLevels classLevels) {
+    public int getPreparedSpells(@Nonnull CoreStats coreStats, @Nonnull ClassLevels classLevels) {
         switch (this) {
             case CLERIC:
                 return classLevels.getCleric() + coreStats.getWisdom().getMod();
@@ -1346,7 +1349,7 @@ public enum SpellcasterClass {
         return 0;
     }
 
-    public int getSpellAttack(ClassLevels classLevels, CoreStats coreStats, Experience experience) {
+    public int getSpellAttack(@Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience) {
         switch (this) {
             case ARCANE_TRICKSTER:
             case ELDRITCH_KNIGHT:
@@ -1366,7 +1369,7 @@ public enum SpellcasterClass {
         return 0;
     }
 
-    public int getSpellSaveDC(ClassLevels classLevels, CoreStats coreStats, Experience experience) {
+    public int getSpellSaveDC(@Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience) {
         switch (this) {
             case ARCANE_TRICKSTER:
             case ELDRITCH_KNIGHT:
@@ -1386,7 +1389,7 @@ public enum SpellcasterClass {
         return 0;
     }
 
-    public int getSpellsAmount(ClassLevels classLevels) {
+    public int getSpellsAmount(@Nonnull ClassLevels classLevels) {
         switch (this) {
             case ARCANE_TRICKSTER:
                 switch (classLevels.getRogue()) {

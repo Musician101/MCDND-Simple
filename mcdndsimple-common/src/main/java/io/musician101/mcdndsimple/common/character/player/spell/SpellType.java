@@ -11,6 +11,7 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.SPELL_TYPE, typeAdapter = SpellType.Serializer.class)
 public enum SpellType {
@@ -24,12 +25,14 @@ public enum SpellType {
     OTHER("Other"),
     TRANSMUTATION("Transmutation");
 
+    @Nonnull
     private final String name;
 
-    SpellType(String name) {
+    SpellType(@Nonnull String name) {
         this.name = name;
     }
 
+    @Nonnull
     public String getName() {
         return name;
     }

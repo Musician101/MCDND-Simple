@@ -16,48 +16,57 @@ import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.INVENTORY_TAB, typeAdapter = InventoryTab.Serializer.class)
 public class InventoryTab {
 
+    @Nonnull
     private List<MCDNDItem> inventory = new ArrayList<>();
+    @Nonnull
     private List<String> inventoryNotes = new ArrayList<>();
+    @Nonnull
     private Wealth wealth = new Wealth();
+    @Nonnull
     private Weight weight = new Weight();
 
     public void addItem(MCDNDItem item) {
         inventory.add(item);
     }
 
+    @Nonnull
     public List<MCDNDItem> getInventory() {
         return inventory;
     }
 
-    public void setInventory(List<MCDNDItem> inventory) {
+    public void setInventory(@Nonnull List<MCDNDItem> inventory) {
         this.inventory = inventory;
     }
 
+    @Nonnull
     public List<String> getInventoryNotes() {
         return inventoryNotes;
     }
 
-    public void setInventoryNotes(List<String> inventoryNotes) {
+    public void setInventoryNotes(@Nonnull List<String> inventoryNotes) {
         this.inventoryNotes = inventoryNotes;
     }
 
+    @Nonnull
     public Wealth getWealth() {
         return wealth;
     }
 
-    public void setWealth(Wealth wealth) {
+    public void setWealth(@Nonnull Wealth wealth) {
         this.wealth = wealth;
     }
 
+    @Nonnull
     public Weight getWeight() {
         return weight;
     }
 
-    public void setWeight(Weight weight) {
+    public void setWeight(@Nonnull Weight weight) {
         this.weight = weight;
     }
 

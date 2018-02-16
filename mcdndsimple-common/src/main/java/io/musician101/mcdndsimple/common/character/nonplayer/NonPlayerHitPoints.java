@@ -13,17 +13,20 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.HIT_POINTS, typeAdapter = NonPlayerHitPoints.Serializer.class)
 public class NonPlayerHitPoints extends HitPoints {
 
+    @Nonnull
     private Dice hitDice = new Dice(0);
 
+    @Nonnull
     public Dice getHitDice() {
         return hitDice;
     }
 
-    public void setHitDice(Dice hitDice) {
+    public void setHitDice(@Nonnull Dice hitDice) {
         this.hitDice = hitDice;
     }
 

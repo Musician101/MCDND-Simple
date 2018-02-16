@@ -16,22 +16,28 @@ import io.musician101.musicianlibrary.java.json.adapter.TypeOf;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 @TypeOf(ClassAction.Serializer.class)
 public class ClassAction extends Rechargeable {
 
+    @Nonnull
     private GainedFrom gainedFrom = GainedFrom.OTHER;
     private int maxUses = 0;
+    @Nonnull
     private String name = "";
+    @Nonnull
     private List<String> output = new ArrayList<>();
+    @Nonnull
     private OutputOptions outputOptions = new OutputOptions();
     private int used = 0;
 
+    @Nonnull
     public GainedFrom getGainedFrom() {
         return gainedFrom;
     }
 
-    public void setGainedFrom(GainedFrom gainedFrom) {
+    public void setGainedFrom(@Nonnull GainedFrom gainedFrom) {
         this.gainedFrom = gainedFrom;
     }
 
@@ -43,27 +49,30 @@ public class ClassAction extends Rechargeable {
         this.maxUses = maxUses;
     }
 
+    @Nonnull
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@Nonnull String name) {
         this.name = name;
     }
 
+    @Nonnull
     public List<String> getOutput() {
         return output;
     }
 
-    public void setOutput(List<String> output) {
+    public void setOutput(@Nonnull List<String> output) {
         this.output = output;
     }
 
+    @Nonnull
     public OutputOptions getOutputOptions() {
         return outputOptions;
     }
 
-    public void setOutputOptions(OutputOptions outputOptions) {
+    public void setOutputOptions(@Nonnull OutputOptions outputOptions) {
         this.outputOptions = outputOptions;
     }
 

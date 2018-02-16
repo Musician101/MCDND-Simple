@@ -12,29 +12,34 @@ import io.musician101.musicianlibrary.java.json.adapter.TypeOf;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 @TypeOf(MCDNDItem.Serializer.class)
 public class MCDNDItem {
 
     private boolean carried = true;
+    @Nonnull
     private List<String> description = new ArrayList<>();
+    @Nonnull
     private String name = "";
     private int quantity = 1;
     private double weight = 0.0;
 
+    @Nonnull
     public List<String> getDescription() {
         return description;
     }
 
-    public void setDescription(List<String> description) {
+    public void setDescription(@Nonnull List<String> description) {
         this.description = description;
     }
 
+    @Nonnull
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@Nonnull String name) {
         this.name = name;
     }
 

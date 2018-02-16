@@ -18,16 +18,18 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
+import javax.annotation.Nonnull;
 
 public abstract class PlayerSheetStorage extends CharacterStorage<PlayerSheet> {
 
-    public PlayerSheetStorage(File storageDir) {
+    public PlayerSheetStorage(@Nonnull File storageDir) {
         super(storageDir);
         load();
     }
 
+    @Nonnull
     @Override
-    public Optional<PlayerSheet> createNewCharacter(UUID uuid, String name) {
+    public Optional<PlayerSheet> createNewCharacter(@Nonnull UUID uuid, @Nonnull String name) {
         if (!getCharacter(uuid, name).isPresent()) {
             PlayerSheet playerSheet = new PlayerSheet();
             playerSheet.setName(name);

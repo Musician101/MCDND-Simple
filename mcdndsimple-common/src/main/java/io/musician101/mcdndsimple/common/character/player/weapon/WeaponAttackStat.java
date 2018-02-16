@@ -11,6 +11,8 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 @JsonKey(key = Keys.ATTACK_STAT, typeAdapter = WeaponAttackStat.Serializer.class)
 public enum WeaponAttackStat {
@@ -22,16 +24,18 @@ public enum WeaponAttackStat {
     STR,
     WIS;
 
+    @Nullable
     private final String name;
 
     WeaponAttackStat() {
         this(null);
     }
 
-    WeaponAttackStat(String name) {
+    WeaponAttackStat(@Nullable String name) {
         this.name = name;
     }
 
+    @Nonnull
     public String getName() {
         return name == null ? toString() : name;
     }

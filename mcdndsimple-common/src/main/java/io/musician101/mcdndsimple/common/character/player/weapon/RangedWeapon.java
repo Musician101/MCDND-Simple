@@ -15,7 +15,7 @@ public class RangedWeapon extends AbstractWeapon {
     private int ammo = 0;
 
     public RangedWeapon() {
-        setAttackStat(WeaponAttackStat.DEX);
+        super(WeaponAttackStat.DEX);
     }
 
     public int getAmmo() {

@@ -13,6 +13,7 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.CORE_STATS, typeAdapter = CoreStatsTab.Serializer.class)
 public class CoreStats {
@@ -24,26 +25,32 @@ public class CoreStats {
     private AbilityScore strength = new AbilityScore("Strength", "str");
     private AbilityScore wisdom = new AbilityScore("Wisdom", "wis");
 
+    @Nonnull
     public AbilityScore getCharisma() {
         return charisma;
     }
 
+    @Nonnull
     public AbilityScore getConstitution() {
         return constitution;
     }
 
+    @Nonnull
     public AbilityScore getDexterity() {
         return dexterity;
     }
 
+    @Nonnull
     public AbilityScore getIntelligence() {
         return intelligence;
     }
 
+    @Nonnull
     public AbilityScore getStrength() {
         return strength;
     }
 
+    @Nonnull
     public AbilityScore getWisdom() {
         return wisdom;
     }

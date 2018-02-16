@@ -12,26 +12,31 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.MELEE_BONUS, typeAdapter = MeleeBonus.Serializer.class)
 public class MeleeBonus {
 
+    @Nonnull
     private Dice attack = new Dice(0);
+    @Nonnull
     private Dice damage = new Dice(0);
 
+    @Nonnull
     public Dice getAttack() {
         return attack;
     }
 
-    public void setAttack(Dice attack) {
+    public void setAttack(@Nonnull Dice attack) {
         this.attack = attack;
     }
 
+    @Nonnull
     public Dice getDamage() {
         return damage;
     }
 
-    public void setDamage(Dice damage) {
+    public void setDamage(@Nonnull Dice damage) {
         this.damage = damage;
     }
 

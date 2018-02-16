@@ -12,26 +12,31 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.SPELL_HEALING, typeAdapter = SpellDamage.Serializer.class)
 public class SpellHealing {
 
+    @Nonnull
     private Dice healAmount = new Dice(0);
+    @Nonnull
     private StatBonus statBonus = StatBonus.NONE;
 
+    @Nonnull
     public Dice getHealAmount() {
         return healAmount;
     }
 
-    public void setHealAmount(Dice healAmount) {
+    public void setHealAmount(@Nonnull Dice healAmount) {
         this.healAmount = healAmount;
     }
 
+    @Nonnull
     public StatBonus getStatBonus() {
         return statBonus;
     }
 
-    public void setStatBonus(StatBonus statBonus) {
+    public void setStatBonus(@Nonnull StatBonus statBonus) {
         this.statBonus = statBonus;
     }
 

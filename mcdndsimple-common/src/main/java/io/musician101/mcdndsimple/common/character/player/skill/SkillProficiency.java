@@ -14,6 +14,7 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.SKILL_PROFICIENCY, typeAdapter = SkillProficiency.Serializer.class)
 public enum SkillProficiency {
@@ -22,13 +23,14 @@ public enum SkillProficiency {
     NONE("None"),
     YES("Yes");
 
+    @Nonnull
     private final String name;
 
-    SkillProficiency(String name) {
+    SkillProficiency(@Nonnull String name) {
         this.name = name;
     }
 
-    public int getBonus(AbilityScore abilityScore, ClassLevels classLevels, Experience experience) {
+    public int getBonus(@Nonnull AbilityScore abilityScore, @Nonnull ClassLevels classLevels, @Nonnull Experience experience) {
         switch (this) {
             case EXPERTISE:
                 return 2 * YES.getBonus(abilityScore, classLevels, experience);
@@ -41,6 +43,7 @@ public enum SkillProficiency {
         }
     }
 
+    @Nonnull
     public String getName() {
         return name;
     }

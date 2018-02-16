@@ -11,6 +11,7 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.GAINED_FROM, typeAdapter = GainedFrom.Serializer.class)
 public enum GainedFrom {
@@ -30,12 +31,14 @@ public enum GainedFrom {
     WARLOCK("Warlock"),
     WIZARD("Wizard");
 
+    @Nonnull
     private final String name;
 
-    GainedFrom(String name) {
+    GainedFrom(@Nonnull String name) {
         this.name = name;
     }
 
+    @Nonnull
     public String getName() {
         return name;
     }

@@ -11,6 +11,7 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.PREPARED, typeAdapter = Prepared.Serializer.class)
 public enum Prepared {
@@ -19,12 +20,14 @@ public enum Prepared {
     YES("Yes"),
     NO("No");
 
+    @Nonnull
     private final String name;
 
-    Prepared(String name) {
+    Prepared(@Nonnull String name) {
         this.name = name;
     }
 
+    @Nonnull
     public String getName() {
         return name;
     }

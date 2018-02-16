@@ -13,28 +13,35 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import io.musician101.musicianlibrary.java.json.adapter.TypeOf;
 import java.lang.reflect.Type;
+import javax.annotation.Nonnull;
 
 @TypeOf(NonPlayer.Serializer.class)
 public class NonPlayer extends AbstractPlayer {
 
+    @Nonnull
     private NonPlayerActions nonPlayerActions = new NonPlayerActions();
+    @Nonnull
     private NonPlayerSheet nonPlayerSheet = new NonPlayerSheet();
+    @Nonnull
     private NonPlayerSkills nonPlayerSkills = new NonPlayerSkills();
+    @Nonnull
     private TraitsBackground traitsBackground = new TraitsBackground();
 
+    @Nonnull
     public NonPlayerActions getNonPlayerActions() {
         return nonPlayerActions;
     }
 
-    public void setNonPlayerActions(NonPlayerActions nonPlayerActions) {
+    public void setNonPlayerActions(@Nonnull NonPlayerActions nonPlayerActions) {
         this.nonPlayerActions = nonPlayerActions;
     }
 
+    @Nonnull
     public NonPlayerSheet getNonPlayerSheet() {
         return nonPlayerSheet;
     }
 
-    public void setNonPlayerSheet(NonPlayerSheet NonPlayerSheet) {
+    public void setNonPlayerSheet(@Nonnull NonPlayerSheet NonPlayerSheet) {
         this.nonPlayerSheet = NonPlayerSheet;
     }
 
@@ -46,11 +53,12 @@ public class NonPlayer extends AbstractPlayer {
         this.nonPlayerSkills = nonPlayerSkills;
     }
 
+    @Nonnull
     public TraitsBackground getTraitsBackground() {
         return traitsBackground;
     }
 
-    public void setTraitsBackground(TraitsBackground traitsBackground) {
+    public void setTraitsBackground(@Nonnull TraitsBackground traitsBackground) {
         this.traitsBackground = traitsBackground;
     }
 

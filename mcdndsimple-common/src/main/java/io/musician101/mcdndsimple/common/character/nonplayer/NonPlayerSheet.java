@@ -13,31 +13,41 @@ import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 public class NonPlayerSheet {
 
+    @Nonnull
     private String alignment = "";
     private int armorClass = 10;
+    @Nonnull
     private String armorClassNote = "";
     private double challengeRating = 0D;
     private int climbSpeed = 0;
+    @Nonnull
     private CoreStats coreStats = new CoreStats();
     private boolean dmOutputOnly = true;
     private int flySpeed = 0;
+    @Nonnull
     private NonPlayerHitPoints health = new NonPlayerHitPoints();
+    @Nonnull
     private List<String> languages = new ArrayList<>();
+    @Nonnull
     private List<String> senses = new ArrayList<>();
+    @Nonnull
     private String size = "";
     private int speed = 0;
     private int swimSpeed = 0;
+    @Nonnull
     private String typeRace = "";
     private int xp = 0;
 
+    @Nonnull
     public String getAlignment() {
         return alignment;
     }
 
-    public void setAlignment(String alignment) {
+    public void setAlignment(@Nonnull String alignment) {
         this.alignment = alignment;
     }
 
@@ -49,11 +59,12 @@ public class NonPlayerSheet {
         this.armorClass = armorClass;
     }
 
+    @Nonnull
     public String getArmorClassNote() {
         return armorClassNote;
     }
 
-    public void setArmorClassNote(String armorClassNote) {
+    public void setArmorClassNote(@Nonnull String armorClassNote) {
         this.armorClassNote = armorClassNote;
     }
 
@@ -73,11 +84,12 @@ public class NonPlayerSheet {
         this.climbSpeed = climbSpeed;
     }
 
+    @Nonnull
     public CoreStats getCoreStats() {
         return coreStats;
     }
 
-    public void setCoreStats(CoreStats coreStats) {
+    public void setCoreStats(@Nonnull CoreStats coreStats) {
         this.coreStats = coreStats;
     }
 
@@ -89,31 +101,35 @@ public class NonPlayerSheet {
         this.flySpeed = flySpeed;
     }
 
+    @Nonnull
     public NonPlayerHitPoints getHealth() {
         return health;
     }
 
+    @Nonnull
     public List<String> getLanguages() {
         return languages;
     }
 
-    public void setLanguages(List<String> languages) {
+    public void setLanguages(@Nonnull List<String> languages) {
         this.languages = languages;
     }
 
+    @Nonnull
     public List<String> getSenses() {
         return senses;
     }
 
-    public void setSenses(List<String> senses) {
+    public void setSenses(@Nonnull List<String> senses) {
         this.senses = senses;
     }
 
+    @Nonnull
     public String getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(@Nonnull String size) {
         this.size = size;
     }
 
@@ -133,11 +149,12 @@ public class NonPlayerSheet {
         this.swimSpeed = swimSpeed;
     }
 
+    @Nonnull
     public String getTypeRace() {
         return typeRace;
     }
 
-    public void setTypeRace(String typeRace) {
+    public void setTypeRace(@Nonnull String typeRace) {
         this.typeRace = typeRace;
     }
 

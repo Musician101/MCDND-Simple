@@ -12,6 +12,7 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
 
+//TODO add to guis
 @JsonKey(key = Keys.DEATH_SAVING_THROWS, typeAdapter = DeathSavingThrows.Serializer.class)
 public class DeathSavingThrows {
 

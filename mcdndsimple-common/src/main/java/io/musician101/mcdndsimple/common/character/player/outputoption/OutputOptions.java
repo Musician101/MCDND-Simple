@@ -10,34 +10,41 @@ import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
+import javax.annotation.Nonnull;
 
 public class OutputOptions {
 
+    @Nonnull
     private CoreSkillsOutputOptions coreSkillsOutputOptions = new CoreSkillsOutputOptions();
+    @Nonnull
     private SavingThrowOutputOptions savingThrowOutputOptions = new SavingThrowOutputOptions();
+    @Nonnull
     private WeaponsSpellMiscOutputOptions weaponsSpellMiscOutputOptions = new WeaponsSpellMiscOutputOptions();
 
+    @Nonnull
     public CoreSkillsOutputOptions getCoreSkillsOutputOptions() {
         return coreSkillsOutputOptions;
     }
 
-    public void setCoreSkillsOutputOptions(CoreSkillsOutputOptions coreSkillsOutputOptions) {
+    public void setCoreSkillsOutputOptions(@Nonnull CoreSkillsOutputOptions coreSkillsOutputOptions) {
         this.coreSkillsOutputOptions = coreSkillsOutputOptions;
     }
 
+    @Nonnull
     public SavingThrowOutputOptions getSavingThrowOutputOptions() {
         return savingThrowOutputOptions;
     }
 
-    public void setSavingThrowOutputOptions(SavingThrowOutputOptions savingThrowOutputOptions) {
+    public void setSavingThrowOutputOptions(@Nonnull SavingThrowOutputOptions savingThrowOutputOptions) {
         this.savingThrowOutputOptions = savingThrowOutputOptions;
     }
 
+    @Nonnull
     public WeaponsSpellMiscOutputOptions getWeaponsSpellMiscOutputOptions() {
         return weaponsSpellMiscOutputOptions;
     }
 
-    public void setWeaponsSpellMiscOutputOptions(WeaponsSpellMiscOutputOptions weaponsSpellMiscOutputOptions) {
+    public void setWeaponsSpellMiscOutputOptions(@Nonnull WeaponsSpellMiscOutputOptions weaponsSpellMiscOutputOptions) {
         this.weaponsSpellMiscOutputOptions = weaponsSpellMiscOutputOptions;
     }
 

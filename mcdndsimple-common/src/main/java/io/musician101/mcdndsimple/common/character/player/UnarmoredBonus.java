@@ -12,6 +12,7 @@ import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.UNARMORED_BONUS, typeAdapter = UnarmoredBonus.Serializer.class)
 public enum UnarmoredBonus {
@@ -20,14 +21,16 @@ public enum UnarmoredBonus {
     MONK("Monk"),
     NONE("None", (dexMod, secondMod) -> 0);
 
+    @Nonnull
     private final BiFunction<Integer, Integer, Integer> biFunction;
+    @Nonnull
     private final String name;
 
-    UnarmoredBonus(String name) {
+    UnarmoredBonus(@Nonnull String name) {
         this(name, (dexMod, secondMod) -> 10 + dexMod + secondMod);
     }
 
-    UnarmoredBonus(String name, BiFunction<Integer, Integer, Integer> biFunction) {
+    UnarmoredBonus(@Nonnull String name, @Nonnull BiFunction<Integer, Integer, Integer> biFunction) {
         this.name = name;
         this.biFunction = biFunction;
     }
@@ -36,6 +39,7 @@ public enum UnarmoredBonus {
         return biFunction.apply(dexMod, secondMod);
     }
 
+    @Nonnull
     public String getName() {
         return name;
     }

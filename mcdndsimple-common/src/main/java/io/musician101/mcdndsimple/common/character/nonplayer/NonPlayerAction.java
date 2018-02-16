@@ -13,45 +13,54 @@ import io.musician101.musicianlibrary.java.json.adapter.TypeOf;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 @TypeOf(NonPlayerAction.Serializer.class)
 public class NonPlayerAction {
 
+    @Nonnull
     private NonPlayerActionType actionType = NonPlayerActionType.NORMAL;
+    @Nonnull
     private List<String> description = new ArrayList<>();
+    @Nonnull
     private List<String> effect = new ArrayList<>();
     private boolean isMultiAttack = false;
+    @Nonnull
     private String name = "";
 
+    @Nonnull
     public NonPlayerActionType getActionType() {
         return actionType;
     }
 
-    public void setActionType(NonPlayerActionType actionType) {
+    public void setActionType(@Nonnull NonPlayerActionType actionType) {
         this.actionType = actionType;
     }
 
+    @Nonnull
     public List<String> getDescription() {
         return description;
     }
 
-    public void setDescription(List<String> description) {
+    public void setDescription(@Nonnull List<String> description) {
         this.description = description;
     }
 
+    @Nonnull
     public List<String> getEffect() {
         return effect;
     }
 
-    public void setEffect(List<String> effect) {
+    public void setEffect(@Nonnull List<String> effect) {
         this.effect = effect;
     }
 
+    @Nonnull
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@Nonnull String name) {
         this.name = name;
     }
 

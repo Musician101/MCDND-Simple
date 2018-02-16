@@ -24,7 +24,6 @@ import static io.musician101.musicianlibrary.java.json.JsonKeyImpl.integerKey;
 import static io.musician101.musicianlibrary.java.json.JsonKeyImpl.listKey;
 import static io.musician101.musicianlibrary.java.json.JsonKeyImpl.stringKey;
 
-//TODO left off here, changing keys so they have a serializer and deserializer
 @JsonKeyCatalog
 public class Keys {
 

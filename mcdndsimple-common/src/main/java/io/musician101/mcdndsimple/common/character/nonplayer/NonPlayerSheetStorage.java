@@ -18,7 +18,9 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
+import javax.annotation.Nonnull;
 
+//TODO GUIS
 public abstract class NonPlayerSheetStorage extends CharacterStorage<NonPlayer> {
 
     public NonPlayerSheetStorage(File storageDir) {
@@ -26,8 +28,9 @@ public abstract class NonPlayerSheetStorage extends CharacterStorage<NonPlayer> 
         load();
     }
 
+    @Nonnull
     @Override
-    public Optional<NonPlayer> createNewCharacter(UUID uuid, String name) {
+    public Optional<NonPlayer> createNewCharacter(@Nonnull UUID uuid, @Nonnull String name) {
         if (!getCharacter(uuid, name).isPresent()) {
             NonPlayer nonPlayerSheet = new NonPlayer();
             nonPlayerSheet.setName(name);

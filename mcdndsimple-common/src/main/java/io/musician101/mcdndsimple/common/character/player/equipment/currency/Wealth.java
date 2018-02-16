@@ -10,32 +10,43 @@ import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.WEALTH, typeAdapter = Wealth.Serializer.class)
 public class Wealth {
 
+    @Nonnull
     private final Coin copper = new Coin("Copper", "CP");
+    @Nonnull
     private final Coin electrum = new Coin("Electrum", "EP");
+    @Nonnull
     private final Coin gold = new Coin("Gold", "GP");
+    @Nonnull
     private final Coin platinum = new Coin("Platinum", "PP");
+    @Nonnull
     private final Coin silver = new Coin("Silver", "SP");
 
+    @Nonnull
     public Coin getCopper() {
         return copper;
     }
 
+    @Nonnull
     public Coin getElectrum() {
         return electrum;
     }
 
+    @Nonnull
     public Coin getGold() {
         return gold;
     }
 
+    @Nonnull
     public Coin getPlatinum() {
         return platinum;
     }
 
+    @Nonnull
     public Coin getSilver() {
         return silver;
     }

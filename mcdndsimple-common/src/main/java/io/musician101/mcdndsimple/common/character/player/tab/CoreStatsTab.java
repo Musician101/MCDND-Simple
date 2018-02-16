@@ -9,6 +9,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.HitPoints;
+import io.musician101.mcdndsimple.common.character.player.DeathSavingThrows;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.HitDice;
 import io.musician101.mcdndsimple.common.character.player.bonus.Bonuses;
@@ -16,64 +17,89 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
+import javax.annotation.Nonnull;
 
+//TODO change some of the classes to remove getters depending on the values they return
 @JsonKey(key = Keys.CORE_STATS_TAB, typeAdapter = CoreStatsTab.Serializer.class)
 public class CoreStatsTab {
 
+    @Nonnull
     private Bonuses bonuses = new Bonuses();
+    @Nonnull
     private CoreStats coreStats = new CoreStats();
+    @Nonnull
+    private DeathSavingThrows deathSavingThrows = new DeathSavingThrows();
+    @Nonnull
     private Experience experience = new Experience();
+    @Nonnull
     private HitDice hitDice = new HitDice();
+    @Nonnull
     private HitPoints hitPoints = new HitPoints();
+    @Nonnull
     private Initiative initiative = new Initiative();
     private boolean inspiration = false;
     private int speed = 30;
 
+    @Nonnull
     public Bonuses getBonuses() {
         return bonuses;
     }
 
-    public void setBonuses(Bonuses bonuses) {
+    @Nonnull
+    public DeathSavingThrows getDeathSavingThrows() {
+        return deathSavingThrows;
+    }
+
+    public void setBonuses(@Nonnull Bonuses bonuses) {
         this.bonuses = bonuses;
     }
 
+    @Nonnull
     public CoreStats getCoreStats() {
         return coreStats;
     }
 
-    public void setCoreStats(CoreStats coreStats) {
+    public void setCoreStats(@Nonnull CoreStats coreStats) {
         this.coreStats = coreStats;
     }
 
+    @Nonnull
     public Experience getExperience() {
         return experience;
     }
 
-    public void setExperience(Experience experience) {
+    public void setDeathSavingThrows(@Nonnull DeathSavingThrows deathSavingThrows) {
+        this.deathSavingThrows = deathSavingThrows;
+    }
+
+    public void setExperience(@Nonnull Experience experience) {
         this.experience = experience;
     }
 
+    @Nonnull
     public HitDice getHitDice() {
         return hitDice;
     }
 
-    public void setHitDice(HitDice hitDice) {
+    public void setHitDice(@Nonnull HitDice hitDice) {
         this.hitDice = hitDice;
     }
 
+    @Nonnull
     public HitPoints getHitPoints() {
         return hitPoints;
     }
 
-    public void setHitPoints(HitPoints hitPoints) {
+    public void setHitPoints(@Nonnull HitPoints hitPoints) {
         this.hitPoints = hitPoints;
     }
 
+    @Nonnull
     public Initiative getInitiative() {
         return initiative;
     }
 
-    public void setInitiative(Initiative initiative) {
+    public void setInitiative(@Nonnull Initiative initiative) {
         this.initiative = initiative;
     }
 

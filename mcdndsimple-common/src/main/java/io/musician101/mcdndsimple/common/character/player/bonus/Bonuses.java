@@ -12,53 +12,64 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.BONUSES, typeAdapter = Bonuses.Serializer.class)
 public class Bonuses {
 
+    @Nonnull
     private Dice abilitiesAndSkills = new Dice(0);
+    @Nonnull
     private MeleeBonus melee = new MeleeBonus();
+    @Nonnull
     private RangedBonus ranged = new RangedBonus();
+    @Nonnull
     private Dice saves = new Dice(0);
+    @Nonnull
     private SpellcastingBonus spellcasting = new SpellcastingBonus();
 
+    @Nonnull
     public Dice getAbilitiesAndSkills() {
         return abilitiesAndSkills;
     }
 
-    public void setAbilitiesAndSkills(Dice abilitiesAndSkills) {
+    public void setAbilitiesAndSkills(@Nonnull Dice abilitiesAndSkills) {
         this.abilitiesAndSkills = abilitiesAndSkills;
     }
 
+    @Nonnull
     public MeleeBonus getMelee() {
         return melee;
     }
 
-    public void setMelee(MeleeBonus melee) {
+    public void setMelee(@Nonnull MeleeBonus melee) {
         this.melee = melee;
     }
 
+    @Nonnull
     public RangedBonus getRanged() {
         return ranged;
     }
 
-    public void setRanged(RangedBonus ranged) {
+    public void setRanged(@Nonnull RangedBonus ranged) {
         this.ranged = ranged;
     }
 
+    @Nonnull
     public Dice getSaves() {
         return saves;
     }
 
-    public void setSaves(Dice saves) {
+    public void setSaves(@Nonnull Dice saves) {
         this.saves = saves;
     }
 
+    @Nonnull
     public SpellcastingBonus getSpellcasting() {
         return spellcasting;
     }
 
-    public void setSpellcasting(SpellcastingBonus spellcasting) {
+    public void setSpellcasting(@Nonnull SpellcastingBonus spellcasting) {
         this.spellcasting = spellcasting;
     }
 

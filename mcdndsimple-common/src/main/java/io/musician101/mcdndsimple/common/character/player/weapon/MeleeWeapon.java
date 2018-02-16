@@ -15,7 +15,7 @@ public class MeleeWeapon extends AbstractWeapon {
     private boolean plusStat = true;
 
     public MeleeWeapon() {
-        setAttackStat(WeaponAttackStat.STR);
+        super(WeaponAttackStat.STR);
     }
 
     public boolean plusStat() {

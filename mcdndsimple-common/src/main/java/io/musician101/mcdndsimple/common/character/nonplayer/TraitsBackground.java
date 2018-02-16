@@ -13,53 +13,64 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.TRAITS_BACKGROUND, typeAdapter = TraitsBackground.Serializer.class)
 public class TraitsBackground {
 
+    @Nonnull
     private String conditionImmunity = "None";
+    @Nonnull
     private String damageImmunity = "None";
+    @Nonnull
     private String damageResistance = "None";
+    @Nonnull
     private String damageVulnerability = "None";
+    @Nonnull
     private List<String> traits = new ArrayList<>(Collections.singletonList("None"));
 
+    @Nonnull
     public String getConditionImmunity() {
         return conditionImmunity;
     }
 
-    public void setConditionImmunity(String conditionImmunity) {
+    public void setConditionImmunity(@Nonnull String conditionImmunity) {
         this.conditionImmunity = conditionImmunity;
     }
 
+    @Nonnull
     public String getDamageImmunity() {
         return damageImmunity;
     }
 
-    public void setDamageImmunity(String damageImmunity) {
+    public void setDamageImmunity(@Nonnull String damageImmunity) {
         this.damageImmunity = damageImmunity;
     }
 
+    @Nonnull
     public String getDamageResistance() {
         return damageResistance;
     }
 
-    public void setDamageResistance(String damageResistance) {
+    public void setDamageResistance(@Nonnull String damageResistance) {
         this.damageResistance = damageResistance;
     }
 
+    @Nonnull
     public String getDamageVulnerability() {
         return damageVulnerability;
     }
 
-    public void setDamageVulnerability(String damageVulnerability) {
+    public void setDamageVulnerability(@Nonnull String damageVulnerability) {
         this.damageVulnerability = damageVulnerability;
     }
 
+    @Nonnull
     public List<String> getTraits() {
         return traits;
     }
 
-    public void setTraits(List<String> traits) {
+    public void setTraits(@Nonnull List<String> traits) {
         this.traits = traits;
     }
 

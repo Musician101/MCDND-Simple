@@ -13,13 +13,17 @@ import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.SPELL_SAVE, typeAdapter = SpellSave.Serializer.class)
 public class SpellSave {
 
     private int customDC = 0;
+    @Nonnull
     private List<String> onSuccessfulSave = new ArrayList<>();
+    @Nonnull
     private StatBonus savingStat = StatBonus.NONE;
+    @Nonnull
     private SpellcasterClass spellcasterClass = SpellcasterClass.OTHER;
 
     public int getCustomDC() {
@@ -30,11 +34,12 @@ public class SpellSave {
         this.customDC = customDC;
     }
 
+    @Nonnull
     public List<String> getOnSuccessfulSave() {
         return onSuccessfulSave;
     }
 
-    public void setOnSuccessfulSave(List<String> onSuccessfulSave) {
+    public void setOnSuccessfulSave(@Nonnull List<String> onSuccessfulSave) {
         this.onSuccessfulSave = onSuccessfulSave;
     }
 
@@ -46,11 +51,12 @@ public class SpellSave {
         this.spellcasterClass = spellcasterClass;
     }
 
+    @Nonnull
     public StatBonus getSavingStat() {
         return savingStat;
     }
 
-    public void setSavingStat(StatBonus savingStat) {
+    public void setSavingStat(@Nonnull StatBonus savingStat) {
         this.savingStat = savingStat;
     }
 

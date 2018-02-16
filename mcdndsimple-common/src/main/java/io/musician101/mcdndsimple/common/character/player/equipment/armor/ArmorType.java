@@ -11,6 +11,7 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.ARMOR_TYPE, typeAdapter = ArmorType.Serializer.class)
 public enum ArmorType {
@@ -20,12 +21,14 @@ public enum ArmorType {
     SHIELD("Shield"),
     NONE("None");
 
+    @Nonnull
     private final String name;
 
-    ArmorType(String name) {
+    ArmorType(@Nonnull String name) {
         this.name = name;
     }
 
+    @Nonnull
     public String getName() {
         return name;
     }

@@ -13,10 +13,12 @@ import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.HIT_DICE, typeAdapter = HitDice.Serializer.class)
 public class HitDice {
 
+    @Nonnull
     private final Map<Integer, Integer> hitDiceMap = new HashMap<>();
 
     public HitDice() {
@@ -34,11 +36,12 @@ public class HitDice {
         return null;
     }
 
+    @Nonnull
     public Map<Integer, Integer> getHitDice() {
         return hitDiceMap;
     }
 
-    public void setHitDice(Dice dice) {
+    public void setHitDice(@Nonnull Dice dice) {
         hitDiceMap.put(dice.getSides(), dice.getAmount());
     }
 

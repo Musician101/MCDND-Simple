@@ -16,20 +16,23 @@ import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.SPELLBOOK_TAB, typeAdapter = SpellbookTab.Serializer.class)
 public class SpellbookTab {
 
     private int sorceryPointsUsed = 0;
+    @Nonnull
     private SpellSlots spellSlots = new SpellSlots();
+    @Nonnull
     private List<Spell> spells = new ArrayList<>();
     private int warlockSpellSlotsUsed = 0;
 
-    public void addSpell(Spell spell) {
+    public void addSpell(@Nonnull Spell spell) {
         spells.add(spell);
     }
 
-    public int getInvocations(ClassLevels classLevels) {
+    public int getInvocations(@Nonnull ClassLevels classLevels) {
         int level = classLevels.getSorcerer();
         if (getSpellcasterClasses(classLevels).contains(SpellcasterClass.WARLOCK)) {
             if (level == 1) {
@@ -46,7 +49,7 @@ public class SpellbookTab {
         return 0;
     }
 
-    public int getSorceryPointsMax(ClassLevels classLevels) {
+    public int getSorceryPointsMax(@Nonnull ClassLevels classLevels) {
         int level = classLevels.getSorcerer();
         if (getSpellcasterClasses(classLevels).contains(SpellcasterClass.SORCERER)) {
             if (level == 1) {
@@ -68,15 +71,16 @@ public class SpellbookTab {
         this.sorceryPointsUsed = sorceryPointsUsed;
     }
 
+    @Nonnull
     public SpellSlots getSpellSlots() {
         return spellSlots;
     }
 
-    public void setSpellSlots(SpellSlots spellSlots) {
+    public void setSpellSlots(@Nonnull SpellSlots spellSlots) {
         this.spellSlots = spellSlots;
     }
 
-    public List<SpellcasterClass> getSpellcasterClasses(ClassLevels classLevels) {
+    public List<SpellcasterClass> getSpellcasterClasses(@Nonnull ClassLevels classLevels) {
         List<SpellcasterClass> list = new ArrayList<>();
         if (classLevels.getBard() > 0) {
             list.add(SpellcasterClass.BARD);
@@ -125,11 +129,12 @@ public class SpellbookTab {
         return list;
     }
 
+    @Nonnull
     public List<Spell> getSpells() {
         return spells;
     }
 
-    public void setSpells(List<Spell> spells) {
+    public void setSpells(@Nonnull List<Spell> spells) {
         this.spells = spells;
     }
 
@@ -141,7 +146,7 @@ public class SpellbookTab {
         this.warlockSpellSlotsUsed = warlockSpellSlotsUsed;
     }
 
-    public void removeSpell(Spell spell) {
+    public void removeSpell(@Nonnull Spell spell) {
         spells.remove(spell);
     }
 

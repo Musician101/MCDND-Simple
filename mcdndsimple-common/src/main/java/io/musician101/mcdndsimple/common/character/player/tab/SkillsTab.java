@@ -14,127 +14,176 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.SKILLS_TAB, typeAdapter = SkillsTab.Serializer.class)
 public class SkillsTab {
 
+    @Nonnull
     private final PlayerSkill acrobatics = new PlayerSkill("Acrobatics (Dex)");
+    @Nonnull
     private final PlayerSkill animalHandling = new PlayerSkill("Animal Handling (Wis)");
+    @Nonnull
     private final PlayerSkill arcana = new PlayerSkill("Arcana (Int)");
+    @Nonnull
     private final PlayerSkill athletics = new PlayerSkill("Athletics (Str)");
+    @Nonnull
     private final PlayerSkill deception = new PlayerSkill("Deception (Cha)");
+    @Nonnull
     private final PlayerSkill history = new PlayerSkill("history (Int)");
+    @Nonnull
     private final PlayerSkill insight = new PlayerSkill("Insight (Wis)");
+    @Nonnull
     private final PlayerSkill intimidation = new PlayerSkill("Intimidation (Cha)");
+    @Nonnull
     private final PlayerSkill investigation = new PlayerSkill("Investigation (Int)");
+    @Nonnull
     private final PlayerSkill medicine = new PlayerSkill("Medicine (Wis)");
+    @Nonnull
     private final PlayerSkill nature = new PlayerSkill("Nature (Int)");
+    @Nonnull
     private final PlayerSkill perception = new PlayerSkill("Perception (Wis)");
+    @Nonnull
     private final PlayerSkill performance = new PlayerSkill("Performance (Cha)");
+    @Nonnull
     private final PlayerSkill persuasion = new PlayerSkill("Persuasion (Cha)");
+    @Nonnull
     private final PlayerSkill religion = new PlayerSkill("Religion (Int)");
+    @Nonnull
     private final PlayerSkill sleightOfHand = new PlayerSkill("Sleight of Hand (Dex)");
+    @Nonnull
     private final PlayerSkill stealth = new PlayerSkill("Stealth (Dex)");
+    @Nonnull
     private final PlayerSkill survival = new PlayerSkill("Survival (Wis)");
+    @Nonnull
     private final PlayerSkill unskilledCHA = new PlayerSkill("Unskilled CHA");
+    @Nonnull
     private final PlayerSkill unskilledCON = new PlayerSkill("Unskilled CON");
+    @Nonnull
     private final PlayerSkill unskilledDEX = new PlayerSkill("Unskilled DEX");
+    @Nonnull
     private final PlayerSkill unskilledINT = new PlayerSkill("Unskilled INT");
+    @Nonnull
     private final PlayerSkill unskilledSTR = new PlayerSkill("Unskilled STR");
+    @Nonnull
     private final PlayerSkill unskilledWIS = new PlayerSkill("Unskilled WIS");
 
+    @Nonnull
     public PlayerSkill getAcrobatics() {
         return acrobatics;
     }
 
+    @Nonnull
     public PlayerSkill getAnimalHandling() {
         return animalHandling;
     }
 
+    @Nonnull
     public PlayerSkill getArcana() {
         return arcana;
     }
 
+    @Nonnull
     public PlayerSkill getAthletics() {
         return athletics;
     }
 
+    @Nonnull
     public PlayerSkill getDeception() {
         return deception;
     }
 
+    @Nonnull
     public PlayerSkill getHistory() {
         return history;
     }
 
+    @Nonnull
     public PlayerSkill getInsight() {
         return insight;
     }
 
+    @Nonnull
     public PlayerSkill getIntimidation() {
         return intimidation;
     }
 
+    @Nonnull
     public PlayerSkill getInvestigation() {
         return investigation;
     }
 
+    @Nonnull
     public PlayerSkill getMedicine() {
         return medicine;
     }
 
+    @Nonnull
     public PlayerSkill getNature() {
         return nature;
     }
 
+    @Nonnull
     public PlayerSkill getPerception() {
         return perception;
     }
 
+    @Nonnull
     public PlayerSkill getPerformance() {
         return performance;
     }
 
+    @Nonnull
     public PlayerSkill getPersuasion() {
         return persuasion;
     }
 
+    @Nonnull
     public PlayerSkill getReligion() {
         return religion;
     }
 
+    @Nonnull
     public PlayerSkill getSleightOfHand() {
         return sleightOfHand;
     }
 
+    @Nonnull
     public PlayerSkill getStealth() {
         return stealth;
     }
 
+    @Nonnull
     public PlayerSkill getSurvival() {
         return survival;
     }
 
+    @Nonnull
     public PlayerSkill getUnskilledCHA() {
         return unskilledCHA;
     }
 
+    @Nonnull
     public PlayerSkill getUnskilledCON() {
         return unskilledCON;
     }
 
+    @Nonnull
     public PlayerSkill getUnskilledDEX() {
         return unskilledDEX;
     }
 
+    @Nonnull
     public PlayerSkill getUnskilledINT() {
         return unskilledINT;
     }
 
+    @Nonnull
     public PlayerSkill getUnskilledSTR() {
         return unskilledSTR;
     }
 
+    @Nonnull
     public PlayerSkill getUnskilledWIS() {
         return unskilledWIS;
     }

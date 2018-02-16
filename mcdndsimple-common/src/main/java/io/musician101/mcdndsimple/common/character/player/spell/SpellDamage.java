@@ -12,13 +12,16 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.SPELL_DAMAGE, typeAdapter = SpellDamage.Serializer.class)
 public class SpellDamage {
 
     private int bonus = 0;
     private boolean canCrit = true;
+    @Nonnull
     private Dice damage = new Dice(0);
+    @Nonnull
     private String damageType = "";
 
     public boolean canCrit() {
@@ -33,19 +36,21 @@ public class SpellDamage {
         this.bonus = bonus;
     }
 
+    @Nonnull
     public Dice getDamage() {
         return damage;
     }
 
-    public void setDamage(Dice damage) {
+    public void setDamage(@Nonnull Dice damage) {
         this.damage = damage;
     }
 
+    @Nonnull
     public String getDamageType() {
         return damageType;
     }
 
-    public void setDamageType(String damageType) {
+    public void setDamageType(@Nonnull String damageType) {
         this.damageType = damageType;
     }
 

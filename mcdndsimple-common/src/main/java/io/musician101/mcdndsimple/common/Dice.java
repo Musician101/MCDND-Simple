@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Random;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 @JsonKeys(keys = {Keys.ABILITIES_AND_SKILLS, Keys.ATTACK, Keys.DAMAGE, Keys.HEAL_AMOUNT, Keys.HIT_DICE, Keys.SAVES}, typeAdapter = Dice.Serializer.class)
 public class Dice {
@@ -32,6 +34,7 @@ public class Dice {
         this.sides = sides;
     }
 
+    @Nullable
     public static Dice parse(String s) {
         int amount;
         int sides = 1;
@@ -52,11 +55,11 @@ public class Dice {
         }
     }
 
-    public static int total(List<Entry<Dice, Integer>> rolls) {
+    public static int total(@Nonnull List<Entry<Dice, Integer>> rolls) {
         return total(rolls, 0);
     }
 
-    public static int total(List<Entry<Dice, Integer>> rolls, int bonus) {
+    public static int total(@Nonnull List<Entry<Dice, Integer>> rolls, int bonus) {
         int total = 0;
         for (Entry<Dice, Integer> roll : rolls) {
             total = +roll.getValue();
@@ -77,6 +80,7 @@ public class Dice {
         return sides;
     }
 
+    @Nonnull
     public List<Entry<Dice, Integer>> roll() {
         List<Entry<Dice, Integer>> list = new ArrayList<>();
         for (int x = 0; x < amount; x++) {

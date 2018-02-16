@@ -14,42 +14,47 @@ import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.WEAPONS_TAB, typeAdapter = WeaponsTab.Serializer.class)
 public class WeaponsTab {
 
+    @Nonnull
     private List<MeleeWeapon> meleeWeapons = new ArrayList<>();
+    @Nonnull
     private List<RangedWeapon> rangedWeapons = new ArrayList<>();
 
-    public void addMeleeWeapon(MeleeWeapon meleeWeapon) {
+    public void addMeleeWeapon(@Nonnull MeleeWeapon meleeWeapon) {
         meleeWeapons.add(meleeWeapon);
     }
 
-    public void addRangedWeapon(RangedWeapon rangedWeapon) {
+    public void addRangedWeapon(@Nonnull RangedWeapon rangedWeapon) {
         rangedWeapons.add(rangedWeapon);
     }
 
+    @Nonnull
     public List<MeleeWeapon> getMeleeWeapons() {
         return meleeWeapons;
     }
 
-    public void setMeleeWeapons(List<MeleeWeapon> meleeWeapons) {
+    public void setMeleeWeapons(@Nonnull List<MeleeWeapon> meleeWeapons) {
         this.meleeWeapons = meleeWeapons;
     }
 
+    @Nonnull
     public List<RangedWeapon> getRangedWeapons() {
         return rangedWeapons;
     }
 
-    public void setRangedWeapons(List<RangedWeapon> rangedWeapons) {
+    public void setRangedWeapons(@Nonnull List<RangedWeapon> rangedWeapons) {
         this.rangedWeapons = rangedWeapons;
     }
 
-    public void removeMeleeWeapon(MeleeWeapon meleeWeapon) {
+    public void removeMeleeWeapon(@Nonnull MeleeWeapon meleeWeapon) {
         meleeWeapons.remove(meleeWeapon);
     }
 
-    public void removeRangedWeapon(RangedWeapon rangedWeapon) {
+    public void removeRangedWeapon(@Nonnull RangedWeapon rangedWeapon) {
         rangedWeapons.remove(rangedWeapon);
     }
 

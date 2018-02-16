@@ -11,6 +11,7 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
+import javax.annotation.Nonnull;
 
 @JsonKey(key = Keys.NON_PLAYER_ACTION_TYPE, typeAdapter = NonPlayerActionType.Serializer.class)
 public enum NonPlayerActionType {
@@ -23,12 +24,14 @@ public enum NonPlayerActionType {
     REACTION("Reaction"),
     SPECIAL("Special");
 
+    @Nonnull
     private final String name;
 
-    NonPlayerActionType(String name) {
+    NonPlayerActionType(@Nonnull String name) {
         this.name = name;
     }
 
+    @Nonnull
     public String getName() {
         return name;
     }

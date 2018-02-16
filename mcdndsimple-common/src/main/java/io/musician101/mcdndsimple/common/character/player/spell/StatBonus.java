@@ -11,6 +11,8 @@ import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKeys;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 @JsonKeys(keys = {Keys.ATTACK_STAT, Keys.STAT_BONUS}, typeAdapter = StatBonus.Serializer.class)
 public enum StatBonus {
@@ -23,16 +25,18 @@ public enum StatBonus {
     STR,
     WIS;
 
+    @Nullable
     private final String name;
 
     StatBonus() {
         this(null);
     }
 
-    StatBonus(String name) {
+    StatBonus(@Nullable String name) {
         this.name = name;
     }
 
+    @Nonnull
     public String getName() {
         return name == null ? toString() : name;
     }

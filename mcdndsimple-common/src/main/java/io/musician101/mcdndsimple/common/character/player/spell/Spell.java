@@ -14,94 +14,120 @@ import io.musician101.musicianlibrary.java.json.adapter.TypeOf;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 
 @TypeOf(Spell.Serializer.class)
 public class Spell {
 
+    @Nonnull
     private List<String> atHigherLevels = new ArrayList<>();
+    @Nonnull
     private StatBonus attackStat = StatBonus.NONE;
     //Most spells simply state Action or Bonus Action which have actual numerical values
     //but to keep things simple, we'll just leave it as a string.
+    @Nonnull
     private String castTime = "";
+    @Nonnull
     private List<String> components = new ArrayList<>();
+    @Nonnull
     private List<String> description = new ArrayList<>();
+    @Nonnull
     private String duration = "";
+    @Nonnull
     private List<String> effects = new ArrayList<>();
+    @Nonnull
     private SpellcasterClass gainedFrom = SpellcasterClass.OTHER;
     private boolean isRitual = false;
     private int level = 0;
+    @Nonnull
     private MacroOptions macroOptions = new MacroOptions();
+    @Nonnull
     private String name = "";
     private boolean needsConcentration = false;
+    @Nonnull
     private Prepared prepared = Prepared.NO;
+    @Nonnull
     private String range = "";
+    @Nonnull
     private SpellDamage spellDamage = new SpellDamage();
+    @Nonnull
     private SpellHealing spellHealing = new SpellHealing();
+    @Nonnull
     private SpellSave spellSave = new SpellSave();
+    @Nonnull
     private SpellType spellType = SpellType.OTHER;
+    @Nonnull
     private String targetArea = "";
 
+    @Nonnull
     public List<String> getAtHigherLevels() {
         return atHigherLevels;
     }
 
-    public void setAtHigherLevels(List<String> atHigherLevels) {
+    public void setAtHigherLevels(@Nonnull List<String> atHigherLevels) {
         this.atHigherLevels = atHigherLevels;
     }
 
+    @Nonnull
     public StatBonus getAttackStat() {
         return attackStat;
     }
 
-    public void setAttackStat(StatBonus attackStat) {
+    public void setAttackStat(@Nonnull StatBonus attackStat) {
         this.attackStat = attackStat;
     }
 
+    @Nonnull
     public String getCastTime() {
         return castTime;
     }
 
-    public void setCastTime(String castTime) {
+    public void setCastTime(@Nonnull String castTime) {
         this.castTime = castTime;
     }
 
+    @Nonnull
     public List<String> getComponents() {
         return components;
     }
 
-    public void setComponents(List<String> components) {
+    public void setComponents(@Nonnull List<String> components) {
         this.components = components;
     }
 
+    @Nonnull
     public List<String> getDescription() {
         return description;
     }
 
-    public void setDescription(List<String> description) {
+    public void setDescription(@Nonnull List<String> description) {
         this.description = description;
     }
 
+    @Nonnull
     public String getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(@Nonnull String duration) {
         this.duration = duration;
     }
 
+    @Nonnull
     public List<String> getEffects() {
         return effects;
     }
 
-    public void setEffects(List<String> effects) {
+    public void setEffects(@Nonnull List<String> effects) {
         this.effects = effects;
     }
 
+    @Nonnull
     public SpellcasterClass getGainedFrom() {
         return gainedFrom;
     }
 
-    public void setGainedFrom(SpellcasterClass gainedFrom) {
+    public void setGainedFrom(@Nonnull SpellcasterClass gainedFrom) {
         this.gainedFrom = gainedFrom;
     }
 
@@ -116,75 +142,84 @@ public class Spell {
         }
     }
 
+    @Nonnull
     public MacroOptions getMacroOptions() {
         return macroOptions;
     }
 
-    public void setMacroOptions(MacroOptions macroOptions) {
+    public void setMacroOptions(@Nonnull MacroOptions macroOptions) {
         this.macroOptions = macroOptions;
     }
 
+    @Nonnull
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@Nonnull String name) {
         this.name = name;
     }
 
+    @Nonnull
     public Prepared getPrepared() {
         return prepared;
     }
 
-    public void setPrepared(Prepared prepared) {
+    public void setPrepared(@Nonnull Prepared prepared) {
         this.prepared = prepared;
     }
 
+    @Nonnull
     public String getRange() {
         return range;
     }
 
-    public void setRange(String range) {
+    public void setRange(@Nonnull String range) {
         this.range = range;
     }
 
+    @Nonnull
     public SpellDamage getSpellDamage() {
         return spellDamage;
     }
 
-    public void setSpellDamage(SpellDamage spellDamage) {
+    public void setSpellDamage(@Nonnull SpellDamage spellDamage) {
         this.spellDamage = spellDamage;
     }
 
+    @Nonnull
     public SpellHealing getSpellHealing() {
         return spellHealing;
     }
 
-    public void setSpellHealing(SpellHealing spellHealing) {
+    public void setSpellHealing(@Nonnull SpellHealing spellHealing) {
         this.spellHealing = spellHealing;
     }
 
+    @Nonnull
     public SpellSave getSpellSave() {
         return spellSave;
     }
 
-    public void setSpellSave(SpellSave spellSave) {
+    public void setSpellSave(@Nonnull SpellSave spellSave) {
         this.spellSave = spellSave;
     }
 
+    @Nonnull
     public SpellType getSpellType() {
         return spellType;
     }
 
-    public void setSpellType(SpellType spellType) {
+    public void setSpellType(@Nonnull SpellType spellType) {
         this.spellType = spellType;
     }
 
+    @Nonnull
     public String getTargetArea() {
         return targetArea;
     }
 
-    public void setTargetArea(String targetArea) {
+    public void setTargetArea(@Nonnull String targetArea) {
         this.targetArea = targetArea;
     }
 

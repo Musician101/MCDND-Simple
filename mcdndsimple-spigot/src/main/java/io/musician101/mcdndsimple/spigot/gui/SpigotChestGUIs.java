@@ -8,6 +8,7 @@ import io.musician101.mcdndsimple.common.character.HitPoints;
 import io.musician101.mcdndsimple.common.character.player.AbilityScore;
 import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
 import io.musician101.mcdndsimple.common.character.player.CharacterSheet;
+import io.musician101.mcdndsimple.common.character.player.DeathSavingThrows;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.HitDice;
 import io.musician101.mcdndsimple.common.character.player.MCDNDItem;
@@ -88,6 +89,7 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.potion.PotionType;
@@ -586,12 +588,59 @@ public class SpigotChestGUIs {
         HitDice hitDice = coreStatsTab.getHitDice();
         HitPoints hitPoints = coreStatsTab.getHitPoints();
         Initiative initiative = coreStatsTab.getInitiative();
-        builder(9, 8, MenuText.CORE_STATS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.CORE_STATS).potionEffect(PotionType.STRENGTH).build(), (g, p) -> coreStats(p, bioAndInfo, classLevels, coreStats, experience, g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.GOLDEN_APPLE).name(MenuText.HIT_POINTS).description(MenuText.hitPoints(hitPoints)).build(), (g, p) -> hitPoints(p, hitPoints, g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.speed(coreStatsTab)).potionEffect(PotionType.SPEED).build(), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        builder(18, 17, MenuText.CORE_STATS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.CORE_STATS).potionEffect(PotionType.STRENGTH).build(), (g, p) -> coreStats(p, bioAndInfo, classLevels, coreStats, experience, g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.GOLDEN_APPLE).name(MenuText.HIT_POINTS).description(MenuText.hitPoints(hitPoints)).build(), (g, p) -> hitPoints(p, hitPoints, g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.speed(coreStatsTab)).potionEffect(PotionType.SPEED).build(), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
             coreStatsTab.setSpeed(i);
             coreStatsTab(player, bioAndInfo, classLevels, coreStatsTab, prevGUI);
         })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.initiative(initiative, dex)).potionEffect(PotionType.NIGHT_VISION).build(), (g, p) -> initiative(p, dex, bioAndInfo, initiative, g)), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.builder(Material.EXP_BOTTLE).name(MenuText.LEVEL_AND_XP).description(MenuText.experience(experience, classLevels)).build(), (g, p) -> experience(p, classLevels, experience, g)), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.HIT_DICE).potionEffect(PotionType.REGEN).build(), (g, p) -> hitDice(p, coreStats.getConstitution(), bioAndInfo, hitDice, g)), GUIButton.of(6, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.BONUSES_PENALTIES), (g, p) -> bonuses(p, coreStatsTab.getBonuses(), g)), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.of(Material.GOLD_NUGGET, MenuText.INSPIRATION), (g, p) -> {
             coreStatsTab.setHasInspiration(!coreStatsTab.hasInspiration());
             coreStatsTab(p, bioAndInfo, classLevels, coreStatsTab, prevGUI);
+        }), GUIButton.of(8, ClickType.LEFT, SpigotIconBuilder.of(Material.SKULL_ITEM, MenuText.DEATH_SAVING_THROWS), (g, p) -> deathSavingThrows(p, bioAndInfo, coreStatsTab.getDeathSavingThrows(), coreStatsTab.getBonuses().getSaves(), hitPoints, g))).build();
+    }
+
+    public void deathSavingThrows(@Nonnull Player player, @Nonnull BioAndInfo bioAndInfo, @Nonnull DeathSavingThrows deathSavingThrows, @Nonnull Dice savingThrowBonus, @Nonnull HitPoints hitPoints, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
+        builder(9, 8, MenuText.DEATH_SAVING_THROWS, player, prevGUI).setButtons(GUIButton.<ClickType, SpigotChestGUI<SpigotMCDNDSimple>, Inventory, SpigotMCDNDSimple, Player, ItemStack>builder().slot(0).icon(SpigotIconBuilder.builder(Material.SKULL_ITEM).durability(3).name(MenuText.successCount(deathSavingThrows.getSuccessCount())).build()).addButton(ClickType.LEFT, (g, p) -> {
+            deathSavingThrows.addSuccessCount();
+            deathSavingThrows(p, bioAndInfo, deathSavingThrows, savingThrowBonus, hitPoints, prevGUI);
+        }).addButton(ClickType.RIGHT, (g, p) -> {
+            deathSavingThrows.removeSuccessCount();
+            deathSavingThrows(p, bioAndInfo, deathSavingThrows, savingThrowBonus, hitPoints, prevGUI);
+        }).build(), GUIButton.<ClickType, SpigotChestGUI<SpigotMCDNDSimple>, Inventory, SpigotMCDNDSimple, Player, ItemStack>builder().slot(1).icon(SpigotIconBuilder.of(Material.SKULL_ITEM, MenuText.failCount(deathSavingThrows.getFailCount()))).addButton(ClickType.LEFT, (g, p) -> {
+            deathSavingThrows.addFailCount();
+            deathSavingThrows(p, bioAndInfo, deathSavingThrows, savingThrowBonus, hitPoints, prevGUI);
+        }).addButton(ClickType.RIGHT, (g, p) -> {
+            deathSavingThrows.removeFailCount();
+            deathSavingThrows(p, bioAndInfo, deathSavingThrows, savingThrowBonus, hitPoints, prevGUI);
+        }).build(), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.SKULL_ITEM, MenuText.failCount(deathSavingThrows.getFailCount())), (g, p) -> {
+            int result = Dice.total(new Dice(20).roll());
+            int total = result + Dice.total(savingThrowBonus.roll());
+            String newLine = "\n";
+            StringBuilder sb = new StringBuilder(p.getName() + " (as " + bioAndInfo.getName() + ") has rolled a Death Saving Throw." + newLine + "The results are ");
+            if (result == 20) {
+                sb.append(ChatColor.GREEN);
+            }
+            else if (result == 1) {
+                sb.append(ChatColor.RED);
+            }
+
+            sb.append(total).append(ChatColor.RESET).append(".").append(newLine);
+            if (total > 10) {
+                if (result == 1) {
+                    deathSavingThrows.addFailCount();
+                }
+
+                deathSavingThrows.addFailCount();
+                sb.append(bioAndInfo.getName()).append(" now has ").append(ChatColor.RED).append(deathSavingThrows.getFailCount()).append(ChatColor.RESET).append(" failed Death Saving Throws!");
+            }
+            else {
+                deathSavingThrows.addSuccessCount();
+                sb.append(bioAndInfo.getName()).append(" now has ").append(ChatColor.GREEN).append(deathSavingThrows.getSuccessCount()).append(ChatColor.RESET).append(" successful Death Saving Throws!");
+                if (result == 20) {
+                    sb.append(ChatColor.GOLD).append("They have also gained 1HP.");
+                    hitPoints.setCurrent(1);
+                }
+            }
+
+            Bukkit.broadcastMessage(sb.toString());
         })).build();
     }
 

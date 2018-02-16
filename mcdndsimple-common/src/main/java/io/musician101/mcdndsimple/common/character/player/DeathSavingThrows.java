@@ -7,18 +7,27 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
 import java.lang.reflect.Type;
 
-//TODO add to guis
 @JsonKey(key = Keys.DEATH_SAVING_THROWS, typeAdapter = DeathSavingThrows.Serializer.class)
 public class DeathSavingThrows {
 
-    private final Dice d20 = new Dice(20);
     private int failCount = 0;
     private int successCount = 0;
+
+    public void addFailCount() {
+        if (failCount > 3) {
+            failCount++;
+        }
+    }
+
+    public void addSuccessCount() {
+        if (successCount > 3) {
+            successCount++;
+        }
+    }
 
     public int getFailCount() {
         return failCount;
@@ -28,24 +37,21 @@ public class DeathSavingThrows {
         return successCount;
     }
 
+    public void removeFailCount() {
+        if (failCount < 0) {
+            failCount--;
+        }
+    }
+
+    public void removeSuccessCount() {
+        if (successCount > 0) {
+            successCount--;
+        }
+    }
+
     public void reset() {
         failCount = 0;
         successCount = 0;
-    }
-
-    public int roll() {
-        int roll = Dice.total(d20.roll());
-        if (roll == 1) {
-            failCount = +2;
-        }
-        else if (roll >= 10 && roll < 20) {
-            successCount++;
-        }
-        else if (roll > 1 && roll < 10) {
-            failCount++;
-        }
-
-        return roll;
     }
 
     public static class Serializer implements JsonDeserializer<DeathSavingThrows>, JsonSerializer<DeathSavingThrows> {

@@ -113,6 +113,7 @@ public class Reference {
         public static final String DAMAGE_ROLLS = "Damage Rolls";
         public static final String DAMAGE_TYPE = "Damage Type";
         public static final String DEATH = "Death";
+        public static final String DEATH_SAVING_THROWS = "Death Saving Throws";
         public static final String DECEPTION = "Deception";
         public static final String DELETE = "Delete";
         public static final String DESCRIPTION = "Description";
@@ -394,6 +395,11 @@ public class Reference {
         }
 
         @Nonnull
+        public static String failCount(int successCount) {
+            return "Fail Count: " + successCount;
+        }
+
+        @Nonnull
         public static String gainedFrom(@Nonnull SpellcasterClass spellcasterClass) {
             return "Gained from " + spellcasterClass.getName();
         }
@@ -623,6 +629,11 @@ public class Reference {
         @Nonnull
         public static String[] spellcastingTable(@Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nonnull SpellcasterClass spellcasterClass) {
             return new String[]{"Cantrips Known: " + spellcasterClass.getCantripsAmount(classLevels), "Spells Known: " + spellcasterClass.getSpellsAmount(classLevels), "Can Prepare: " + spellcasterClass.getPreparedSpells(coreStats, classLevels), "Save DC: " + spellcasterClass.getSpellSaveDC(classLevels, coreStats, experience)};
+        }
+
+        @Nonnull
+        public static String successCount(int successCount) {
+            return "Success Count: " + successCount;
         }
 
         @Nonnull

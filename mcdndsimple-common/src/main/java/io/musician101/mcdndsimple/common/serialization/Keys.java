@@ -34,6 +34,7 @@ public class Keys {
     public static final JsonKeyImpl<JsonPrimitive, Integer> AGE = integerKey("age");
     public static final JsonKeyImpl<JsonPrimitive, String> ALIGNMENT = stringKey("alignment");
     public static final JsonKeyImpl<JsonPrimitive, Integer> AMMO = integerKey("ammo");
+    public static final JsonKeyImpl<JsonPrimitive, Integer> AMOUNT = integerKey("amount");
     public static final String ANIMAL_HANDLING = "animal_handling";
     public static final JsonKeyImpl<JsonPrimitive, Boolean> ANIMAL_HANDLING_BOOLEAN = booleanKey("animal_handling");
     public static final String ARCANA = "arcana";
@@ -95,6 +96,7 @@ public class Keys {
     public static final JsonKeyImpl<JsonPrimitive, String> DAMAGE_TYPE = stringKey("damage_type");
     public static final JsonKeyImpl<JsonPrimitive, String> DAMAGE_VULNERABILITY = stringKey("damage_vulnerability");
     public static final JsonKeyImpl<JsonPrimitive, Boolean> DEATH_BOOLEAN = booleanKey("death");
+    public static final String DEATH_SAVING_THROWS = "death_saving_throws";
     public static final String DECEPTION = "deception";
     public static final JsonKeyImpl<JsonPrimitive, Boolean> DECEPTION_BOOLEAN = booleanKey("deception");
     public static final JsonKeyImpl<JsonArray, List<String>> DESCRIPTION = listKey("description", new StringListSerializer());
@@ -111,6 +113,7 @@ public class Keys {
     public static final JsonKeyImpl<JsonPrimitive, Integer> ELECTRUM = integerKey("electrum");
     public static final JsonKeyImpl<JsonPrimitive, Integer> EXPERIENCE = integerKey("experience");
     public static final JsonKeyImpl<JsonPrimitive, String> EYES = stringKey("eyes");
+    public static final JsonKeyImpl<JsonPrimitive, Integer> FAIL_COUNT = integerKey("fail_count");
     public static final JsonKeyImpl<JsonPrimitive, Integer> FIFTH_LEVEL_SPELLS_USED = integerKey("fifth_level_spells_used");
     public static final JsonKeyImpl<JsonPrimitive, Integer> FIGHTER = integerKey("fighter");
     public static final JsonKeyImpl<JsonPrimitive, Integer> FIRST_LEVEL_SPELLS_USED = integerKey("first_level_spells_used");
@@ -207,6 +210,7 @@ public class Keys {
     public static final JsonKeyImpl<JsonArray, List<String>> SENSES = listKey("senses", new StringListSerializer());
     public static final JsonKeyImpl<JsonPrimitive, Integer> SEVENTH_LEVEL_SPELLS_USED = integerKey("seventh_level_spells_used");
     public static final JsonKeyImpl<JsonPrimitive, String> SHORT_NAME = stringKey("short_name");
+    public static final JsonKeyImpl<JsonPrimitive, Integer> SIDES = integerKey("sides");
     public static final JsonKeyImpl<JsonPrimitive, Integer> SILVER = integerKey("silver");
     public static final JsonKeyImpl<JsonPrimitive, Integer> SIXTH_LEVEL_SPELLS_USED = integerKey("sixth_level_spells_used");
     public static final JsonKeyImpl<JsonPrimitive, String> SIZE = stringKey("size");
@@ -234,6 +238,7 @@ public class Keys {
     public static final JsonKeyImpl<JsonPrimitive, Boolean> STEALTH_PENALTY = booleanKey("stealth_penalty");
     public static final String STRENGTH = "strength";
     public static final JsonKeyImpl<JsonPrimitive, Boolean> STRENGTH_BOOLEAN = booleanKey("strength");
+    public static final JsonKeyImpl<JsonPrimitive, Integer> SUCCESS_COUNT = integerKey("success_count");
     public static final String SURVIVAL = "survival";
     public static final JsonKeyImpl<JsonPrimitive, Boolean> SURVIVAL_BOOLEAN = booleanKey("survival");
     public static final JsonKeyImpl<JsonPrimitive, Integer> SWIM_SPEED = integerKey("swim_speed");
@@ -269,11 +274,6 @@ public class Keys {
     public static final JsonKeyImpl<JsonPrimitive, Integer> WIZARD = integerKey("wizard");
     public static final JsonKeyImpl<JsonPrimitive, Boolean> WORN = booleanKey("worn");
     public static final JsonKeyImpl<JsonPrimitive, Integer> XP = integerKey("xp");
-    public static final JsonKeyImpl<JsonPrimitive, Integer> AMOUNT = integerKey("amount");
-    public static final JsonKeyImpl<JsonPrimitive, Integer> SIDES = integerKey("sides");
-    public static final String DEATH_SAVING_THROWS = "death_saving_throws";
-    public static final JsonKeyImpl<JsonPrimitive, Integer> FAIL_COUNT = integerKey("fail_count");
-    public static final JsonKeyImpl<JsonPrimitive, Integer> SUCCESS_COUNT = integerKey("success_count");
 
     private Keys() {
 

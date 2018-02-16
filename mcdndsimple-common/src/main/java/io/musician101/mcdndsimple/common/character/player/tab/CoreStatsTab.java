@@ -45,11 +45,6 @@ public class CoreStatsTab {
         return bonuses;
     }
 
-    @Nonnull
-    public DeathSavingThrows getDeathSavingThrows() {
-        return deathSavingThrows;
-    }
-
     public void setBonuses(@Nonnull Bonuses bonuses) {
         this.bonuses = bonuses;
     }
@@ -64,12 +59,17 @@ public class CoreStatsTab {
     }
 
     @Nonnull
-    public Experience getExperience() {
-        return experience;
+    public DeathSavingThrows getDeathSavingThrows() {
+        return deathSavingThrows;
     }
 
     public void setDeathSavingThrows(@Nonnull DeathSavingThrows deathSavingThrows) {
         this.deathSavingThrows = deathSavingThrows;
+    }
+
+    @Nonnull
+    public Experience getExperience() {
+        return experience;
     }
 
     public void setExperience(@Nonnull Experience experience) {

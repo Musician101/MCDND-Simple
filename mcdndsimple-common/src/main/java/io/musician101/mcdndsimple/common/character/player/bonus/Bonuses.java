@@ -42,7 +42,7 @@ public class Bonuses {
         return melee;
     }
 
-    public void setMelee(@Nonnull MeleeBonus melee) {
+    private void setMelee(@Nonnull MeleeBonus melee) {
         this.melee = melee;
     }
 
@@ -51,7 +51,7 @@ public class Bonuses {
         return ranged;
     }
 
-    public void setRanged(@Nonnull RangedBonus ranged) {
+    private void setRanged(@Nonnull RangedBonus ranged) {
         this.ranged = ranged;
     }
 
@@ -69,7 +69,7 @@ public class Bonuses {
         return spellcasting;
     }
 
-    public void setSpellcasting(@Nonnull SpellcastingBonus spellcasting) {
+    private void setSpellcasting(@Nonnull SpellcastingBonus spellcasting) {
         this.spellcasting = spellcasting;
     }
 

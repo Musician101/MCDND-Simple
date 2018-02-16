@@ -46,7 +46,7 @@ public class CharacterSheet {
         return armorTab;
     }
 
-    public void setArmorTab(@Nonnull ArmorTab armorTab) {
+    private void setArmorTab(@Nonnull ArmorTab armorTab) {
         this.armorTab = armorTab;
     }
 
@@ -55,7 +55,7 @@ public class CharacterSheet {
         return backgroundTab;
     }
 
-    public void setBackgroundTab(@Nonnull BackgroundTab backgroundTab) {
+    private void setBackgroundTab(@Nonnull BackgroundTab backgroundTab) {
         this.backgroundTab = backgroundTab;
     }
 
@@ -64,7 +64,7 @@ public class CharacterSheet {
         return classTab;
     }
 
-    public void setClassTab(@Nonnull ClassTab classTab) {
+    private void setClassTab(@Nonnull ClassTab classTab) {
         this.classTab = classTab;
     }
 
@@ -73,7 +73,7 @@ public class CharacterSheet {
         return coreStatsTab;
     }
 
-    public void setCoreStatsTab(@Nonnull CoreStatsTab coreStatsTab) {
+    private void setCoreStatsTab(@Nonnull CoreStatsTab coreStatsTab) {
         this.coreStatsTab = coreStatsTab;
     }
 
@@ -82,7 +82,7 @@ public class CharacterSheet {
         return inventoryTab;
     }
 
-    public void setInventoryTab(@Nonnull InventoryTab inventoryTab) {
+    private void setInventoryTab(@Nonnull InventoryTab inventoryTab) {
         this.inventoryTab = inventoryTab;
     }
 
@@ -91,7 +91,7 @@ public class CharacterSheet {
         return skillsTab;
     }
 
-    public void setSkillsTab(@Nonnull SkillsTab skillsTab) {
+    private void setSkillsTab(@Nonnull SkillsTab skillsTab) {
         this.skillsTab = skillsTab;
     }
 
@@ -100,7 +100,7 @@ public class CharacterSheet {
         return spellbookTab;
     }
 
-    public void setSpellbookTab(@Nonnull SpellbookTab spellbookTab) {
+    private void setSpellbookTab(@Nonnull SpellbookTab spellbookTab) {
         this.spellbookTab = spellbookTab;
     }
 
@@ -109,7 +109,7 @@ public class CharacterSheet {
         return weaponsTab;
     }
 
-    public void setWeaponsTab(@Nonnull WeaponsTab weaponsTab) {
+    private void setWeaponsTab(@Nonnull WeaponsTab weaponsTab) {
         this.weaponsTab = weaponsTab;
     }
 

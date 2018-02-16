@@ -63,7 +63,7 @@ public class ClassTab {
         return classLevels;
     }
 
-    public void setClassLevels(@Nonnull ClassLevels classLevels) {
+    private void setClassLevels(@Nonnull ClassLevels classLevels) {
         this.classLevels = classLevels;
     }
 

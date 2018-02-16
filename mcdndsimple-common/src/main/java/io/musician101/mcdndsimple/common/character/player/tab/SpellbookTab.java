@@ -76,7 +76,7 @@ public class SpellbookTab {
         return spellSlots;
     }
 
-    public void setSpellSlots(@Nonnull SpellSlots spellSlots) {
+    private void setSpellSlots(@Nonnull SpellSlots spellSlots) {
         this.spellSlots = spellSlots;
     }
 

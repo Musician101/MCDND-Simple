@@ -19,7 +19,6 @@ import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
 import java.lang.reflect.Type;
 import javax.annotation.Nonnull;
 
-//TODO change some of the classes to remove getters depending on the values they return
 @JsonKey(key = Keys.CORE_STATS_TAB, typeAdapter = CoreStatsTab.Serializer.class)
 public class CoreStatsTab {
 
@@ -45,7 +44,7 @@ public class CoreStatsTab {
         return bonuses;
     }
 
-    public void setBonuses(@Nonnull Bonuses bonuses) {
+    private void setBonuses(@Nonnull Bonuses bonuses) {
         this.bonuses = bonuses;
     }
 
@@ -54,7 +53,7 @@ public class CoreStatsTab {
         return coreStats;
     }
 
-    public void setCoreStats(@Nonnull CoreStats coreStats) {
+    private void setCoreStats(@Nonnull CoreStats coreStats) {
         this.coreStats = coreStats;
     }
 
@@ -63,7 +62,7 @@ public class CoreStatsTab {
         return deathSavingThrows;
     }
 
-    public void setDeathSavingThrows(@Nonnull DeathSavingThrows deathSavingThrows) {
+    private void setDeathSavingThrows(@Nonnull DeathSavingThrows deathSavingThrows) {
         this.deathSavingThrows = deathSavingThrows;
     }
 
@@ -72,16 +71,12 @@ public class CoreStatsTab {
         return experience;
     }
 
-    public void setExperience(@Nonnull Experience experience) {
-        this.experience = experience;
-    }
-
     @Nonnull
     public HitDice getHitDice() {
         return hitDice;
     }
 
-    public void setHitDice(@Nonnull HitDice hitDice) {
+    private void setHitDice(@Nonnull HitDice hitDice) {
         this.hitDice = hitDice;
     }
 
@@ -90,17 +85,13 @@ public class CoreStatsTab {
         return hitPoints;
     }
 
-    public void setHitPoints(@Nonnull HitPoints hitPoints) {
+    private void setHitPoints(@Nonnull HitPoints hitPoints) {
         this.hitPoints = hitPoints;
     }
 
     @Nonnull
     public Initiative getInitiative() {
         return initiative;
-    }
-
-    public void setInitiative(@Nonnull Initiative initiative) {
-        this.initiative = initiative;
     }
 
     public int getSpeed() {

@@ -147,7 +147,7 @@ public class Spell {
         return macroOptions;
     }
 
-    public void setMacroOptions(@Nonnull MacroOptions macroOptions) {
+    private void setMacroOptions(@Nonnull MacroOptions macroOptions) {
         this.macroOptions = macroOptions;
     }
 
@@ -183,7 +183,7 @@ public class Spell {
         return spellDamage;
     }
 
-    public void setSpellDamage(@Nonnull SpellDamage spellDamage) {
+    private void setSpellDamage(@Nonnull SpellDamage spellDamage) {
         this.spellDamage = spellDamage;
     }
 
@@ -192,7 +192,7 @@ public class Spell {
         return spellHealing;
     }
 
-    public void setSpellHealing(@Nonnull SpellHealing spellHealing) {
+    private void setSpellHealing(@Nonnull SpellHealing spellHealing) {
         this.spellHealing = spellHealing;
     }
 
@@ -201,7 +201,7 @@ public class Spell {
         return spellSave;
     }
 
-    public void setSpellSave(@Nonnull SpellSave spellSave) {
+    private void setSpellSave(@Nonnull SpellSave spellSave) {
         this.spellSave = spellSave;
     }
 

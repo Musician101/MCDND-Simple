@@ -17,7 +17,7 @@ public class CoreSkillsOutputOptionsGUI extends MCDNDSimpleChestGUI {
     private final CoreSkillsOutputOptions coreSkillsOutputOptions;
 
     public CoreSkillsOutputOptionsGUI(Player player, CoreSkillsOutputOptions coreSkillsOutputOptions, AbstractSpongeChestGUI<AbstractConfig, SpongeMCDNDSimple> prevGUI) {
-        super(player, MenuText.CORE_SKILLS_OUTPUT_SKILLS, 27, prevGUI);
+        super(player, MenuText.CORE_SKILLS_OUTPUT_SKILLS_OPTIONS, 27, prevGUI);
         this.coreSkillsOutputOptions = coreSkillsOutputOptions;
     }
 

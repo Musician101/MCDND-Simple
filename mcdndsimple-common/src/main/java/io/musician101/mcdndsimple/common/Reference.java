@@ -101,8 +101,7 @@ public class Reference {
         public static final String COIN_CARRIED = "Coin Carried";
         public static final String COMPONENTS = "Components";
         public static final String CONSTITUTION = "Constitution";
-        //TODO rename to CORE_SKILLS_OUTPUT_OPTIONS
-        public static final String CORE_SKILLS_OUTPUT_SKILLS = "Core Skills Output Options";
+        public static final String CORE_SKILLS_OUTPUT_SKILLS_OPTIONS = "Core Skills Output Options";
         public static final String CORE_STATS = "Core Stats";
         public static final String D10_DESC = "Fighter, Paladin, Ranger";
         public static final String D12_DESC = "Barbarian";

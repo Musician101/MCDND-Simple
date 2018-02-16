@@ -514,7 +514,7 @@ public class SpigotChestGUIs {
     }
 
     public void coreSkillsOutputOptions(@Nonnull Player player, @Nonnull CoreSkillsOutputOptions coreSkillsOutputOptions, @Nonnull SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(27, 26, MenuText.CORE_SKILLS_OUTPUT_SKILLS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.builder(Material.LEATHER_BOOTS).name(MenuText.ACROBATICS).addGlow(coreSkillsOutputOptions.isAcrobaticsEnabled()).build(), (g, p) -> {
+        builder(27, 26, MenuText.CORE_SKILLS_OUTPUT_SKILLS_OPTIONS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.builder(Material.LEATHER_BOOTS).name(MenuText.ACROBATICS).addGlow(coreSkillsOutputOptions.isAcrobaticsEnabled()).build(), (g, p) -> {
             coreSkillsOutputOptions.setAcrobaticsEnabled(!coreSkillsOutputOptions.isAcrobaticsEnabled());
             coreSkillsOutputOptions(p, coreSkillsOutputOptions, prevGUI);
         }), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.SADDLE).name(MenuText.ANIMAL_HANDLING).addGlow(coreSkillsOutputOptions.isAnimalHandlingEnabled()).build(), (g, p) -> {
@@ -931,7 +931,7 @@ public class SpigotChestGUIs {
     }
 
     public void outputOptions(@Nonnull Player player, @Nonnull OutputOptions outputOptions, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.OUTPUT_OPTIONS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_INGOT, MenuText.SAVING_THROWS), (g, p) -> savingThrowOutputOptions(p, outputOptions.getSavingThrowOutputOptions(), g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.GOLD_INGOT, MenuText.WEAPONS_SPELL_MISC_OUTPUT_OPTIONS), (g, p) -> weaponsSpellMiscOutputOptions(p, outputOptions.getWeaponsSpellMiscOutputOptions(), g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.NETHER_STAR, MenuText.CORE_SKILLS_OUTPUT_SKILLS), (g, p) -> coreSkillsOutputOptions(p, outputOptions.getCoreSkillsOutputOptions(), g))).build();
+        builder(9, 8, MenuText.OUTPUT_OPTIONS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_INGOT, MenuText.SAVING_THROWS), (g, p) -> savingThrowOutputOptions(p, outputOptions.getSavingThrowOutputOptions(), g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.GOLD_INGOT, MenuText.WEAPONS_SPELL_MISC_OUTPUT_OPTIONS), (g, p) -> weaponsSpellMiscOutputOptions(p, outputOptions.getWeaponsSpellMiscOutputOptions(), g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.NETHER_STAR, MenuText.CORE_SKILLS_OUTPUT_SKILLS_OPTIONS), (g, p) -> coreSkillsOutputOptions(p, outputOptions.getCoreSkillsOutputOptions(), g))).build();
     }
 
     @Nonnull

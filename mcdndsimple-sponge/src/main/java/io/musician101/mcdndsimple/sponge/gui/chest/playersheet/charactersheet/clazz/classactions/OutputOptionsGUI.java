@@ -24,7 +24,7 @@ public class OutputOptionsGUI extends MCDNDSimpleChestGUI {
     protected void build() {
         set(0, ClickInventoryEvent.class, createItem(ItemTypes.IRON_INGOT, Text.of(MenuText.SAVING_THROWS)), player -> new SavingThrowOutputOptionsGUI(player, outputOptions.getSavingThrowOutputOptions(), this));
         set(1, ClickInventoryEvent.class, createItem(ItemTypes.GOLD_INGOT, Text.of(MenuText.WEAPONS_SPELL_MISC_OUTPUT_OPTIONS)), player -> new WeaponsSpellMiscOutputOptionsGUI(player, outputOptions.getWeaponsSpellMiscOutputOptions(), this));
-        set(2, ClickInventoryEvent.class, createItem(ItemTypes.NETHER_STAR, Text.of(MenuText.CORE_SKILLS_OUTPUT_SKILLS)), player -> new CoreSkillsOutputOptionsGUI(player, outputOptions.getCoreSkillsOutputOptions(), this));
+        set(2, ClickInventoryEvent.class, createItem(ItemTypes.NETHER_STAR, Text.of(MenuText.CORE_SKILLS_OUTPUT_SKILLS_OPTIONS)), player -> new CoreSkillsOutputOptionsGUI(player, outputOptions.getCoreSkillsOutputOptions(), this));
         setBackButton(8, ClickInventoryEvent.class, ItemTypes.BARRIER);
     }
 }

@@ -955,7 +955,22 @@ public class SpigotChestGUIs {
     }
 
     public void playerSheet(@Nonnull Player player, @Nonnull PlayerSheet playerSheet, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.PLAYER_SHEET, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK, MenuText.BIO_AND_INFO), (g, p) -> bioAndInfo(p, playerSheet.getBioAndInfo(), playerSheet, g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.CHARACTER_SHEET), (g, p) -> characterSheet(p, playerSheet.getBioAndInfo(), playerSheet.getCharacterSheet(), g))).build();
+        builder(9, 8, MenuText.PLAYER_SHEET, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.RENAME), (g, p) -> {
+            new StringAnvilGUI(p, (ply, s) -> {
+                playerSheet.setName(s);
+                playerSheet(ply, playerSheet, prevGUI);
+            });
+        }), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_CHESTPLATE, MenuText.CLASS), (g, p) -> {
+            new StringAnvilGUI(p, (ply, s) -> {
+                playerSheet.setClazz(s);
+                playerSheet(ply, playerSheet, prevGUI);
+            });
+        }), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.MONSTER_EGG, MenuText.RACE), (g, p) -> {
+            new StringAnvilGUI(p, (ply, s) -> {
+                playerSheet.setClazz(s);
+                playerSheet(ply, playerSheet, prevGUI);
+            });
+        }), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK, MenuText.BIO_AND_INFO), (g, p) -> bioAndInfo(p, playerSheet.getBioAndInfo(), playerSheet, g)), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.CHARACTER_SHEET), (g, p) -> characterSheet(p, playerSheet.getBioAndInfo(), playerSheet.getCharacterSheet(), g))).build();
     }
 
     public void prepared(@Nonnull Player player, int page, @Nonnull Spell spell, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {

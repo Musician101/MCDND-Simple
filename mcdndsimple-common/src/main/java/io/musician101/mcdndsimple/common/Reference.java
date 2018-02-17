@@ -228,6 +228,7 @@ public class Reference {
         public static final String WEIGHT = "Weight";
         public static final String WISDOM = "Wisdom";
         public static final String WIZARD = "Wizard";
+        public static final String RACE = "Race";
 
         private MenuText() {
 

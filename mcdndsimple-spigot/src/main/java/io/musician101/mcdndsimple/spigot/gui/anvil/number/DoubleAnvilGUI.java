@@ -4,16 +4,16 @@ import io.musician101.mcdndsimple.spigot.gui.anvil.MCDNDSimpleAnvilGUI;
 import java.util.function.BiConsumer;
 import org.bukkit.entity.Player;
 
-public class IntegerInputAnvilGUI extends MCDNDSimpleAnvilGUI {
+public class DoubleAnvilGUI extends MCDNDSimpleAnvilGUI {
 
-    public IntegerInputAnvilGUI(Player holder, BiConsumer<Player, Integer> biConsumer) {
+    public DoubleAnvilGUI(Player holder, BiConsumer<Player, Double> biConsumer) {
         super(holder, (player, name) -> {
-            int number;
+            double number;
             try {
-                number = Integer.parseInt(name);
+                number = Double.parseDouble(name);
             }
             catch (NumberFormatException e) {
-                return "That is not a number!";
+                return "That is not a number.";
             }
 
             biConsumer.accept(player, number);

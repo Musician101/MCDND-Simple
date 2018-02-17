@@ -58,9 +58,9 @@ import io.musician101.mcdndsimple.common.character.player.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.RangedWeapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.WeaponAttackStat;
 import io.musician101.mcdndsimple.spigot.SpigotMCDNDSimple;
-import io.musician101.mcdndsimple.spigot.gui.anvil.StringInputAnvilGUI;
-import io.musician101.mcdndsimple.spigot.gui.anvil.number.DoubleInputAnvilGUI;
-import io.musician101.mcdndsimple.spigot.gui.anvil.number.IntegerInputAnvilGUI;
+import io.musician101.mcdndsimple.spigot.gui.anvil.StringAnvilGUI;
+import io.musician101.mcdndsimple.spigot.gui.anvil.number.DoubleAnvilGUI;
+import io.musician101.mcdndsimple.spigot.gui.anvil.number.IntegerAnvilGUI;
 import io.musician101.mcdndsimple.spigot.util.ItemRepresentation;
 import io.musician101.musicianlibrary.java.minecraft.gui.chest.GUIButton;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.SpigotBookGUI;
@@ -103,7 +103,7 @@ public class SpigotChestGUIs {
     }
 
     public void abilityScore(@Nonnull Player player, @Nonnull AbilityScore abilityScore, @Nonnull BioAndInfo bioAndInfo, @Nonnull ClassLevels classLevels, @Nonnull Experience experience, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, abilityScore.getName(), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.score(abilityScore)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        builder(9, 8, abilityScore.getName(), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.score(abilityScore)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             abilityScore.setScore(i);
             abilityScore(ply, abilityScore, bioAndInfo, classLevels, experience, prevGUI);
         })), GUIButton.of(1, SpigotIconBuilder.of(Material.SULPHUR, MenuText.mod(abilityScore))), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.proficient(abilityScore)), (g, p) -> {
@@ -143,13 +143,13 @@ public class SpigotChestGUIs {
         }), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.CHAINMAIL_CHESTPLATE).name(MenuText.isUnarmored(armor)).addGlow(armor.isUnarmored()).build(), (g, p) -> {
             armor.setIsUnarmored(!armor.isUnarmored());
             g.open();
-        }), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.NAME_TAG, MenuText.RENAME), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        }), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.NAME_TAG, MenuText.RENAME), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             armor.setName(s);
             armor(ply, armor, armorList, prevGUI);
-        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_CHESTPLATE, MenuText.baseAC(armor)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_CHESTPLATE, MenuText.baseAC(armor)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             armor.setBaseArmorClass(i);
             g.open();
-        })), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_INGOT, armor.getArmorType().getName()), (g, p) -> armorType(player, armor, 0, g)), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTMENT_TABLE, MenuText.magicBonus(armor)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_INGOT, armor.getArmorType().getName()), (g, p) -> armorType(player, armor, 0, g)), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTMENT_TABLE, MenuText.magicBonus(armor)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             armor.setMagicBonus(i);
             g.open();
         })), GUIButton.of(6, SpigotIconBuilder.of(Material.DIAMOND_CHESTPLATE, MenuText.totalAC(armor))), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.hasStealthPenalty(armor)).potionEffect(PotionType.INVISIBILITY).build(), (g, p) -> {
@@ -166,7 +166,7 @@ public class SpigotChestGUIs {
     }
 
     public void armorList(@Nonnull Player player, @Nonnull List<Armor> armorList, int page, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        paged(MenuText.ARMOR, player, prevGUI, page, ItemRepresentation::armor, (armor) -> (g, p) -> armor(p, armor, armorList, g), (p, i) -> armorList(p, armorList, i, prevGUI), armorList).setButton(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_CLASS_ACTION), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        paged(MenuText.ARMOR, player, prevGUI, page, ItemRepresentation::armor, (armor) -> (g, p) -> armor(p, armor, armorList, g), (p, i) -> armorList(p, armorList, i, prevGUI), armorList).setButton(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_CLASS_ACTION), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             Armor armor = new Armor();
             armor.setName(s);
             armorList.add(armor);
@@ -193,28 +193,28 @@ public class SpigotChestGUIs {
     }
 
     public void backgroundTab(@Nonnull Player player, @Nonnull BackgroundTab backgroundTab, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(27, 26, MenuText.BACKGROUND, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.ARROW, MenuText.gender(backgroundTab)), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        builder(27, 26, MenuText.BACKGROUND, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.ARROW, MenuText.gender(backgroundTab)), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             backgroundTab.setGender(s);
             g.open();
-        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.RAW_FISH, MenuText.age(backgroundTab)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.RAW_FISH, MenuText.age(backgroundTab)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             backgroundTab.setAge(i);
             g.open();
-        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.ARMOR_STAND, MenuText.height(backgroundTab)), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.ARMOR_STAND, MenuText.height(backgroundTab)), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             backgroundTab.setHeight(s);
             g.open();
-        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_BLOCK, MenuText.weight(backgroundTab)), (g, p) -> new DoubleInputAnvilGUI(p, (ply, d) -> {
+        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_BLOCK, MenuText.weight(backgroundTab)), (g, p) -> new DoubleAnvilGUI(p, (ply, d) -> {
             backgroundTab.setWeight(d);
             g.open();
-        })), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.SPIDER_EYE, MenuText.eyes(backgroundTab)), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.SPIDER_EYE, MenuText.eyes(backgroundTab)), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             backgroundTab.setEyes(s);
             g.open();
-        })), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.RABBIT_HIDE, MenuText.hair(backgroundTab)), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.RABBIT_HIDE, MenuText.hair(backgroundTab)), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             backgroundTab.setHair(s);
             g.open();
-        })), GUIButton.of(6, ClickType.LEFT, SpigotIconBuilder.of(Material.LEATHER, MenuText.size(backgroundTab)), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(6, ClickType.LEFT, SpigotIconBuilder.of(Material.LEATHER, MenuText.size(backgroundTab)), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             backgroundTab.setSize(s);
             g.open();
-        })), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.vision(backgroundTab)).potionEffect(PotionType.NIGHT_VISION).build(), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.vision(backgroundTab)).potionEffect(PotionType.NIGHT_VISION).build(), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             backgroundTab.setVision(s);
             g.open();
         })), GUIButton.of(8, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK, MenuText.KNOWN_LANGUAGES), (g, p) -> {
@@ -228,7 +228,7 @@ public class SpigotChestGUIs {
                 backgroundTab.setLanguages(pages);
                 g.open();
             });
-        }), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(Material.TOTEM, MenuText.alignment(backgroundTab)), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        }), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(Material.TOTEM, MenuText.alignment(backgroundTab)), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             backgroundTab.setAlignment(s);
             g.open();
         })), GUIButton.of(10, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK, MenuText.BACKGROUND), (g, p) -> {
@@ -345,7 +345,7 @@ public class SpigotChestGUIs {
     }
 
     public void bioAndInfo(@Nonnull Player player, @Nonnull BioAndInfo bioAndInfo, @Nonnull PlayerSheet playerSheet, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.BIO_AND_INFO, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.NAME_TAG, MenuText.name(bioAndInfo)), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        builder(9, 8, MenuText.BIO_AND_INFO, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.NAME_TAG, MenuText.name(bioAndInfo)), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             playerSheet.setName(s);
             g.open();
         })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK, MenuText.BIO), (g, p) -> {
@@ -363,7 +363,7 @@ public class SpigotChestGUIs {
     }
 
     public void bonuses(@Nonnull Player player, @Nonnull Bonuses bonuses, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.BONUSES_PENALTIES, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.MELEE_BONUSES), (g, p) -> meleeBonus(p, bonuses.getMelee(), g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.BOW, MenuText.RANGED_BONUSES), (g, p) -> rangedBonus(p, bonuses.getRanged(), g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.SPELLCASTING_BONUSES), (g, p) -> spellcastingBonus(p, bonuses.getSpellcasting(), g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.STRENGTH).name(MenuText.SAVING_THROW_BONUSES).build(), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        builder(9, 8, MenuText.BONUSES_PENALTIES, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.MELEE_BONUSES), (g, p) -> meleeBonus(p, bonuses.getMelee(), g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.BOW, MenuText.RANGED_BONUSES), (g, p) -> rangedBonus(p, bonuses.getRanged(), g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.SPELLCASTING_BONUSES), (g, p) -> spellcastingBonus(p, bonuses.getSpellcasting(), g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.STRENGTH).name(MenuText.SAVING_THROW_BONUSES).build(), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 ply.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -372,7 +372,7 @@ public class SpigotChestGUIs {
 
             bonuses.setSaves(dice);
             bonuses(player, bonuses, prevGUI);
-        })), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.LUCK).name(MenuText.ABILITY_SKILL_CHECK_ROLLS).build(), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.LUCK).name(MenuText.ABILITY_SKILL_CHECK_ROLLS).build(), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 ply.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -397,13 +397,13 @@ public class SpigotChestGUIs {
     }
 
     public void classAction(@Nonnull Player player, @Nonnull ClassAction classAction, @Nonnull List<ClassAction> classActions, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, classAction.getName(), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.NAME_TAG, MenuText.RENAME), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        builder(9, 8, classAction.getName(), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.NAME_TAG, MenuText.RENAME), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             classAction.setName(s);
             classAction(ply, classAction, classActions, prevGUI);
-        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_TORCH_OFF, MenuText.used(classAction.getUsed())), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_TORCH_OFF, MenuText.used(classAction.getUsed())), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classAction.setUsed(i);
             classAction(ply, classAction, classActions, prevGUI);
-        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_TORCH_ON, MenuText.maxUses(classAction.getMaxUses())), (g, p) -> recharge(p, classAction, 1, g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.BED, MenuText.recharge(classAction.getRecharge())), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_TORCH_ON, MenuText.maxUses(classAction.getMaxUses())), (g, p) -> recharge(p, classAction, 1, g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.BED, MenuText.recharge(classAction.getRecharge())), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classAction.setUsed(i);
             classAction(ply, classAction, classActions, prevGUI);
         })), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.GAINED_FROM), (g, p) -> gainedFrom(p, 1, classAction, g)), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE, MenuText.OUTPUT_OPTIONS), (g, p) -> outputOptions(p, classAction.getOutputOptions(), g)), GUIButton.of(6, ClickType.LEFT, SpigotIconBuilder.of(Material.ENDER_CHEST, MenuText.DELETE), (g, p) -> {
@@ -413,7 +413,7 @@ public class SpigotChestGUIs {
     }
 
     public void classActions(@Nonnull Player player, @Nonnull List<ClassAction> classActions, int page, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        paged(MenuText.CLASS_ACTIONS, player, prevGUI, page, classAction -> SpigotIconBuilder.of(Material.NETHER_STAR, classAction.getName()), classAction -> (g, p) -> classAction(p, classAction, classActions, g), (p, i) -> classActions(p, classActions, page, prevGUI), classActions).setButton(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_CLASS_ACTION), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        paged(MenuText.CLASS_ACTIONS, player, prevGUI, page, classAction -> SpigotIconBuilder.of(Material.NETHER_STAR, classAction.getName()), classAction -> (g, p) -> classAction(p, classAction, classActions, g), (p, i) -> classActions(p, classActions, page, prevGUI), classActions).setButton(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_CLASS_ACTION), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             ClassAction classAction = new ClassAction();
             classAction.setName(s);
             classActions.add(classAction);
@@ -422,53 +422,53 @@ public class SpigotChestGUIs {
     }
 
     public void classLevels(@Nonnull Player player, @Nonnull ClassLevels classLevels, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(18, 17, MenuText.CLASS_LEVELS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.WOOD_SWORD, MenuText.BARBARIAN), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        builder(18, 17, MenuText.CLASS_LEVELS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.WOOD_SWORD, MenuText.BARBARIAN), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classLevels.setBarbarian(i);
             classLevels(ply, classLevels, prevGUI);
-        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.NOTE_BLOCK, MenuText.BARD), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.NOTE_BLOCK, MenuText.BARD), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classLevels.setBard(i);
             classLevels(ply, classLevels, prevGUI);
-        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.CLERIC).potionEffect(PotionType.INSTANT_HEAL).build(), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.CLERIC).potionEffect(PotionType.INSTANT_HEAL).build(), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classLevels.setCleric(i);
             classLevels(ply, classLevels, prevGUI);
-        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.DRUID).potionEffect(PotionType.LUCK).build(), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.DRUID).potionEffect(PotionType.LUCK).build(), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classLevels.setDruid(i);
             classLevels(ply, classLevels, prevGUI);
-        })), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_SWORD, MenuText.FIGHTER), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_SWORD, MenuText.FIGHTER), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classLevels.setFighter(i);
             classLevels(ply, classLevels, prevGUI);
-        })), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.MONK).potionEffect(PotionType.SPEED).build(), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.MONK).potionEffect(PotionType.SPEED).build(), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classLevels.setMonk(i);
             classLevels(ply, classLevels, prevGUI);
-        })), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.PALADIN), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.PALADIN), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classLevels.setPaladin(i);
             classLevels(ply, classLevels, prevGUI);
-        })), GUIButton.of(10, ClickType.LEFT, SpigotIconBuilder.of(Material.BOW, MenuText.RANGER), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(10, ClickType.LEFT, SpigotIconBuilder.of(Material.BOW, MenuText.RANGER), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classLevels.setRanger(i);
             classLevels(ply, classLevels, prevGUI);
-        })), GUIButton.of(11, ClickType.LEFT, SpigotIconBuilder.of(Material.GOLD_SWORD, MenuText.ROGUE), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(11, ClickType.LEFT, SpigotIconBuilder.of(Material.GOLD_SWORD, MenuText.ROGUE), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classLevels.setRogue(i);
             classLevels(ply, classLevels, prevGUI);
-        })), GUIButton.of(12, ClickType.LEFT, SpigotIconBuilder.of(Material.MAGMA_CREAM, MenuText.SORCERER), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(12, ClickType.LEFT, SpigotIconBuilder.of(Material.MAGMA_CREAM, MenuText.SORCERER), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classLevels.setSorcerer(i);
             classLevels(ply, classLevels, prevGUI);
-        })), GUIButton.of(13, ClickType.LEFT, SpigotIconBuilder.of(Material.END_CRYSTAL, MenuText.WARLOCK), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(13, ClickType.LEFT, SpigotIconBuilder.of(Material.END_CRYSTAL, MenuText.WARLOCK), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classLevels.setWarlock(i);
             classLevels(ply, classLevels, prevGUI);
-        })), GUIButton.of(14, ClickType.LEFT, SpigotIconBuilder.of(Material.TOTEM, MenuText.WIZARD), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(14, ClickType.LEFT, SpigotIconBuilder.of(Material.TOTEM, MenuText.WIZARD), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classLevels.setWizard(i);
             classLevels(ply, classLevels, prevGUI);
         }))).build();
     }
 
     public void classResource(@Nonnull Player player, @Nonnull ClassResource classResource, @Nonnull List<ClassResource> classResources, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, classResource.getName(), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.NAME_TAG, classResource.getName()), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        builder(9, 8, classResource.getName(), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.NAME_TAG, classResource.getName()), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             classResource.setName(s);
             classResource(ply, classResource, classResources, prevGUI);
-        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.BED, MenuText.recharge(classResource.getRecharge())), (g, p) -> recharge(p, classResource, 1, g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_COMPARATOR_OFF, MenuText.current(classResource)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.BED, MenuText.recharge(classResource.getRecharge())), (g, p) -> recharge(p, classResource, 1, g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_COMPARATOR_OFF, MenuText.current(classResource)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classResource.setCurrentCharges(i);
             classResource(ply, classResource, classResources, prevGUI);
-        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_COMPARATOR_ON, MenuText.maxUses(classResource.getMaxUses())), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_COMPARATOR_ON, MenuText.maxUses(classResource.getMaxUses())), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             classResource.setMaxCharges(i);
             classResource(ply, classResource, classResources, prevGUI);
         })), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.ENDER_CHEST, MenuText.DELETE), (g, p) -> {
@@ -479,7 +479,7 @@ public class SpigotChestGUIs {
     }
 
     public void classResources(@Nonnull Player player, @Nonnull List<ClassResource> classResources, int page, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        paged(MenuText.CLASS_RESOURCES, player, prevGUI, page, classResource -> SpigotIconBuilder.of(Material.NETHER_STAR, classResource.getName()), classResource -> (g, p) -> classResource(p, classResource, classResources, g), (p, i) -> classResources(p, classResources, i, prevGUI), classResources).setButton(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_CLASS_ACTION), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        paged(MenuText.CLASS_RESOURCES, player, prevGUI, page, classResource -> SpigotIconBuilder.of(Material.NETHER_STAR, classResource.getName()), classResource -> (g, p) -> classResource(p, classResource, classResources, g), (p, i) -> classResources(p, classResources, i, prevGUI), classResources).setButton(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_CLASS_ACTION), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             ClassResource classResource = new ClassResource();
             classResource.setName(s);
             classResources.add(classResource);
@@ -588,7 +588,7 @@ public class SpigotChestGUIs {
         HitDice hitDice = coreStatsTab.getHitDice();
         HitPoints hitPoints = coreStatsTab.getHitPoints();
         Initiative initiative = coreStatsTab.getInitiative();
-        builder(18, 17, MenuText.CORE_STATS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.CORE_STATS).potionEffect(PotionType.STRENGTH).build(), (g, p) -> coreStats(p, bioAndInfo, classLevels, coreStats, experience, g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.GOLDEN_APPLE).name(MenuText.HIT_POINTS).description(MenuText.hitPoints(hitPoints)).build(), (g, p) -> hitPoints(p, hitPoints, g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.speed(coreStatsTab)).potionEffect(PotionType.SPEED).build(), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        builder(18, 17, MenuText.CORE_STATS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.CORE_STATS).potionEffect(PotionType.STRENGTH).build(), (g, p) -> coreStats(p, bioAndInfo, classLevels, coreStats, experience, g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.GOLDEN_APPLE).name(MenuText.HIT_POINTS).description(MenuText.hitPoints(hitPoints)).build(), (g, p) -> hitPoints(p, hitPoints, g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.speed(coreStatsTab)).potionEffect(PotionType.SPEED).build(), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             coreStatsTab.setSpeed(i);
             coreStatsTab(player, bioAndInfo, classLevels, coreStatsTab, prevGUI);
         })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.initiative(initiative, dex)).potionEffect(PotionType.NIGHT_VISION).build(), (g, p) -> initiative(p, dex, bioAndInfo, initiative, g)), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.builder(Material.EXP_BOTTLE).name(MenuText.LEVEL_AND_XP).description(MenuText.experience(experience, classLevels)).build(), (g, p) -> experience(p, classLevels, experience, g)), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.HIT_DICE).potionEffect(PotionType.REGEN).build(), (g, p) -> hitDice(p, coreStats.getConstitution(), bioAndInfo, hitDice, g)), GUIButton.of(6, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.BONUSES_PENALTIES), (g, p) -> bonuses(p, coreStatsTab.getBonuses(), g)), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.of(Material.GOLD_NUGGET, MenuText.INSPIRATION), (g, p) -> {
@@ -645,7 +645,7 @@ public class SpigotChestGUIs {
     }
 
     public void experience(@Nonnull Player player, @Nonnull ClassLevels classLevels, @Nonnull Experience experience, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.LEVEL_AND_XP, player, prevGUI).setButtons(GUIButton.of(0, SpigotIconBuilder.of(Material.BOOK, MenuText.overallLevel(experience, classLevels))), GUIButton.of(1, SpigotIconBuilder.of(Material.ANVIL, MenuText.proficiencyBonus(experience, classLevels))), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.EXP_BOTTLE, MenuText.currentXP(experience)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        builder(9, 8, MenuText.LEVEL_AND_XP, player, prevGUI).setButtons(GUIButton.of(0, SpigotIconBuilder.of(Material.BOOK, MenuText.overallLevel(experience, classLevels))), GUIButton.of(1, SpigotIconBuilder.of(Material.ANVIL, MenuText.proficiencyBonus(experience, classLevels))), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.EXP_BOTTLE, MenuText.currentXP(experience)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             experience.setExp(i);
             experience(ply, classLevels, experience, prevGUI);
         })), GUIButton.of(3, SpigotIconBuilder.of(Material.EXP_BOTTLE, MenuText.xpForNextLevel(experience, classLevels)))).build();
@@ -659,7 +659,7 @@ public class SpigotChestGUIs {
     }
 
     public void healing(@Nonnull Player player, @Nonnull SpellHealing spellHealing, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.HEALING, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_LAMP_OFF, MenuText.healAmount(spellHealing.getHealAmount())), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        builder(9, 8, MenuText.HEALING, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_LAMP_OFF, MenuText.healAmount(spellHealing.getHealAmount())), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 p.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -675,36 +675,36 @@ public class SpigotChestGUIs {
         Material redstoneLampOff = Material.REDSTONE_LAMP_OFF;
         Material redstoneLampOn = Material.REDSTONE_LAMP_ON;
         String[] hitDiceStrings = MenuText.hitDice(hitDice);
-        builder(18, 17, MenuText.HIT_DICE, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOff, hitDiceStrings[0]), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        builder(18, 17, MenuText.HIT_DICE, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOff, hitDiceStrings[0]), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             hitDice.updateHitDie(6, i);
             hitDice(player, constitution, bioAndInfo, hitDice, prevGUI);
-        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOff, hitDiceStrings[1]), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOff, hitDiceStrings[1]), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             hitDice.updateHitDie(8, i);
             hitDice(player, constitution, bioAndInfo, hitDice, prevGUI);
-        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOff, hitDiceStrings[2]), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOff, hitDiceStrings[2]), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             hitDice.updateHitDie(10, i);
             hitDice(player, constitution, bioAndInfo, hitDice, prevGUI);
-        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOff, hitDiceStrings[3]), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOff, hitDiceStrings[3]), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             hitDice.updateHitDie(12, i);
             hitDice(player, constitution, bioAndInfo, hitDice, prevGUI);
-        })), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOn, MenuText.rollHitDie(6)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> rollHitDie(player, constitution, bioAndInfo, i, 6))), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOn, MenuText.rollHitDie(8)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> rollHitDie(player, constitution, bioAndInfo, i, 8))), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOn, MenuText.rollHitDie(10)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> rollHitDie(player, constitution, bioAndInfo, i, 10))), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOn, MenuText.rollHitDie(12)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> rollHitDie(player, constitution, bioAndInfo, i, 12)))).build();
+        })), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOn, MenuText.rollHitDie(6)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> rollHitDie(player, constitution, bioAndInfo, i, 6))), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOn, MenuText.rollHitDie(8)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> rollHitDie(player, constitution, bioAndInfo, i, 8))), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOn, MenuText.rollHitDie(10)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> rollHitDie(player, constitution, bioAndInfo, i, 10))), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(redstoneLampOn, MenuText.rollHitDie(12)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> rollHitDie(player, constitution, bioAndInfo, i, 12)))).build();
     }
 
     private void hitPoints(@Nonnull Player player, @Nonnull HitPoints hitPoints, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.HIT_POINTS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.currentHitPoints(hitPoints)).potionEffect(PotionType.REGEN).build(), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        builder(9, 8, MenuText.HIT_POINTS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.currentHitPoints(hitPoints)).potionEffect(PotionType.REGEN).build(), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             hitPoints.setCurrent(i);
             hitPoints(ply, hitPoints, prevGUI);
-        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.maxHitPoints(hitPoints)).potionEffect(PotionType.INSTANT_HEAL).build(), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.maxHitPoints(hitPoints)).potionEffect(PotionType.INSTANT_HEAL).build(), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             hitPoints.setMax(i);
             hitPoints(ply, hitPoints, prevGUI);
-        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.tempHitPoints(hitPoints)).potionEffect(PotionType.STRENGTH).build(), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).name(MenuText.tempHitPoints(hitPoints)).potionEffect(PotionType.STRENGTH).build(), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             hitPoints.setTemp(i);
             hitPoints(ply, hitPoints, prevGUI);
         }))).build();
     }
 
     public void initiative(@Nonnull Player player, @Nonnull AbilityScore dex, @Nonnull BioAndInfo bioAndInfo, @Nonnull Initiative initiative, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.INITIATIVE, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.GLOWSTONE_DUST, MenuText.BONUS), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        builder(9, 8, MenuText.INITIATIVE, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.GLOWSTONE_DUST, MenuText.BONUS), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             initiative.setBonus(i);
             initiative(ply, dex, bioAndInfo, initiative, prevGUI);
         })), GUIButton.of(1, SpigotIconBuilder.of(Material.GLOWSTONE, MenuText.totalInitiative(initiative, dex))), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_LAMP_OFF, MenuText.ROLL_INITIATIVE), (g, p) -> {
@@ -726,7 +726,7 @@ public class SpigotChestGUIs {
     }
 
     public void inventory(@Nonnull Player player, @Nonnull List<MCDNDItem> items, int page, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        paged(MenuText.INVENTORY, player, prevGUI, page, item -> SpigotIconBuilder.builder(Material.CHEST).name(item.getName()).description(MenuText.itemDesc(item)).build(), item -> (g, p) -> item(p, item, items, g), (p, i) -> inventory(p, items, i, prevGUI), items).setButton(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_ITEM), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        paged(MenuText.INVENTORY, player, prevGUI, page, item -> SpigotIconBuilder.builder(Material.CHEST).name(item.getName()).description(MenuText.itemDesc(item)).build(), item -> (g, p) -> item(p, item, items, g), (p, i) -> inventory(p, items, i, prevGUI), items).setButton(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_ITEM), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             MCDNDItem item = new MCDNDItem();
             item.setName(s);
             items.add(item);
@@ -751,16 +751,16 @@ public class SpigotChestGUIs {
     }
 
     public void item(@Nonnull Player player, @Nonnull MCDNDItem item, @Nonnull List<MCDNDItem> items, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, item.getName(), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.RENAME), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        builder(9, 8, item.getName(), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.RENAME), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             item.setName(s);
             item(player, item, items, prevGUI);
         })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(item.isCarried() ? Material.REDSTONE_TORCH_ON : Material.REDSTONE_TORCH_ON, MenuText.carried(item)), (g, p) -> {
             item.setIsCarried(!item.isCarried());
             item(p, item, items, prevGUI);
-        }), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.CHEST, MenuText.quantity(item)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        }), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.CHEST, MenuText.quantity(item)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             item.setQuantity(i);
             item(player, item, items, prevGUI);
-        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.OBSIDIAN, MenuText.weight(item)), (g, p) -> new DoubleInputAnvilGUI(p, (ply, d) -> {
+        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.OBSIDIAN, MenuText.weight(item)), (g, p) -> new DoubleAnvilGUI(p, (ply, d) -> {
             item.setWeight(d);
             item(player, item, items, prevGUI);
         })), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK, MenuText.DESCRIPTION), (g, p) -> {
@@ -812,7 +812,7 @@ public class SpigotChestGUIs {
     }
 
     public void meleeBonus(@Nonnull Player player, @Nonnull MeleeBonus meleeBonus, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.MELEE_BONUSES, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.ATTACK_ROLLS), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        builder(9, 8, MenuText.MELEE_BONUSES, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.ATTACK_ROLLS), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 ply.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -821,7 +821,7 @@ public class SpigotChestGUIs {
 
             meleeBonus.setAttack(dice);
             meleeBonus(player, meleeBonus, prevGUI);
-        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.STRENGTH).name(MenuText.DAMAGE_ROLLS).build(), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.STRENGTH).name(MenuText.DAMAGE_ROLLS).build(), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 ply.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -837,13 +837,13 @@ public class SpigotChestGUIs {
         builder(18, 17, weapon.getName(), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.builder(weapon.isProficient() ? Material.REDSTONE_TORCH_ON : Material.REDSTONE_TORCH_OFF).name(MenuText.isProficient(weapon)).addGlow(weapon.isProficient()).build(), (g, p) -> {
             weapon.setIsProficient(!weapon.isProficient());
             meleeWeapon(p, bioAndInfo, classLevels, coreStats, experience, weapons, meleeBonus, weapon, prevGUI);
-        }), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.RENAME), (g, p) -> new StringInputAnvilGUI(player, (ply, s) -> {
+        }), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.RENAME), (g, p) -> new StringAnvilGUI(player, (ply, s) -> {
             weapon.setName(s);
             meleeWeapon(p, bioAndInfo, classLevels, coreStats, experience, weapons, meleeBonus, weapon, prevGUI);
-        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_SWORD, MenuText.ATTACK_STAT), (g, p) -> attackStat(p, 1, weapon, g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.magicBonus(weapon)), (g, p) -> new IntegerInputAnvilGUI(player, (ply, i) -> {
+        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_SWORD, MenuText.ATTACK_STAT), (g, p) -> attackStat(p, 1, weapon, g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.magicBonus(weapon)), (g, p) -> new IntegerAnvilGUI(player, (ply, i) -> {
             weapon.setMagicBonus(i);
             meleeWeapon(p, bioAndInfo, classLevels, coreStats, experience, weapons, meleeBonus, weapon, prevGUI);
-        })), GUIButton.of(4, SpigotIconBuilder.of(Material.STONE_SWORD, MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)))), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.GOLD_SWORD, MenuText.damageDice(weapon.getDamage())), (g, p) -> new StringInputAnvilGUI(player, (ply, s) -> {
+        })), GUIButton.of(4, SpigotIconBuilder.of(Material.STONE_SWORD, MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)))), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.GOLD_SWORD, MenuText.damageDice(weapon.getDamage())), (g, p) -> new StringAnvilGUI(player, (ply, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 p.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -855,10 +855,10 @@ public class SpigotChestGUIs {
         })), GUIButton.of(6, ClickType.LEFT, SpigotIconBuilder.builder(Material.GLOWSTONE).name(MenuText.PLUS_STAT).addGlow(weapon.plusStat()).build(), (g, p) -> {
             weapon.setPlusStat(!weapon.plusStat());
             meleeWeapon(p, bioAndInfo, classLevels, coreStats, experience, weapons, meleeBonus, weapon, prevGUI);
-        }), GUIButton.of(7, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.damageBonus(weapon, coreStats))), GUIButton.of(8, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND, MenuText.damageType(weapon.getDamageType())), (g, p) -> new StringInputAnvilGUI(player, (ply, s) -> {
+        }), GUIButton.of(7, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.damageBonus(weapon, coreStats))), GUIButton.of(8, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND, MenuText.damageType(weapon.getDamageType())), (g, p) -> new StringAnvilGUI(player, (ply, s) -> {
             weapon.setDamageType(s);
             meleeWeapon(p, bioAndInfo, classLevels, coreStats, experience, weapons, meleeBonus, weapon, prevGUI);
-        })), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.critDamage(weapon)), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.critDamage(weapon)), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 p.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -867,7 +867,7 @@ public class SpigotChestGUIs {
 
             weapon.setCritDamage(dice);
             meleeWeapon(p, bioAndInfo, classLevels, coreStats, experience, weapons, meleeBonus, weapon, prevGUI);
-        })), GUIButton.of(10, ClickType.LEFT, SpigotIconBuilder.of(Material.SULPHUR, MenuText.critOn(weapon)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(10, ClickType.LEFT, SpigotIconBuilder.of(Material.SULPHUR, MenuText.critOn(weapon)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             weapon.setCritMin(i);
             meleeWeapon(p, bioAndInfo, classLevels, coreStats, experience, weapons, meleeBonus, weapon, prevGUI);
         })), GUIButton.of(11, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_LAMP_ON, MenuText.ROLL_ATTACK), (g, p) -> {
@@ -907,7 +907,7 @@ public class SpigotChestGUIs {
     }
 
     public void meleeWeapons(@Nonnull Player player, int page, @Nonnull BioAndInfo bioAndInfo, @Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nonnull List<MeleeWeapon> meleeWeapons, @Nonnull MeleeBonus meleeBonus, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        paged(MenuText.MELEE_WEAPONS, player, prevGUI, page, meleeWeapon -> ItemRepresentation.meleeWeapon(meleeWeapon, classLevels, coreStats, experience), meleeWeapon -> (g, p) -> meleeWeapon(p, bioAndInfo, classLevels, coreStats, experience, meleeWeapons, meleeBonus, meleeWeapon, g), (p, i) -> meleeWeapons(p, i, bioAndInfo, classLevels, coreStats, experience, meleeWeapons, meleeBonus, prevGUI), meleeWeapons).setButtons(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_MELEE_WEAPON), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        paged(MenuText.MELEE_WEAPONS, player, prevGUI, page, meleeWeapon -> ItemRepresentation.meleeWeapon(meleeWeapon, classLevels, coreStats, experience), meleeWeapon -> (g, p) -> meleeWeapon(p, bioAndInfo, classLevels, coreStats, experience, meleeWeapons, meleeBonus, meleeWeapon, g), (p, i) -> meleeWeapons(p, i, bioAndInfo, classLevels, coreStats, experience, meleeWeapons, meleeBonus, prevGUI), meleeWeapons).setButtons(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_MELEE_WEAPON), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             MeleeWeapon meleeWeapon = new MeleeWeapon();
             meleeWeapon.setName(s);
             meleeWeapon(p, bioAndInfo, classLevels, coreStats, experience, meleeWeapons, meleeBonus, meleeWeapon, g);
@@ -966,7 +966,7 @@ public class SpigotChestGUIs {
     }
 
     public void rangedBonus(@Nonnull Player player, @Nonnull RangedBonus rangedBonus, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.RANGED_BONUSES, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.ATTACK_ROLLS), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        builder(9, 8, MenuText.RANGED_BONUSES, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.ATTACK_ROLLS), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 ply.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -975,7 +975,7 @@ public class SpigotChestGUIs {
 
             rangedBonus.setAttack(dice);
             rangedBonus(player, rangedBonus, prevGUI);
-        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.STRENGTH).name(MenuText.DAMAGE_ROLLS).build(), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.STRENGTH).name(MenuText.DAMAGE_ROLLS).build(), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 ply.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -991,13 +991,13 @@ public class SpigotChestGUIs {
         builder(18, 17, weapon.getName(), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.builder(weapon.isProficient() ? Material.REDSTONE_TORCH_ON : Material.REDSTONE_TORCH_OFF).name(MenuText.isProficient(weapon)).addGlow(weapon.isProficient()).build(), (g, p) -> {
             weapon.setIsProficient(!weapon.isProficient());
             rangedWeapon(p, bioAndInfo, classLevels, coreStats, experience, weapons, rangedBonus, weapon, prevGUI);
-        }), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.RENAME), (g, p) -> new StringInputAnvilGUI(player, (ply, s) -> {
+        }), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.RENAME), (g, p) -> new StringAnvilGUI(player, (ply, s) -> {
             weapon.setName(s);
             rangedWeapon(p, bioAndInfo, classLevels, coreStats, experience, weapons, rangedBonus, weapon, prevGUI);
-        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_SWORD, MenuText.ATTACK_STAT), (g, p) -> attackStat(p, 1, weapon, g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.magicBonus(weapon)), (g, p) -> new IntegerInputAnvilGUI(player, (ply, i) -> {
+        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_SWORD, MenuText.ATTACK_STAT), (g, p) -> attackStat(p, 1, weapon, g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.magicBonus(weapon)), (g, p) -> new IntegerAnvilGUI(player, (ply, i) -> {
             weapon.setMagicBonus(i);
             rangedWeapon(p, bioAndInfo, classLevels, coreStats, experience, weapons, rangedBonus, weapon, prevGUI);
-        })), GUIButton.of(4, SpigotIconBuilder.of(Material.STONE_SWORD, MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)))), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.GOLD_SWORD, MenuText.damageDice(weapon.getDamage())), (g, p) -> new StringInputAnvilGUI(player, (ply, s) -> {
+        })), GUIButton.of(4, SpigotIconBuilder.of(Material.STONE_SWORD, MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)))), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.GOLD_SWORD, MenuText.damageDice(weapon.getDamage())), (g, p) -> new StringAnvilGUI(player, (ply, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 p.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -1006,10 +1006,10 @@ public class SpigotChestGUIs {
 
             weapon.setDamage(dice);
             rangedWeapon(p, bioAndInfo, classLevels, coreStats, experience, weapons, rangedBonus, weapon, prevGUI);
-        })), GUIButton.of(6, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.damageBonus(weapon, coreStats))), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND, MenuText.damageType(weapon.getDamageType())), (g, p) -> new StringInputAnvilGUI(player, (ply, s) -> {
+        })), GUIButton.of(6, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.damageBonus(weapon, coreStats))), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND, MenuText.damageType(weapon.getDamageType())), (g, p) -> new StringAnvilGUI(player, (ply, s) -> {
             weapon.setDamageType(s);
             rangedWeapon(p, bioAndInfo, classLevels, coreStats, experience, weapons, rangedBonus, weapon, prevGUI);
-        })), GUIButton.of(8, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.critDamage(weapon)), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(8, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.critDamage(weapon)), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 p.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -1018,7 +1018,7 @@ public class SpigotChestGUIs {
 
             weapon.setCritDamage(dice);
             rangedWeapon(p, bioAndInfo, classLevels, coreStats, experience, weapons, rangedBonus, weapon, prevGUI);
-        })), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(Material.SULPHUR, MenuText.critOn(weapon)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(Material.SULPHUR, MenuText.critOn(weapon)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             weapon.setCritMin(i);
             rangedWeapon(p, bioAndInfo, classLevels, coreStats, experience, weapons, rangedBonus, weapon, prevGUI);
         })), GUIButton.of(10, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_LAMP_ON, MenuText.ROLL_ATTACK), (g, p) -> {
@@ -1058,7 +1058,7 @@ public class SpigotChestGUIs {
     }
 
     public void rangedWeapons(@Nonnull Player player, int page, @Nonnull BioAndInfo bioAndInfo, @Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nonnull List<RangedWeapon> rangedWeapons, @Nonnull RangedBonus rangedBonus, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        paged(MenuText.RANGED_WEAPONS, player, prevGUI, page, rangedWeapon -> ItemRepresentation.rangedWeapon(rangedWeapon, classLevels, coreStats, experience), rangedWeapon -> (g, p) -> rangedWeapon(p, bioAndInfo, classLevels, coreStats, experience, rangedWeapons, rangedBonus, rangedWeapon, g), (p, i) -> rangedWeapons(p, i, bioAndInfo, classLevels, coreStats, experience, rangedWeapons, rangedBonus, prevGUI), rangedWeapons).setButtons(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_RANGED_WEAPON), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        paged(MenuText.RANGED_WEAPONS, player, prevGUI, page, rangedWeapon -> ItemRepresentation.rangedWeapon(rangedWeapon, classLevels, coreStats, experience), rangedWeapon -> (g, p) -> rangedWeapon(p, bioAndInfo, classLevels, coreStats, experience, rangedWeapons, rangedBonus, rangedWeapon, g), (p, i) -> rangedWeapons(p, i, bioAndInfo, classLevels, coreStats, experience, rangedWeapons, rangedBonus, prevGUI), rangedWeapons).setButtons(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_RANGED_WEAPON), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             RangedWeapon rangedWeapon = new RangedWeapon();
             rangedWeapon.setName(s);
             rangedWeapon(p, bioAndInfo, classLevels, coreStats, experience, rangedWeapons, rangedBonus, rangedWeapon, g);
@@ -1101,7 +1101,7 @@ public class SpigotChestGUIs {
     }
 
     public void skill(@Nonnull Player player, @Nonnull AbilityScore abilityScore, @Nonnull BioAndInfo bioAndInfo, @Nonnull ClassLevels classLevels, @Nonnull Experience experience, @Nonnull Dice skillBonus, @Nonnull PlayerSkill skill, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, skill.getName(), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.builder(Material.ENCHANTED_BOOK).name(MenuText.PROFICIENT).description("- " + skill.getSkillProficiency().getName()).build(), (g, p) -> skillProficiency(p, skill, 1, g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.INK_SACK).name(MenuText.bonus(skill)).durability(4).build(), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        builder(9, 8, skill.getName(), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.builder(Material.ENCHANTED_BOOK).name(MenuText.PROFICIENT).description("- " + skill.getSkillProficiency().getName()).build(), (g, p) -> skillProficiency(p, skill, 1, g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.INK_SACK).name(MenuText.bonus(skill)).durability(4).build(), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             skill.setBonus(i);
             skill(p, abilityScore, bioAndInfo, classLevels, experience, skillBonus, skill, prevGUI);
         })), GUIButton.of(2, SpigotIconBuilder.of(Material.BOOKSHELF, MenuText.total(abilityScore, classLevels, experience, skill))), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_LAMP_ON, MenuText.bonus(skill)), (g, p) -> {
@@ -1143,13 +1143,13 @@ public class SpigotChestGUIs {
     }
 
     public void spell(@Nonnull Player player, @Nonnull Spell spell, @Nonnull BioAndInfo bioAndInfo, @Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nonnull SpellcastingBonus spellcastingBonus, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        SpigotChestGUIBuilder<SpigotMCDNDSimple> builder = builder(27, 26, spell.getName(), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.RENAME), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        SpigotChestGUIBuilder<SpigotMCDNDSimple> builder = builder(27, 26, spell.getName(), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.RENAME), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             spell.setName(s);
             spell(ply, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
-        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.INK_SACK).durability(4).name(MenuText.RENAME).build(), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.INK_SACK).durability(4).name(MenuText.RENAME).build(), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             spell.setLevel(i);
             spell(ply, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
-        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.spellType(spell.getSpellType())), (g, p) -> spellType(p, 1, spell, g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.WATCH, MenuText.castTime(spell.getCastTime())), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.spellType(spell.getSpellType())), (g, p) -> spellType(p, 1, spell, g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.WATCH, MenuText.castTime(spell.getCastTime())), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             spell.setCastTime(s);
             spell(ply, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
         })), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_TORCH_ON, MenuText.concentration(spell)), (g, p) -> {
@@ -1158,13 +1158,13 @@ public class SpigotChestGUIs {
         }), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.TOTEM, MenuText.ritual(spell)), (g, p) -> {
             spell.setIsRitual(!spell.isRitual());
             spell(p, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
-        }), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTMENT_TABLE, MenuText.gainedFrom(spell.getGainedFrom())), (g, p) -> spellcasterClass(player, 1, spell::setGainedFrom, spellCasterClass -> spellCasterClass == spell.getGainedFrom(), g)), GUIButton.of(8, ClickType.LEFT, SpigotIconBuilder.of(Material.LINGERING_POTION, MenuText.TARGET), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        }), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTMENT_TABLE, MenuText.gainedFrom(spell.getGainedFrom())), (g, p) -> spellcasterClass(player, 1, spell::setGainedFrom, spellCasterClass -> spellCasterClass == spell.getGainedFrom(), g)), GUIButton.of(8, ClickType.LEFT, SpigotIconBuilder.of(Material.LINGERING_POTION, MenuText.TARGET), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             spell.setTargetArea(s);
             spell(ply, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
-        })), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(Material.BOW, MenuText.range(spell)), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(Material.BOW, MenuText.range(spell)), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             spell.setRange(s);
             spell(ply, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
-        })), GUIButton.of(10, ClickType.LEFT, SpigotIconBuilder.of(Material.STRING, MenuText.duration(spell)), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(10, ClickType.LEFT, SpigotIconBuilder.of(Material.STRING, MenuText.duration(spell)), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             spell.setDuration(s);
             spell(ply, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
         })), GUIButton.of(11, ClickType.LEFT, SpigotIconBuilder.builder(Material.PURPLE_SHULKER_BOX).name(MenuText.COMPONENTS).description(spell.getComponents()).build(), (g, p) -> {
@@ -1363,7 +1363,7 @@ public class SpigotChestGUIs {
         builder(9, 8, MenuText.DAMAGE, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.builder(Material.DIAMOND_SWORD).name(MenuText.CAN_CRIT).addGlow(spellDamage.canCrit()).build(), (g, p) -> {
             spellDamage.setCanCrit(!spellDamage.canCrit());
             spellDamage(player, spellDamage, prevGUI);
-        }), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_LAMP_OFF, MenuText.DAMAGE_DICE), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        }), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_LAMP_OFF, MenuText.DAMAGE_DICE), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 p.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -1372,20 +1372,20 @@ public class SpigotChestGUIs {
 
             spellDamage.setDamage(dice);
             g.open();
-        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.STICK, MenuText.otherBonus(spellDamage)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.STICK, MenuText.otherBonus(spellDamage)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             spellDamage.setBonus(i);
             spellDamage(player, spellDamage, prevGUI);
-        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.damageType(spellDamage.getDamageType())), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.damageType(spellDamage.getDamageType())), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             spellDamage.setDamageType(s);
             spellDamage(player, spellDamage, prevGUI);
         }))).build();
     }
 
     public void spellDashboard(@Nonnull Player player, @Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nonnull SpellbookTab spellbookTab, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(27, 26, MenuText.SPELLS_DASHBOARD, player, prevGUI).setButtons(GUIButton.of(0, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.ARCANE_TRICKSTER)), GUIButton.of(1, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.BARD)), GUIButton.of(2, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.CLERIC)), GUIButton.of(3, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.DRUID)), GUIButton.of(4, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.ELDRITCH_KNIGHT)), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.builder(Material.LINGERING_POTION).name(MenuText.SORCERY_POINTS).description(MenuText.sorceryPoints(classLevels, spellbookTab)).build(), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        builder(27, 26, MenuText.SPELLS_DASHBOARD, player, prevGUI).setButtons(GUIButton.of(0, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.ARCANE_TRICKSTER)), GUIButton.of(1, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.BARD)), GUIButton.of(2, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.CLERIC)), GUIButton.of(3, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.DRUID)), GUIButton.of(4, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.ELDRITCH_KNIGHT)), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.builder(Material.LINGERING_POTION).name(MenuText.SORCERY_POINTS).description(MenuText.sorceryPoints(classLevels, spellbookTab)).build(), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             spellbookTab.setSorceryPointsUsed(i);
             spellDashboard(player, classLevels, coreStats, experience, spellbookTab, prevGUI);
-        })), GUIButton.of(8, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.PALADIN)), GUIButton.of(9, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.RANGER)), GUIButton.of(10, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.SORCERER)), GUIButton.of(11, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.WARLOCK)), GUIButton.of(12, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.WIZARD)), GUIButton.of(16, ClickType.LEFT, SpigotIconBuilder.builder(Material.ENCHANTMENT_TABLE).name(MenuText.SPELL_SLOTS).description(MenuText.spellSlots(classLevels, spellbookTab)).build(), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        })), GUIButton.of(8, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.PALADIN)), GUIButton.of(9, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.RANGER)), GUIButton.of(10, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.SORCERER)), GUIButton.of(11, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.WARLOCK)), GUIButton.of(12, spellcasterIcon(classLevels, coreStats, experience, spellbookTab, SpellcasterClass.WIZARD)), GUIButton.of(16, ClickType.LEFT, SpigotIconBuilder.builder(Material.ENCHANTMENT_TABLE).name(MenuText.SPELL_SLOTS).description(MenuText.spellSlots(classLevels, spellbookTab)).build(), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             spellbookTab.setWarlockSpellSlotsUsed(i);
             spellDashboard(player, classLevels, coreStats, experience, spellbookTab, prevGUI);
         }))).build();
@@ -1418,7 +1418,7 @@ public class SpigotChestGUIs {
     }
 
     public void spellSave(@Nonnull Player player, @Nonnull SpellSave spellSave, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.SAVE, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.SHIELD, MenuText.SAVING_STAT), (g, p) -> statBonus(p, 1, spellSave::setSavingStat, statBonus -> spellSave.getSavingStat() == statBonus, g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTMENT_TABLE, MenuText.SAVE_DC), (g, p) -> spellcasterClass(p, 1, spellSave::setSaveDCType, spellCasterClass -> spellCasterClass == spellSave.getSaveDCType(), g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.customDC(spellSave)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
+        builder(9, 8, MenuText.SAVE, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.SHIELD, MenuText.SAVING_STAT), (g, p) -> statBonus(p, 1, spellSave::setSavingStat, statBonus -> spellSave.getSavingStat() == statBonus, g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTMENT_TABLE, MenuText.SAVE_DC), (g, p) -> spellcasterClass(p, 1, spellSave::setSaveDCType, spellCasterClass -> spellCasterClass == spellSave.getSaveDCType(), g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.customDC(spellSave)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             spellSave.setCustomDC(i);
             spellSave(player, spellSave, prevGUI);
         })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK, MenuText.ON_SUCCESSFUL_SAVE), (g, p) -> {
@@ -1460,7 +1460,7 @@ public class SpigotChestGUIs {
     }
 
     public void spellcastingBonus(@Nonnull Player player, @Nonnull SpellcastingBonus spellcastingBonus, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.SPELLCASTING_BONUSES, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.ATTACK_ROLLS), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        builder(9, 8, MenuText.SPELLCASTING_BONUSES, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.ATTACK_ROLLS), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 ply.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -1469,7 +1469,7 @@ public class SpigotChestGUIs {
 
             spellcastingBonus.setAttack(dice);
             spellcastingBonus(player, spellcastingBonus, prevGUI);
-        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.STRENGTH).name(MenuText.DAMAGE_ROLLS).build(), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.STRENGTH).name(MenuText.DAMAGE_ROLLS).build(), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 ply.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -1478,7 +1478,7 @@ public class SpigotChestGUIs {
 
             spellcastingBonus.setDamage(dice);
             spellcastingBonus(player, spellcastingBonus, prevGUI);
-        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.LUCK).name(MenuText.SAVE_DC_ROLLS).build(), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.LUCK).name(MenuText.SAVE_DC_ROLLS).build(), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             Dice dice = Dice.parse(s);
             if (dice == null) {
                 ply.sendMessage(ChatColor.RED + Messages.malformedDiceInput(s));
@@ -1491,7 +1491,7 @@ public class SpigotChestGUIs {
     }
 
     public void spells(@Nonnull Player player, int level, @Nonnull List<Spell> spells, int page, @Nonnull BioAndInfo bioAndInfo, @Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nonnull SpellcastingBonus spellcastingBonus, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        paged(MenuText.spellLevel(level), player, prevGUI, page, ItemRepresentation::spell, spell -> (g, p) -> spell(p, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, g), (p, i) -> spells(player, level, spells, page, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI), spells.stream().filter(spell -> spell.getLevel() == level).collect(Collectors.toList())).setButtons(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_MELEE_WEAPON), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+        paged(MenuText.spellLevel(level), player, prevGUI, page, ItemRepresentation::spell, spell -> (g, p) -> spell(p, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, g), (p, i) -> spells(player, level, spells, page, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI), spells.stream().filter(spell -> spell.getLevel() == level).collect(Collectors.toList())).setButtons(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_MELEE_WEAPON), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             Spell spell = new Spell();
             spell.setName(s);
             spell(p, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, g);
@@ -1548,7 +1548,7 @@ public class SpigotChestGUIs {
         Coin electrum = wealth.getElectrum();
         Coin gold = wealth.getGold();
         Coin platinum = wealth.getPlatinum();
-        builder(9, 8, MenuText.COIN_CARRIED, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.ROTTEN_FLESH, MenuText.coin(copper)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> copper.setAmount(i))), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.ROTTEN_FLESH, MenuText.coin(silver)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> silver.setAmount(i))), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.ROTTEN_FLESH, MenuText.coin(electrum)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> electrum.setAmount(i))), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.ROTTEN_FLESH, MenuText.coin(gold)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> gold.setAmount(i))), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.ROTTEN_FLESH, MenuText.coin(platinum)), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> platinum.setAmount(i))), GUIButton.of(5, SpigotIconBuilder.of(Material.ROTTEN_FLESH, MenuText.total(wealth)))).build();
+        builder(9, 8, MenuText.COIN_CARRIED, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.ROTTEN_FLESH, MenuText.coin(copper)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> copper.setAmount(i))), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.ROTTEN_FLESH, MenuText.coin(silver)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> silver.setAmount(i))), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.ROTTEN_FLESH, MenuText.coin(electrum)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> electrum.setAmount(i))), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.ROTTEN_FLESH, MenuText.coin(gold)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> gold.setAmount(i))), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.ROTTEN_FLESH, MenuText.coin(platinum)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> platinum.setAmount(i))), GUIButton.of(5, SpigotIconBuilder.of(Material.ROTTEN_FLESH, MenuText.total(wealth)))).build();
     }
 
     public void weaponsSpellMiscOutputOptions(@Nonnull Player player, @Nonnull WeaponsSpellMiscOutputOptions weaponsSpellMiscOutputOptions, @Nonnull SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
@@ -1578,7 +1578,7 @@ public class SpigotChestGUIs {
     }
 
     public void weight(@Nonnull Player player, @Nonnull CoreStats coreStats, @Nonnull List<MCDNDItem> items, @Nonnull Wealth wealth, @Nonnull Weight weight, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.WEIGHT, player, prevGUI).setButtons(GUIButton.of(0, SpigotIconBuilder.of(Material.CHEST, MenuText.inventoryWeight(items, weight))), GUIButton.of(1, SpigotIconBuilder.of(Material.EMERALD, MenuText.coinWeight(wealth, weight))), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.STICK, MenuText.otherWeight(weight)), (g, p) -> new DoubleInputAnvilGUI(p, (ply, d) -> {
+        builder(9, 8, MenuText.WEIGHT, player, prevGUI).setButtons(GUIButton.of(0, SpigotIconBuilder.of(Material.CHEST, MenuText.inventoryWeight(items, weight))), GUIButton.of(1, SpigotIconBuilder.of(Material.EMERALD, MenuText.coinWeight(wealth, weight))), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.STICK, MenuText.otherWeight(weight)), (g, p) -> new DoubleAnvilGUI(p, (ply, d) -> {
             weight.setOther(d);
             weight(player, coreStats, items, wealth, weight, prevGUI);
         })), GUIButton.of(3, SpigotIconBuilder.of(Material.STONE, MenuText.totalWeight(items, wealth, weight))), GUIButton.of(4, SpigotIconBuilder.of(Material.CHEST, MenuText.carryingMax(coreStats, weight))), GUIButton.of(5, SpigotIconBuilder.of(Material.PISTON_BASE, MenuText.pushDragLift(coreStats, weight))), GUIButton.of(6, SpigotIconBuilder.of(Material.STONE, MenuText.encumbered(coreStats, weight))), GUIButton.of(7, SpigotIconBuilder.of(Material.OBSIDIAN, MenuText.heavilyEncumbered(coreStats, weight)))).build();

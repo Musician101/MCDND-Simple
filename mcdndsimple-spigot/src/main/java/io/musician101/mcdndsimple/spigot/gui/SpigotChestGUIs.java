@@ -393,7 +393,7 @@ public class SpigotChestGUIs {
         ClassTab classTab = characterSheet.getClassTab();
         CoreStatsTab coreStatsTab = characterSheet.getCoreStatsTab();
         Bonuses bonuses = coreStatsTab.getBonuses();
-        builder(9, 8, MenuText.CHARACTER_SHEET, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_CHESTPLATE, MenuText.ARMOR), (g, p) -> armorTab(p, characterSheet.getArmorTab(), g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK, MenuText.BACKGROUND), (g, p) -> backgroundTab(p, characterSheet.getBackgroundTab(), g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.CLASS), (g, p) -> classTab(p, characterSheet.getClassTab(), g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND, MenuText.CORE_STATS), (g, p) -> coreStatsTab(p, bioAndInfo, classTab.getClassLevels(), coreStatsTab, g)), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.CHEST, MenuText.INVENTORY), (g, p) -> inventoryTab(p, coreStatsTab.getCoreStats(), characterSheet.getInventoryTab(), g)), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.SKILLS), (g, p) -> skillsTab(p, bioAndInfo, classTab.getClassLevels(), coreStatsTab.getCoreStats(), coreStatsTab.getBonuses().getAbilitiesAndSkills(), coreStatsTab.getExperience(), characterSheet.getSkillsTab(), g)), GUIButton.of(6, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTMENT_TABLE, MenuText.SPELLBOOK), (g, p) -> spellbookTab(p, bioAndInfo, classTab.getClassLevels(), coreStatsTab.getCoreStats(), coreStatsTab.getExperience(), characterSheet.getSpellbookTab(), g)), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTMENT_TABLE, MenuText.INVENTORY), (g, p) -> weaponsTab(p, bioAndInfo, classTab.getClassLevels(), coreStatsTab.getCoreStats(), coreStatsTab.getExperience(), bonuses.getMelee(), bonuses.getRanged(), characterSheet.getWeaponsTab(), g))).build();
+        builder(9, 8, MenuText.CHARACTER_SHEET, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_CHESTPLATE, MenuText.ARMOR), (g, p) -> armorTab(p, characterSheet.getArmorTab(), g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK, MenuText.BACKGROUND), (g, p) -> backgroundTab(p, characterSheet.getBackgroundTab(), g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.CLASS), (g, p) -> classTab(p, characterSheet.getClassTab(), g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND, MenuText.CORE_STATS), (g, p) -> coreStatsTab(p, bioAndInfo, classTab.getClassLevels(), coreStatsTab, g)), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.CHEST, MenuText.INVENTORY), (g, p) -> inventoryTab(p, coreStatsTab.getCoreStats(), characterSheet.getInventoryTab(), g)), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.SKILLS), (g, p) -> skillsTab(p, bioAndInfo, classTab.getClassLevels(), coreStatsTab.getCoreStats(), coreStatsTab.getBonuses().getAbilitiesAndSkills(), coreStatsTab.getExperience(), characterSheet.getSkillsTab(), g)), GUIButton.of(6, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTMENT_TABLE, MenuText.SPELLBOOK), (g, p) -> spellbookTab(p, bioAndInfo, classTab.getClassLevels(), coreStatsTab.getCoreStats(), coreStatsTab.getExperience(), characterSheet.getSpellbookTab(), coreStatsTab.getBonuses().getSpellcasting(), g)), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTMENT_TABLE, MenuText.INVENTORY), (g, p) -> weaponsTab(p, bioAndInfo, classTab.getClassLevels(), coreStatsTab.getCoreStats(), coreStatsTab.getExperience(), bonuses.getMelee(), bonuses.getRanged(), characterSheet.getWeaponsTab(), g))).build();
     }
 
     public void classAction(@Nonnull Player player, @Nonnull ClassAction classAction, @Nonnull List<ClassAction> classActions, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
@@ -1142,31 +1142,31 @@ public class SpigotChestGUIs {
         builder(27, 26, MenuText.SKILLS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.LEATHER_BOOTS, MenuText.ACROBATICS), (g, p) -> skill(p, coreStats.getDexterity(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getAcrobatics(), g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.SADDLE, MenuText.ANIMAL_HANDLING), (g, p) -> skill(p, coreStats.getWisdom(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getAnimalHandling(), g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.ARCANA), (g, p) -> skill(p, coreStats.getIntelligence(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getArcana(), g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.SPEED).name(MenuText.ATHLETICS).build(), (g, p) -> skill(p, coreStats.getStrength(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getAthletics(), g)), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.EMERALD, MenuText.DECEPTION), (g, p) -> skill(p, coreStats.getCharisma(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getDeception(), g)), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK_AND_QUILL, MenuText.HISTORY), (g, p) -> skill(p, coreStats.getIntelligence(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getHistory(), g)), GUIButton.of(6, ClickType.LEFT, SpigotIconBuilder.of(Material.ICE, MenuText.INSIGHT), (g, p) -> skill(p, coreStats.getWisdom(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getInsight(), g)), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.INTIMIDATION), (g, p) -> skill(p, coreStats.getCharisma(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getIntimidation(), g)), GUIButton.of(8, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTMENT_TABLE, MenuText.INVESTIGATION), (g, p) -> skill(p, coreStats.getIntelligence(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getInvestigation(), g)), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.INSTANT_HEAL).name(MenuText.MEDICINE).build(), (g, p) -> skill(p, coreStats.getWisdom(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getMedicine(), g)), GUIButton.of(10, ClickType.LEFT, SpigotIconBuilder.of(Material.VINE, MenuText.NATURE), (g, p) -> skill(p, coreStats.getIntelligence(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getNature(), g)), GUIButton.of(11, ClickType.LEFT, SpigotIconBuilder.of(Material.CARROT_ITEM, MenuText.PERCEPTION), (g, p) -> skill(p, coreStats.getWisdom(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getPerception(), g)), GUIButton.of(12, ClickType.LEFT, SpigotIconBuilder.of(Material.NOTE_BLOCK, MenuText.PERFORMANCE), (g, p) -> skill(p, coreStats.getCharisma(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getPerformance(), g)), GUIButton.of(13, ClickType.LEFT, SpigotIconBuilder.of(Material.EYE_OF_ENDER, MenuText.PERSUASION), (g, p) -> skill(p, coreStats.getCharisma(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getPersuasion(), g)), GUIButton.of(14, ClickType.LEFT, SpigotIconBuilder.of(Material.NETHER_STAR, MenuText.RELIGION), (g, p) -> skill(p, coreStats.getIntelligence(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getReligion(), g)), GUIButton.of(15, ClickType.LEFT, SpigotIconBuilder.of(Material.TRIPWIRE_HOOK, MenuText.SLEIGHT_OF_HAND), (g, p) -> skill(p, coreStats.getDexterity(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getSleightOfHand(), g)), GUIButton.of(16, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.NIGHT_VISION).name(MenuText.STEALTH).build(), (g, p) -> skill(p, coreStats.getDexterity(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getStealth(), g)), GUIButton.of(17, ClickType.LEFT, SpigotIconBuilder.of(Material.SKULL_ITEM, MenuText.SURVIVAL), (g, p) -> skill(p, coreStats.getWisdom(), bioAndInfo, classLevels, experience, skillBonus, skillsTab.getSurvival(), g))).build();
     }
 
-    public void spell(@Nonnull Player player, @Nonnull Spell spell, @Nonnull BioAndInfo bioAndInfo, @Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
+    public void spell(@Nonnull Player player, @Nonnull Spell spell, @Nonnull BioAndInfo bioAndInfo, @Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nonnull SpellcastingBonus spellcastingBonus, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
         SpigotChestGUIBuilder<SpigotMCDNDSimple> builder = builder(27, 26, spell.getName(), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.RENAME), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
             spell.setName(s);
-            spell(player, spell, bioAndInfo, classLevels, coreStats, experience, prevGUI);
+            spell(ply, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
         })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.INK_SACK).durability(4).name(MenuText.RENAME).build(), (g, p) -> new IntegerInputAnvilGUI(p, (ply, i) -> {
             spell.setLevel(i);
-            spell(player, spell, bioAndInfo, classLevels, coreStats, experience, prevGUI);
+            spell(ply, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
         })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.spellType(spell.getSpellType())), (g, p) -> spellType(p, 1, spell, g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.WATCH, MenuText.castTime(spell.getCastTime())), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
             spell.setCastTime(s);
-            spell(player, spell, bioAndInfo, classLevels, coreStats, experience, prevGUI);
+            spell(ply, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
         })), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_TORCH_ON, MenuText.concentration(spell)), (g, p) -> {
             spell.setNeedsConcentration(!spell.needsConcentration());
-            spell(player, spell, bioAndInfo, classLevels, coreStats, experience, prevGUI);
+            spell(p, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
         }), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.TOTEM, MenuText.ritual(spell)), (g, p) -> {
             spell.setIsRitual(!spell.isRitual());
-            spell(player, spell, bioAndInfo, classLevels, coreStats, experience, prevGUI);
+            spell(p, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
         }), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTMENT_TABLE, MenuText.gainedFrom(spell.getGainedFrom())), (g, p) -> spellcasterClass(player, 1, spell::setGainedFrom, spellCasterClass -> spellCasterClass == spell.getGainedFrom(), g)), GUIButton.of(8, ClickType.LEFT, SpigotIconBuilder.of(Material.LINGERING_POTION, MenuText.TARGET), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
             spell.setTargetArea(s);
-            spell(player, spell, bioAndInfo, classLevels, coreStats, experience, prevGUI);
+            spell(ply, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
         })), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.of(Material.BOW, MenuText.range(spell)), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
             spell.setRange(s);
-            spell(player, spell, bioAndInfo, classLevels, coreStats, experience, prevGUI);
+            spell(ply, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
         })), GUIButton.of(10, ClickType.LEFT, SpigotIconBuilder.of(Material.STRING, MenuText.duration(spell)), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
             spell.setDuration(s);
-            spell(player, spell, bioAndInfo, classLevels, coreStats, experience, prevGUI);
+            spell(ply, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
         })), GUIButton.of(11, ClickType.LEFT, SpigotIconBuilder.builder(Material.PURPLE_SHULKER_BOX).name(MenuText.COMPONENTS).description(spell.getComponents()).build(), (g, p) -> {
             ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
             BookMeta bookMeta = (BookMeta) book.getItemMeta();
@@ -1175,24 +1175,21 @@ public class SpigotChestGUIs {
             bookMeta.setAuthor(player.getName());
             new SpigotBookGUI<>(SpigotMCDNDSimple.instance(), p, book, pages -> {
                 spell.setComponents(pages);
-                spell(p, spell, bioAndInfo, classLevels, coreStats, experience, prevGUI);
+                spell(p, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI);
             });
         }), GUIButton.of(12, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_LAMP_OFF, MenuText.SPELL_INFO), (g, p) -> {
             MacroOptions macroOptions = spell.getMacroOptions();
             String newLine = "\n";
-            //TODO need to go through and rewrite this because i have click and hover events in a hover event
-            //might just change this to a click event that will show the "spellHoverText"
             TextComponent spellHoverText = new TextComponent(MenuText.spellType(spell.getSpellType()) + newLine + MenuText.spellLevel(spell.getLevel()));
             if (macroOptions.isInfoBlockEnabled()) {
-                //TODO replace this usage of MenuText.components() with proper usage. This is just here as a place holder
                 spellHoverText.addExtra(newLine + MenuText.components(spell) + newLine + MenuText.castTime(spell.getCastTime()) + newLine + MenuText.duration(spell) + newLine + MenuText.target(spell.getTargetArea()) + newLine + MenuText.range(spell));
             }
 
             if (macroOptions.isAttackRollEnabled()) {
                 Dice d20 = new Dice(20);
-                int attackRoll = d20.roll().get(0).getValue();
-                //TODO need to consider spellcasting bonuses
-                TextComponent attackText = new TextComponent(newLine + "Attack: " + (attackRoll + experience.getProficiencyBonus(classLevels)));
+                int attackRoll = Dice.total(d20.roll());
+                int bonus = Dice.total(spellcastingBonus.getAttack().roll());
+                TextComponent attackText = new TextComponent(newLine + "Attack: " + (attackRoll + bonus + experience.getProficiencyBonus(classLevels)));
                 if (attackRoll == 1) {
                     attackText.setColor(net.md_5.bungee.api.ChatColor.RED);
                 }
@@ -1201,8 +1198,8 @@ public class SpigotChestGUIs {
                 }
 
                 if (macroOptions.isSecondAttackRollEnabled()) {
-                    int secAttackRoll = d20.roll().get(0).getValue();
-                    TextComponent secAttackText = new TextComponent(" | " + (attackRoll + experience.getProficiencyBonus(classLevels)));
+                    int secAttackRoll = Dice.total(d20.roll());
+                    TextComponent secAttackText = new TextComponent(" | " + (attackRoll + bonus + experience.getProficiencyBonus(classLevels)));
                     if (secAttackRoll == 1) {
                         secAttackText.setColor(net.md_5.bungee.api.ChatColor.RED);
                     }
@@ -1220,7 +1217,7 @@ public class SpigotChestGUIs {
             TextComponent saveSuccess = new TextComponent();
             if (macroOptions.isSavingThrowEnabled()) {
                 SpellSave spellSave = spell.getSpellSave();
-                spellHoverText.addExtra(newLine + "Save: DC " + spellSave.getSaveDCType().getSpellSaveDC(classLevels, coreStats, experience) + " " + spellSave.getSavingStat());
+                spellHoverText.addExtra(newLine + "Save: DC " + Dice.total(spellcastingBonus.getSaveDC().roll(), spellSave.getSaveDCType().getSpellSaveDC(classLevels, coreStats, experience)) + " " + spellSave.getSavingStat());
                 saveSuccess.setText(newLine + "Click ");
                 TextComponent here = new TextComponent("HERE");
                 here.setColor(net.md_5.bungee.api.ChatColor.GREEN);
@@ -1259,7 +1256,7 @@ public class SpigotChestGUIs {
 
             if (macroOptions.isDamageEnabled()) {
                 SpellDamage spellDamage = spell.getSpellDamage();
-                int statBonus = spellDamage.getBonus();
+                int statBonus = Dice.total(spellcastingBonus.getDamage().roll(), spellDamage.getBonus());
                 switch (spell.getAttackStat()) {
                     case CHA:
                         statBonus += coreStats.getCharisma().getMod();
@@ -1294,7 +1291,7 @@ public class SpigotChestGUIs {
                 TextComponent here = new TextComponent("HERE");
                 here.setColor(net.md_5.bungee.api.ChatColor.GREEN);
                 here.setBold(true);
-                here.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, openBookCommand(player, bioAndInfo, spell.getEffects(), spell)));
+                here.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, openBookCommand(p, bioAndInfo, spell.getEffects(), spell)));
                 effect.addExtra(here);
                 effect.addExtra(" to view the spell's effects.");
             }
@@ -1305,7 +1302,7 @@ public class SpigotChestGUIs {
                 TextComponent here = new TextComponent("HERE");
                 here.setColor(net.md_5.bungee.api.ChatColor.GREEN);
                 here.setBold(true);
-                here.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, openBookCommand(player, bioAndInfo, spell.getDescription(), spell)));
+                here.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, openBookCommand(p, bioAndInfo, spell.getDescription(), spell)));
                 spellDescription.addExtra(here);
                 spellDescription.addExtra(" to view the spell's description.");
             }
@@ -1316,14 +1313,15 @@ public class SpigotChestGUIs {
                 TextComponent here = new TextComponent("HERE");
                 here.setColor(net.md_5.bungee.api.ChatColor.GREEN);
                 here.setBold(true);
-                here.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, openBookCommand(player, bioAndInfo, spell.getAtHigherLevels(), spell)));
+                here.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, openBookCommand(p, bioAndInfo, spell.getAtHigherLevels(), spell)));
                 atHigherLevels.addExtra(" to view how the spell behaves at higher levels.");
             }
 
             TextComponent spellComponent = new TextComponent(spell.getName());
             spellComponent.setColor(net.md_5.bungee.api.ChatColor.GREEN);
             spellComponent.setBold(true);
-            spellComponent.setHoverEvent(new HoverEvent(Action.SHOW_TEXT, new BaseComponent[]{spellHoverText}));
+            spellComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/callback " + SpigotMCDNDSimple.instance().getCallbackTracker().getIdForCallback(sender -> sender.spigot().sendMessage(spellHoverText)).toString()));
+            spellComponent.setHoverEvent(new HoverEvent(Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("Click to view!")}));
             spellComponent.addExtra(spellDescription);
             spellComponent.addExtra(atHigherLevels);
 
@@ -1357,8 +1355,8 @@ public class SpigotChestGUIs {
         builder.build();
     }
 
-    public void spellBook(@Nonnull Player player, @Nonnull BioAndInfo bioAndInfo, @Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nonnull List<Spell> spells, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(18, 17, MenuText.SPELLS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.CANTRIPS).description(MenuText.total(0, spells)).build(), (g, p) -> spells(player, 0, spells, 0, bioAndInfo, classLevels, coreStats, experience, g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_1).description(MenuText.total(1, spells)).build(), (g, p) -> spells(p, 1, spells, 0, bioAndInfo, classLevels, coreStats, experience, g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_2).description(MenuText.total(2, spells)).build(), (g, p) -> spells(p, 2, spells, 0, bioAndInfo, classLevels, coreStats, experience, g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_3).description(MenuText.total(3, spells)).build(), (g, p) -> spells(p, 3, spells, 0, bioAndInfo, classLevels, coreStats, experience, g)), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_4).description(MenuText.total(4, spells)).build(), (g, p) -> spells(p, 4, spells, 0, bioAndInfo, classLevels, coreStats, experience, g)), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_5).description(MenuText.total(5, spells)).build(), (g, p) -> spells(p, 5, spells, 0, bioAndInfo, classLevels, coreStats, experience, g)), GUIButton.of(6, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_6).description(MenuText.total(6, spells)).build(), (g, p) -> spells(p, 6, spells, 0, bioAndInfo, classLevels, coreStats, experience, g)), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_7).description(MenuText.total(7, spells)).build(), (g, p) -> spells(p, 7, spells, 0, bioAndInfo, classLevels, coreStats, experience, g)), GUIButton.of(8, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_8).description(MenuText.total(8, spells)).build(), (g, p) -> spells(p, 8, spells, 0, bioAndInfo, classLevels, coreStats, experience, g)), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_9).description(MenuText.total(9, spells)).build(), (g, p) -> spells(p, 9, spells, 0, bioAndInfo, classLevels, coreStats, experience, g))).build();
+    public void spellBook(@Nonnull Player player, @Nonnull BioAndInfo bioAndInfo, @Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nonnull List<Spell> spells, @Nonnull SpellcastingBonus spellcastingBonus, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
+        builder(18, 17, MenuText.SPELLS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.CANTRIPS).description(MenuText.total(0, spells)).build(), (g, p) -> spells(p, 0, spells, 0, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_1).description(MenuText.total(1, spells)).build(), (g, p) -> spells(p, 1, spells, 0, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_2).description(MenuText.total(2, spells)).build(), (g, p) -> spells(p, 2, spells, 0, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_3).description(MenuText.total(3, spells)).build(), (g, p) -> spells(p, 3, spells, 0, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, g)), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_4).description(MenuText.total(4, spells)).build(), (g, p) -> spells(p, 4, spells, 0, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, g)), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_5).description(MenuText.total(5, spells)).build(), (g, p) -> spells(p, 5, spells, 0, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, g)), GUIButton.of(6, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_6).description(MenuText.total(6, spells)).build(), (g, p) -> spells(p, 6, spells, 0, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, g)), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_7).description(MenuText.total(7, spells)).build(), (g, p) -> spells(p, 7, spells, 0, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, g)), GUIButton.of(8, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_8).description(MenuText.total(8, spells)).build(), (g, p) -> spells(p, 8, spells, 0, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, g)), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.builder(Material.BOOK_AND_QUILL).name(MenuText.SPELL_SLOT_9).description(MenuText.total(9, spells)).build(), (g, p) -> spells(p, 9, spells, 0, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, g))).build();
     }
 
     public void spellDamage(@Nonnull Player player, @Nonnull SpellDamage spellDamage, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
@@ -1440,8 +1438,8 @@ public class SpigotChestGUIs {
         }, (p, i) -> spellType(p, i, spell, prevGUI), SpellType.values()).build();
     }
 
-    public void spellbookTab(@Nonnull Player player, @Nonnull BioAndInfo bioAndInfo, @Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nonnull SpellbookTab spellbookTab, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.SPELL_DASHBOARD, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK_AND_QUILL, MenuText.SPELL_DASHBOARD), (g, p) -> spellDashboard(p, classLevels, coreStats, experience, spellbookTab, g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.SPELLS), (g, p) -> spellBook(p, bioAndInfo, classLevels, coreStats, experience, spellbookTab.getSpells(), g))).build();
+    public void spellbookTab(@Nonnull Player player, @Nonnull BioAndInfo bioAndInfo, @Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nonnull SpellbookTab spellbookTab, @Nonnull SpellcastingBonus spellcastingBonus, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
+        builder(9, 8, MenuText.SPELL_DASHBOARD, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK_AND_QUILL, MenuText.SPELL_DASHBOARD), (g, p) -> spellDashboard(p, classLevels, coreStats, experience, spellbookTab, g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.SPELLS), (g, p) -> spellBook(p, bioAndInfo, classLevels, coreStats, experience, spellbookTab.getSpells(), spellcastingBonus, g))).build();
     }
 
     public void spellcasterClass(@Nonnull Player player, int page, @Nonnull Consumer<SpellcasterClass> valueSetter, @Nonnull Predicate<SpellcasterClass> glowApplier, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
@@ -1492,11 +1490,11 @@ public class SpigotChestGUIs {
         }))).build();
     }
 
-    public void spells(@Nonnull Player player, int level, @Nonnull List<Spell> spells, int page, @Nonnull BioAndInfo bioAndInfo, @Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        paged(MenuText.spellLevel(level), player, prevGUI, page, ItemRepresentation::spell, spell -> (g, p) -> spell(p, spell, bioAndInfo, classLevels, coreStats, experience, g), (p, i) -> spells(player, level, spells, page, bioAndInfo, classLevels, coreStats, experience, prevGUI), spells.stream().filter(spell -> spell.getLevel() == level).collect(Collectors.toList())).setButtons(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_MELEE_WEAPON), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
+    public void spells(@Nonnull Player player, int level, @Nonnull List<Spell> spells, int page, @Nonnull BioAndInfo bioAndInfo, @Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nonnull SpellcastingBonus spellcastingBonus, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
+        paged(MenuText.spellLevel(level), player, prevGUI, page, ItemRepresentation::spell, spell -> (g, p) -> spell(p, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, g), (p, i) -> spells(player, level, spells, page, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, prevGUI), spells.stream().filter(spell -> spell.getLevel() == level).collect(Collectors.toList())).setButtons(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_MELEE_WEAPON), (g, p) -> new StringInputAnvilGUI(p, (ply, s) -> {
             Spell spell = new Spell();
             spell.setName(s);
-            spell(p, spell, bioAndInfo, classLevels, coreStats, experience, g);
+            spell(p, spell, bioAndInfo, classLevels, coreStats, experience, spellcastingBonus, g);
         }))).build();
     }
 

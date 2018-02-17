@@ -11,8 +11,6 @@ import java.io.File;
 
 public class SpigotMCDNDSimple extends AbstractSpigotPlugin<AbstractConfig, SpigotMCDNDSimple> {
 
-    //TODO need to check that all of the list GUIs have the ability to delete objects
-    //TODO need to check deprecated methods for other things
     private CallbackTracker callbackTracker;
     private SpigotPlayerSheetStorage characterSheetStorage;
     private SpigotNonPlayerSheetStorage npcStorage;

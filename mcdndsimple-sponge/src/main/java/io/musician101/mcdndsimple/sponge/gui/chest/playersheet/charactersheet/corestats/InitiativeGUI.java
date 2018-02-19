@@ -41,7 +41,7 @@ public class InitiativeGUI extends MCDNDSimpleChestGUI {
                 open();
             });
         });
-        set(1, createItem(ItemTypes.GLOWSTONE, Text.of(MenuText.totalInitiative(initiative, dex))));
+        set(1, createItem(ItemTypes.GLOWSTONE, Text.of(MenuText.total(initiative, dex))));
         set(2, ClickInventoryEvent.class, createItem(ItemTypes.REDSTONE_LAMP, Text.of(MenuText.ROLL_INITIATIVE)), player -> {
             player.closeInventory();
             int baseResult = new Dice(20).roll().get(0).getValue();

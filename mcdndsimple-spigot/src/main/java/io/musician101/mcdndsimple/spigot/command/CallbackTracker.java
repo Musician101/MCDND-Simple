@@ -17,7 +17,7 @@ public class CallbackTracker {
     private final LoadingCache<Consumer<CommandSender>, UUID> callbackCache = CacheBuilder.newBuilder().expireAfterAccess(10, TimeUnit.MINUTES).removalListener(notification -> callbacks.remove(notification.getValue(), notification.getKey())).build(new CacheLoader<Consumer<CommandSender>, UUID>() {
 
         @Override
-        public UUID load(@Nonnull Consumer<CommandSender> callback) throws Exception {
+        public UUID load(@Nonnull Consumer<CommandSender> callback) {
             UUID ret = UUID.randomUUID();
             callbacks.putIfAbsent(ret, callback);
             return ret;

@@ -1,9 +1,13 @@
 package io.musician101.mcdndsimple.common.serialization;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import io.musician101.mcdndsimple.common.character.CoreStats;
+import io.musician101.mcdndsimple.common.character.nonplayer.NonPlayerAbilityScore;
 import io.musician101.mcdndsimple.common.character.nonplayer.NonPlayerAction;
 import io.musician101.mcdndsimple.common.character.player.MCDNDItem;
+import io.musician101.mcdndsimple.common.character.player.PlayerAbilityScore;
 import io.musician101.mcdndsimple.common.character.player.PlayerSheet;
 import io.musician101.mcdndsimple.common.character.player.clazz.ClassAction;
 import io.musician101.mcdndsimple.common.character.player.clazz.ClassResource;
@@ -22,6 +26,7 @@ import static io.musician101.musicianlibrary.java.json.JsonKeyImpl.booleanKey;
 import static io.musician101.musicianlibrary.java.json.JsonKeyImpl.doubleKey;
 import static io.musician101.musicianlibrary.java.json.JsonKeyImpl.integerKey;
 import static io.musician101.musicianlibrary.java.json.JsonKeyImpl.listKey;
+import static io.musician101.musicianlibrary.java.json.JsonKeyImpl.objectKey;
 import static io.musician101.musicianlibrary.java.json.JsonKeyImpl.stringKey;
 
 @JsonKeyCatalog
@@ -83,7 +88,7 @@ public class Keys {
     public static final JsonKeyImpl<JsonArray, List<UUID>> CONTROLLERS = listKey("controllers", new ObjectListSerializer<>());
     public static final JsonKeyImpl<JsonPrimitive, Integer> COPPER = integerKey("copper");
     public static final String CORE_SKILLS_OUTPUT_OPTIONS = "core_skills_output_options";
-    public static final String CORE_STATS = "core_stats";
+    private static final String CORE_STATS = "core_stats";
     public static final String CORE_STATS_TAB = "core_stats_tab";
     public static final String CRIT_DAMAGE = "crit_damage_dice";
     public static final JsonKeyImpl<JsonPrimitive, Integer> CRIT_MINIMUM = integerKey("crit_minimum");
@@ -172,6 +177,7 @@ public class Keys {
     public static final JsonKeyImpl<JsonPrimitive, Integer> NINTH_LEVEL_SPELLS_USED = integerKey("ninth_level_spells_used");
     public static final String NON_PLAYER_ACTIONS = "non_player_actions";
     public static final String NON_PLAYER_ACTION_TYPE = "non_player_action_type";
+    public static final JsonKeyImpl<JsonObject, CoreStats<NonPlayerAbilityScore>> NON_PLAYER_CORE_STATS = objectKey(CORE_STATS, new CoreStats.Serializer<>());
     public static final String NON_PLAYER_SHEET = "non_player_sheets";
     public static final String NON_PLAYER_SKILLS = "non_player_skills";
     public static final JsonKeyImpl<JsonArray, List<String>> ON_SUCCESSFUL_SAVE = listKey("on_successful_save", new StringListSerializer());
@@ -186,6 +192,7 @@ public class Keys {
     public static final String PERSUASION = "persuasion";
     public static final JsonKeyImpl<JsonPrimitive, Boolean> PERSUASION_BOOLEAN = booleanKey("persuasion");
     public static final JsonKeyImpl<JsonPrimitive, Integer> PLATINUM = integerKey("platinum");
+    public static final JsonKeyImpl<JsonObject, CoreStats<PlayerAbilityScore>> PLAYER_CORE_STATS = objectKey(CORE_STATS, new CoreStats.Serializer<>());
     public static final JsonKeyImpl<JsonArray, List<PlayerSheet>> PLAYER_SHEETS = listKey("player_sheets", new ObjectListSerializer<>());
     public static final JsonKeyImpl<JsonPrimitive, Boolean> PLUS_STAT = booleanKey("plus_stat");
     public static final String PREPARED = "prepared";

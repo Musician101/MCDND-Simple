@@ -2,11 +2,18 @@ package io.musician101.mcdndsimple.common;
 
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.HitPoints;
+import io.musician101.mcdndsimple.common.character.nonplayer.NonPlayer;
+import io.musician101.mcdndsimple.common.character.nonplayer.NonPlayerAbilityScore;
+import io.musician101.mcdndsimple.common.character.nonplayer.NonPlayerActionType;
+import io.musician101.mcdndsimple.common.character.nonplayer.NonPlayerHitPoints;
+import io.musician101.mcdndsimple.common.character.nonplayer.NonPlayerSheet;
+import io.musician101.mcdndsimple.common.character.nonplayer.skill.NonPlayerSkill;
 import io.musician101.mcdndsimple.common.character.player.AbilityScore;
 import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.HitDice;
 import io.musician101.mcdndsimple.common.character.player.MCDNDItem;
+import io.musician101.mcdndsimple.common.character.player.PlayerAbilityScore;
 import io.musician101.mcdndsimple.common.character.player.Recharge;
 import io.musician101.mcdndsimple.common.character.player.Weight;
 import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
@@ -26,9 +33,9 @@ import io.musician101.mcdndsimple.common.character.player.tab.BackgroundTab;
 import io.musician101.mcdndsimple.common.character.player.tab.CoreStatsTab;
 import io.musician101.mcdndsimple.common.character.player.tab.Initiative;
 import io.musician101.mcdndsimple.common.character.player.tab.SpellbookTab;
-import io.musician101.mcdndsimple.common.character.player.weapon.Weapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.RangedWeapon;
+import io.musician101.mcdndsimple.common.character.player.weapon.Weapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.WeaponAttackStat;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,9 +75,12 @@ public class Reference {
 
         public static final String ABILITY_SKILL_CHECK_ROLLS = "Ability/Skill Check Rolls";
         public static final String ACROBATICS = "Acrobatics";
+        public static final String ACTIONS = "Actions";
+        public static final String ACTION_TYPE = "Action Type";
         public static final String ANIMAL_HANDLING = "Animal Handling";
         public static final String ARCANA = "Arcana";
         public static final String ARMOR = "Armor";
+        public static final String ARMOR_CLASS_NOTE = "Armor Class Note";
         public static final String ARMOR_PROFICIENCIES = "Armor Proficiencies";
         public static final String ARMOR_TYPE = "Armor Type";
         public static final String ATHLETICS = "Athletics";
@@ -100,6 +110,7 @@ public class Reference {
         public static final String CLICK_TO_VIEW = "Click to view.";
         public static final String COIN_CARRIED = "Coin Carried";
         public static final String COMPONENTS = "Components";
+        public static final String CONDITION_IMMUNITY = "Condition Immunity";
         public static final String CONSTITUTION = "Constitution";
         public static final String CORE_SKILLS_OUTPUT_SKILLS_OPTIONS = "Core Skills Output Options";
         public static final String CORE_STATS = "Core Stats";
@@ -109,8 +120,11 @@ public class Reference {
         public static final String[] D8_DESC = {"Bard, Cleric, Druid", "Rogue, Monk, Warlock"};
         public static final String DAMAGE = "Damage";
         public static final String DAMAGE_DICE = "Damage Dice";
+        public static final String DAMAGE_IMMUNITY = "Damage Immunity";
+        public static final String DAMAGE_RESISTANCE = "Damage Resistance";
         public static final String DAMAGE_ROLLS = "Damage Rolls";
         public static final String DAMAGE_TYPE = "Damage Type";
+        public static final String DAMAGE_VULNERABILITY = "Damage Vulnerability";
         public static final String DEATH = "Death";
         public static final String DEATH_SAVING_THROWS = "Death Saving Throws";
         public static final String DECEPTION = "Deception";
@@ -118,6 +132,7 @@ public class Reference {
         public static final String DESCRIPTION = "Description";
         public static final String DEXTERITY = "Dexterity";
         public static final String DRUID = "Druid";
+        public static final String EFFECT = "Effect";
         public static final String EFFECTS = "Effects";
         public static final String FIGHTER = "Fighter";
         public static final String FINESSE = "Finesse";
@@ -143,6 +158,7 @@ public class Reference {
         public static final String MELEE_BONUSES = "Melee Bonuses";
         public static final String MELEE_WEAPONS = "Melee Weapons";
         public static final String MONK = "Monk";
+        public static final String MULTI_ATTACK = "Multi-Attack";
         public static final String NATURE = "Nature";
         public static final String NEW_CLASS_ACTION = "New Class Action";
         public static final String NEW_ITEM = "New Item";
@@ -168,6 +184,7 @@ public class Reference {
         public static final String PLUS_STAT = "Plus Stat?";
         public static final String PREVIOUS_PAGE = "Previous Page";
         public static final String PROFICIENT = "Proficient";
+        public static final String RACE = "Race";
         public static final String RACIAL_TRAITS = "Racial Traits";
         public static final String RANGED_BONUSES = "Ranged Bonuses";
         public static final String RANGED_WEAPONS = "Ranged Weapons";
@@ -190,6 +207,7 @@ public class Reference {
         public static final String SAVING_THROW_OUTPUT_OPTIONS = "Saving Throw Output Options";
         public static final String SCHOOL = "School";
         public static final String SECOND_ATTACK = "Second Attack";
+        public static final String SENSES = "Senses";
         public static final String SKILLS = "Skills";
         public static final String SLEIGHT_OF_HAND = "Sleight of Hand";
         public static final String SORCERER = "Sorcerer";
@@ -220,6 +238,8 @@ public class Reference {
         public static final String TARGET = "Target/Area of Effect";
         public static final String TOOL_PROFICIENCIES = "Tool Proficiencies";
         public static final String TOTAL_IN_GOLD = "Total in Gold";
+        public static final String TRAITS = "Traits";
+        public static final String TRAITS_BACKGROUND = "Traits and Background";
         public static final String UNARMORED_BONUS = "Unarmored Bonus";
         public static final String WARLOCK = "Warlock";
         public static final String WEAPONS = "Weapons";
@@ -228,10 +248,14 @@ public class Reference {
         public static final String WEIGHT = "Weight";
         public static final String WISDOM = "Wisdom";
         public static final String WIZARD = "Wizard";
-        public static final String RACE = "Race";
 
         private MenuText() {
 
+        }
+
+        @Nonnull
+        public static String actionType(@Nonnull NonPlayerActionType actionType) {
+            return "Action Type: " + actionType.getName();
         }
 
         @Nonnull
@@ -241,7 +265,17 @@ public class Reference {
 
         @Nonnull
         public static String alignment(@Nonnull BackgroundTab backgroundTab) {
-            return "Alignment: " + backgroundTab.getAlignment();
+            return alignment(backgroundTab.getAlignment());
+        }
+
+        @Nonnull
+        public static String alignment(@Nonnull NonPlayerSheet nonPlayerSheet) {
+            return alignment(nonPlayerSheet.getAlignment());
+        }
+
+        @Nonnull
+        private static String alignment(@Nonnull String alignment) {
+            return "Alignment: " + alignment;
         }
 
         @Nonnull
@@ -251,7 +285,17 @@ public class Reference {
 
         @Nonnull
         public static String armorClass(@Nonnull Armor armor) {
-            return "Armor Class: " + armor.getBaseArmorClass();
+            return armorClass(armor.getBaseArmorClass());
+        }
+
+        @Nonnull
+        public static String armorClass(@Nonnull NonPlayerSheet nonPlayerSheet) {
+            return armorClass(nonPlayerSheet.getArmorClass());
+        }
+
+        @Nonnull
+        private static String armorClass(int armorClass) {
+            return "Armor Class: " + armorClass;
         }
 
         @Nonnull
@@ -276,7 +320,22 @@ public class Reference {
 
         @Nonnull
         public static String bonus(@Nonnull PlayerSkill skill) {
-            return BONUS + ": " + skill.getBonus();
+            return bonus(skill.getBonus());
+        }
+
+        @Nonnull
+        public static String bonus(@Nonnull NonPlayerAbilityScore score) {
+            return bonus(score.getBonus());
+        }
+
+        @Nonnull
+        public static String bonus(@Nonnull NonPlayerSkill skill) {
+            return bonus(skill.getBonus());
+        }
+
+        @Nonnull
+        private static String bonus(int bonus) {
+            return BONUS + ": " + bonus;
         }
 
         @Nonnull
@@ -295,8 +354,18 @@ public class Reference {
         }
 
         @Nonnull
+        public static String challengeRating(@Nonnull NonPlayerSheet nonPlayerSheet) {
+            return "Challenge Rating: " + nonPlayerSheet.getChallengeRating();
+        }
+
+        @Nonnull
         public static String clazz(@Nonnull SpellcasterClass spellcasterClass) {
             return "Class: " + spellcasterClass.getName();
+        }
+
+        @Nonnull
+        public static String climbSpeed(@Nonnull NonPlayerSheet nonPlayerSheet) {
+            return "Climb Speed: " + nonPlayerSheet.getClimbSpeed();
         }
 
         @Nonnull
@@ -375,6 +444,11 @@ public class Reference {
         }
 
         @Nonnull
+        public static String dmOutputOnly(@Nonnull NonPlayerSheet nonPlayerSheet) {
+            return "DM Output Only? " + (nonPlayerSheet.isDMOutputOnly() ? "Yes" : "No");
+        }
+
+        @Nonnull
         public static String duration(@Nonnull Spell spell) {
             return "Duration: " + spell.getDuration();
         }
@@ -390,6 +464,11 @@ public class Reference {
         }
 
         @Nonnull
+        public static String experience(@Nonnull NonPlayerSheet nonPlayerSheet) {
+            return "XP: " + nonPlayerSheet.getXP();
+        }
+
+        @Nonnull
         public static String eyes(@Nonnull BackgroundTab backgroundTab) {
             return "Eyes: " + backgroundTab.getEyes();
         }
@@ -397,6 +476,11 @@ public class Reference {
         @Nonnull
         public static String failCount(int successCount) {
             return "Fail Count: " + successCount;
+        }
+
+        @Nonnull
+        public static String flySpeed(@Nonnull NonPlayerSheet nonPlayerSheet) {
+            return "Fly Speed: " + nonPlayerSheet.getFlySpeed();
         }
 
         @Nonnull
@@ -449,6 +533,11 @@ public class Reference {
             List<String> list = new ArrayList<>();
             hitDice.getHitDice().forEach((sides, amount) -> list.add(amount + " x d" + sides));
             return list.toArray(new String[0]);
+        }
+
+        @Nonnull
+        public static String hitDice(@Nonnull NonPlayerHitPoints nonPlayerHitPoints) {
+            return "Hit Dice: " + nonPlayerHitPoints.getHitDice().toString();
         }
 
         @Nonnull
@@ -513,7 +602,17 @@ public class Reference {
 
         @Nonnull
         public static String name(@Nonnull BioAndInfo bioAndInfo) {
-            return "".equals(bioAndInfo.getName()) ? "Not Set" : bioAndInfo.getName();
+            return name(bioAndInfo.getName());
+        }
+
+        @Nonnull
+        public static String name(@Nonnull NonPlayer nonPlayer) {
+            return name(nonPlayer.getName());
+        }
+
+        @Nonnull
+        private static String name(@Nonnull String name) {
+            return "".equals(name) ? "Not Set" : name;
         }
 
         @Nonnull
@@ -547,7 +646,7 @@ public class Reference {
         }
 
         @Nonnull
-        public static String proficient(@Nonnull AbilityScore score) {
+        public static String proficient(@Nonnull PlayerAbilityScore score) {
             return "Proficient? " + (score.isProficient() ? "Yes" : "No");
         }
 
@@ -582,8 +681,13 @@ public class Reference {
         }
 
         @Nonnull
-        public static String saveMod(@Nonnull AbilityScore score, @Nonnull ClassLevels classLevels, @Nonnull Experience experience) {
+        public static String saveMod(@Nonnull PlayerAbilityScore score, @Nonnull ClassLevels classLevels, @Nonnull Experience experience) {
             return "Save Mod: " + score.getSaveMod(classLevels, experience);
+        }
+
+        @Nonnull
+        public static String saveTotal(@Nonnull NonPlayerAbilityScore score) {
+            return "Save Total: " + score.getSaveTotal();
         }
 
         @Nonnull
@@ -592,13 +696,28 @@ public class Reference {
         }
 
         @Nonnull
-        public static String[] scoreLore(@Nonnull AbilityScore score, @Nonnull ClassLevels classLevels, @Nonnull Experience experience) {
+        public static String[] scoreLore(@Nonnull PlayerAbilityScore score, @Nonnull ClassLevels classLevels, @Nonnull Experience experience) {
             return new String[]{score(score), mod(score), proficient(score), saveMod(score, classLevels, experience)};
         }
 
         @Nonnull
+        public static String[] scoreLore(@Nonnull NonPlayerAbilityScore score) {
+            return new String[]{score(score), mod(score), bonus(score), saveTotal(score)};
+        }
+
+        @Nonnull
         public static String size(@Nonnull BackgroundTab backgroundTab) {
-            return "Size: " + backgroundTab.getSize();
+            return size(backgroundTab.getSize());
+        }
+
+        @Nonnull
+        public static String size(@Nonnull NonPlayerSheet nonPlayerSheet) {
+            return size(nonPlayerSheet.getSize());
+        }
+
+        @Nonnull
+        private static String size(@Nonnull String size) {
+            return "Size: " + size;
         }
 
         @Nonnull
@@ -608,7 +727,17 @@ public class Reference {
 
         @Nonnull
         public static String speed(@Nonnull CoreStatsTab coreStatsTab) {
-            return "Speed: " + coreStatsTab.getSpeed();
+            return speed(coreStatsTab.getSpeed());
+        }
+
+        @Nonnull
+        public static String speed(@Nonnull NonPlayerSheet nonPlayerSheet) {
+            return "Speed: " + nonPlayerSheet.getSpeed();
+        }
+
+        @Nonnull
+        private static String speed(int speed) {
+            return "Speed: " + speed;
         }
 
         @Nonnull
@@ -637,6 +766,11 @@ public class Reference {
         }
 
         @Nonnull
+        public static String swimSpeed(@Nonnull NonPlayerSheet nonPlayerSheet) {
+            return "Swim Speed: " + nonPlayerSheet.getSwimSpeed();
+        }
+
+        @Nonnull
         public static String target(@Nonnull String targetArea) {
             return "Target/AoE: " + targetArea;
         }
@@ -653,22 +787,32 @@ public class Reference {
 
         @Nonnull
         public static String total(@Nonnull Wealth wealth) {
-            return "Total: " + ((wealth.getCopper().getAmount() / 100) + (wealth.getSilver().getAmount() / 10) + (wealth.getElectrum().getAmount() / 2) + wealth.getGold().getAmount() + (wealth.getPlatinum().getAmount() * 10));
+            return total((wealth.getCopper().getAmount() / 100) + (wealth.getSilver().getAmount() / 10) + (wealth.getElectrum().getAmount() / 2) + wealth.getGold().getAmount() + (wealth.getPlatinum().getAmount() * 10));
         }
 
         @Nonnull
-        public static String total(@Nonnull AbilityScore abilityScore, @Nonnull ClassLevels classLevels, @Nonnull Experience experience, @Nonnull PlayerSkill skill) {
-            return "Total: " + skill.getTotal(abilityScore, classLevels, experience);
+        public static String total(@Nonnull PlayerAbilityScore abilityScore, @Nonnull ClassLevels classLevels, @Nonnull Experience experience, @Nonnull PlayerSkill skill) {
+            return total(skill.getTotal(abilityScore, classLevels, experience));
         }
 
         @Nonnull
-        public static String total(int amount) {
+        public static String total(@Nonnull NonPlayerAbilityScore abilityScore, @Nonnull NonPlayerSkill skill) {
+            return total(skill.getTotal(abilityScore));
+        }
+
+        @Nonnull
+        private static String total(int amount) {
             return "Total: " + amount;
         }
 
         @Nonnull
         public static String total(int level, @Nonnull List<Spell> spells) {
-            return "Total: " + spells.stream().filter(spell -> spell.getLevel() == level).collect(Collectors.toList()).size();
+            return total(spells.stream().filter(spell -> spell.getLevel() == level).collect(Collectors.toList()).size());
+        }
+
+        @Nonnull
+        public static String total(@Nonnull Initiative initiative, @Nonnull AbilityScore dex) {
+            return total(initiative.getInitiative(dex));
         }
 
         @Nonnull
@@ -677,13 +821,13 @@ public class Reference {
         }
 
         @Nonnull
-        public static String totalInitiative(@Nonnull Initiative initiative, @Nonnull AbilityScore dex) {
-            return "Total: " + initiative.getInitiative(dex);
+        public static String totalWeight(@Nonnull List<MCDNDItem> items, @Nonnull Wealth wealth, @Nonnull Weight weight) {
+            return "Total: " + (weight.getInventory(items) + weight.getCoin(wealth) + weight.getOther());
         }
 
         @Nonnull
-        public static String totalWeight(@Nonnull List<MCDNDItem> items, @Nonnull Wealth wealth, @Nonnull Weight weight) {
-            return "Total: " + (weight.getInventory(items) + weight.getCoin(wealth) + weight.getOther());
+        public static String typeRace(@Nonnull NonPlayerSheet nonPlayerSheet) {
+            return "Type/Race: " + nonPlayerSheet.getTypeRace();
         }
 
         @Nonnull

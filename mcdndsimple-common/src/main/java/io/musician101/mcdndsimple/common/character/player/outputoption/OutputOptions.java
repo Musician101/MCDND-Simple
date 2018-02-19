@@ -26,7 +26,7 @@ public class OutputOptions {
         return coreSkillsOutputOptions;
     }
 
-    public void setCoreSkillsOutputOptions(@Nonnull CoreSkillsOutputOptions coreSkillsOutputOptions) {
+    private void setCoreSkillsOutputOptions(@Nonnull CoreSkillsOutputOptions coreSkillsOutputOptions) {
         this.coreSkillsOutputOptions = coreSkillsOutputOptions;
     }
 
@@ -35,7 +35,7 @@ public class OutputOptions {
         return savingThrowOutputOptions;
     }
 
-    public void setSavingThrowOutputOptions(@Nonnull SavingThrowOutputOptions savingThrowOutputOptions) {
+    private void setSavingThrowOutputOptions(@Nonnull SavingThrowOutputOptions savingThrowOutputOptions) {
         this.savingThrowOutputOptions = savingThrowOutputOptions;
     }
 
@@ -44,7 +44,7 @@ public class OutputOptions {
         return weaponsSpellMiscOutputOptions;
     }
 
-    public void setWeaponsSpellMiscOutputOptions(@Nonnull WeaponsSpellMiscOutputOptions weaponsSpellMiscOutputOptions) {
+    private void setWeaponsSpellMiscOutputOptions(@Nonnull WeaponsSpellMiscOutputOptions weaponsSpellMiscOutputOptions) {
         this.weaponsSpellMiscOutputOptions = weaponsSpellMiscOutputOptions;
     }
 

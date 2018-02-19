@@ -72,7 +72,7 @@ public class ClassAction extends Rechargeable {
         return outputOptions;
     }
 
-    public void setOutputOptions(@Nonnull OutputOptions outputOptions) {
+    private void setOutputOptions(@Nonnull OutputOptions outputOptions) {
         this.outputOptions = outputOptions;
     }
 

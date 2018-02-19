@@ -25,7 +25,7 @@ public class NonPlayerSheet {
     private double challengeRating = 0D;
     private int climbSpeed = 0;
     @Nonnull
-    private CoreStats coreStats = new CoreStats();
+    private CoreStats<NonPlayerAbilityScore> coreStats = new CoreStats<>();
     private boolean dmOutputOnly = true;
     private int flySpeed = 0;
     @Nonnull
@@ -85,11 +85,11 @@ public class NonPlayerSheet {
     }
 
     @Nonnull
-    public CoreStats getCoreStats() {
+    public CoreStats<NonPlayerAbilityScore> getCoreStats() {
         return coreStats;
     }
 
-    public void setCoreStats(@Nonnull CoreStats coreStats) {
+    private void setCoreStats(@Nonnull CoreStats<NonPlayerAbilityScore> coreStats) {
         this.coreStats = coreStats;
     }
 
@@ -162,6 +162,10 @@ public class NonPlayerSheet {
         return xp;
     }
 
+    public void setXP(int xp) {
+        this.xp = xp;
+    }
+
     public boolean isDMOutputOnly() {
         return dmOutputOnly;
     }
@@ -170,12 +174,8 @@ public class NonPlayerSheet {
         this.dmOutputOnly = dmOutputOnly;
     }
 
-    public void setHitPoints(NonPlayerHitPoints health) {
+    private void setHitPoints(NonPlayerHitPoints health) {
         this.health = health;
-    }
-
-    public void setXp(int xp) {
-        this.xp = xp;
     }
 
     public static class Serializer implements JsonDeserializer<NonPlayerSheet>, JsonSerializer<NonPlayerSheet> {
@@ -185,14 +185,14 @@ public class NonPlayerSheet {
             JsonObject jsonObject = json.getAsJsonObject();
             NonPlayerSheet nonPlayerSheet = new NonPlayerSheet();
             Keys.DM_OUTPUT_ONLY.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setDMOutputOnly);
-            JsonKeyProcessor.<JsonObject, CoreStats>getJsonKey(Keys.CORE_STATS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setCoreStats));
+            Keys.NON_PLAYER_CORE_STATS.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setCoreStats);
             Keys.CHALLENGE_RATING.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setChallengeRating);
             Keys.ARMOR_CLASS.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setArmorClass);
             Keys.CLIMB_SPEED.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setClimbSpeed);
             Keys.FLY_SPEED.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setFlySpeed);
             Keys.SPEED.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setSpeed);
             Keys.SWIM_SPEED.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setSwimSpeed);
-            Keys.XP.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setXp);
+            Keys.XP.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setXP);
             JsonKeyProcessor.<JsonObject, NonPlayerHitPoints>getJsonKey(Keys.HIT_POINTS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setHitPoints));
             Keys.ARMOR_CLASS_NOTE.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setArmorClassNote);
             Keys.ALIGNMENT.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setAlignment);
@@ -207,7 +207,7 @@ public class NonPlayerSheet {
         public JsonElement serialize(NonPlayerSheet src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
             Keys.DM_OUTPUT_ONLY.serialize(src.isDMOutputOnly(), jsonObject, context);
-            JsonKeyProcessor.<JsonObject, CoreStats>getJsonKey(Keys.CORE_STATS).ifPresent(jsonKey -> jsonKey.serialize(src.getCoreStats(), jsonObject, context));
+            Keys.NON_PLAYER_CORE_STATS.serialize(src.getCoreStats(), jsonObject, context);
             Keys.CHALLENGE_RATING.serialize(src.getChallengeRating(), jsonObject, context);
             Keys.ARMOR_CLASS.serialize(src.getArmorClass(), jsonObject, context);
             Keys.CLIMB_SPEED.serialize(src.getClimbSpeed(), jsonObject, context);

@@ -5,10 +5,9 @@ import java.util.function.BiFunction;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.entity.Player;
 
-//TODO rename "InputAnvilGUIs" so they don't have "Input" in the name
 public class MCDNDSimpleAnvilGUI extends AnvilGUI {
 
-    public MCDNDSimpleAnvilGUI(Player holder, BiFunction<Player, String, String> biFunction) {
+    protected MCDNDSimpleAnvilGUI(Player holder, BiFunction<Player, String, String> biFunction) {
         super(SpigotMCDNDSimple.instance(), holder, "Rename me!", biFunction);
     }
 }

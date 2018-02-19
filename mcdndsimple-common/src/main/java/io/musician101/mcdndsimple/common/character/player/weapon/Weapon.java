@@ -33,7 +33,7 @@ public abstract class Weapon {
     @Nonnull
     private String name = "";
 
-    protected Weapon(@Nonnull WeaponAttackStat defaultAttackStat) {
+    Weapon(@Nonnull WeaponAttackStat defaultAttackStat) {
         this.attackStat = defaultAttackStat;
     }
 

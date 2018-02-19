@@ -32,7 +32,7 @@ public class NonPlayer extends AbstractPlayer {
         return nonPlayerActions;
     }
 
-    public void setNonPlayerActions(@Nonnull NonPlayerActions nonPlayerActions) {
+    private void setNonPlayerActions(@Nonnull NonPlayerActions nonPlayerActions) {
         this.nonPlayerActions = nonPlayerActions;
     }
 
@@ -41,7 +41,7 @@ public class NonPlayer extends AbstractPlayer {
         return nonPlayerSheet;
     }
 
-    public void setNonPlayerSheet(@Nonnull NonPlayerSheet NonPlayerSheet) {
+    private void setNonPlayerSheet(@Nonnull NonPlayerSheet NonPlayerSheet) {
         this.nonPlayerSheet = NonPlayerSheet;
     }
 
@@ -49,7 +49,7 @@ public class NonPlayer extends AbstractPlayer {
         return nonPlayerSkills;
     }
 
-    public void setSkills(NonPlayerSkills nonPlayerSkills) {
+    private void setSkills(@Nonnull NonPlayerSkills nonPlayerSkills) {
         this.nonPlayerSkills = nonPlayerSkills;
     }
 
@@ -58,7 +58,7 @@ public class NonPlayer extends AbstractPlayer {
         return traitsBackground;
     }
 
-    public void setTraitsBackground(@Nonnull TraitsBackground traitsBackground) {
+    private void setTraitsBackground(@Nonnull TraitsBackground traitsBackground) {
         this.traitsBackground = traitsBackground;
     }
 

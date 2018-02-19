@@ -90,6 +90,11 @@ public class Dice {
         return list;
     }
 
+    @Override
+    public String toString() {
+        return amount + "d" + sides;
+    }
+
     public static class Serializer implements JsonDeserializer<Dice>, JsonSerializer<Dice> {
 
         @Override

@@ -40,9 +40,9 @@ import io.musician101.mcdndsimple.common.character.player.tab.InventoryTab;
 import io.musician101.mcdndsimple.common.character.player.tab.SkillsTab;
 import io.musician101.mcdndsimple.common.character.player.tab.SpellbookTab;
 import io.musician101.mcdndsimple.common.character.player.tab.WeaponsTab;
-import io.musician101.mcdndsimple.common.character.player.weapon.Weapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.RangedWeapon;
+import io.musician101.mcdndsimple.common.character.player.weapon.Weapon;
 import ninja.leaping.configurate.ConfigurationNode;
 import ninja.leaping.configurate.SimpleConfigurationNode;
 

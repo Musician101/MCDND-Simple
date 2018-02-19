@@ -12,6 +12,7 @@ import io.musician101.mcdndsimple.common.character.HitPoints;
 import io.musician101.mcdndsimple.common.character.player.DeathSavingThrows;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.HitDice;
+import io.musician101.mcdndsimple.common.character.player.PlayerAbilityScore;
 import io.musician101.mcdndsimple.common.character.player.bonus.Bonuses;
 import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
@@ -25,17 +26,17 @@ public class CoreStatsTab {
     @Nonnull
     private Bonuses bonuses = new Bonuses();
     @Nonnull
-    private CoreStats coreStats = new CoreStats();
+    private CoreStats<PlayerAbilityScore> coreStats = new CoreStats<>();
     @Nonnull
     private DeathSavingThrows deathSavingThrows = new DeathSavingThrows();
     @Nonnull
-    private Experience experience = new Experience();
+    private final Experience experience = new Experience();
     @Nonnull
     private HitDice hitDice = new HitDice();
     @Nonnull
     private HitPoints hitPoints = new HitPoints();
     @Nonnull
-    private Initiative initiative = new Initiative();
+    private final Initiative initiative = new Initiative();
     private boolean inspiration = false;
     private int speed = 30;
 
@@ -49,11 +50,11 @@ public class CoreStatsTab {
     }
 
     @Nonnull
-    public CoreStats getCoreStats() {
+    public CoreStats<PlayerAbilityScore> getCoreStats() {
         return coreStats;
     }
 
-    private void setCoreStats(@Nonnull CoreStats coreStats) {
+    private void setCoreStats(@Nonnull CoreStats<PlayerAbilityScore> coreStats) {
         this.coreStats = coreStats;
     }
 
@@ -118,7 +119,7 @@ public class CoreStatsTab {
             CoreStatsTab coreStatsTab = new CoreStatsTab();
             JsonKeyProcessor.<JsonObject, Bonuses>getJsonKey(Keys.BONUSES).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setBonuses));
             Keys.INSPIRATION.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setHasInspiration);
-            JsonKeyProcessor.<JsonObject, CoreStats>getJsonKey(Keys.CORE_STATS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setCoreStats));
+            Keys.PLAYER_CORE_STATS.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setCoreStats);
             JsonKeyProcessor.<JsonObject, DeathSavingThrows>getJsonKey(Keys.DEATH_SAVING_THROWS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setDeathSavingThrows));
             Keys.EXPERIENCE.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab.getExperience()::setExp);
             JsonKeyProcessor.<JsonObject, HitDice>getJsonKey(Keys.HIT_DICE).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setHitDice));
@@ -133,7 +134,7 @@ public class CoreStatsTab {
             JsonObject jsonObject = new JsonObject();
             JsonKeyProcessor.<JsonObject, Bonuses>getJsonKey(Keys.BONUSES).ifPresent(jsonKey -> jsonKey.serialize(src.getBonuses(), jsonObject, context));
             Keys.INSPIRATION.serialize(src.hasInspiration(), jsonObject, context);
-            JsonKeyProcessor.<JsonObject, CoreStats>getJsonKey(Keys.CORE_STATS).ifPresent(jsonKey -> jsonKey.serialize(src.getCoreStats(), jsonObject, context));
+            Keys.PLAYER_CORE_STATS.serialize(src.getCoreStats(), jsonObject, context);
             JsonKeyProcessor.<JsonObject, DeathSavingThrows>getJsonKey(Keys.DEATH_SAVING_THROWS).ifPresent(jsonKey -> jsonKey.serialize(src.getDeathSavingThrows(), jsonObject, context));
             Keys.EXPERIENCE.serialize(src.getExperience().getXP(), jsonObject, context);
             JsonKeyProcessor.<JsonObject, HitDice>getJsonKey(Keys.HIT_DICE).ifPresent(jsonKey -> jsonKey.serialize(src.getHitDice(), jsonObject, context));

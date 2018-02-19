@@ -9,7 +9,7 @@ public abstract class Skill {
     private final String name;
     private int bonus = 0;
 
-    public Skill(@Nonnull String name) {
+    protected Skill(@Nonnull String name) {
         this.name = name;
     }
 

@@ -7,60 +7,101 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.google.gson.reflect.TypeToken;
+import io.musician101.mcdndsimple.common.character.nonplayer.NonPlayerAbilityScore;
 import io.musician101.mcdndsimple.common.character.player.AbilityScore;
-import io.musician101.mcdndsimple.common.character.player.tab.CoreStatsTab;
+import io.musician101.mcdndsimple.common.character.player.PlayerAbilityScore;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
 import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.CORE_STATS, typeAdapter = CoreStatsTab.Serializer.class)
-public class CoreStats {
+public class CoreStats<A extends AbilityScore> {
 
-    private AbilityScore charisma = new AbilityScore("Charisma", "cha");
-    private AbilityScore constitution = new AbilityScore("Constitution", "con");
-    private AbilityScore dexterity = new AbilityScore("Dexterity", "dex");
-    private AbilityScore intelligence = new AbilityScore("Intelligence", "int");
-    private AbilityScore strength = new AbilityScore("Strength", "str");
-    private AbilityScore wisdom = new AbilityScore("Wisdom", "wis");
+    private final A charisma;
+    private final A constitution;
+    private final A dexterity;
+    private final A intelligence;
+    private final A strength;
+    private final A wisdom;
+
+    @SuppressWarnings("unchecked")
+    public CoreStats() {
+        Class<?> clazz = ((ParameterizedType) new TypeToken<CoreStats<A>>() {
+
+        }.getType()).getActualTypeArguments()[0].getClass();
+        try {
+            charisma = (A) clazz.getConstructor(String.class, String.class).newInstance("Charisma", "cha");
+            constitution = (A) clazz.getConstructor(String.class, String.class).newInstance("Constitution", "con");
+            dexterity = (A) clazz.getConstructor(String.class, String.class).newInstance("Dexterity", "dex");
+            intelligence = (A) clazz.getConstructor(String.class, String.class).newInstance("Intelligence", "int");
+            strength = (A) clazz.getConstructor(String.class, String.class).newInstance("Strength", "str");
+            wisdom = (A) clazz.getConstructor(String.class, String.class).newInstance("Wisdom", "wis");
+        }
+        catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
+            throw new UnsupportedOperationException(e);
+        }
+    }
 
     @Nonnull
-    public AbilityScore getCharisma() {
+    public A getCharisma() {
         return charisma;
     }
 
     @Nonnull
-    public AbilityScore getConstitution() {
+    public A getConstitution() {
         return constitution;
     }
 
     @Nonnull
-    public AbilityScore getDexterity() {
+    public A getDexterity() {
         return dexterity;
     }
 
     @Nonnull
-    public AbilityScore getIntelligence() {
+    public A getIntelligence() {
         return intelligence;
     }
 
     @Nonnull
-    public AbilityScore getStrength() {
+    public A getStrength() {
         return strength;
     }
 
     @Nonnull
-    public AbilityScore getWisdom() {
+    public A getWisdom() {
         return wisdom;
     }
 
-    public static class Serializer implements JsonDeserializer<CoreStats>, JsonSerializer<CoreStats> {
+    public static class Serializer<A extends AbilityScore> implements JsonDeserializer<CoreStats<A>>, JsonSerializer<CoreStats<A>> {
+
+        private final DeserializerConsumer<A> deserialize;
+        private final SerializerConsumer<A> serialize;
+
+        @SuppressWarnings("unchecked")
+        public Serializer() {
+            Class<?> clazz = ((ParameterizedType) new TypeToken<CoreStats<A>>() {
+
+            }.getType()).getActualTypeArguments()[0].getClass();
+            if (clazz.equals(NonPlayerAbilityScore.class)) {
+                deserialize = (abilityScore, jsonObject, context) -> Keys.BONUS.deserializeFromParent(jsonObject, context).ifPresent(((NonPlayerAbilityScore) abilityScore)::setBonus);
+                serialize = (abilityScore, jsonObject, context) -> Keys.BONUS.serialize(((NonPlayerAbilityScore) abilityScore).getBonus(), jsonObject, context);
+            }
+            else if (clazz.equals(PlayerAbilityScore.class)) {
+                deserialize = (abilityScore, jsonObject, context) -> Keys.IS_PROFICIENT.deserializeFromParent(jsonObject, context).ifPresent(((PlayerAbilityScore) abilityScore)::setIsProficient);
+                serialize = (abilityScore, jsonObject, context) -> Keys.IS_PROFICIENT.serialize(((PlayerAbilityScore) abilityScore).isProficient(), jsonObject, context);
+            }
+            else {
+                throw new UnsupportedOperationException(clazz.getCanonicalName() + " is not a supported implementation of " + AbilityScore.class.getCanonicalName());
+            }
+        }
 
         @Override
-        public CoreStats deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+        public CoreStats<A> deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
-            CoreStats coreStats = new CoreStats();
+            CoreStats<A> coreStats = new CoreStats<>();
             deserialize(coreStats.getCharisma(), jsonObject.getAsJsonObject(Keys.CHARISMA), context);
             deserialize(coreStats.getConstitution(), jsonObject.getAsJsonObject(Keys.CONSTITUTION), context);
             deserialize(coreStats.getDexterity(), jsonObject.getAsJsonObject(Keys.DEXTERITY), context);
@@ -70,13 +111,13 @@ public class CoreStats {
             return coreStats;
         }
 
-        private void deserialize(AbilityScore abilityScore, JsonObject jsonObject, JsonDeserializationContext context) {
-            Keys.IS_PROFICIENT.deserializeFromParent(jsonObject, context).ifPresent(abilityScore::setIsProficient);
+        private void deserialize(A abilityScore, JsonObject jsonObject, JsonDeserializationContext context) {
+            deserialize.apply(abilityScore, jsonObject, context);
             Keys.SCORE.deserializeFromParent(jsonObject, context).ifPresent(abilityScore::setScore);
         }
 
         @Override
-        public JsonElement serialize(CoreStats src, Type type, JsonSerializationContext context) {
+        public JsonElement serialize(CoreStats<A> src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
             serialize(src.getCharisma(), jsonObject.getAsJsonObject(Keys.CHARISMA), context);
             serialize(src.getConstitution(), jsonObject.getAsJsonObject(Keys.CONSTITUTION), context);
@@ -93,9 +134,21 @@ public class CoreStats {
             return jsonObject;
         }
 
-        private void serialize(AbilityScore abilityScore, JsonObject jsonObject, JsonSerializationContext context) {
-            Keys.IS_PROFICIENT.serialize(abilityScore.isProficient(), jsonObject, context);
+        private void serialize(A abilityScore, JsonObject jsonObject, JsonSerializationContext context) {
+            serialize.apply(abilityScore, jsonObject, context);
             Keys.SCORE.serialize(abilityScore.getScore(), jsonObject, context);
+        }
+
+        @FunctionalInterface
+        private interface DeserializerConsumer<A extends AbilityScore> {
+
+            void apply(A abilityScore, JsonObject jsonObject, JsonDeserializationContext context);
+        }
+
+        @FunctionalInterface
+        private interface SerializerConsumer<A extends AbilityScore> {
+
+            void apply(A abilityScore, JsonObject jsonObject, JsonSerializationContext context);
         }
     }
 }

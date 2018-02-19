@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-//TODO see if it's possible to have a picture of some sort
 @JsonKey(key = "bio_and_info", typeAdapter = BioAndInfo.Serializer.class)
 public class BioAndInfo {
 

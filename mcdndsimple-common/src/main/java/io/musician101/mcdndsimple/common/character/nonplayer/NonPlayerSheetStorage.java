@@ -20,7 +20,6 @@ import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 
-//TODO GUIS
 public abstract class NonPlayerSheetStorage extends CharacterStorage<NonPlayer> {
 
     public NonPlayerSheetStorage(File storageDir) {

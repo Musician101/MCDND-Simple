@@ -1,6 +1,6 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.spellbook.spell;
 
-import io.musician101.mcdndsimple.common.Reference.MenuText;
+import io.musician101.mcdndsimple.common.reference.MenuText;
 import io.musician101.mcdndsimple.common.character.player.spell.StatBonus;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.chest.MCDNDSimpleChestGUI;

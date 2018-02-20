@@ -1,8 +1,8 @@
 package io.musician101.mcdndsimple.spigot.command;
 
-import io.musician101.mcdndsimple.common.Reference.Commands;
-import io.musician101.mcdndsimple.common.Reference.Messages;
-import io.musician101.mcdndsimple.common.Reference.Permissions;
+import io.musician101.mcdndsimple.common.reference.Commands;
+import io.musician101.mcdndsimple.common.reference.Messages;
+import io.musician101.mcdndsimple.common.reference.Permissions;
 import io.musician101.mcdndsimple.spigot.SpigotMCDNDSimple;
 import io.musician101.mcdndsimple.spigot.character.SpigotNonPlayerSheetStorage;
 import io.musician101.mcdndsimple.spigot.character.SpigotPlayerSheetStorage;

@@ -1,7 +1,7 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.clazz;
 
-import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.Reference.Messages;
+import io.musician101.mcdndsimple.common.reference.MenuText;
+import io.musician101.mcdndsimple.common.reference.Messages;
 import io.musician101.mcdndsimple.common.character.player.clazz.ClassResource;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import io.musician101.mcdndsimple.sponge.gui.anvil.StringInputAnvilGUI;

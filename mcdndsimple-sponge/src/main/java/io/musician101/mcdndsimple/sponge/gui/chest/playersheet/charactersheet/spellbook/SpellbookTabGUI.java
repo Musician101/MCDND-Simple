@@ -1,6 +1,6 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.spellbook;
 
-import io.musician101.mcdndsimple.common.Reference.MenuText;
+import io.musician101.mcdndsimple.common.reference.MenuText;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
 import io.musician101.mcdndsimple.common.character.player.Experience;

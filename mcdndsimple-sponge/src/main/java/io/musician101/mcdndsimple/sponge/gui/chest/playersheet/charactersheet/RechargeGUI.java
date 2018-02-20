@@ -1,6 +1,6 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet;
 
-import io.musician101.mcdndsimple.common.Reference.MenuText;
+import io.musician101.mcdndsimple.common.reference.MenuText;
 import io.musician101.mcdndsimple.common.character.player.Recharge;
 import io.musician101.mcdndsimple.common.character.player.Rechargeable;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;

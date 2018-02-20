@@ -1,6 +1,6 @@
 package io.musician101.mcdndsimple.sponge.gui.chest.playersheet.charactersheet.weapons;
 
-import io.musician101.mcdndsimple.common.Reference.MenuText;
+import io.musician101.mcdndsimple.common.reference.MenuText;
 import io.musician101.mcdndsimple.common.character.player.weapon.Weapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.WeaponAttackStat;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;

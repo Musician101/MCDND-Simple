@@ -1,7 +1,7 @@
 package io.musician101.mcdndsimple.sponge.command.args;
 
-import io.musician101.mcdndsimple.common.Reference.Commands;
-import io.musician101.mcdndsimple.common.Reference.Messages;
+import io.musician101.mcdndsimple.common.reference.Commands;
+import io.musician101.mcdndsimple.common.reference.Messages;
 import io.musician101.mcdndsimple.sponge.SpongeMCDNDSimple;
 import java.util.ArrayList;
 import java.util.Collections;

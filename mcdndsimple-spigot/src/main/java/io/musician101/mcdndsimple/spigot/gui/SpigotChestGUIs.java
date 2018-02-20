@@ -1,9 +1,9 @@
 package io.musician101.mcdndsimple.spigot.gui;
 
 import io.musician101.mcdndsimple.common.Dice;
-import io.musician101.mcdndsimple.common.Reference.MenuText;
-import io.musician101.mcdndsimple.common.Reference.Messages;
-import io.musician101.mcdndsimple.common.Reference.Permissions;
+import io.musician101.mcdndsimple.common.reference.MenuText;
+import io.musician101.mcdndsimple.common.reference.Messages;
+import io.musician101.mcdndsimple.common.reference.Permissions;
 import io.musician101.mcdndsimple.common.character.AbstractPlayer;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.HitPoints;

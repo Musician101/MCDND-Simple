@@ -1,6 +1,6 @@
 package io.musician101.mcdndsimple.spigot;
 
-import io.musician101.mcdndsimple.common.Reference.Messages;
+import io.musician101.mcdndsimple.common.reference.Messages;
 import io.musician101.mcdndsimple.spigot.character.SpigotNonPlayerSheetStorage;
 import io.musician101.mcdndsimple.spigot.character.SpigotPlayerSheetStorage;
 import io.musician101.mcdndsimple.spigot.command.CallbackTracker;

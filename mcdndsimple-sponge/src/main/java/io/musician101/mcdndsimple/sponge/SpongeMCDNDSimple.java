@@ -1,7 +1,7 @@
 package io.musician101.mcdndsimple.sponge;
 
 import com.google.inject.Inject;
-import io.musician101.mcdndsimple.common.Reference.Commands;
+import io.musician101.mcdndsimple.common.reference.Commands;
 import io.musician101.mcdndsimple.common.character.player.PlayerSheet;
 import io.musician101.mcdndsimple.sponge.character.SpongePlayerSheetStorage;
 import io.musician101.mcdndsimple.sponge.command.args.CharacterSheetCommandElement;

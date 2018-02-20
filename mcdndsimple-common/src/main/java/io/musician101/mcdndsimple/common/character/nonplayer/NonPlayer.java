@@ -68,6 +68,7 @@ public class NonPlayer extends AbstractPlayer {
         public NonPlayer deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             NonPlayer nonPlayerSheet = new NonPlayer();
+            Keys.CONTROLLERS.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setControllers);
             JsonKeyProcessor.<JsonObject, NonPlayerActions>getJsonKey(Keys.NON_PLAYER_ACTIONS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setNonPlayerActions));
             JsonKeyProcessor.<JsonObject, NonPlayerSheet>getJsonKey(Keys.NON_PLAYER_SHEET).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setNonPlayerSheet));
             JsonKeyProcessor.<JsonObject, NonPlayerSkills>getJsonKey(Keys.NON_PLAYER_SKILLS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setSkills));
@@ -78,6 +79,7 @@ public class NonPlayer extends AbstractPlayer {
         @Override
         public JsonElement serialize(NonPlayer src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
+            Keys.CONTROLLERS.serialize(src.getControllers(), jsonObject, context);
             JsonKeyProcessor.<JsonObject, NonPlayerActions>getJsonKey(Keys.NON_PLAYER_ACTIONS).ifPresent(jsonKey -> jsonKey.serialize(src.getNonPlayerActions(), jsonObject, context));
             JsonKeyProcessor.<JsonObject, NonPlayerSheet>getJsonKey(Keys.NON_PLAYER_SHEET).ifPresent(jsonKey -> jsonKey.serialize(src.getNonPlayerSheet(), jsonObject, context));
             JsonKeyProcessor.<JsonObject, NonPlayerSkills>getJsonKey(Keys.NON_PLAYER_SKILLS).ifPresent(jsonKey -> jsonKey.serialize(src.getSkills(), jsonObject, context));

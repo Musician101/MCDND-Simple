@@ -1,12 +1,8 @@
 package io.musician101.mcdndsimple.common.character;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonSerializer;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nonnull;
@@ -14,7 +10,7 @@ import javax.annotation.Nonnull;
 public abstract class CharacterStorage<T extends AbstractPlayer> {
 
     @Nonnull
-    protected final Multimap<T, UUID> data = ArrayListMultimap.create();
+    protected final List<T> data = new ArrayList<>();
     @Nonnull
     protected final File storageDir;
 
@@ -28,27 +24,23 @@ public abstract class CharacterStorage<T extends AbstractPlayer> {
 
     @Nonnull
     public Optional<T> getCharacter(@Nonnull UUID uuid, @Nonnull String name) {
-        return data.keys().stream().filter(sheet -> name.equals(sheet.getName()) && data.get(sheet).contains(uuid)).findFirst();
+        return data.stream().filter(sheet -> sheet.getName().equals(name) && sheet.isController(uuid)).findFirst();
     }
 
     @Nonnull
-    public Multimap<T, UUID> getCharacters() {
+    public List<T> getCharacters() {
         return data;
     }
 
     public abstract void load();
 
     public void remove(@Nonnull T value) {
-        data.removeAll(value);
+        data.remove(value);
     }
 
     public void removeFrom(@Nonnull T value, @Nonnull UUID uuid) {
-        data.remove(value, uuid);
+        value.removeController(uuid);
     }
 
     public abstract void save();
-
-    protected interface Serializer<T extends AbstractPlayer> extends JsonDeserializer<Entry<T, List<UUID>>>, JsonSerializer<Entry<T, List<UUID>>> {
-
-    }
 }

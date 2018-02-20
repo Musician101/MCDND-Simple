@@ -52,6 +52,7 @@ public class PlayerSheet extends AbstractPlayer {
         public PlayerSheet deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             PlayerSheet playerSheet = new PlayerSheet();
+            Keys.CONTROLLERS.deserializeFromParent(jsonObject, context).ifPresent(playerSheet::setControllers);
             JsonKeyProcessor.<JsonObject, BioAndInfo>getJsonKey(Keys.BIO_AND_INFO).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(playerSheet::setBioAndInfo));
             JsonKeyProcessor.<JsonObject, CharacterSheet>getJsonKey(Keys.CHARACTER_SHEET).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(playerSheet::setCharacterSheet));
             Keys.CLASS.deserializeFromParent(jsonObject, context).ifPresent(playerSheet::setClazz);
@@ -63,6 +64,7 @@ public class PlayerSheet extends AbstractPlayer {
         @Override
         public JsonElement serialize(PlayerSheet src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
+            Keys.CONTROLLERS.serialize(src.getControllers(), jsonObject, context);
             Keys.CLASS.serialize(src.getClazz(), jsonObject, context);
             Keys.NAME.serialize(src.getName(), jsonObject, context);
             Keys.RACE.serialize(src.getRace(), jsonObject, context);

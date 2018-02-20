@@ -53,15 +53,15 @@ public class Reference {
         public static final String CALLBACK_DESC = "An internal command for running code from clickable text in chat.";
         public static final String CALLBACK_NAME = "callback";
         public static final String CHARACTER_DESC = "Edit a character's sheet.";
-        public static final String CHARACTER_NAME = "character";
         public static final String CREATE_COMMAND = "create";
-        public static final String CREATE_COMMAND_DESC = "Create a PC or NPC_NAME.";
+        public static final String CREATE_COMMAND_DESC = "Create a PC or NPC.";
         public static final String NAME = "name";
-        public static final String NPC_DESC = "Open up the player sheet for an NPC.";
+        public static final String NPC_DESC = "Open up the PLAYER_NAME sheet for an NPC.";
         public static final String NPC_NAME = "npc";
-        public static final String PC = "pc";
-        public static final String CREATE_ARGUMENT = NPC_NAME + " | " + PC;
-        public static final String PLAYER_SHEET_DESC = "Open up the player sheet for a character.";
+        public static final String PC_NAME = "pc";
+        public static final String CREATE_ARGUMENT = NPC_NAME + " | " + PC_NAME;
+        public static final String PLAYER_NAME = "player";
+        public static final String PLAYER_SHEET_DESC = "Open up the character sheet for a character.";
         public static final String PLAYER_SHEET_NAME = "playersheet";
         public static final String SPELL_NAME = "spell";
         public static final String UUID = "UUID";
@@ -132,6 +132,7 @@ public class Reference {
         public static final String DESCRIPTION = "Description";
         public static final String DEXTERITY = "Dexterity";
         public static final String DRUID = "Druid";
+        public static final String EDIT_CONTROLLERS = "Edit Controllers";
         public static final String EFFECT = "Effect";
         public static final String EFFECTS = "Effects";
         public static final String FIGHTER = "Fighter";
@@ -163,13 +164,9 @@ public class Reference {
         public static final String NEW_CLASS_ACTION = "New Class Action";
         public static final String NEW_ITEM = "New Item";
         public static final String NEW_MELEE_WEAPON = "New Melee Weapon";
+        public static final String NEW_PLAYER_SHEET = "New Player Sheet";
         public static final String NEW_RANGED_WEAPON = "New Ranged Weapon";
         public static final String NEXT_PAGE = "Next Page";
-        /**
-         * @deprecated need to use a tiny bit more often in some cases
-         */
-        @Deprecated
-        public static final String NONE = "None";
         public static final String ON_SUCCESSFUL_SAVE = "On A Successful Save";
         public static final String OTHER_BONUS = "Other Bonus";
         public static final String OTHER_NOTES = "Other Notes";
@@ -181,6 +178,7 @@ public class Reference {
         public static final String PERSONALITY_TRAITS = "Personality Traits";
         public static final String PERSUASION = "Persuasion";
         public static final String PLAYER_SHEET = "Player Sheet";
+        public static final String PLAYER_SHEETS = "Player Sheets";
         public static final String PLUS_STAT = "Plus Stat?";
         public static final String PREVIOUS_PAGE = "Previous Page";
         public static final String PROFICIENT = "Proficient";

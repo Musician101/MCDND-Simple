@@ -24,19 +24,19 @@ import javax.annotation.Nonnull;
 public class CoreStatsTab {
 
     @Nonnull
+    private final Experience experience = new Experience();
+    @Nonnull
+    private final Initiative initiative = new Initiative();
+    @Nonnull
     private Bonuses bonuses = new Bonuses();
     @Nonnull
     private CoreStats<PlayerAbilityScore> coreStats = new CoreStats<>();
     @Nonnull
     private DeathSavingThrows deathSavingThrows = new DeathSavingThrows();
     @Nonnull
-    private final Experience experience = new Experience();
-    @Nonnull
     private HitDice hitDice = new HitDice();
     @Nonnull
     private HitPoints hitPoints = new HitPoints();
-    @Nonnull
-    private final Initiative initiative = new Initiative();
     private boolean inspiration = false;
     private int speed = 30;
 

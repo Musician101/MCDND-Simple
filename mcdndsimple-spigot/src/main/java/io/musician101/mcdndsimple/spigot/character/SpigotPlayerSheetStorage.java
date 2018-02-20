@@ -9,9 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.List;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 public class SpigotPlayerSheetStorage extends PlayerSheetStorage {
@@ -26,7 +23,7 @@ public class SpigotPlayerSheetStorage extends PlayerSheetStorage {
         File[] files = storageDir.listFiles();
         Logger logger = SpigotMCDNDSimple.instance().getLogger();
         if (files == null) {
-            logger.warning("An error occurred while loading player character data.");
+            logger.warning("An error occurred while loading PLAYER_NAME character data.");
             return;
         }
 
@@ -36,8 +33,7 @@ public class SpigotPlayerSheetStorage extends PlayerSheetStorage {
             }
 
             try {
-                SimpleEntry<PlayerSheet, List<UUID>> entry = JsonKeyProcessor.GSON.fromJson(new FileReader(file), PlayerSheetStorage.Serializer.ENTRY_CLASS.getType());
-                data.putAll(entry.getKey(), entry.getValue());
+                data.add(JsonKeyProcessor.GSON.fromJson(new FileReader(file), PlayerSheet.class));
             }
             catch (FileNotFoundException e) {
                 logger.warning("An error occurred while loading " + file.getName());
@@ -47,15 +43,15 @@ public class SpigotPlayerSheetStorage extends PlayerSheetStorage {
 
     @Override
     public void save() {
-        data.keys().forEach(playerSheet -> {
+        data.forEach(playerSheet -> {
             File file = new File(storageDir, playerSheet.getName() + ".pc");
             try {
                 if (!file.exists()) {
-                    file.getParentFile().mkdirs();
+                    storageDir.mkdirs();
                     file.createNewFile();
                 }
 
-                JsonKeyProcessor.GSON.toJson(new SimpleEntry<>(playerSheet, data.get(playerSheet)), new FileWriter(file));
+                JsonKeyProcessor.GSON.toJson(playerSheet, new FileWriter(file));
             }
             catch (IOException e) {
                 SpigotMCDNDSimple.instance().getLogger().warning("An error occurred while saving " + file.getName());

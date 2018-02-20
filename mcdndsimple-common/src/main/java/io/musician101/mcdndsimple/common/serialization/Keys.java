@@ -88,7 +88,6 @@ public class Keys {
     public static final JsonKeyImpl<JsonArray, List<UUID>> CONTROLLERS = listKey("controllers", new ObjectListSerializer<>());
     public static final JsonKeyImpl<JsonPrimitive, Integer> COPPER = integerKey("copper");
     public static final String CORE_SKILLS_OUTPUT_OPTIONS = "core_skills_output_options";
-    private static final String CORE_STATS = "core_stats";
     public static final String CORE_STATS_TAB = "core_stats_tab";
     public static final String CRIT_DAMAGE = "crit_damage_dice";
     public static final JsonKeyImpl<JsonPrimitive, Integer> CRIT_MINIMUM = integerKey("crit_minimum");
@@ -177,7 +176,6 @@ public class Keys {
     public static final JsonKeyImpl<JsonPrimitive, Integer> NINTH_LEVEL_SPELLS_USED = integerKey("ninth_level_spells_used");
     public static final String NON_PLAYER_ACTIONS = "non_player_actions";
     public static final String NON_PLAYER_ACTION_TYPE = "non_player_action_type";
-    public static final JsonKeyImpl<JsonObject, CoreStats<NonPlayerAbilityScore>> NON_PLAYER_CORE_STATS = objectKey(CORE_STATS, new CoreStats.Serializer<>());
     public static final String NON_PLAYER_SHEET = "non_player_sheets";
     public static final String NON_PLAYER_SKILLS = "non_player_skills";
     public static final JsonKeyImpl<JsonArray, List<String>> ON_SUCCESSFUL_SAVE = listKey("on_successful_save", new StringListSerializer());
@@ -192,7 +190,6 @@ public class Keys {
     public static final String PERSUASION = "persuasion";
     public static final JsonKeyImpl<JsonPrimitive, Boolean> PERSUASION_BOOLEAN = booleanKey("persuasion");
     public static final JsonKeyImpl<JsonPrimitive, Integer> PLATINUM = integerKey("platinum");
-    public static final JsonKeyImpl<JsonObject, CoreStats<PlayerAbilityScore>> PLAYER_CORE_STATS = objectKey(CORE_STATS, new CoreStats.Serializer<>());
     public static final JsonKeyImpl<JsonArray, List<PlayerSheet>> PLAYER_SHEETS = listKey("player_sheets", new ObjectListSerializer<>());
     public static final JsonKeyImpl<JsonPrimitive, Boolean> PLUS_STAT = booleanKey("plus_stat");
     public static final String PREPARED = "prepared";
@@ -281,6 +278,9 @@ public class Keys {
     public static final JsonKeyImpl<JsonPrimitive, Integer> WIZARD = integerKey("wizard");
     public static final JsonKeyImpl<JsonPrimitive, Boolean> WORN = booleanKey("worn");
     public static final JsonKeyImpl<JsonPrimitive, Integer> XP = integerKey("xp");
+    private static final String CORE_STATS = "core_stats";
+    public static final JsonKeyImpl<JsonObject, CoreStats<NonPlayerAbilityScore>> NON_PLAYER_CORE_STATS = objectKey(CORE_STATS, new CoreStats.Serializer<>());
+    public static final JsonKeyImpl<JsonObject, CoreStats<PlayerAbilityScore>> PLAYER_CORE_STATS = objectKey(CORE_STATS, new CoreStats.Serializer<>());
 
     private Keys() {
 

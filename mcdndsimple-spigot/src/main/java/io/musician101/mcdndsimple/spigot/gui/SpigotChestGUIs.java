@@ -3,6 +3,8 @@ package io.musician101.mcdndsimple.spigot.gui;
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.Reference.MenuText;
 import io.musician101.mcdndsimple.common.Reference.Messages;
+import io.musician101.mcdndsimple.common.Reference.Permissions;
+import io.musician101.mcdndsimple.common.character.AbstractPlayer;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.HitPoints;
 import io.musician101.mcdndsimple.common.character.nonplayer.NonPlayer;
@@ -96,6 +98,7 @@ import net.minecraft.server.v1_12_R1.EnumHand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
@@ -103,6 +106,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionType;
 
 public class SpigotChestGUIs {
@@ -611,6 +615,23 @@ public class SpigotChestGUIs {
         })).build();
     }
 
+    public void editControllers(@Nonnull Player player, int page, @Nonnull AbstractPlayer abstractPlayer, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
+        paged(MenuText.EDIT_CONTROLLERS, player, prevGUI, page, uuid -> {
+            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+            ItemStack itemStack = SpigotIconBuilder.builder(Material.SKULL_ITEM).name(offlinePlayer.getName()).durability(3).addGlow(abstractPlayer.isController(uuid)).build();
+            SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
+            skullMeta.setOwningPlayer(offlinePlayer);
+            return itemStack;
+        }, uuid -> (g, p) -> {
+            if (abstractPlayer.isController(uuid)) {
+                abstractPlayer.removeController(uuid);
+            }
+            else {
+                abstractPlayer.addController(uuid);
+            }
+        }, (p, i) -> editControllers(p, i, abstractPlayer, prevGUI), abstractPlayer.getControllers()).build();
+    }
+
     public void experience(@Nonnull Player player, @Nonnull ClassLevels classLevels, @Nonnull Experience experience, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
         builder(9, 8, MenuText.LEVEL_AND_XP, player, prevGUI).setButtons(GUIButton.of(0, SpigotIconBuilder.of(Material.BOOK, MenuText.overallLevel(experience, classLevels))), GUIButton.of(1, SpigotIconBuilder.of(Material.ANVIL, MenuText.proficiencyBonus(experience, classLevels))), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.EXP_BOTTLE, MenuText.currentXP(experience)), (g, p) -> new IntegerAnvilGUI(p, (ply, i) -> {
             experience.setExp(i);
@@ -882,7 +903,7 @@ public class SpigotChestGUIs {
     }
 
     public void nonPlayer(@Nonnull Player player, @Nonnull NonPlayer nonPlayer, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.name(nonPlayer), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.RENAME), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
+        SpigotChestGUIBuilder<SpigotMCDNDSimple> builder = builder(9, 8, MenuText.name(nonPlayer), player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.RENAME), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             nonPlayer.setName(s);
             nonPlayer(ply, nonPlayer, prevGUI);
         })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_CHESTPLATE, MenuText.CLASS), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
@@ -891,7 +912,12 @@ public class SpigotChestGUIs {
         })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.MONSTER_EGG, MenuText.RACE), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             nonPlayer.setClazz(s);
             nonPlayer(ply, nonPlayer, prevGUI);
-        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_TORCH_ON, MenuText.ACTIONS), (g, p) -> nonPlayerActions(p, nonPlayer.getNonPlayerActions(), g)), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK_AND_QUILL, MenuText.CHARACTER_SHEET), (g, p) -> nonPlayerSheet(p, nonPlayer, g)), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.SKILLS), (g, p) -> nonPlayerSkills(p, nonPlayer.getNonPlayerSheet().getCoreStats(), nonPlayer, nonPlayer.getSkills(), g)), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK_AND_QUILL, MenuText.TRAITS_BACKGROUND), (g, p) -> traitsBackground(p, nonPlayer.getTraitsBackground(), g))).build();
+        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.REDSTONE_TORCH_ON, MenuText.ACTIONS), (g, p) -> nonPlayerActions(p, nonPlayer.getNonPlayerActions(), g)), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK_AND_QUILL, MenuText.CHARACTER_SHEET), (g, p) -> nonPlayerSheet(p, nonPlayer, g)), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.SKILLS), (g, p) -> nonPlayerSkills(p, nonPlayer.getNonPlayerSheet().getCoreStats(), nonPlayer, nonPlayer.getSkills(), g)), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK_AND_QUILL, MenuText.TRAITS_BACKGROUND), (g, p) -> traitsBackground(p, nonPlayer.getTraitsBackground(), g)));
+        if (player.hasPermission(Permissions.DM)) {
+            builder.setButtons(GUIButton.of(6, ClickType.LEFT, SpigotIconBuilder.builder(Material.SKULL_ITEM).name(MenuText.EDIT_CONTROLLERS).durability(3).build(), (g, p) -> editControllers(p, 1, nonPlayer, g)), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.of(Material.ENDER_CHEST, MenuText.DELETE), (g, p) -> SpigotMCDNDSimple.instance().getNonPlayerStorage().remove(nonPlayer)));
+        }
+
+        builder.build();
     }
 
     public void nonPlayerAbilityScore(@Nonnull Player player, @Nonnull NonPlayer nonPlayer, @Nonnull NonPlayerAbilityScore abilityScore, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
@@ -1084,6 +1110,19 @@ public class SpigotChestGUIs {
         builder(27, 26, MenuText.SKILLS, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.LEATHER_BOOTS, MenuText.ACROBATICS), (g, p) -> skill(p, nonPlayer, coreStats.getDexterity(), skills.getAcrobatics(), g)), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.SADDLE, MenuText.ANIMAL_HANDLING), (g, p) -> skill(p, nonPlayer, coreStats.getWisdom(), skills.getAnimalHandling(), g)), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.ARCANA), (g, p) -> skill(p, nonPlayer, coreStats.getIntelligence(), skills.getArcana(), g)), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.SPEED).name(MenuText.ATHLETICS).build(), (g, p) -> skill(p, nonPlayer, coreStats.getStrength(), skills.getAthletics(), g)), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.EMERALD, MenuText.DECEPTION), (g, p) -> skill(p, nonPlayer, coreStats.getCharisma(), skills.getDeception(), g)), GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK_AND_QUILL, MenuText.HISTORY), (g, p) -> skill(p, nonPlayer, coreStats.getIntelligence(), skills.getHistory(), g)), GUIButton.of(6, ClickType.LEFT, SpigotIconBuilder.of(Material.ICE, MenuText.INSIGHT), (g, p) -> skill(p, nonPlayer, coreStats.getWisdom(), skills.getInsight(), g)), GUIButton.of(7, ClickType.LEFT, SpigotIconBuilder.of(Material.DIAMOND_SWORD, MenuText.INTIMIDATION), (g, p) -> skill(p, nonPlayer, coreStats.getCharisma(), skills.getIntimidation(), g)), GUIButton.of(8, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTMENT_TABLE, MenuText.INVESTIGATION), (g, p) -> skill(p, nonPlayer, coreStats.getIntelligence(), skills.getInvestigation(), g)), GUIButton.of(9, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.INSTANT_HEAL).name(MenuText.MEDICINE).build(), (g, p) -> skill(p, nonPlayer, coreStats.getWisdom(), skills.getMedicine(), g)), GUIButton.of(10, ClickType.LEFT, SpigotIconBuilder.of(Material.VINE, MenuText.NATURE), (g, p) -> skill(p, nonPlayer, coreStats.getIntelligence(), skills.getNature(), g)), GUIButton.of(11, ClickType.LEFT, SpigotIconBuilder.of(Material.CARROT_ITEM, MenuText.PERCEPTION), (g, p) -> skill(p, nonPlayer, coreStats.getWisdom(), skills.getPerception(), g)), GUIButton.of(12, ClickType.LEFT, SpigotIconBuilder.of(Material.NOTE_BLOCK, MenuText.PERFORMANCE), (g, p) -> skill(p, nonPlayer, coreStats.getCharisma(), skills.getPerformance(), g)), GUIButton.of(13, ClickType.LEFT, SpigotIconBuilder.of(Material.EYE_OF_ENDER, MenuText.PERSUASION), (g, p) -> skill(p, nonPlayer, coreStats.getCharisma(), skills.getPersuasion(), g)), GUIButton.of(14, ClickType.LEFT, SpigotIconBuilder.of(Material.NETHER_STAR, MenuText.RELIGION), (g, p) -> skill(p, nonPlayer, coreStats.getIntelligence(), skills.getReligion(), g)), GUIButton.of(15, ClickType.LEFT, SpigotIconBuilder.of(Material.TRIPWIRE_HOOK, MenuText.SLEIGHT_OF_HAND), (g, p) -> skill(p, nonPlayer, coreStats.getDexterity(), skills.getSleightOfHand(), g)), GUIButton.of(16, ClickType.LEFT, SpigotIconBuilder.builder(Material.POTION).potionEffect(PotionType.NIGHT_VISION).name(MenuText.STEALTH).build(), (g, p) -> skill(p, nonPlayer, coreStats.getDexterity(), skills.getStealth(), g)), GUIButton.of(17, ClickType.LEFT, SpigotIconBuilder.of(Material.SKULL_ITEM, MenuText.SURVIVAL), (g, p) -> skill(p, nonPlayer, coreStats.getWisdom(), skills.getSurvival(), g)), GUIButton.of(18, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_SWORD, MenuText.STRENGTH), (g, p) -> skill(p, nonPlayer, coreStats.getStrength(), skills.getUnskilledSTR(), g)), GUIButton.of(19, ClickType.LEFT, SpigotIconBuilder.of(Material.BOW, MenuText.DEXTERITY), (g, p) -> skill(p, nonPlayer, coreStats.getDexterity(), skills.getUnskilledDEX(), g)), GUIButton.of(20, ClickType.LEFT, SpigotIconBuilder.of(Material.GOLDEN_APPLE, MenuText.CONSTITUTION), (g, p) -> skill(p, nonPlayer, coreStats.getConstitution(), skills.getUnskilledCON(), g)), GUIButton.of(21, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK_AND_QUILL, MenuText.INTELLIGENCE), (g, p) -> skill(p, nonPlayer, coreStats.getIntelligence(), skills.getUnskilledINT(), g)), GUIButton.of(22, ClickType.LEFT, SpigotIconBuilder.of(Material.ENCHANTED_BOOK, MenuText.WISDOM), (g, p) -> skill(p, nonPlayer, coreStats.getWisdom(), skills.getUnskilledWIS(), g)), GUIButton.of(23, ClickType.LEFT, SpigotIconBuilder.builder(Material.SKULL_ITEM).name(MenuText.CHARISMA).durability(3).build(), (g, p) -> skill(p, nonPlayer, coreStats.getCharisma(), skills.getUnskilledCHA(), g))).build();
     }
 
+    public void nonPlayers(@Nonnull Player player, @Nonnull List<NonPlayer> nonPlayers, int page) {
+        SpigotChestGUIBuilder<SpigotMCDNDSimple> builder = paged(MenuText.PLAYER_SHEETS, player, null, page, playerSheet -> SpigotIconBuilder.of(Material.WRITTEN_BOOK, playerSheet.getName()), nonPlayer -> (g, p) -> nonPlayer(player, nonPlayer, g), (p, i) -> nonPlayers(p, nonPlayers, i), nonPlayers);
+        if (player.hasPermission(Permissions.DM)) {
+            builder.setButton(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_PLAYER_SHEET), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
+                PlayerSheet playerSheet = new PlayerSheet();
+                playerSheet.setName(s);
+                playerSheet(ply, playerSheet, g);
+            })));
+        }
+
+        builder.build();
+    }
+
     @Nonnull
     private String openBookCommand(@Nonnull Player player, @Nonnull BioAndInfo bioAndInfo, @Nonnull List<String> pages, @Nonnull Spell spell) {
         return "/callback " + SpigotMCDNDSimple.instance().getCallbackTracker().getIdForCallback(sender -> {
@@ -1169,7 +1208,7 @@ public class SpigotChestGUIs {
     }
 
     public void playerSheet(@Nonnull Player player, @Nonnull PlayerSheet playerSheet, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {
-        builder(9, 8, MenuText.PLAYER_SHEET, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.RENAME), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
+        SpigotChestGUIBuilder<SpigotMCDNDSimple> builder = builder(9, 8, MenuText.PLAYER_SHEET, player, prevGUI).setButtons(GUIButton.of(0, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.RENAME), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             playerSheet.setName(s);
             playerSheet(ply, playerSheet, prevGUI);
         })), GUIButton.of(1, ClickType.LEFT, SpigotIconBuilder.of(Material.IRON_CHESTPLATE, MenuText.CLASS), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
@@ -1178,7 +1217,25 @@ public class SpigotChestGUIs {
         })), GUIButton.of(2, ClickType.LEFT, SpigotIconBuilder.of(Material.MONSTER_EGG, MenuText.RACE), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
             playerSheet.setClazz(s);
             playerSheet(ply, playerSheet, prevGUI);
-        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK, MenuText.BIO_AND_INFO), (g, p) -> bioAndInfo(p, playerSheet.getBioAndInfo(), playerSheet, g)), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK_AND_QUILL, MenuText.CHARACTER_SHEET), (g, p) -> characterSheet(p, playerSheet.getBioAndInfo(), playerSheet.getCharacterSheet(), g))).build();
+        })), GUIButton.of(3, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK, MenuText.BIO_AND_INFO), (g, p) -> bioAndInfo(p, playerSheet.getBioAndInfo(), playerSheet, g)), GUIButton.of(4, ClickType.LEFT, SpigotIconBuilder.of(Material.BOOK_AND_QUILL, MenuText.CHARACTER_SHEET), (g, p) -> characterSheet(p, playerSheet.getBioAndInfo(), playerSheet.getCharacterSheet(), g)));
+        if (player.hasPermission(Permissions.DM)) {
+            builder.setButtons(GUIButton.of(5, ClickType.LEFT, SpigotIconBuilder.builder(Material.SKULL_ITEM).name(MenuText.EDIT_CONTROLLERS).durability(3).build(), (g, p) -> editControllers(p, 1, playerSheet, g)), GUIButton.of(6, ClickType.LEFT, SpigotIconBuilder.of(Material.ENDER_CHEST, MenuText.DELETE), (g, p) -> SpigotMCDNDSimple.instance().getPlayerStorage().remove(playerSheet)));
+        }
+
+        builder.build();
+    }
+
+    public void players(@Nonnull Player player, @Nonnull List<PlayerSheet> playerSheets, int page) {
+        SpigotChestGUIBuilder<SpigotMCDNDSimple> builder = paged(MenuText.PLAYER_SHEETS, player, null, page, playerSheet -> SpigotIconBuilder.of(Material.WRITTEN_BOOK, playerSheet.getName()), playerSheet -> (g, p) -> playerSheet(player, playerSheet, g), (p, i) -> players(p, playerSheets, i), playerSheets);
+        if (player.hasPermission(Permissions.DM)) {
+            builder.setButton(GUIButton.of(49, ClickType.LEFT, SpigotIconBuilder.of(Material.PAPER, MenuText.NEW_PLAYER_SHEET), (g, p) -> new StringAnvilGUI(p, (ply, s) -> {
+                PlayerSheet playerSheet = new PlayerSheet();
+                playerSheet.setName(s);
+                playerSheet(ply, playerSheet, g);
+            })));
+        }
+
+        builder.build();
     }
 
     public void prepared(@Nonnull Player player, int page, @Nonnull Spell spell, @Nullable SpigotChestGUI<SpigotMCDNDSimple> prevGUI) {

@@ -23,12 +23,12 @@ public class SpigotMCDNDSimple extends AbstractSpigotPlugin<AbstractConfig, Spig
         return callbackTracker;
     }
 
-    public SpigotPlayerSheetStorage getCharacterSheetStorage() {
-        return characterSheetStorage;
+    public SpigotNonPlayerSheetStorage getNonPlayerStorage() {
+        return npcStorage;
     }
 
-    public SpigotNonPlayerSheetStorage getNPCStorage() {
-        return npcStorage;
+    public SpigotPlayerSheetStorage getPlayerStorage() {
+        return characterSheetStorage;
     }
 
     @Override

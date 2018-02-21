@@ -2,19 +2,18 @@ package io.musician101.mcdndsimple.sponge.gui.anvil.number;
 
 import io.musician101.mcdndsimple.sponge.gui.anvil.MCDNDSimpleAnvilGUI;
 import java.util.function.BiConsumer;
-import net.minecraft.entity.player.EntityPlayer;
 import org.spongepowered.api.entity.living.player.Player;
 
-public class IntegerInputAnvilGUI extends MCDNDSimpleAnvilGUI {
+public class DoubleAnvilGUI extends MCDNDSimpleAnvilGUI {
 
-    public IntegerInputAnvilGUI(Player holder, BiConsumer<EntityPlayer, Integer> biConsumer) {
+    public DoubleAnvilGUI(Player holder, BiConsumer<Player, Double> biConsumer) {
         super(holder, (player, name) -> {
-            int number;
+            double number;
             try {
-                number = Integer.parseInt(name);
+                number = Double.parseDouble(name);
             }
             catch (NumberFormatException e) {
-                return "That is not a number!";
+                return "That is not a number.";
             }
 
             biConsumer.accept(player, number);

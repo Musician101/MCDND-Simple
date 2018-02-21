@@ -12,8 +12,8 @@ import java.io.File;
 public class SpigotMCDNDSimple extends AbstractSpigotPlugin<AbstractConfig, SpigotMCDNDSimple> {
 
     private CallbackTracker callbackTracker;
-    private SpigotPlayerSheetStorage characterSheetStorage;
-    private SpigotNonPlayerSheetStorage npcStorage;
+    private SpigotNonPlayerSheetStorage nonPlayerSheetStorage;
+    private SpigotPlayerSheetStorage playerSheetStorage;
 
     public static SpigotMCDNDSimple instance() {
         return getPlugin(SpigotMCDNDSimple.class);
@@ -23,23 +23,23 @@ public class SpigotMCDNDSimple extends AbstractSpigotPlugin<AbstractConfig, Spig
         return callbackTracker;
     }
 
-    public SpigotNonPlayerSheetStorage getNonPlayerStorage() {
-        return npcStorage;
+    public SpigotNonPlayerSheetStorage getNonPlayerSheetStorage() {
+        return nonPlayerSheetStorage;
     }
 
-    public SpigotPlayerSheetStorage getPlayerStorage() {
-        return characterSheetStorage;
+    public SpigotPlayerSheetStorage getPlayerSheetStorage() {
+        return playerSheetStorage;
     }
 
     @Override
     public void onDisable() {
-        characterSheetStorage.save();
+        playerSheetStorage.save();
     }
 
     @Override
     public void onEnable() {
-        characterSheetStorage = new SpigotPlayerSheetStorage(new File(getDataFolder(), "players"));
-        npcStorage = new SpigotNonPlayerSheetStorage(new File(getDataFolder(), "npc"));
+        playerSheetStorage = new SpigotPlayerSheetStorage(new File(getDataFolder(), "players"));
+        nonPlayerSheetStorage = new SpigotNonPlayerSheetStorage(new File(getDataFolder(), "npc"));
         callbackTracker = new CallbackTracker();
         commands.addAll(MCDNDSimpleCommands.commands());
         getLogger().info(Messages.LOAD_COMPLETE);

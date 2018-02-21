@@ -1,6 +1,5 @@
 package io.musician101.mcdndsimple.spigot.util;
 
-import io.musician101.mcdndsimple.common.reference.MenuText;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.UnarmoredBonus;
@@ -11,6 +10,7 @@ import io.musician101.mcdndsimple.common.character.player.spell.Spell;
 import io.musician101.mcdndsimple.common.character.player.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.RangedWeapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.WeaponAttackStat;
+import io.musician101.mcdndsimple.common.reference.MenuText;
 import io.musician101.musicianlibrary.java.minecraft.spigot.gui.SpigotIconBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

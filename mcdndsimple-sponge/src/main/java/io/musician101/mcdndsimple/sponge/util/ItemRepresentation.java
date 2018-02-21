@@ -1,6 +1,5 @@
 package io.musician101.mcdndsimple.sponge.util;
 
-import io.musician101.mcdndsimple.common.reference.MenuText;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.UnarmoredBonus;
@@ -10,14 +9,14 @@ import io.musician101.mcdndsimple.common.character.player.equipment.armor.ArmorT
 import io.musician101.mcdndsimple.common.character.player.spell.Spell;
 import io.musician101.mcdndsimple.common.character.player.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.RangedWeapon;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.spongepowered.api.data.key.Keys;
+import io.musician101.mcdndsimple.common.character.player.weapon.WeaponAttackStat;
+import io.musician101.mcdndsimple.common.reference.MenuText;
+import io.musician101.musicianlibrary.java.minecraft.sponge.gui.SpongeIconBuilder;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
-import org.spongepowered.api.text.Text;
+
+import static org.spongepowered.api.text.Text.of;
 
 public class ItemRepresentation {
 
@@ -26,76 +25,40 @@ public class ItemRepresentation {
     }
 
     public static ItemStack armor(Armor armor) {
-        List<String> lore = new ArrayList<>();
-        lore.add(MenuText.baseAC(armor));
-        lore.add(MenuText.armorType(armor));
-        lore.add(MenuText.magicBonus(armor.getMagicBonus()));
-        lore.add(MenuText.hasSpeedPenalty(armor));
-        lore.add(MenuText.hasStealthPenalty(armor));
-        lore.add(MenuText.isUnarmored(armor));
-        lore.add(MenuText.isWorn(armor));
-        return ItemStack.builder().itemType(getArmorMaterial(armor.getArmorType())).add(Keys.DISPLAY_NAME, Text.of(armor.getName())).add(Keys.ITEM_LORE, lore.stream().map(Text::of).collect(Collectors.toList())).build();
+        return SpongeIconBuilder.builder(getArmorMaterial(armor.getArmorType())).name(of(armor.getName())).description(of(MenuText.armorClass(armor)), of(MenuText.armorType(armor)), of(MenuText.magicBonus(armor)), of(MenuText.hasSpeedPenalty(armor)), of(MenuText.hasStealthPenalty(armor)), of(MenuText.isUnarmored(armor)), of(MenuText.isWorn(armor))).build();
     }
 
     public static ItemStack armorType(ArmorType armorType) {
-        return ItemStack.builder().itemType(getArmorMaterial(armorType)).add(Keys.DISPLAY_NAME, Text.of(armorType.getName())).build();
+        return SpongeIconBuilder.of(getArmorMaterial(armorType), of(armorType.getName()));
     }
 
     private static ItemType getArmorMaterial(ArmorType armorType) {
-        ItemType material = ItemTypes.GOLDEN_CHESTPLATE;
-        if (armorType == ArmorType.LIGHT) {
-            material = ItemTypes.LEATHER_CHESTPLATE;
-        }
-        else if (armorType == ArmorType.MEDIUM) {
-            material = ItemTypes.IRON_CHESTPLATE;
-        }
-        else if (armorType == ArmorType.HEAVY) {
-            material = ItemTypes.DIAMOND_CHESTPLATE;
+        ItemType itemType = ItemTypes.GOLDEN_CHESTPLATE;
+        switch (armorType) {
+            case LIGHT:
+                itemType = ItemTypes.LEATHER_CHESTPLATE;
+                break;
+            case MEDIUM:
+                itemType = ItemTypes.IRON_CHESTPLATE;
+                break;
+            case HEAVY:
+                itemType = ItemTypes.DIAMOND_CHESTPLATE;
+                break;
         }
 
-        return material;
+        return itemType;
     }
 
     public static ItemStack meleeWeapon(MeleeWeapon weapon, ClassLevels classLevels, CoreStats coreStats, Experience experience) {
-        List<String> lore = new ArrayList<>();
-        lore.add(MenuText.isProficient(weapon.isProficient()));
-        lore.add(MenuText.attackStat(weapon.getAttackStat()));
-        lore.add(MenuText.magicBonus(weapon.getMagicBonus()));
-        lore.add(MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)));
-        lore.add(MenuText.damageDice(weapon.getDamage()));
-        lore.add(MenuText.damageBonus(weapon.getDamageBonus(coreStats)));
-        lore.add(MenuText.damageType(weapon.getDamageType()));
-        lore.add(MenuText.critDamage(weapon.getCritDamage()));
-        lore.add(MenuText.critOn(weapon.getCritMin()));
-        return ItemStack.builder().itemType(ItemTypes.DIAMOND_SWORD).add(Keys.DISPLAY_NAME, Text.of(weapon.getName())).add(Keys.ITEM_LORE, lore.stream().map(Text::of).collect(Collectors.toList())).build();
+        return SpongeIconBuilder.builder(ItemTypes.DIAMOND_SWORD).name(of(weapon.getName())).description(of(MenuText.isProficient(weapon)), of(MenuText.attackStat(weapon.getAttackStat())), of(MenuText.magicBonus(weapon)), of(MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience))), of(MenuText.plusStat(weapon)), of(MenuText.damageDice(weapon.getDamage())), of(MenuText.damageBonus(weapon, coreStats)), of(MenuText.damageType(weapon.getDamageType())), of(MenuText.critDamage(weapon)), of(MenuText.critOn(weapon))).build();
     }
 
     public static ItemStack rangedWeapon(RangedWeapon weapon, ClassLevels classLevels, CoreStats coreStats, Experience experience) {
-        List<String> lore = new ArrayList<>();
-        lore.add(MenuText.isProficient(weapon.isProficient()));
-        lore.add(MenuText.attackStat(weapon.getAttackStat()));
-        lore.add(MenuText.magicBonus(weapon.getMagicBonus()));
-        lore.add(MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)));
-        lore.add(MenuText.damageDice(weapon.getDamage()));
-        lore.add(MenuText.damageBonus(weapon.getDamageBonus(coreStats)));
-        lore.add(MenuText.damageType(weapon.getDamageType()));
-        lore.add(MenuText.critDamage(weapon.getCritDamage()));
-        lore.add(MenuText.critOn(weapon.getCritMin()));
-        lore.add(MenuText.ammo(weapon.getAmmo()));
-        return ItemStack.builder().itemType(ItemTypes.BOW).add(Keys.DISPLAY_NAME, Text.of(weapon.getName())).add(Keys.ITEM_LORE, lore.stream().map(Text::of).collect(Collectors.toList())).build();
+        return SpongeIconBuilder.builder(ItemTypes.BOW).name(of(weapon.getName())).description(of(MenuText.isProficient(weapon)), of(MenuText.attackStat(weapon.getAttackStat())), of(MenuText.magicBonus(weapon)), of(MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience))), of(MenuText.damageDice(weapon.getDamage())), of(MenuText.damageBonus(weapon, coreStats)), of(MenuText.damageType(weapon.getDamageType())), of(MenuText.critDamage(weapon), MenuText.critOn(weapon))).build();
     }
 
     public static ItemStack spell(Spell spell) {
-        List<String> lore = new ArrayList<>();
-        lore.add(MenuText.spellLevel(spell.getLevel()));
-        lore.add(MenuText.spellType(spell.getSpellType()));
-        lore.add(MenuText.gainedFrom(spell.getGainedFrom()));
-        lore.add(MenuText.components(spell.getComponents()));
-        lore.add(MenuText.castTime(spell.getCastTime()));
-        lore.add(MenuText.duration(spell.getDuration()));
-        lore.add(MenuText.target(spell.getTargetArea()));
-        lore.add(MenuText.range(spell.getRange()));
-        return ItemStack.builder().itemType(ItemTypes.ENCHANTED_BOOK).add(Keys.ITEM_LORE, lore.stream().map(Text::of).collect(Collectors.toList())).build();
+        return SpongeIconBuilder.builder(ItemTypes.ENCHANTED_BOOK).name(of(spell.getName())).description(of(MenuText.spellLevel(spell.getLevel())), of(MenuText.spellType(spell.getSpellType())), of(MenuText.gainedFrom(spell.getGainedFrom())), of(MenuText.hasComponents(spell.getComponents())), of(MenuText.castTime(spell.getCastTime())), of(MenuText.duration(spell)), of(MenuText.target(spell.getTargetArea())), of(MenuText.range(spell))).build();
     }
 
     public static ItemStack unarmoredBonus(UnarmoredBonus unarmoredBonus) {
@@ -118,6 +81,37 @@ public class ItemRepresentation {
             }
         }
 
-        return ItemStack.builder().itemType(itemType).add(Keys.DISPLAY_NAME, Text.of(unarmoredBonus.getName())).build();
+        return SpongeIconBuilder.of(itemType, of(unarmoredBonus.getName()));
+    }
+
+    public static ItemStack weaponAttackStat(WeaponAttackStat stat) {
+        SpongeIconBuilder builder;
+        switch (stat) {
+            case CHA:
+                builder = SpongeIconBuilder.builder(ItemTypes.SKULL).durability(3);
+                break;
+            case CON:
+                builder = SpongeIconBuilder.builder(ItemTypes.GOLDEN_APPLE);
+                break;
+            case DEX:
+                builder = SpongeIconBuilder.builder(ItemTypes.BOW);
+                break;
+            case FINESSE:
+                builder = SpongeIconBuilder.builder(ItemTypes.DIAMOND_SWORD);
+                break;
+            case INT:
+                builder = SpongeIconBuilder.builder(ItemTypes.WRITABLE_BOOK);
+                break;
+            case STR:
+                builder = SpongeIconBuilder.builder(ItemTypes.IRON_SWORD);
+                break;
+            case WIS:
+                builder = SpongeIconBuilder.builder(ItemTypes.ENCHANTED_BOOK);
+                break;
+            default:
+                return SpongeIconBuilder.builder(ItemTypes.BARRIER).name(of("I'M AN ERROR! PLEASE REPORT ME!")).build();
+        }
+
+        return builder.name(of(stat.getName())).build();
     }
 }

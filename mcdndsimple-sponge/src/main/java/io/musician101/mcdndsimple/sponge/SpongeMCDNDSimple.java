@@ -64,6 +64,7 @@ public class SpongeMCDNDSimple extends AbstractSpongePlugin<AbstractConfig> {
     @Listener
     public void preInit(GamePreInitializationEvent event) {
         playerSheetStorage = new SpongePlayerSheetStorage(new File(configDir, "character_storage"));
+        nonPlayerSheetStorage = new SpongeNonPlayerSheetStorage(new File(configDir, "character_storage"));
     }
 
     @Listener

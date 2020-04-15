@@ -1,19 +1,15 @@
 package io.musician101.mcdndsimple.common.character.player.equipment.armor;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.ARMOR_TYPE, typeAdapter = ArmorType.Serializer.class)
 public enum ArmorType {
     LIGHT("Light"),
     MEDIUM("Medium"),
@@ -33,7 +29,7 @@ public enum ArmorType {
         return name;
     }
 
-    public static class Serializer implements JsonDeserializer<ArmorType>, JsonSerializer<ArmorType> {
+    public static class Serializer extends BaseSerializer<ArmorType> {
 
         @Override
         public ArmorType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {

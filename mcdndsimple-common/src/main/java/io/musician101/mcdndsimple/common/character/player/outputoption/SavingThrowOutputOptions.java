@@ -1,13 +1,12 @@
 package io.musician101.mcdndsimple.common.character.player.outputoption;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 
 public class SavingThrowOutputOptions {
@@ -76,32 +75,32 @@ public class SavingThrowOutputOptions {
         this.wisdom = wisdom;
     }
 
-    public static class Serializer implements JsonDeserializer<SavingThrowOutputOptions>, JsonSerializer<SavingThrowOutputOptions> {
+    public static class Serializer extends BaseSerializer<SavingThrowOutputOptions> {
 
         @Override
         public SavingThrowOutputOptions deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             SavingThrowOutputOptions savingThrowOutputOptions = new SavingThrowOutputOptions();
-            Keys.CHARISMA_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(savingThrowOutputOptions::setCharismaEnabled);
-            Keys.CONSTITUTION_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(savingThrowOutputOptions::setConstitutionEnabled);
-            Keys.DEATH_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(savingThrowOutputOptions::setDeathEnabled);
-            Keys.DEXTERITY_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(savingThrowOutputOptions::setDexterityEnabled);
-            Keys.INTELLIGENCE_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(savingThrowOutputOptions::setIntelligenceEnabled);
-            Keys.STRENGTH_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(savingThrowOutputOptions::setStrengthEnabled);
-            Keys.WISDOM_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(savingThrowOutputOptions::setWisdomEnabled);
+            savingThrowOutputOptions.setCharismaEnabled(deserialize(jsonObject, context, Keys.CHARISMA_BOOLEAN));
+            savingThrowOutputOptions.setConstitutionEnabled(deserialize(jsonObject, context, Keys.CONSTITUTION_BOOLEAN));
+            savingThrowOutputOptions.setDeathEnabled(deserialize(jsonObject, context, Keys.DEATH_BOOLEAN));
+            savingThrowOutputOptions.setDexterityEnabled(deserialize(jsonObject, context, Keys.DEXTERITY_BOOLEAN));
+            savingThrowOutputOptions.setIntelligenceEnabled(deserialize(jsonObject, context, Keys.INTELLIGENCE_BOOLEAN));
+            savingThrowOutputOptions.setStrengthEnabled(deserialize(jsonObject, context, Keys.STRENGTH_BOOLEAN));
+            savingThrowOutputOptions.setWisdomEnabled(deserialize(jsonObject, context, Keys.WISDOM_BOOLEAN));
             return savingThrowOutputOptions;
         }
 
         @Override
         public JsonElement serialize(SavingThrowOutputOptions src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.CHARISMA_BOOLEAN.serialize(src.isCharismaEnabled(), jsonObject, context);
-            Keys.CONSTITUTION_BOOLEAN.serialize(src.isConstitutionEnabled(), jsonObject, context);
-            Keys.DEATH_BOOLEAN.serialize(src.isDeathEnabled(), jsonObject, context);
-            Keys.DEXTERITY_BOOLEAN.serialize(src.isDexterityEnabled(), jsonObject, context);
-            Keys.INTELLIGENCE_BOOLEAN.serialize(src.isIntelligenceEnabled(), jsonObject, context);
-            Keys.STRENGTH_BOOLEAN.serialize(src.isStrengthEnabled(), jsonObject, context);
-            Keys.WISDOM_BOOLEAN.serialize(src.isWisdomEnabled(), jsonObject, context);
+            serialize(jsonObject, context, Keys.CHARISMA_BOOLEAN, src.isCharismaEnabled());
+            serialize(jsonObject, context, Keys.CONSTITUTION_BOOLEAN, src.isConstitutionEnabled());
+            serialize(jsonObject, context, Keys.DEATH_BOOLEAN, src.isDeathEnabled());
+            serialize(jsonObject, context, Keys.DEXTERITY_BOOLEAN, src.isDexterityEnabled());
+            serialize(jsonObject, context, Keys.INTELLIGENCE_BOOLEAN, src.isIntelligenceEnabled());
+            serialize(jsonObject, context, Keys.STRENGTH_BOOLEAN, src.isStrengthEnabled());
+            serialize(jsonObject, context, Keys.WISDOM_BOOLEAN, src.isWisdomEnabled());
             return jsonObject;
         }
     }

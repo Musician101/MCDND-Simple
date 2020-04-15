@@ -1,13 +1,12 @@
 package io.musician101.mcdndsimple.common.character.player.outputoption;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 
 public class WeaponsSpellMiscOutputOptions {
@@ -67,30 +66,30 @@ public class WeaponsSpellMiscOutputOptions {
         this.spellInfo = spellInfo;
     }
 
-    public static class Serializer implements JsonDeserializer<WeaponsSpellMiscOutputOptions>, JsonSerializer<WeaponsSpellMiscOutputOptions> {
+    public static class Serializer extends BaseSerializer<WeaponsSpellMiscOutputOptions> {
 
         @Override
         public WeaponsSpellMiscOutputOptions deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             WeaponsSpellMiscOutputOptions weaponsSpellMiscOutputOptions = new WeaponsSpellMiscOutputOptions();
-            Keys.HIT_DICE_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(weaponsSpellMiscOutputOptions::setHitDiceEnabled);
-            Keys.INITIATIVE_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(weaponsSpellMiscOutputOptions::setInitiativeEnabled);
-            Keys.MELEE_WEAPONS_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(weaponsSpellMiscOutputOptions::setMeleeWeaponsEnabled);
-            Keys.RANGED_WEAPONS_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(weaponsSpellMiscOutputOptions::setRangedWeaponsEnabled);
-            Keys.SPELL_CAST_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(weaponsSpellMiscOutputOptions::setSpellCastEnabled);
-            Keys.SPELL_INFO_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(weaponsSpellMiscOutputOptions::setSpellInfoEnabled);
+            weaponsSpellMiscOutputOptions.setHitDiceEnabled(deserialize(jsonObject, context, Keys.HIT_DICE_BOOLEAN));
+            weaponsSpellMiscOutputOptions.setInitiativeEnabled(deserialize(jsonObject, context, Keys.INITIATIVE_BOOLEAN));
+            weaponsSpellMiscOutputOptions.setMeleeWeaponsEnabled(deserialize(jsonObject, context, Keys.MELEE_WEAPONS_BOOLEAN));
+            weaponsSpellMiscOutputOptions.setRangedWeaponsEnabled(deserialize(jsonObject, context, Keys.RANGED_WEAPONS_BOOLEAN));
+            weaponsSpellMiscOutputOptions.setSpellCastEnabled(deserialize(jsonObject, context, Keys.SPELL_CAST_BOOLEAN));
+            weaponsSpellMiscOutputOptions.setSpellInfoEnabled(deserialize(jsonObject, context, Keys.SPELL_INFO_BOOLEAN));
             return weaponsSpellMiscOutputOptions;
         }
 
         @Override
         public JsonElement serialize(WeaponsSpellMiscOutputOptions src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.HIT_DICE_BOOLEAN.serialize(src.isHitDiceEnabled(), jsonObject, context);
-            Keys.INITIATIVE_BOOLEAN.serialize(src.isInitiativeEnabled(), jsonObject, context);
-            Keys.MELEE_WEAPONS_BOOLEAN.serialize(src.isMeleeWeaponsEnabled(), jsonObject, context);
-            Keys.RANGED_WEAPONS_BOOLEAN.serialize(src.isRangedWeaponsEnabled(), jsonObject, context);
-            Keys.SPELL_CAST_BOOLEAN.serialize(src.isSpellCastEnabled(), jsonObject, context);
-            Keys.SPELL_INFO_BOOLEAN.serialize(src.isSpellCastEnabled(), jsonObject, context);
+            serialize(jsonObject, context, Keys.HIT_DICE_BOOLEAN, src.isHitDiceEnabled());
+            serialize(jsonObject, context, Keys.INITIATIVE_BOOLEAN, src.isInitiativeEnabled());
+            serialize(jsonObject, context, Keys.MELEE_WEAPONS_BOOLEAN, src.isMeleeWeaponsEnabled());
+            serialize(jsonObject, context, Keys.RANGED_WEAPONS_BOOLEAN, src.isRangedWeaponsEnabled());
+            serialize(jsonObject, context, Keys.SPELL_CAST_BOOLEAN, src.isSpellCastEnabled());
+            serialize(jsonObject, context, Keys.SPELL_INFO_BOOLEAN, src.isSpellCastEnabled());
             return jsonObject;
         }
     }

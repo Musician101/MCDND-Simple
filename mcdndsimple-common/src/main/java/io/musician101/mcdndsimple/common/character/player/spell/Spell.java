@@ -1,22 +1,17 @@
 package io.musician101.mcdndsimple.common.character.player.spell;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
-import io.musician101.musicianlibrary.java.json.adapter.TypeOf;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-@TypeOf(Spell.Serializer.class)
 public class Spell {
 
     @Nonnull
@@ -239,62 +234,62 @@ public class Spell {
         this.needsConcentration = needsConcentration;
     }
 
-    public static class Serializer implements JsonDeserializer<Spell>, JsonSerializer<Spell> {
+    public static class Serializer extends BaseSerializer<Spell> {
 
         @Override
         public Spell deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             Spell spell = new Spell();
-            Keys.IS_RITUAL.deserializeFromParent(jsonObject, context).ifPresent(spell::setIsRitual);
-            Keys.NEEDS_CONCENTRATION.deserializeFromParent(jsonObject, context).ifPresent(spell::setNeedsConcentration);
-            Keys.LEVEL.deserializeFromParent(jsonObject, context).ifPresent(spell::setLevel);
-            Keys.AT_HIGHER_LEVELS.deserializeFromParent(jsonObject, context).ifPresent(spell::setAtHigherLevels);
-            Keys.COMPONENTS.deserializeFromParent(jsonObject, context).ifPresent(spell::setComponents);
-            Keys.DESCRIPTION.deserializeFromParent(jsonObject, context).ifPresent(spell::setDescription);
-            Keys.EFFECTS.deserializeFromParent(jsonObject, context).ifPresent(spell::setEffects);
-            Keys.CAST_TIME.deserializeFromParent(jsonObject, context).ifPresent(spell::setCastTime);
-            Keys.DURATION.deserializeFromParent(jsonObject, context).ifPresent(spell::setDuration);
-            Keys.NAME.deserializeFromParent(jsonObject, context).ifPresent(spell::setName);
-            Keys.RANGE.deserializeFromParent(jsonObject, context).ifPresent(spell::setRange);
-            Keys.TARGET_AREA.deserializeFromParent(jsonObject, context).ifPresent(spell::setTargetArea);
+            spell.setIsRitual(deserialize(jsonObject, context, Keys.IS_RITUAL));
+            spell.setNeedsConcentration(deserialize(jsonObject, context, Keys.NEEDS_CONCENTRATION));
+            spell.setLevel(deserialize(jsonObject, context, Keys.LEVEL));
+            spell.setAtHigherLevels(deserialize(jsonObject, context, Keys.AT_HIGHER_LEVELS));
+            spell.setComponents(deserialize(jsonObject, context, Keys.COMPONENTS));
+            spell.setDescription(deserialize(jsonObject, context, Keys.DESCRIPTION));
+            spell.setEffects(deserialize(jsonObject, context, Keys.EFFECTS));
+            spell.setCastTime(deserialize(jsonObject, context, Keys.CAST_TIME));
+            spell.setDuration(deserialize(jsonObject, context, Keys.DURATION));
+            spell.setName(deserialize(jsonObject, context, Keys.NAME));
+            spell.setRange(deserialize(jsonObject, context, Keys.RANGE));
+            spell.setTargetArea(deserialize(jsonObject, context, Keys.TARGET_AREA));
             handleAnnotatedKeys(jsonObject, context, spell);
             return spell;
         }
 
         private void handleAnnotatedKeys(JsonObject jsonObject, JsonDeserializationContext context, Spell spell) throws JsonParseException {
-            JsonKeyProcessor.<JsonObject, MacroOptions>getJsonKey(Keys.MACRO_OPTIONS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(spell::setMacroOptions));
-            JsonKeyProcessor.<JsonPrimitive, Prepared>getJsonKey(Keys.PREPARED).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(spell::setPrepared));
-            JsonKeyProcessor.<JsonPrimitive, SpellcasterClass>getJsonKey(Keys.GAINED_FROM).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(spell::setGainedFrom));
-            JsonKeyProcessor.<JsonObject, SpellDamage>getJsonKey(Keys.SPELL_DAMAGE).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(spell::setSpellDamage));
-            JsonKeyProcessor.<JsonObject, SpellHealing>getJsonKey(Keys.SPELL_HEALING).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(spell::setSpellHealing));
-            JsonKeyProcessor.<JsonObject, SpellSave>getJsonKey(Keys.SPELL_SAVE).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(spell::setSpellSave));
-            JsonKeyProcessor.<JsonPrimitive, SpellType>getJsonKey(Keys.SPELL_TYPE).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(spell::setSpellType));
-            JsonKeyProcessor.<JsonPrimitive, StatBonus>getJsonKey(Keys.ATTACK_STAT).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(spell::setAttackStat));
+            spell.setMacroOptions(deserialize(jsonObject, context, Keys.MACRO_OPTIONS));;
+            spell.setPrepared(deserialize(jsonObject, context, Keys.PREPARED));;
+            spell.setGainedFrom(deserialize(jsonObject, context, Keys.GAINED_FROM_SPELL));;
+            spell.setSpellDamage(deserialize(jsonObject, context, Keys.SPELL_DAMAGE));;
+            spell.setSpellHealing(deserialize(jsonObject, context, Keys.SPELL_HEALING));;
+            spell.setSpellSave(deserialize(jsonObject, context, Keys.SPELL_SAVE));;
+            spell.setSpellType(deserialize(jsonObject, context, Keys.SPELL_TYPE));;
+            spell.setAttackStat(deserialize(jsonObject, context, Keys.ATTACK_STAT));;
         }
 
         @Override
         public JsonElement serialize(Spell src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.IS_RITUAL.serialize(src.isRitual(), jsonObject, context);
-            Keys.NEEDS_CONCENTRATION.serialize(src.needsConcentration(), jsonObject, context);
-            Keys.LEVEL.serialize(src.getLevel(), jsonObject, context);
-            Keys.AT_HIGHER_LEVELS.serialize(src.getAtHigherLevels(), jsonObject, context);
-            Keys.COMPONENTS.serialize(src.getComponents(), jsonObject, context);
-            Keys.DESCRIPTION.serialize(src.getDescription(), jsonObject, context);
-            Keys.EFFECTS.serialize(src.getEffects(), jsonObject, context);
-            JsonKeyProcessor.<JsonObject, MacroOptions>getJsonKey(Keys.MACRO_OPTIONS).ifPresent(jsonKey -> jsonKey.serialize(src.getMacroOptions(), jsonObject, context));
-            JsonKeyProcessor.<JsonPrimitive, Prepared>getJsonKey(Keys.PREPARED).ifPresent(jsonKey -> jsonKey.serialize(src.getPrepared(), jsonObject, context));
-            JsonKeyProcessor.<JsonPrimitive, SpellcasterClass>getJsonKey(Keys.GAINED_FROM).ifPresent(jsonKey -> jsonKey.serialize(src.getGainedFrom(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, SpellDamage>getJsonKey(Keys.SPELL_DAMAGE).ifPresent(jsonKey -> jsonKey.serialize(src.getSpellDamage(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, SpellHealing>getJsonKey(Keys.SPELL_HEALING).ifPresent(jsonKey -> jsonKey.serialize(src.getSpellHealing(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, SpellSave>getJsonKey(Keys.SPELL_SAVE).ifPresent(jsonKey -> jsonKey.serialize(src.getSpellSave(), jsonObject, context));
-            JsonKeyProcessor.<JsonPrimitive, SpellType>getJsonKey(Keys.SPELL_TYPE).ifPresent(jsonKey -> jsonKey.serialize(src.getSpellType(), jsonObject, context));
-            JsonKeyProcessor.<JsonPrimitive, StatBonus>getJsonKey(Keys.ATTACK_STAT).ifPresent(jsonKey -> jsonKey.serialize(src.getAttackStat(), jsonObject, context));
-            Keys.CAST_TIME.serialize(src.getCastTime(), jsonObject, context);
-            Keys.DURATION.serialize(src.getDuration(), jsonObject, context);
-            Keys.NAME.serialize(src.getName(), jsonObject, context);
-            Keys.RANGE.serialize(src.getRange(), jsonObject, context);
-            Keys.TARGET_AREA.serialize(src.getTargetArea(), jsonObject, context);
+            serialize(jsonObject, context, Keys.IS_RITUAL, src.isRitual());
+            serialize(jsonObject, context, Keys.NEEDS_CONCENTRATION, src.needsConcentration());
+            serialize(jsonObject, context, Keys.LEVEL, src.getLevel());
+            serialize(jsonObject, context, Keys.AT_HIGHER_LEVELS, src.getAtHigherLevels());
+            serialize(jsonObject, context, Keys.COMPONENTS, src.getComponents());
+            serialize(jsonObject, context, Keys.DESCRIPTION, src.getDescription());
+            serialize(jsonObject, context, Keys.EFFECTS, src.getEffects());
+            serialize(jsonObject, context, Keys.MACRO_OPTIONS, src.getMacroOptions());
+            serialize(jsonObject, context, Keys.PREPARED, src.getPrepared());
+            serialize(jsonObject, context, Keys.GAINED_FROM_SPELL, src.getGainedFrom());
+            serialize(jsonObject, context, Keys.SPELL_DAMAGE, src.getSpellDamage());
+            serialize(jsonObject, context, Keys.SPELL_HEALING, src.getSpellHealing());
+            serialize(jsonObject, context, Keys.SPELL_SAVE, src.getSpellSave());
+            serialize(jsonObject, context, Keys.SPELL_TYPE, src.getSpellType());
+            serialize(jsonObject, context, Keys.ATTACK_STAT, src.getAttackStat());
+            serialize(jsonObject, context, Keys.CAST_TIME, src.getCastTime());
+            serialize(jsonObject, context, Keys.DURATION, src.getDuration());
+            serialize(jsonObject, context, Keys.NAME, src.getName());
+            serialize(jsonObject, context, Keys.RANGE, src.getRange());
+            serialize(jsonObject, context, Keys.TARGET_AREA, src.getTargetArea());
             return jsonObject;
         }
     }

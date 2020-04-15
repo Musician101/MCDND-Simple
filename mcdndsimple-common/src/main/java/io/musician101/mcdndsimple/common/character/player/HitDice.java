@@ -1,21 +1,17 @@
 package io.musician101.mcdndsimple.common.character.player;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.Dice;
-import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.HIT_DICE, typeAdapter = HitDice.Serializer.class)
 public class HitDice {
 
     @Nonnull
@@ -50,10 +46,16 @@ public class HitDice {
     }
 
     public void useHitDice(int sides) {
-        hitDiceMap.compute(sides, (s, amount) -> --amount);
+        hitDiceMap.compute(sides, (s, amount) -> {
+            if (amount != null) {
+                return --amount;
+            }
+
+            return null;
+        });
     }
 
-    public static class Serializer implements JsonDeserializer<HitDice>, JsonSerializer<HitDice> {
+    public static class Serializer extends BaseSerializer<HitDice> {
 
         @Override
         public HitDice deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {

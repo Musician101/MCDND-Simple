@@ -8,19 +8,22 @@ import javax.annotation.Nonnull;
 public abstract class AbstractPlayer {
 
     @Nonnull
-    private String clazz = "";
+    private String clazz;
     @Nonnull
     private List<UUID> controllers = new ArrayList<>();
     @Nonnull
-    private String name = "Your Name Here";
+    private String id;
     @Nonnull
-    private String race = "";
+    private String name;
+    @Nonnull
+    private String race;
 
-    protected AbstractPlayer() {
-
+    protected AbstractPlayer(@Nonnull String id) {
+        this(id, "", "Your Name here", "");
     }
 
-    protected AbstractPlayer(@Nonnull String clazz, @Nonnull String name, @Nonnull String race) {
+    protected AbstractPlayer(@Nonnull String id, @Nonnull String clazz, @Nonnull String name, @Nonnull String race) {
+        this.id = id;
         this.clazz = clazz;
         this.name = name;
         this.race = race;
@@ -35,6 +38,11 @@ public abstract class AbstractPlayer {
     @Nonnull
     public String getClazz() {
         return clazz;
+    }
+
+    @Nonnull
+    public String getID() {
+        return id;
     }
 
     public void setClazz(@Nonnull String clazz) {
@@ -55,6 +63,10 @@ public abstract class AbstractPlayer {
         return name;
     }
 
+    public void setId(@Nonnull String id) {
+        this.id = id;
+    }
+
     public void setName(@Nonnull String name) {
         this.name = name;
     }
@@ -73,8 +85,6 @@ public abstract class AbstractPlayer {
     }
 
     public void removeController(@Nonnull UUID uuid) {
-        if (!isController(uuid)) {
-            controllers.remove(uuid);
-        }
+        controllers.remove(uuid);
     }
 }

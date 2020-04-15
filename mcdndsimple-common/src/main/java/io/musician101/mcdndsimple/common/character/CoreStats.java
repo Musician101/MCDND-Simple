@@ -1,18 +1,16 @@
 package io.musician101.mcdndsimple.common.character;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import io.musician101.mcdndsimple.common.character.nonplayer.NonPlayerAbilityScore;
 import io.musician101.mcdndsimple.common.character.player.AbilityScore;
 import io.musician101.mcdndsimple.common.character.player.PlayerAbilityScore;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -27,18 +25,14 @@ public class CoreStats<A extends AbilityScore> {
     private final A strength;
     private final A wisdom;
 
-    @SuppressWarnings("unchecked")
-    public CoreStats() {
-        Class<?> clazz = ((ParameterizedType) new TypeToken<CoreStats<A>>() {
-
-        }.getType()).getActualTypeArguments()[0].getClass();
+    public CoreStats(Class<A> abilityScoreClass) {
         try {
-            charisma = (A) clazz.getConstructor(String.class, String.class).newInstance("Charisma", "cha");
-            constitution = (A) clazz.getConstructor(String.class, String.class).newInstance("Constitution", "con");
-            dexterity = (A) clazz.getConstructor(String.class, String.class).newInstance("Dexterity", "dex");
-            intelligence = (A) clazz.getConstructor(String.class, String.class).newInstance("Intelligence", "int");
-            strength = (A) clazz.getConstructor(String.class, String.class).newInstance("Strength", "str");
-            wisdom = (A) clazz.getConstructor(String.class, String.class).newInstance("Wisdom", "wis");
+            charisma = abilityScoreClass.getConstructor(String.class, String.class).newInstance("Charisma", "cha");
+            constitution = abilityScoreClass.getConstructor(String.class, String.class).newInstance("Constitution", "con");
+            dexterity = abilityScoreClass.getConstructor(String.class, String.class).newInstance("Dexterity", "dex");
+            intelligence = abilityScoreClass.getConstructor(String.class, String.class).newInstance("Intelligence", "int");
+            strength = abilityScoreClass.getConstructor(String.class, String.class).newInstance("Strength", "str");
+            wisdom = abilityScoreClass.getConstructor(String.class, String.class).newInstance("Wisdom", "wis");
         }
         catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
             throw new UnsupportedOperationException(e);
@@ -75,23 +69,24 @@ public class CoreStats<A extends AbilityScore> {
         return wisdom;
     }
 
-    public static class Serializer<A extends AbilityScore> implements JsonDeserializer<CoreStats<A>>, JsonSerializer<CoreStats<A>> {
+    public static class Serializer<A extends AbilityScore> extends BaseSerializer<CoreStats<A>> {
 
         private final DeserializerConsumer<A> deserialize;
         private final SerializerConsumer<A> serialize;
+        private final Class<A> clazz;
 
         @SuppressWarnings("unchecked")
         public Serializer() {
-            Class<?> clazz = ((ParameterizedType) new TypeToken<CoreStats<A>>() {
+            this.clazz = (Class<A>) ((ParameterizedType) new TypeToken<CoreStats<A>>() {
 
             }.getType()).getActualTypeArguments()[0].getClass();
             if (clazz.equals(NonPlayerAbilityScore.class)) {
-                deserialize = (abilityScore, jsonObject, context) -> Keys.BONUS.deserializeFromParent(jsonObject, context).ifPresent(((NonPlayerAbilityScore) abilityScore)::setBonus);
-                serialize = (abilityScore, jsonObject, context) -> Keys.BONUS.serialize(((NonPlayerAbilityScore) abilityScore).getBonus(), jsonObject, context);
+                deserialize = (abilityScore, jsonObject, context) -> ((NonPlayerAbilityScore) abilityScore).setBonus(deserialize(jsonObject, context, Keys.BONUS));;
+                serialize = (abilityScore, jsonObject, context) -> serialize(jsonObject, context, Keys.BONUS, ((NonPlayerAbilityScore) abilityScore).getBonus());
             }
             else if (clazz.equals(PlayerAbilityScore.class)) {
-                deserialize = (abilityScore, jsonObject, context) -> Keys.IS_PROFICIENT.deserializeFromParent(jsonObject, context).ifPresent(((PlayerAbilityScore) abilityScore)::setIsProficient);
-                serialize = (abilityScore, jsonObject, context) -> Keys.IS_PROFICIENT.serialize(((PlayerAbilityScore) abilityScore).isProficient(), jsonObject, context);
+                deserialize = (abilityScore, jsonObject, context) -> ((PlayerAbilityScore) abilityScore).setIsProficient(deserialize(jsonObject, context, Keys.IS_PROFICIENT));;
+                serialize = (abilityScore, jsonObject, context) -> serialize(jsonObject, context, Keys.IS_PROFICIENT, ((PlayerAbilityScore) abilityScore).isProficient());
             }
             else {
                 throw new UnsupportedOperationException(clazz.getCanonicalName() + " is not a supported implementation of " + AbilityScore.class.getCanonicalName());
@@ -101,7 +96,7 @@ public class CoreStats<A extends AbilityScore> {
         @Override
         public CoreStats<A> deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
-            CoreStats<A> coreStats = new CoreStats<>();
+            CoreStats<A> coreStats = new CoreStats<>(clazz);
             deserialize(coreStats.getCharisma(), jsonObject.getAsJsonObject(Keys.CHARISMA), context);
             deserialize(coreStats.getConstitution(), jsonObject.getAsJsonObject(Keys.CONSTITUTION), context);
             deserialize(coreStats.getDexterity(), jsonObject.getAsJsonObject(Keys.DEXTERITY), context);
@@ -113,7 +108,7 @@ public class CoreStats<A extends AbilityScore> {
 
         private void deserialize(A abilityScore, JsonObject jsonObject, JsonDeserializationContext context) {
             deserialize.apply(abilityScore, jsonObject, context);
-            Keys.SCORE.deserializeFromParent(jsonObject, context).ifPresent(abilityScore::setScore);
+            abilityScore.setScore(deserialize(jsonObject, context, Keys.SCORE));;
         }
 
         @Override
@@ -125,18 +120,12 @@ public class CoreStats<A extends AbilityScore> {
             serialize(src.getIntelligence(), jsonObject.getAsJsonObject(Keys.INTELLIGENCE), context);
             serialize(src.getStrength(), jsonObject.getAsJsonObject(Keys.STRENGTH), context);
             serialize(src.getWisdom(), jsonObject.getAsJsonObject(Keys.WISDOM), context);
-            JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.CHARISMA).ifPresent(jsonKey -> jsonKey.serialize(src.getCharisma(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.CONSTITUTION).ifPresent(jsonKey -> jsonKey.serialize(src.getConstitution(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.DEXTERITY).ifPresent(jsonKey -> jsonKey.serialize(src.getDexterity(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.INTELLIGENCE).ifPresent(jsonKey -> jsonKey.serialize(src.getIntelligence(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.STRENGTH).ifPresent(jsonKey -> jsonKey.serialize(src.getIntelligence(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, AbilityScore>getJsonKey(Keys.WISDOM).ifPresent(jsonKey -> jsonKey.serialize(src.getWisdom(), jsonObject, context));
             return jsonObject;
         }
 
         private void serialize(A abilityScore, JsonObject jsonObject, JsonSerializationContext context) {
             serialize.apply(abilityScore, jsonObject, context);
-            Keys.SCORE.serialize(abilityScore.getScore(), jsonObject, context);
+            serialize(jsonObject, context, Keys.SCORE, abilityScore.getScore());
         }
 
         @FunctionalInterface

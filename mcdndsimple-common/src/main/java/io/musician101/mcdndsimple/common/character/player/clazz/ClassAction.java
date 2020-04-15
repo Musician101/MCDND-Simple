@@ -1,24 +1,19 @@
 package io.musician101.mcdndsimple.common.character.player.clazz;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.character.player.Rechargeable;
 import io.musician101.mcdndsimple.common.character.player.outputoption.OutputOptions;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
-import io.musician101.musicianlibrary.java.json.adapter.TypeOf;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-@TypeOf(ClassAction.Serializer.class)
 public class ClassAction extends Rechargeable {
 
     @Nonnull
@@ -84,30 +79,30 @@ public class ClassAction extends Rechargeable {
         this.used = used;
     }
 
-    public static class Serializer implements JsonDeserializer<ClassAction>, JsonSerializer<ClassAction> {
+    public static class Serializer extends BaseSerializer<ClassAction> {
 
         @Override
         public ClassAction deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             ClassAction classAction = new ClassAction();
-            JsonKeyProcessor.<JsonPrimitive, GainedFrom>getJsonKey(Keys.GAINED_FROM).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(classAction::setGainedFrom));
-            Keys.MAX_USES.deserializeFromParent(jsonObject, context).ifPresent(classAction::setMaxUses);
-            Keys.USED.deserializeFromParent(jsonObject, context).ifPresent(classAction::setUsed);
-            Keys.OUTPUT.deserializeFromParent(jsonObject, context).ifPresent(classAction::setOutput);
-            JsonKeyProcessor.<JsonObject, OutputOptions>getJsonKey(Keys.OUTPUT_OPTIONS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(classAction::setOutputOptions));
-            Keys.NAME.deserializeFromParent(jsonObject, context).ifPresent(classAction::setName);
+            classAction.setGainedFrom(deserialize(jsonObject, context, Keys.GAINED_FROM));;
+            classAction.setMaxUses(deserialize(jsonObject, context, Keys.MAX_USES));;
+            classAction.setUsed(deserialize(jsonObject, context, Keys.USED));;
+            classAction.setOutput(deserialize(jsonObject, context, Keys.OUTPUT));;
+            classAction.setOutputOptions(deserialize(jsonObject, context, Keys.OUTPUT_OPTIONS));;
+            classAction.setName(deserialize(jsonObject, context, Keys.NAME));;
             return classAction;
         }
 
         @Override
         public JsonElement serialize(ClassAction src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            JsonKeyProcessor.<JsonObject, GainedFrom>getJsonKey(Keys.GAINED_FROM).ifPresent(jsonKey -> jsonKey.serialize(src.getGainedFrom(), jsonObject, context));
-            Keys.MAX_USES.serialize(src.getMaxUses(), jsonObject, context);
-            Keys.USED.serialize(src.getUsed(), jsonObject, context);
-            Keys.OUTPUT.serialize(src.getOutput(), jsonObject, context);
-            JsonKeyProcessor.<JsonObject, OutputOptions>getJsonKey(Keys.OUTPUT_OPTIONS).ifPresent(jsonKey -> jsonKey.serialize(src.getOutputOptions(), jsonObject, context));
-            Keys.NAME.serialize(src.getName(), jsonObject, context);
+            serialize(jsonObject, context, Keys.GAINED_FROM, src.getGainedFrom());
+            serialize(jsonObject, context, Keys.MAX_USES, src.getMaxUses());
+            serialize(jsonObject, context, Keys.USED, src.getUsed());
+            serialize(jsonObject, context, Keys.OUTPUT, src.getOutput());
+            serialize(jsonObject, context, Keys.OUTPUT_OPTIONS, src.getOutputOptions());
+            serialize(jsonObject, context, Keys.NAME, src.getName());
             return jsonObject;
         }
     }

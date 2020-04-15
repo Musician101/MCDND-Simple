@@ -1,20 +1,18 @@
 package io.musician101.mcdndsimple.common.character.player.tab;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.BACKGROUND_TAB, typeAdapter = BackgroundTab.Serializer.class)
+
 public class BackgroundTab {
 
     private int age = 0;
@@ -234,58 +232,58 @@ public class BackgroundTab {
         this.weight = weight;
     }
 
-    public static class Serializer implements JsonDeserializer<BackgroundTab>, JsonSerializer<BackgroundTab> {
+    public static class Serializer extends BaseSerializer<BackgroundTab> {
 
         @Override
         public BackgroundTab deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             BackgroundTab backgroundTab = new BackgroundTab();
-            Keys.WEIGHT_DOUBLE.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setWeight);
-            Keys.AGE.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setWeight);
-            Keys.ARMOR_PROFICIENCIES.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setArmorProficiencies);
-            Keys.BACKGROUND.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setBackground);
-            Keys.BONDS.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setBonds);
-            Keys.FLAWS.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setFlaws);
-            Keys.IDEALS.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setIdeals);
-            Keys.LANGUAGES.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setLanguages);
-            Keys.OTHER_NOTES.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setOtherNotes);
-            Keys.PERSONALITY_TRAITS.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setPersonalityTraits);
-            Keys.RACIAL_TRAITS.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setRacialTraits);
-            Keys.TOOL_PROFICIENCIES.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setToolProficiencies);
-            Keys.WEAPON_PROFICIENCIES.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setWeaponProficiencies);
-            Keys.ALIGNMENT.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setAlignment);
-            Keys.EYES.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setEyes);
-            Keys.GENDER.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setGender);
-            Keys.HAIR.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setHair);
-            Keys.HEIGHT.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setHeight);
-            Keys.SIZE.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setSize);
-            Keys.VISION.deserializeFromParent(jsonObject, context).ifPresent(backgroundTab::setVision);
+            backgroundTab.setWeight(deserialize(jsonObject, context, Keys.WEIGHT_DOUBLE));
+            backgroundTab.setWeight(deserialize(jsonObject, context, Keys.AGE));
+            backgroundTab.setArmorProficiencies(deserialize(jsonObject, context, Keys.ARMOR_PROFICIENCIES));
+            backgroundTab.setBackground(deserialize(jsonObject, context, Keys.BACKGROUND));
+            backgroundTab.setBonds(deserialize(jsonObject, context, Keys.BONDS));
+            backgroundTab.setFlaws(deserialize(jsonObject, context, Keys.FLAWS));
+            backgroundTab.setIdeals(deserialize(jsonObject, context, Keys.IDEALS));
+            backgroundTab.setLanguages(deserialize(jsonObject, context, Keys.LANGUAGES));
+            backgroundTab.setOtherNotes(deserialize(jsonObject, context, Keys.OTHER_NOTES));
+            backgroundTab.setPersonalityTraits(deserialize(jsonObject, context, Keys.PERSONALITY_TRAITS));
+            backgroundTab.setRacialTraits(deserialize(jsonObject, context, Keys.RACIAL_TRAITS));
+            backgroundTab.setToolProficiencies(deserialize(jsonObject, context, Keys.TOOL_PROFICIENCIES));
+            backgroundTab.setWeaponProficiencies(deserialize(jsonObject, context, Keys.WEAPON_PROFICIENCIES));
+            backgroundTab.setAlignment(deserialize(jsonObject, context, Keys.ALIGNMENT));
+            backgroundTab.setEyes(deserialize(jsonObject, context, Keys.EYES));
+            backgroundTab.setGender(deserialize(jsonObject, context, Keys.GENDER));
+            backgroundTab.setHair(deserialize(jsonObject, context, Keys.HAIR));
+            backgroundTab.setHeight(deserialize(jsonObject, context, Keys.HEIGHT));
+            backgroundTab.setSize(deserialize(jsonObject, context, Keys.SIZE));
+            backgroundTab.setVision(deserialize(jsonObject, context, Keys.VISION));
             return backgroundTab;
         }
 
         @Override
         public JsonElement serialize(BackgroundTab src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.WEIGHT_DOUBLE.serialize(src.getWeight(), jsonObject, context);
-            Keys.AGE.serialize(src.getAge(), jsonObject, context);
-            Keys.ARMOR_PROFICIENCIES.serialize(src.getArmorProficiencies(), jsonObject, context);
-            Keys.BACKGROUND.serialize(src.getBackground(), jsonObject, context);
-            Keys.BONDS.serialize(src.getBonds(), jsonObject, context);
-            Keys.FLAWS.serialize(src.getFlaws(), jsonObject, context);
-            Keys.IDEALS.serialize(src.getIdeals(), jsonObject, context);
-            Keys.LANGUAGES.serialize(src.getLanguages(), jsonObject, context);
-            Keys.OTHER_NOTES.serialize(src.getOtherNotes(), jsonObject, context);
-            Keys.PERSONALITY_TRAITS.serialize(src.getPersonalityTraits(), jsonObject, context);
-            Keys.RACIAL_TRAITS.serialize(src.getRacialTraits(), jsonObject, context);
-            Keys.TOOL_PROFICIENCIES.serialize(src.getToolProficiencies(), jsonObject, context);
-            Keys.WEAPON_PROFICIENCIES.serialize(src.getWeaponProficiencies(), jsonObject, context);
-            Keys.ALIGNMENT.serialize(src.getAlignment(), jsonObject, context);
-            Keys.EYES.serialize(src.getEyes(), jsonObject, context);
-            Keys.GENDER.serialize(src.getGender(), jsonObject, context);
-            Keys.HAIR.serialize(src.getHair(), jsonObject, context);
-            Keys.HEIGHT.serialize(src.getHeight(), jsonObject, context);
-            Keys.SIZE.serialize(src.getSize(), jsonObject, context);
-            Keys.VISION.serialize(src.getVision(), jsonObject, context);
+            serialize(jsonObject, context, Keys.WEIGHT_DOUBLE, src.getWeight());
+            serialize(jsonObject, context, Keys.AGE, src.getAge());
+            serialize(jsonObject, context, Keys.ARMOR_PROFICIENCIES, src.getArmorProficiencies());
+            serialize(jsonObject, context, Keys.BACKGROUND, src.getBackground());
+            serialize(jsonObject, context, Keys.BONDS, src.getBonds());
+            serialize(jsonObject, context, Keys.FLAWS, src.getFlaws());
+            serialize(jsonObject, context, Keys.IDEALS, src.getIdeals());
+            serialize(jsonObject, context, Keys.LANGUAGES, src.getLanguages());
+            serialize(jsonObject, context, Keys.OTHER_NOTES, src.getOtherNotes());
+            serialize(jsonObject, context, Keys.PERSONALITY_TRAITS, src.getPersonalityTraits());
+            serialize(jsonObject, context, Keys.RACIAL_TRAITS, src.getRacialTraits());
+            serialize(jsonObject, context, Keys.TOOL_PROFICIENCIES, src.getToolProficiencies());
+            serialize(jsonObject, context, Keys.WEAPON_PROFICIENCIES, src.getWeaponProficiencies());
+            serialize(jsonObject, context, Keys.ALIGNMENT, src.getAlignment());
+            serialize(jsonObject, context, Keys.EYES, src.getEyes());
+            serialize(jsonObject, context, Keys.GENDER, src.getGender());
+            serialize(jsonObject, context, Keys.HAIR, src.getHair());
+            serialize(jsonObject, context, Keys.HEIGHT, src.getHeight());
+            serialize(jsonObject, context, Keys.SIZE, src.getSize());
+            serialize(jsonObject, context, Keys.VISION, src.getVision());
             return jsonObject;
         }
     }

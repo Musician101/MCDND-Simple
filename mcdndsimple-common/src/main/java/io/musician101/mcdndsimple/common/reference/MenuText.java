@@ -38,11 +38,11 @@ import io.musician101.mcdndsimple.common.character.player.weapon.MeleeWeapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.RangedWeapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.Weapon;
 import io.musician101.mcdndsimple.common.character.player.weapon.WeaponAttackStat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
+//TODO move this to a factory class or some other thing so that I can auto format e-e
+@Deprecated
 public class MenuText {
 
     public static final String ABILITY_SKILL_CHECK_ROLLS = "Ability/Skill Check Rolls";
@@ -60,6 +60,7 @@ public class MenuText {
     public static final String ATTACK_ROLLS = "Attack Rolls";
     public static final String ATTACK_STAT = "Attack Stat";
     public static final String AT_HIGHER_LEVELS = "At Higher Levels";
+    public static final String BACK = "Back";
     public static final String BACKGROUND = "Background";
     public static final String BARBARIAN = "Barbarian";
     public static final String BARD = "Bard";
@@ -133,12 +134,16 @@ public class MenuText {
     public static final String MONK = "Monk";
     public static final String MULTI_ATTACK = "Multi-Attack";
     public static final String NATURE = "Nature";
+    public static final String NEW_ARMOR = "New Armor";
     public static final String NEW_CLASS_ACTION = "New Class Action";
+    public static final String NEW_CLASS_RESOURCE = "New Class Resource";
     public static final String NEW_ITEM = "New Item";
     public static final String NEW_MELEE_WEAPON = "New Melee Weapon";
+    public static final String NEW_NON_PLAYER_ACTION = "New NPC Action";
     public static final String NEW_PLAYER_SHEET = "New Player Sheet";
     public static final String NEW_RANGED_WEAPON = "New Ranged Weapon";
     public static final String NEXT_PAGE = "Next Page";
+    public static final String NPCS = "NPCs";
     public static final String ON_SUCCESSFUL_SAVE = "On A Successful Save";
     public static final String OTHER_BONUS = "Other Bonus";
     public static final String OTHER_NOTES = "Other Notes";
@@ -179,6 +184,7 @@ public class MenuText {
     public static final String SECOND_ATTACK = "Second Attack";
     public static final String SENSES = "Senses";
     public static final String SKILLS = "Skills";
+    public static final String SKILL_PROFICIENCY = "Skill Proficiency";
     public static final String SLEIGHT_OF_HAND = "Sleight of Hand";
     public static final String SORCERER = "Sorcerer";
     public static final String SORCERY_POINTS = "Sorcery Points";
@@ -314,7 +320,7 @@ public class MenuText {
     }
 
     @Nonnull
-    public static String carryingMax(@Nonnull CoreStats coreStats, @Nonnull Weight weight) {
+    public static String carryingMax(@Nonnull CoreStats<PlayerAbilityScore> coreStats, @Nonnull Weight weight) {
         return "Carrying Max: " + weight.getCarryingMax(coreStats);
     }
 
@@ -399,7 +405,7 @@ public class MenuText {
     }
 
     @Nonnull
-    public static String damageBonus(@Nonnull Weapon weapon, @Nonnull CoreStats coreStats) {
+    public static String damageBonus(@Nonnull Weapon weapon, @Nonnull CoreStats<PlayerAbilityScore> coreStats) {
         return "Damage Bonus: " + weapon.getDamageBonus(coreStats);
     }
 
@@ -424,7 +430,7 @@ public class MenuText {
     }
 
     @Nonnull
-    public static String encumbered(@Nonnull CoreStats coreStats, @Nonnull Weight weight) {
+    public static String encumbered(@Nonnull CoreStats<PlayerAbilityScore> coreStats, @Nonnull Weight weight) {
         return "Encumbered: " + weight.getEncumbered(coreStats);
     }
 
@@ -489,7 +495,7 @@ public class MenuText {
     }
 
     @Nonnull
-    public static String heavilyEncumbered(@Nonnull CoreStats coreStats, @Nonnull Weight weight) {
+    public static String heavilyEncumbered(@Nonnull CoreStats<PlayerAbilityScore> coreStats, @Nonnull Weight weight) {
         return "Heavily Encumbered: " + weight.getHeavilyEncumbered(coreStats);
     }
 
@@ -500,9 +506,7 @@ public class MenuText {
 
     @Nonnull
     public static String[] hitDice(@Nonnull HitDice hitDice) {
-        List<String> list = new ArrayList<>();
-        hitDice.getHitDice().forEach((sides, amount) -> list.add(amount + " x d" + sides));
-        return list.toArray(new String[0]);
+        return hitDice.getHitDice().entrySet().stream().map(entry -> entry.getValue() + " x d" + entry.getKey()).toArray(String[]::new);
     }
 
     @Nonnull
@@ -621,7 +625,7 @@ public class MenuText {
     }
 
     @Nonnull
-    public static String pushDragLift(@Nonnull CoreStats coreStats, @Nonnull Weight weight) {
+    public static String pushDragLift(@Nonnull CoreStats<PlayerAbilityScore> coreStats, @Nonnull Weight weight) {
         return "Push/Drag/Lift: " + weight.getPushDragLift(coreStats);
     }
 
@@ -726,7 +730,7 @@ public class MenuText {
     }
 
     @Nonnull
-    public static String[] spellcastingTable(@Nonnull ClassLevels classLevels, @Nonnull CoreStats coreStats, @Nonnull Experience experience, @Nonnull SpellcasterClass spellcasterClass) {
+    public static String[] spellcastingTable(@Nonnull ClassLevels classLevels, @Nonnull CoreStats<PlayerAbilityScore> coreStats, @Nonnull Experience experience, @Nonnull SpellcasterClass spellcasterClass) {
         return new String[]{"Cantrips Known: " + spellcasterClass.getCantripsAmount(classLevels), "Spells Known: " + spellcasterClass.getSpellsAmount(classLevels), "Can Prepare: " + spellcasterClass.getPreparedSpells(coreStats, classLevels), "Save DC: " + spellcasterClass.getSpellSaveDC(classLevels, coreStats, experience)};
     }
 
@@ -777,7 +781,7 @@ public class MenuText {
 
     @Nonnull
     public static String total(int level, @Nonnull List<Spell> spells) {
-        return total(spells.stream().filter(spell -> spell.getLevel() == level).collect(Collectors.toList()).size());
+        return total((int) spells.stream().filter(spell -> spell.getLevel() == level).count());
     }
 
     @Nonnull

@@ -1,24 +1,20 @@
 package io.musician101.mcdndsimple.common.character.player.tab;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.character.player.UnarmoredBonus;
 import io.musician101.mcdndsimple.common.character.player.equipment.armor.Armor;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
-import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.ARMOR_TAB, typeAdapter = ArmorTab.Serializer.class)
+
 public class ArmorTab {
 
     private int armorClass = 0;
@@ -70,26 +66,26 @@ public class ArmorTab {
         this.armorList = armor;
     }
 
-    public static class Serializer implements JsonDeserializer<ArmorTab>, JsonSerializer<ArmorTab> {
+    public static class Serializer extends BaseSerializer<ArmorTab> {
 
         @Override
         public ArmorTab deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             ArmorTab armorTab = new ArmorTab();
-            Keys.ARMOR_CLASS.deserializeFromParent(jsonObject, context).ifPresent(armorTab::setArmorClass);
-            Keys.UNARMORED_ARMOR_CLASS.deserializeFromParent(jsonObject, context).ifPresent(armorTab::setUnarmoredClass);
-            Keys.ARMOR_LIST.deserializeFromParent(jsonObject, context).ifPresent(armorTab::setArmor);
-            JsonKeyProcessor.<JsonPrimitive, UnarmoredBonus>getJsonKey(Keys.UNARMORED_BONUS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(armorTab::setUnarmoredBonus));
+            armorTab.setArmorClass(deserialize(jsonObject, context, Keys.ARMOR_CLASS));
+            armorTab.setUnarmoredClass(deserialize(jsonObject, context, Keys.UNARMORED_ARMOR_CLASS));
+            armorTab.setArmor(deserialize(jsonObject, context, Keys.ARMOR_LIST));
+            armorTab.setUnarmoredBonus(deserialize(jsonObject, context, Keys.UNARMORED_BONUS));;
             return armorTab;
         }
 
         @Override
         public JsonElement serialize(ArmorTab src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.ARMOR_CLASS.serialize(src.getArmorClass(), jsonObject, context);
-            Keys.UNARMORED_ARMOR_CLASS.serialize(src.getUnarmoredClass(), jsonObject, context);
-            Keys.ARMOR_LIST.serialize(src.getArmorList(), jsonObject, context);
-            JsonKeyProcessor.<JsonPrimitive, UnarmoredBonus>getJsonKey(Keys.UNARMORED_BONUS).ifPresent(jsonKey -> jsonKey.serialize(src.getUnarmoredBonus(), jsonObject, context));
+            serialize(jsonObject, context, Keys.ARMOR_CLASS, src.getArmorClass());
+            serialize(jsonObject, context, Keys.UNARMORED_ARMOR_CLASS, src.getUnarmoredClass());
+            serialize(jsonObject, context, Keys.ARMOR_LIST, src.getArmorList());
+            serialize(jsonObject, context, Keys.UNARMORED_BONUS, src.getUnarmoredBonus());
             return jsonObject;
         }
     }

@@ -1,17 +1,14 @@
 package io.musician101.mcdndsimple.common.character.player.clazz;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 
-@JsonKey(key = Keys.CLASS_LEVELS, typeAdapter = ClassLevels.Serializer.class)
 public class ClassLevels {
 
     private int barbarian = 0;
@@ -123,40 +120,40 @@ public class ClassLevels {
         this.wizard = wizard;
     }
 
-    public static class Serializer implements JsonDeserializer<ClassLevels>, JsonSerializer<ClassLevels> {
+    public static class Serializer extends BaseSerializer<ClassLevels> {
 
         @Override
         public ClassLevels deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             ClassLevels classLevels = new ClassLevels();
-            Keys.BARBARIAN.deserializeFromParent(jsonObject, context).ifPresent(classLevels::setBarbarian);
-            Keys.BARD.deserializeFromParent(jsonObject, context).ifPresent(classLevels::setBard);
-            Keys.DRUID.deserializeFromParent(jsonObject, context).ifPresent(classLevels::setDruid);
-            Keys.FIGHTER.deserializeFromParent(jsonObject, context).ifPresent(classLevels::setFighter);
-            Keys.MONK.deserializeFromParent(jsonObject, context).ifPresent(classLevels::setMonk);
-            Keys.PALADIN.deserializeFromParent(jsonObject, context).ifPresent(classLevels::setPaladin);
-            Keys.RANGER.deserializeFromParent(jsonObject, context).ifPresent(classLevels::setRanger);
-            Keys.ROGUE.deserializeFromParent(jsonObject, context).ifPresent(classLevels::setRogue);
-            Keys.SORCERER.deserializeFromParent(jsonObject, context).ifPresent(classLevels::setSorcerer);
-            Keys.WARLOCK.deserializeFromParent(jsonObject, context).ifPresent(classLevels::setWarlock);
-            Keys.WIZARD.deserializeFromParent(jsonObject, context).ifPresent(classLevels::setWizard);
+            classLevels.setBarbarian(deserialize(jsonObject, context, Keys.BARBARIAN));;
+            classLevels.setBard(deserialize(jsonObject, context, Keys.BARD));;
+            classLevels.setDruid(deserialize(jsonObject, context, Keys.DRUID));;
+            classLevels.setFighter(deserialize(jsonObject, context, Keys.FIGHTER));;
+            classLevels.setMonk(deserialize(jsonObject, context, Keys.MONK));;
+            classLevels.setPaladin(deserialize(jsonObject, context, Keys.PALADIN));;
+            classLevels.setRanger(deserialize(jsonObject, context, Keys.RANGER));;
+            classLevels.setRogue(deserialize(jsonObject, context, Keys.ROGUE));;
+            classLevels.setSorcerer(deserialize(jsonObject, context, Keys.SORCERER));;
+            classLevels.setWarlock(deserialize(jsonObject, context, Keys.WARLOCK));;
+            classLevels.setWizard(deserialize(jsonObject, context, Keys.WIZARD));;
             return classLevels;
         }
 
         @Override
         public JsonElement serialize(ClassLevels src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.BARBARIAN.serialize(src.getBarbarian(), jsonObject, context);
-            Keys.BARD.serialize(src.getBard(), jsonObject, context);
-            Keys.DRUID.serialize(src.getDruid(), jsonObject, context);
-            Keys.FIGHTER.serialize(src.getFighter(), jsonObject, context);
-            Keys.MONK.serialize(src.getMonk(), jsonObject, context);
-            Keys.PALADIN.serialize(src.getPaladin(), jsonObject, context);
-            Keys.RANGER.serialize(src.getRanger(), jsonObject, context);
-            Keys.ROGUE.serialize(src.getRogue(), jsonObject, context);
-            Keys.SORCERER.serialize(src.getSorcerer(), jsonObject, context);
-            Keys.WARLOCK.serialize(src.getWarlock(), jsonObject, context);
-            Keys.WIZARD.serialize(src.getWizard(), jsonObject, context);
+            serialize(jsonObject, context, Keys.BARBARIAN, src.getBarbarian());
+            serialize(jsonObject, context, Keys.BARD, src.getBard());
+            serialize(jsonObject, context, Keys.DRUID, src.getDruid());
+            serialize(jsonObject, context, Keys.FIGHTER, src.getFighter());
+            serialize(jsonObject, context, Keys.MONK, src.getMonk());
+            serialize(jsonObject, context, Keys.PALADIN, src.getPaladin());
+            serialize(jsonObject, context, Keys.RANGER, src.getRanger());
+            serialize(jsonObject, context, Keys.ROGUE, src.getRogue());
+            serialize(jsonObject, context, Keys.SORCERER, src.getSorcerer());
+            serialize(jsonObject, context, Keys.WARLOCK, src.getWarlock());
+            serialize(jsonObject, context, Keys.WIZARD, src.getWizard());
             return jsonObject;
         }
     }

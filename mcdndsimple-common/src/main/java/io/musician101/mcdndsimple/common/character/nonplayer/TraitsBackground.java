@@ -1,21 +1,19 @@
 package io.musician101.mcdndsimple.common.character.nonplayer;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.TRAITS_BACKGROUND, typeAdapter = TraitsBackground.Serializer.class)
+
 public class TraitsBackground {
 
     @Nonnull
@@ -74,28 +72,28 @@ public class TraitsBackground {
         this.traits = traits;
     }
 
-    public static class Serializer implements JsonDeserializer<TraitsBackground>, JsonSerializer<TraitsBackground> {
+    public static class Serializer extends BaseSerializer<TraitsBackground> {
 
         @Override
         public TraitsBackground deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             TraitsBackground traitsBackground = new TraitsBackground();
-            Keys.TRAITS.deserializeFromParent(jsonObject, context).ifPresent(traitsBackground::setTraits);
-            Keys.CONDITION_IMMUNITY.deserializeFromParent(jsonObject, context).ifPresent(traitsBackground::setConditionImmunity);
-            Keys.DAMAGE_IMMUNITY.deserializeFromParent(jsonObject, context).ifPresent(traitsBackground::setDamageImmunity);
-            Keys.DAMAGE_RESISTANCE.deserializeFromParent(jsonObject, context).ifPresent(traitsBackground::setDamageResistance);
-            Keys.DAMAGE_VULNERABILITY.deserializeFromParent(jsonObject, context).ifPresent(traitsBackground::setDamageVulnerability);
+            traitsBackground.setTraits(deserialize(jsonObject, context, Keys.TRAITS));
+            traitsBackground.setConditionImmunity(deserialize(jsonObject, context, Keys.CONDITION_IMMUNITY));
+            traitsBackground.setDamageImmunity(deserialize(jsonObject, context, Keys.DAMAGE_IMMUNITY));
+            traitsBackground.setDamageResistance(deserialize(jsonObject, context, Keys.DAMAGE_RESISTANCE));
+            traitsBackground.setDamageVulnerability(deserialize(jsonObject, context, Keys.DAMAGE_VULNERABILITY));
             return traitsBackground;
         }
 
         @Override
         public JsonElement serialize(TraitsBackground src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.TRAITS.serialize(src.getTraits(), jsonObject, context);
-            Keys.CONDITION_IMMUNITY.serialize(src.getConditionImmunity(), jsonObject, context);
-            Keys.DAMAGE_IMMUNITY.serialize(src.getDamageImmunity(), jsonObject, context);
-            Keys.DAMAGE_RESISTANCE.serialize(src.getDamageResistance(), jsonObject, context);
-            Keys.DAMAGE_VULNERABILITY.serialize(src.getDamageVulnerability(), jsonObject, context);
+            serialize(jsonObject, context, Keys.TRAITS, src.getTraits());
+            serialize(jsonObject, context, Keys.CONDITION_IMMUNITY, src.getConditionImmunity());
+            serialize(jsonObject, context, Keys.DAMAGE_IMMUNITY, src.getDamageImmunity());
+            serialize(jsonObject, context, Keys.DAMAGE_RESISTANCE, src.getDamageResistance());
+            serialize(jsonObject, context, Keys.DAMAGE_VULNERABILITY, src.getDamageVulnerability());
             return jsonObject;
         }
     }

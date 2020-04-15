@@ -1,20 +1,16 @@
 package io.musician101.mcdndsimple.common.character.player.bonus;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
-import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.BONUSES, typeAdapter = Bonuses.Serializer.class)
 public class Bonuses {
 
     @Nonnull
@@ -73,28 +69,28 @@ public class Bonuses {
         this.spellcasting = spellcasting;
     }
 
-    public static class Serializer implements JsonDeserializer<Bonuses>, JsonSerializer<Bonuses> {
+    public static class Serializer extends BaseSerializer<Bonuses> {
 
         @Override
         public Bonuses deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             Bonuses coreStatsTab = new Bonuses();
-            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.ABILITIES_AND_SKILLS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setAbilitiesAndSkills));
-            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.SAVES).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setSaves));
-            JsonKeyProcessor.<JsonObject, MeleeBonus>getJsonKey(Keys.MELEE_BONUS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setMelee));
-            JsonKeyProcessor.<JsonObject, RangedBonus>getJsonKey(Keys.RANGED_BONUS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setRanged));
-            JsonKeyProcessor.<JsonObject, SpellcastingBonus>getJsonKey(Keys.SPELLCASTING_BONUS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(coreStatsTab::setSpellcasting));
+            coreStatsTab.setAbilitiesAndSkills(deserialize(jsonObject, context, Keys.ABILITIES_AND_SKILLS));;
+            coreStatsTab.setSaves(deserialize(jsonObject, context, Keys.SAVES));;
+            coreStatsTab.setMelee(deserialize(jsonObject, context, Keys.MELEE_BONUS));;
+            coreStatsTab.setRanged(deserialize(jsonObject, context, Keys.RANGED_BONUS));;
+            coreStatsTab.setSpellcasting(deserialize(jsonObject, context, Keys.SPELLCASTING_BONUS));;
             return coreStatsTab;
         }
 
         @Override
         public JsonElement serialize(Bonuses src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.ABILITIES_AND_SKILLS).ifPresent(jsonKey -> jsonKey.serialize(src.getAbilitiesAndSkills(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.SAVES).ifPresent(jsonKey -> jsonKey.serialize(src.getSaves(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, MeleeBonus>getJsonKey(Keys.MELEE_BONUS).ifPresent(jsonKey -> jsonKey.serialize(src.getMelee(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, RangedBonus>getJsonKey(Keys.RANGED_BONUS).ifPresent(jsonKey -> jsonKey.serialize(src.getRanged(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, SpellcastingBonus>getJsonKey(Keys.SPELLCASTING_BONUS).ifPresent(jsonKey -> jsonKey.serialize(src.getSpellcasting(), jsonObject, context));
+            serialize(jsonObject, context, Keys.ABILITIES_AND_SKILLS, src.getAbilitiesAndSkills());
+            serialize(jsonObject, context, Keys.SAVES, src.getSaves());
+            serialize(jsonObject, context, Keys.MELEE_BONUS, src.getMelee());
+            serialize(jsonObject, context, Keys.RANGED_BONUS, src.getRanged());
+            serialize(jsonObject, context, Keys.SPELLCASTING_BONUS, src.getSpellcasting());
             return jsonObject;
         }
     }

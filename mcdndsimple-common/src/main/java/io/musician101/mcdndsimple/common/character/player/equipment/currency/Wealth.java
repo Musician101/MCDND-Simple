@@ -1,18 +1,15 @@
 package io.musician101.mcdndsimple.common.character.player.equipment.currency;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.WEALTH, typeAdapter = Wealth.Serializer.class)
 public class Wealth {
 
     @Nonnull
@@ -51,28 +48,28 @@ public class Wealth {
         return silver;
     }
 
-    public static class Serializer implements JsonDeserializer<Wealth>, JsonSerializer<Wealth> {
+    public static class Serializer extends BaseSerializer<Wealth> {
 
         @Override
         public Wealth deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             Wealth wealth = new Wealth();
-            Keys.COPPER.deserializeFromParent(jsonObject, context).ifPresent(copper -> wealth.getCopper().setAmount(copper));
-            Keys.ELECTRUM.deserializeFromParent(jsonObject, context).ifPresent(electrum -> wealth.getElectrum().setAmount(electrum));
-            Keys.GOLD.deserializeFromParent(jsonObject, context).ifPresent(gold -> wealth.getGold().setAmount(gold));
-            Keys.PLATINUM.deserializeFromParent(jsonObject, context).ifPresent(platinum -> wealth.getPlatinum().setAmount(platinum));
-            Keys.SILVER.deserializeFromParent(jsonObject, context).ifPresent(silver -> wealth.getSilver().setAmount(silver));
+            wealth.getCopper().setAmount(deserialize(jsonObject, context, Keys.COPPER));
+            wealth.getElectrum().setAmount(deserialize(jsonObject, context, Keys.ELECTRUM));
+            wealth.getGold().setAmount(deserialize(jsonObject, context, Keys.GOLD));
+            wealth.getPlatinum().setAmount(deserialize(jsonObject, context, Keys.PLATINUM));
+            wealth.getSilver().setAmount(deserialize(jsonObject, context, Keys.SILVER));
             return wealth;
         }
 
         @Override
         public JsonElement serialize(Wealth src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.COPPER.serialize(src.getCopper().getAmount(), jsonObject, context);
-            Keys.ELECTRUM.serialize(src.getElectrum().getAmount(), jsonObject, context);
-            Keys.GOLD.serialize(src.getGold().getAmount(), jsonObject, context);
-            Keys.PLATINUM.serialize(src.getPlatinum().getAmount(), jsonObject, context);
-            Keys.SILVER.serialize(src.getSilver().getAmount(), jsonObject, context);
+            serialize(jsonObject, context, Keys.COPPER, src.getCopper().getAmount());
+            serialize(jsonObject, context, Keys.ELECTRUM, src.getElectrum().getAmount());
+            serialize(jsonObject, context, Keys.GOLD, src.getGold().getAmount());
+            serialize(jsonObject, context, Keys.PLATINUM, src.getPlatinum().getAmount());
+            serialize(jsonObject, context, Keys.SILVER, src.getSilver().getAmount());
             return jsonObject;
         }
     }

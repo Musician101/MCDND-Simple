@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
 public abstract class CharacterStorage<T extends AbstractPlayer> {
 
     @Nonnull
-    protected final List<T> data = new ArrayList<>();
+    protected final List<T> characters = new ArrayList<>();
     @Nonnull
     protected final File storageDir;
 
@@ -20,22 +21,31 @@ public abstract class CharacterStorage<T extends AbstractPlayer> {
     }
 
     @Nonnull
-    public abstract Optional<T> createNewCharacter(@Nonnull UUID uuid, @Nonnull String name);
+    public abstract Optional<T> createNewCharacter(@Nonnull String id);
+
+    public boolean delete(@Nonnull UUID uuid, @Nonnull String id) {
+        return characters.removeIf(nonPlayer -> isDM(uuid) && id.equals(nonPlayer.getID()));
+    }
 
     @Nonnull
-    public Optional<T> getCharacter(@Nonnull UUID uuid, @Nonnull String name) {
-        return data.stream().filter(sheet -> sheet.getName().equals(name) && sheet.isController(uuid)).findFirst();
+    public Optional<T> getCharacter(@Nonnull String id) {
+        return characters.stream().filter(sheet -> sheet.getID().equals(id)).findFirst();
+    }
+
+    @Nonnull
+    public List<T> getCharacters(@Nonnull UUID uuid) {
+        return characters.stream().filter(character -> isDM(uuid) || character.getControllers().contains(uuid)).collect(Collectors.toList());
     }
 
     @Nonnull
     public List<T> getCharacters() {
-        return data;
+        return characters;
     }
 
     public abstract void load();
 
     public void remove(@Nonnull T value) {
-        data.remove(value);
+        characters.remove(value);
     }
 
     public void removeFrom(@Nonnull T value, @Nonnull UUID uuid) {
@@ -43,4 +53,6 @@ public abstract class CharacterStorage<T extends AbstractPlayer> {
     }
 
     public abstract void save();
+
+    protected abstract boolean isDM(@Nonnull UUID uuid);
 }

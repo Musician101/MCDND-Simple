@@ -4,3 +4,4 @@ main: io.musician101.mcdndsimple.spigot.SpigotMCDNDSimple
 softdepend: [SpigotMusicianLibrary]
 authors: [Musician101]
 description: test
+api-version: '1.14'

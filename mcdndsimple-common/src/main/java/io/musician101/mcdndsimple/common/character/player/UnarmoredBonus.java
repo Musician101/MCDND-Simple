@@ -1,20 +1,16 @@
 package io.musician101.mcdndsimple.common.character.player;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.UNARMORED_BONUS, typeAdapter = UnarmoredBonus.Serializer.class)
 public enum UnarmoredBonus {
     BARBARIAN("Barbarian"),
     DRACONIC_RESILIENCE("Draconic Resilience (Sorcerer Subclass)", (dexMod, secondMod) -> 13 + dexMod),
@@ -44,7 +40,7 @@ public enum UnarmoredBonus {
         return name;
     }
 
-    public static class Serializer implements JsonDeserializer<UnarmoredBonus>, JsonSerializer<UnarmoredBonus> {
+    public static class Serializer extends BaseSerializer<UnarmoredBonus> {
 
         @Override
         public UnarmoredBonus deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {

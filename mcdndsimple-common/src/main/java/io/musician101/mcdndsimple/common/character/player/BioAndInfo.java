@@ -1,20 +1,17 @@
 package io.musician101.mcdndsimple.common.character.player;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = "bio_and_info", typeAdapter = BioAndInfo.Serializer.class)
 public class BioAndInfo {
 
     @Nonnull
@@ -40,22 +37,22 @@ public class BioAndInfo {
         this.name = name;
     }
 
-    public static class Serializer implements JsonDeserializer<BioAndInfo>, JsonSerializer<BioAndInfo> {
+    public static class Serializer extends BaseSerializer<BioAndInfo> {
 
         @Override
         public BioAndInfo deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             BioAndInfo bioAndInfo = new BioAndInfo();
-            Keys.NAME.deserializeFromParent(jsonObject, context).ifPresent(bioAndInfo::setName);
-            Keys.BIO.deserializeFromParent(jsonObject, context).ifPresent(bioAndInfo::setBio);
+            bioAndInfo.setName(deserialize(jsonObject, context, Keys.NAME));;
+            bioAndInfo.setBio(deserialize(jsonObject, context, Keys.BIO));;
             return bioAndInfo;
         }
 
         @Override
         public JsonElement serialize(BioAndInfo src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.NAME.serialize(src.getName(), jsonObject, context);
-            Keys.BIO.serialize(src.getBio(), jsonObject, context);
+            serialize(jsonObject, context, Keys.NAME, src.getName());
+            serialize(jsonObject, context, Keys.BIO, src.getBio());
             return jsonObject;
         }
     }

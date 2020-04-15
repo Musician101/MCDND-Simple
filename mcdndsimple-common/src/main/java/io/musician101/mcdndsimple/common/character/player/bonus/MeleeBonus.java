@@ -1,20 +1,16 @@
 package io.musician101.mcdndsimple.common.character.player.bonus;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
-import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.MELEE_BONUS, typeAdapter = MeleeBonus.Serializer.class)
 public class MeleeBonus {
 
     @Nonnull
@@ -40,22 +36,22 @@ public class MeleeBonus {
         this.damage = damage;
     }
 
-    public static class Serializer implements JsonDeserializer<MeleeBonus>, JsonSerializer<MeleeBonus> {
+    public static class Serializer extends BaseSerializer<MeleeBonus> {
 
         @Override
         public MeleeBonus deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             MeleeBonus meleeBonus = new MeleeBonus();
-            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.ATTACK).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(meleeBonus::setAttack));
-            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.DAMAGE).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(meleeBonus::setDamage));
+            meleeBonus.setAttack(deserialize(jsonObject, context, Keys.ATTACK));;
+            meleeBonus.setDamage(deserialize(jsonObject, context, Keys.DAMAGE));;
             return meleeBonus;
         }
 
         @Override
         public JsonElement serialize(MeleeBonus src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.ATTACK).ifPresent(jsonKey -> jsonKey.serialize(src.getAttack(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.DAMAGE).ifPresent(jsonKey -> jsonKey.serialize(src.getDamage(), jsonObject, context));
+            serialize(jsonObject, context, Keys.ATTACK, src.getAttack());
+            serialize(jsonObject, context, Keys.DAMAGE, src.getDamage());
             return jsonObject;
         }
     }

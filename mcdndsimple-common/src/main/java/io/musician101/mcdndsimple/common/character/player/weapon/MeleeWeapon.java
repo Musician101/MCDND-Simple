@@ -6,10 +6,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.adapter.TypeOf;
 import java.lang.reflect.Type;
 
-@TypeOf(MeleeWeapon.Serializer.class)
 public class MeleeWeapon extends Weapon {
 
     private boolean plusStat = true;
@@ -32,14 +30,14 @@ public class MeleeWeapon extends Weapon {
         public MeleeWeapon deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             MeleeWeapon weapon = super.deserialize(json, type, context);
-            Keys.PLUS_STAT.deserializeFromParent(jsonObject, context).ifPresent(weapon::setPlusStat);
+            weapon.setPlusStat(deserialize(jsonObject, context, Keys.PLUS_STAT));
             return weapon;
         }
 
         @Override
         public JsonElement serialize(MeleeWeapon src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = super.serialize(src, type, context).getAsJsonObject();
-            Keys.PLUS_STAT.serialize(src.plusStat(), jsonObject, context);
+            serialize(jsonObject, context, Keys.PLUS_STAT, src.plusStat());
             return jsonObject;
         }
     }

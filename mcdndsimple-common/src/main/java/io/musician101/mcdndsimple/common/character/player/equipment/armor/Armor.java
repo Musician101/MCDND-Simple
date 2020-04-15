@@ -1,20 +1,15 @@
 package io.musician101.mcdndsimple.common.character.player.equipment.armor;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
-import io.musician101.musicianlibrary.java.json.adapter.TypeOf;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import javax.annotation.Nonnull;
 
-@TypeOf(Armor.Serializer.class)
 public class Armor {
 
     @Nonnull
@@ -98,34 +93,34 @@ public class Armor {
         this.stealthPenalty = stealthPenalty;
     }
 
-    public static class Serializer implements JsonDeserializer<Armor>, JsonSerializer<Armor> {
+    public static class Serializer extends BaseSerializer<Armor> {
 
         @Override
         public Armor deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             Armor armor = new Armor();
-            JsonKeyProcessor.<JsonPrimitive, ArmorType>getJsonKey(Keys.ARMOR_TYPE).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(armor::setArmorType));
-            Keys.SPEED_PENALTY.deserializeFromParent(jsonObject, context).ifPresent(armor::setSpeedPenalty);
-            Keys.STEALTH_PENALTY.deserializeFromParent(jsonObject, context).ifPresent(armor::setStealthPenalty);
-            Keys.UNARMORED.deserializeFromParent(jsonObject, context).ifPresent(armor::setIsUnarmored);
-            Keys.WORN.deserializeFromParent(jsonObject, context).ifPresent(armor::setIsWorn);
-            Keys.BASE_ARMOR_CLASS.deserializeFromParent(jsonObject, context).ifPresent(armor::setBaseArmorClass);
-            Keys.MAGIC_BONUS.deserializeFromParent(jsonObject, context).ifPresent(armor::setMagicBonus);
-            Keys.NAME.deserializeFromParent(jsonObject, context).ifPresent(armor::setName);
+            armor.setArmorType(deserialize(jsonObject, context, Keys.ARMOR_TYPE));
+            armor.setSpeedPenalty(deserialize(jsonObject, context, Keys.SPEED_PENALTY));
+            armor.setStealthPenalty(deserialize(jsonObject, context, Keys.STEALTH_PENALTY));
+            armor.setIsUnarmored(deserialize(jsonObject, context, Keys.UNARMORED));
+            armor.setIsWorn(deserialize(jsonObject, context, Keys.WORN));
+            armor.setBaseArmorClass(deserialize(jsonObject, context, Keys.BASE_ARMOR_CLASS));
+            armor.setMagicBonus(deserialize(jsonObject, context, Keys.MAGIC_BONUS));
+            armor.setName(deserialize(jsonObject, context, Keys.NAME));
             return armor;
         }
 
         @Override
         public JsonElement serialize(Armor src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            JsonKeyProcessor.<JsonPrimitive, ArmorType>getJsonKey(Keys.ARMOR_TYPE).ifPresent(jsonKey -> jsonKey.serialize(src.getArmorType(), jsonObject, context));
-            Keys.SPEED_PENALTY.serialize(src.hasSpeedPenalty(), jsonObject, context);
-            Keys.STEALTH_PENALTY.serialize(src.hasStealthPenalty(), jsonObject, context);
-            Keys.UNARMORED.serialize(src.isUnarmored(), jsonObject, context);
-            Keys.WORN.serialize(src.isWorn(), jsonObject, context);
-            Keys.BASE_ARMOR_CLASS.serialize(src.getBaseArmorClass(), jsonObject, context);
-            Keys.MAGIC_BONUS.serialize(src.getMagicBonus(), jsonObject, context);
-            Keys.NAME.serialize(src.getName(), jsonObject, context);
+            serialize(jsonObject, context, Keys.ARMOR_TYPE, src.getArmorType());
+            serialize(jsonObject, context, Keys.SPEED_PENALTY, src.hasSpeedPenalty());
+            serialize(jsonObject, context, Keys.STEALTH_PENALTY, src.hasStealthPenalty());
+            serialize(jsonObject, context, Keys.UNARMORED, src.isUnarmored());
+            serialize(jsonObject, context, Keys.WORN, src.isWorn());
+            serialize(jsonObject, context, Keys.BASE_ARMOR_CLASS, src.getBaseArmorClass());
+            serialize(jsonObject, context, Keys.MAGIC_BONUS, src.getMagicBonus());
+            serialize(jsonObject, context, Keys.NAME, src.getName());
             return jsonObject;
         }
     }

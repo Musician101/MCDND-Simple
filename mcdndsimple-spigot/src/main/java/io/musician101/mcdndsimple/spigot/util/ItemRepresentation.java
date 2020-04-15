@@ -2,6 +2,7 @@ package io.musician101.mcdndsimple.spigot.util;
 
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.Experience;
+import io.musician101.mcdndsimple.common.character.player.PlayerAbilityScore;
 import io.musician101.mcdndsimple.common.character.player.UnarmoredBonus;
 import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.player.equipment.armor.Armor;
@@ -30,27 +31,25 @@ public class ItemRepresentation {
     }
 
     private static Material getArmorMaterial(ArmorType armorType) {
-        Material material = Material.GOLD_CHESTPLATE;
         switch (armorType) {
             case LIGHT:
-                material = Material.LEATHER_CHESTPLATE;
-                break;
+                return Material.LEATHER_CHESTPLATE;
             case MEDIUM:
-                material = Material.IRON_CHESTPLATE;
-                break;
+                return Material.IRON_CHESTPLATE;
             case HEAVY:
-                material = Material.DIAMOND_CHESTPLATE;
-                break;
+                return Material.DIAMOND_CHESTPLATE;
+            case SHIELD:
+                return Material.SHIELD;
+            default:
+                return Material.GOLDEN_CHESTPLATE;
         }
-
-        return material;
     }
 
-    public static ItemStack meleeWeapon(MeleeWeapon weapon, ClassLevels classLevels, CoreStats coreStats, Experience experience) {
+    public static ItemStack meleeWeapon(MeleeWeapon weapon, ClassLevels classLevels, CoreStats<PlayerAbilityScore> coreStats, Experience experience) {
         return SpigotIconBuilder.builder(Material.DIAMOND_SWORD).name(weapon.getName()).description(MenuText.isProficient(weapon), MenuText.attackStat(weapon.getAttackStat()), MenuText.magicBonus(weapon), MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)), MenuText.plusStat(weapon), MenuText.damageDice(weapon.getDamage()), MenuText.damageBonus(weapon, coreStats), MenuText.damageType(weapon.getDamageType()), MenuText.critDamage(weapon), MenuText.critOn(weapon)).build();
     }
 
-    public static ItemStack rangedWeapon(RangedWeapon weapon, ClassLevels classLevels, CoreStats coreStats, Experience experience) {
+    public static ItemStack rangedWeapon(RangedWeapon weapon, ClassLevels classLevels, CoreStats<PlayerAbilityScore> coreStats, Experience experience) {
         return SpigotIconBuilder.builder(Material.BOW).name(weapon.getName()).description(MenuText.isProficient(weapon), MenuText.attackStat(weapon.getAttackStat()), MenuText.magicBonus(weapon), MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience)), MenuText.damageDice(weapon.getDamage()), MenuText.damageBonus(weapon, coreStats), MenuText.damageType(weapon.getDamageType()), MenuText.critDamage(weapon), MenuText.critOn(weapon)).build();
     }
 
@@ -66,7 +65,7 @@ public class ItemRepresentation {
                 break;
             }
             case DRACONIC_RESILIENCE: {
-                material = Material.DRAGONS_BREATH;
+                material = Material.DRAGON_BREATH;
                 break;
             }
             case MONK: {
@@ -85,7 +84,7 @@ public class ItemRepresentation {
         SpigotIconBuilder builder;
         switch (stat) {
             case CHA:
-                builder = SpigotIconBuilder.builder(Material.SKULL_ITEM).durability(3);
+                builder = SpigotIconBuilder.builder(Material.PLAYER_HEAD);
                 break;
             case CON:
                 builder = SpigotIconBuilder.builder(Material.GOLDEN_APPLE);
@@ -97,7 +96,7 @@ public class ItemRepresentation {
                 builder = SpigotIconBuilder.builder(Material.DIAMOND_SWORD);
                 break;
             case INT:
-                builder = SpigotIconBuilder.builder(Material.BOOK_AND_QUILL);
+                builder = SpigotIconBuilder.builder(Material.WRITTEN_BOOK);
                 break;
             case STR:
                 builder = SpigotIconBuilder.builder(Material.IRON_SWORD);

@@ -17,7 +17,6 @@ repositories {
 dependencies {
     compile project(':mcdndsimple-common')
     compile 'io.musician101:musicianlibrary-spigot:3.0-SNAPSHOT'
-    compile 'net.wesjd:anvilgui:1.1.1-SNAPSHOT'
 }
 
 processResources {
@@ -29,6 +28,5 @@ processResources {
 shadowJar {
     dependencies {
         include(dependency(':mcdndsimple-common'))
-        include(dependency(':anilgui:1.1.1-SNAPSHOT'))
     }
 }

@@ -1,17 +1,14 @@
 package io.musician101.mcdndsimple.common.character.player.spell;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 
-@JsonKey(key = Keys.MACRO_OPTIONS, typeAdapter = MacroOptions.Serializer.class)
 public class MacroOptions {
 
     private boolean atHigherLevelsEnabled = false;
@@ -96,36 +93,36 @@ public class MacroOptions {
         this.secondAttackRollEnabled = secondAttackRollEnabled;
     }
 
-    public static class Serializer implements JsonDeserializer<MacroOptions>, JsonSerializer<MacroOptions> {
+    public static class Serializer extends BaseSerializer<MacroOptions> {
 
         @Override
         public MacroOptions deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             MacroOptions macroOptions = new MacroOptions();
-            Keys.AT_HIGHER_LEVELS_ENABLED.deserializeFromParent(jsonObject, context).ifPresent(macroOptions::setAtHigherLevelsEnabled);
-            Keys.ATTACK_ROLL_ENABLED.deserializeFromParent(jsonObject, context).ifPresent(macroOptions::setAttackRollEnabled);
-            Keys.DAMAGE_ENABLED.deserializeFromParent(jsonObject, context).ifPresent(macroOptions::setDamageEnabled);
-            Keys.DESCRIPTION_ENABLED.deserializeFromParent(jsonObject, context).ifPresent(macroOptions::setDescriptionEnabled);
-            Keys.EFFECTS_ENABLED.deserializeFromParent(jsonObject, context).ifPresent(macroOptions::setEffectsEnabled);
-            Keys.HEALING_ENABLED.deserializeFromParent(jsonObject, context).ifPresent(macroOptions::setHealingEnabled);
-            Keys.INFO_BLOCK_ENABLED.deserializeFromParent(jsonObject, context).ifPresent(macroOptions::setInfoBlockEnabled);
-            Keys.SAVING_THROW_ENABLED.deserializeFromParent(jsonObject, context).ifPresent(macroOptions::setSavingThrowEnabled);
-            Keys.SECOND_ATTACK_ROLL_ENABLED.deserializeFromParent(jsonObject, context).ifPresent(macroOptions::setSecondAttackRollEnabled);
+            macroOptions.setAtHigherLevelsEnabled(deserialize(jsonObject, context, Keys.AT_HIGHER_LEVELS_ENABLED));
+            macroOptions.setAttackRollEnabled(deserialize(jsonObject, context, Keys.ATTACK_ROLL_ENABLED));
+            macroOptions.setDamageEnabled(deserialize(jsonObject, context, Keys.DAMAGE_ENABLED));
+            macroOptions.setDescriptionEnabled(deserialize(jsonObject, context, Keys.DESCRIPTION_ENABLED));
+            macroOptions.setEffectsEnabled(deserialize(jsonObject, context, Keys.EFFECTS_ENABLED));
+            macroOptions.setHealingEnabled(deserialize(jsonObject, context, Keys.HEALING_ENABLED));
+            macroOptions.setInfoBlockEnabled(deserialize(jsonObject, context, Keys.INFO_BLOCK_ENABLED));
+            macroOptions.setSavingThrowEnabled(deserialize(jsonObject, context, Keys.SAVING_THROW_ENABLED));
+            macroOptions.setSecondAttackRollEnabled(deserialize(jsonObject, context, Keys.SECOND_ATTACK_ROLL_ENABLED));
             return macroOptions;
         }
 
         @Override
         public JsonElement serialize(MacroOptions src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.AT_HIGHER_LEVELS_ENABLED.serialize(src.isAtHigherLevelsEnabled(), jsonObject, context);
-            Keys.ATTACK_ROLL_ENABLED.serialize(src.isAttackRollEnabled(), jsonObject, context);
-            Keys.DAMAGE_ENABLED.serialize(src.isDamageEnabled(), jsonObject, context);
-            Keys.DESCRIPTION_ENABLED.serialize(src.isDescriptionEnabled(), jsonObject, context);
-            Keys.EFFECTS_ENABLED.serialize(src.isEffectsEnabled(), jsonObject, context);
-            Keys.HEALING_ENABLED.serialize(src.isHealingEnabled(), jsonObject, context);
-            Keys.INFO_BLOCK_ENABLED.serialize(src.isInfoBlockEnabled(), jsonObject, context);
-            Keys.SAVING_THROW_ENABLED.serialize(src.isSavingThrowEnabled(), jsonObject, context);
-            Keys.SECOND_ATTACK_ROLL_ENABLED.serialize(src.isSecondAttackRollEnabled(), jsonObject, context);
+            serialize(jsonObject, context, Keys.AT_HIGHER_LEVELS_ENABLED, src.isAtHigherLevelsEnabled());
+            serialize(jsonObject, context, Keys.ATTACK_ROLL_ENABLED, src.isAttackRollEnabled());
+            serialize(jsonObject, context, Keys.DAMAGE_ENABLED, src.isDamageEnabled());
+            serialize(jsonObject, context, Keys.DESCRIPTION_ENABLED, src.isDescriptionEnabled());
+            serialize(jsonObject, context, Keys.EFFECTS_ENABLED, src.isEffectsEnabled());
+            serialize(jsonObject, context, Keys.HEALING_ENABLED, src.isHealingEnabled());
+            serialize(jsonObject, context, Keys.INFO_BLOCK_ENABLED, src.isInfoBlockEnabled());
+            serialize(jsonObject, context, Keys.SAVING_THROW_ENABLED, src.isSavingThrowEnabled());
+            serialize(jsonObject, context, Keys.SECOND_ATTACK_ROLL_ENABLED, src.isSecondAttackRollEnabled());
             return jsonObject;
         }
     }

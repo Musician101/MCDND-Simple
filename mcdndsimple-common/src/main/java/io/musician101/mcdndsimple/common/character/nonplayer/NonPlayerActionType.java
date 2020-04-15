@@ -1,19 +1,16 @@
 package io.musician101.mcdndsimple.common.character.nonplayer;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.NON_PLAYER_ACTION_TYPE, typeAdapter = NonPlayerActionType.Serializer.class)
+
 public enum NonPlayerActionType {
 
     BONUS("Bonus"),
@@ -36,7 +33,7 @@ public enum NonPlayerActionType {
         return name;
     }
 
-    public static class Serializer implements JsonDeserializer<NonPlayerActionType>, JsonSerializer<NonPlayerActionType> {
+    public static class Serializer extends BaseSerializer<NonPlayerActionType> {
 
         @Override
         public NonPlayerActionType deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {

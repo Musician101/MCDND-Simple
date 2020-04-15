@@ -2,7 +2,7 @@ package io.musician101.mcdndsimple.common.character.player;
 
 import javax.annotation.Nonnull;
 
-public class Rechargeable {
+public abstract class Rechargeable {
 
     @Nonnull
     private Recharge recharge = Recharge.NONE;

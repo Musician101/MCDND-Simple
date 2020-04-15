@@ -4,6 +4,8 @@ import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.character.player.BioAndInfo;
 import javax.annotation.Nonnull;
 
+//TODO move to factory for auto formatting
+@Deprecated
 public class Messages {
 
     public static final String LOAD_COMPLETE = "Let the adventures begin...";

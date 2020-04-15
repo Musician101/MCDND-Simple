@@ -1,22 +1,18 @@
 package io.musician101.mcdndsimple.common.character.player.skill;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.character.player.AbilityScore;
 import io.musician101.mcdndsimple.common.character.player.Experience;
 import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
-import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.SKILL_PROFICIENCY, typeAdapter = SkillProficiency.Serializer.class)
 public enum SkillProficiency {
     EXPERTISE("Expertise"),
     JACK_OF_ALL_TRADES("Jack of all Trades"),
@@ -48,7 +44,7 @@ public enum SkillProficiency {
         return name;
     }
 
-    public static class Serializer implements JsonDeserializer<SkillProficiency>, JsonSerializer<SkillProficiency> {
+    public static class Serializer extends BaseSerializer<SkillProficiency> {
 
         @Override
         public SkillProficiency deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {

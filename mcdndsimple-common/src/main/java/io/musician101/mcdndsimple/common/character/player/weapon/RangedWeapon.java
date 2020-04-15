@@ -6,10 +6,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.adapter.TypeOf;
 import java.lang.reflect.Type;
 
-@TypeOf(RangedWeapon.Serializer.class)
 public class RangedWeapon extends Weapon {
 
     private int ammo = 0;
@@ -32,14 +30,14 @@ public class RangedWeapon extends Weapon {
         public RangedWeapon deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             RangedWeapon weapon = super.deserialize(json, type, context);
-            Keys.AMMO.deserializeFromParent(jsonObject, context).ifPresent(weapon::setAmmo);
+            weapon.setAmmo(deserialize(jsonObject, context, Keys.AMMO));
             return weapon;
         }
 
         @Override
         public JsonElement serialize(RangedWeapon src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = super.serialize(src, type, context).getAsJsonObject();
-            Keys.AMMO.serialize(src.getAmmo(), jsonObject, context);
+            serialize(jsonObject, context, Keys.AMMO, src.getAmmo());
             return jsonObject;
         }
     }

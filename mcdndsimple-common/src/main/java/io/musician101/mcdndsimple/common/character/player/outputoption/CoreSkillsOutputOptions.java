@@ -1,13 +1,12 @@
 package io.musician101.mcdndsimple.common.character.player.outputoption;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 
 public class CoreSkillsOutputOptions {
@@ -175,50 +174,50 @@ public class CoreSkillsOutputOptions {
         this.survival = survival;
     }
 
-    public static class Serializer implements JsonDeserializer<CoreSkillsOutputOptions>, JsonSerializer<CoreSkillsOutputOptions> {
+    public static class Serializer extends BaseSerializer<CoreSkillsOutputOptions> {
 
         @Override
         public CoreSkillsOutputOptions deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             CoreSkillsOutputOptions coreSkillsOutputOptions = new CoreSkillsOutputOptions();
-            Keys.ACROBATICS_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setAcrobaticsEnabled);
-            Keys.ANIMAL_HANDLING_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setAnimalHandlingEnabled);
-            Keys.ARCANA_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setArcanaEnabled);
-            Keys.ATHLETICS_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setAthleticsEnabled);
-            Keys.DECEPTION_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setDeceptionEnabled);
-            Keys.HISTORY_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setHistoryEnabled);
-            Keys.INSIGHT_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setInsightEnabled);
-            Keys.INTIMIDATION_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setIntimidationEnabled);
-            Keys.INVESTIGATION_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setInvestigationEnabled);
-            Keys.MEDICINE_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setMedicineEnabled);
-            Keys.NATURE_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setNatureEnabled);
-            Keys.PERCEPTION_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setPerceptionEnabled);
-            Keys.PERSUASION_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setPersuasionEnabled);
-            Keys.RELIGION_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setReligionEnabled);
-            Keys.SLEIGHT_OF_HAND_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setSleightOfHandEnabled);
-            Keys.SURVIVAL_BOOLEAN.deserializeFromParent(jsonObject, context).ifPresent(coreSkillsOutputOptions::setSurvivalEnabled);
+            coreSkillsOutputOptions.setAcrobaticsEnabled(deserialize(jsonObject, context, Keys.ACROBATICS_BOOLEAN));
+            coreSkillsOutputOptions.setAnimalHandlingEnabled(deserialize(jsonObject, context, Keys.ANIMAL_HANDLING_BOOLEAN));
+            coreSkillsOutputOptions.setArcanaEnabled(deserialize(jsonObject, context, Keys.ARCANA_BOOLEAN));
+            coreSkillsOutputOptions.setAthleticsEnabled(deserialize(jsonObject, context, Keys.ATHLETICS_BOOLEAN));
+            coreSkillsOutputOptions.setDeceptionEnabled(deserialize(jsonObject, context, Keys.DECEPTION_BOOLEAN));
+            coreSkillsOutputOptions.setHistoryEnabled(deserialize(jsonObject, context, Keys.HISTORY_BOOLEAN));
+            coreSkillsOutputOptions.setInsightEnabled(deserialize(jsonObject, context, Keys.INSIGHT_BOOLEAN));
+            coreSkillsOutputOptions.setIntimidationEnabled(deserialize(jsonObject, context, Keys.INTIMIDATION_BOOLEAN));
+            coreSkillsOutputOptions.setInvestigationEnabled(deserialize(jsonObject, context, Keys.INVESTIGATION_BOOLEAN));
+            coreSkillsOutputOptions.setMedicineEnabled(deserialize(jsonObject, context, Keys.MEDICINE_BOOLEAN));
+            coreSkillsOutputOptions.setNatureEnabled(deserialize(jsonObject, context, Keys.NATURE_BOOLEAN));
+            coreSkillsOutputOptions.setPerceptionEnabled(deserialize(jsonObject, context, Keys.PERCEPTION_BOOLEAN));
+            coreSkillsOutputOptions.setPersuasionEnabled(deserialize(jsonObject, context, Keys.PERSUASION_BOOLEAN));
+            coreSkillsOutputOptions.setReligionEnabled(deserialize(jsonObject, context, Keys.RELIGION_BOOLEAN));
+            coreSkillsOutputOptions.setSleightOfHandEnabled(deserialize(jsonObject, context, Keys.SLEIGHT_OF_HAND_BOOLEAN));
+            coreSkillsOutputOptions.setSurvivalEnabled(deserialize(jsonObject, context, Keys.SURVIVAL_BOOLEAN));
             return coreSkillsOutputOptions;
         }
 
         @Override
         public JsonElement serialize(CoreSkillsOutputOptions src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.ACROBATICS_BOOLEAN.serialize(src.isAcrobaticsEnabled(), jsonObject, context);
-            Keys.ANIMAL_HANDLING_BOOLEAN.serialize(src.isAnimalHandlingEnabled(), jsonObject, context);
-            Keys.ARCANA_BOOLEAN.serialize(src.isArcanaEnabled(), jsonObject, context);
-            Keys.ATHLETICS_BOOLEAN.serialize(src.isAthleticsEnabled(), jsonObject, context);
-            Keys.DECEPTION_BOOLEAN.serialize(src.isDeceptionEnabled(), jsonObject, context);
-            Keys.HISTORY_BOOLEAN.serialize(src.isHistoryEnabled(), jsonObject, context);
-            Keys.INSIGHT_BOOLEAN.serialize(src.isInsightEnabled(), jsonObject, context);
-            Keys.INTIMIDATION_BOOLEAN.serialize(src.isIntimidationEnabled(), jsonObject, context);
-            Keys.INVESTIGATION_BOOLEAN.serialize(src.isInvestigationEnabled(), jsonObject, context);
-            Keys.MEDICINE_BOOLEAN.serialize(src.isMedicineEnabled(), jsonObject, context);
-            Keys.NATURE_BOOLEAN.serialize(src.isNatureEnabled(), jsonObject, context);
-            Keys.PERCEPTION_BOOLEAN.serialize(src.isPerceptionEnabled(), jsonObject, context);
-            Keys.PERSUASION_BOOLEAN.serialize(src.isPersuasionEnabled(), jsonObject, context);
-            Keys.RELIGION_BOOLEAN.serialize(src.isReligionEnabled(), jsonObject, context);
-            Keys.SLEIGHT_OF_HAND_BOOLEAN.serialize(src.isSleightOfHandEnabled(), jsonObject, context);
-            Keys.SURVIVAL_BOOLEAN.serialize(src.isSurvivalEnabled(), jsonObject, context);
+            serialize(jsonObject, context, Keys.ACROBATICS_BOOLEAN, src.isAcrobaticsEnabled());
+            serialize(jsonObject, context, Keys.ANIMAL_HANDLING_BOOLEAN, src.isAnimalHandlingEnabled());
+            serialize(jsonObject, context, Keys.ARCANA_BOOLEAN, src.isArcanaEnabled());
+            serialize(jsonObject, context, Keys.ATHLETICS_BOOLEAN, src.isAthleticsEnabled());
+            serialize(jsonObject, context, Keys.DECEPTION_BOOLEAN, src.isDeceptionEnabled());
+            serialize(jsonObject, context, Keys.HISTORY_BOOLEAN, src.isHistoryEnabled());
+            serialize(jsonObject, context, Keys.INSIGHT_BOOLEAN, src.isInsightEnabled());
+            serialize(jsonObject, context, Keys.INTIMIDATION_BOOLEAN, src.isIntimidationEnabled());
+            serialize(jsonObject, context, Keys.INVESTIGATION_BOOLEAN, src.isInvestigationEnabled());
+            serialize(jsonObject, context, Keys.MEDICINE_BOOLEAN, src.isMedicineEnabled());
+            serialize(jsonObject, context, Keys.NATURE_BOOLEAN, src.isNatureEnabled());
+            serialize(jsonObject, context, Keys.PERCEPTION_BOOLEAN, src.isPerceptionEnabled());
+            serialize(jsonObject, context, Keys.PERSUASION_BOOLEAN, src.isPersuasionEnabled());
+            serialize(jsonObject, context, Keys.RELIGION_BOOLEAN, src.isReligionEnabled());
+            serialize(jsonObject, context, Keys.SLEIGHT_OF_HAND_BOOLEAN, src.isSleightOfHandEnabled());
+            serialize(jsonObject, context, Keys.SURVIVAL_BOOLEAN, src.isSurvivalEnabled());
             return jsonObject;
         }
     }

@@ -1,15 +1,13 @@
 package io.musician101.mcdndsimple.common.character.nonplayer;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +23,7 @@ public class NonPlayerSheet {
     private double challengeRating = 0D;
     private int climbSpeed = 0;
     @Nonnull
-    private CoreStats<NonPlayerAbilityScore> coreStats = new CoreStats<>();
+    private CoreStats<NonPlayerAbilityScore> coreStats = new CoreStats<>(NonPlayerAbilityScore.class);
     private boolean dmOutputOnly = true;
     private int flySpeed = 0;
     @Nonnull
@@ -178,50 +176,50 @@ public class NonPlayerSheet {
         this.health = health;
     }
 
-    public static class Serializer implements JsonDeserializer<NonPlayerSheet>, JsonSerializer<NonPlayerSheet> {
+    public static class Serializer extends BaseSerializer<NonPlayerSheet> {
 
         @Override
         public NonPlayerSheet deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             NonPlayerSheet nonPlayerSheet = new NonPlayerSheet();
-            Keys.DM_OUTPUT_ONLY.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setDMOutputOnly);
-            Keys.NON_PLAYER_CORE_STATS.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setCoreStats);
-            Keys.CHALLENGE_RATING.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setChallengeRating);
-            Keys.ARMOR_CLASS.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setArmorClass);
-            Keys.CLIMB_SPEED.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setClimbSpeed);
-            Keys.FLY_SPEED.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setFlySpeed);
-            Keys.SPEED.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setSpeed);
-            Keys.SWIM_SPEED.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setSwimSpeed);
-            Keys.XP.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setXP);
-            JsonKeyProcessor.<JsonObject, NonPlayerHitPoints>getJsonKey(Keys.HIT_POINTS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setHitPoints));
-            Keys.ARMOR_CLASS_NOTE.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setArmorClassNote);
-            Keys.ALIGNMENT.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setAlignment);
-            Keys.LANGUAGES.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setLanguages);
-            Keys.SENSES.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setSenses);
-            Keys.SIZE.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setSize);
-            Keys.TYPE_RACE.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setTypeRace);
+            nonPlayerSheet.setDMOutputOnly(deserialize(jsonObject, context, Keys.DM_OUTPUT_ONLY));
+            nonPlayerSheet.setCoreStats(deserialize(jsonObject, context, Keys.NON_PLAYER_CORE_STATS));
+            nonPlayerSheet.setChallengeRating(deserialize(jsonObject, context, Keys.CHALLENGE_RATING));
+            nonPlayerSheet.setArmorClass(deserialize(jsonObject, context, Keys.ARMOR_CLASS));
+            nonPlayerSheet.setClimbSpeed(deserialize(jsonObject, context, Keys.CLIMB_SPEED));
+            nonPlayerSheet.setFlySpeed(deserialize(jsonObject, context, Keys.FLY_SPEED));
+            nonPlayerSheet.setSpeed(deserialize(jsonObject, context, Keys.SPEED));
+            nonPlayerSheet.setSwimSpeed(deserialize(jsonObject, context, Keys.SWIM_SPEED));
+            nonPlayerSheet.setXP(deserialize(jsonObject, context, Keys.XP));
+            nonPlayerSheet.setHitPoints(deserialize(jsonObject, context, Keys.HIT_POINTS_NPC));;
+            nonPlayerSheet.setArmorClassNote(deserialize(jsonObject, context, Keys.ARMOR_CLASS_NOTE));
+            nonPlayerSheet.setAlignment(deserialize(jsonObject, context, Keys.ALIGNMENT));
+            nonPlayerSheet.setLanguages(deserialize(jsonObject, context, Keys.LANGUAGES));
+            nonPlayerSheet.setSenses(deserialize(jsonObject, context, Keys.SENSES));
+            nonPlayerSheet.setSize(deserialize(jsonObject, context, Keys.SIZE));
+            nonPlayerSheet.setTypeRace(deserialize(jsonObject, context, Keys.TYPE_RACE));
             return nonPlayerSheet;
         }
 
         @Override
         public JsonElement serialize(NonPlayerSheet src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.DM_OUTPUT_ONLY.serialize(src.isDMOutputOnly(), jsonObject, context);
-            Keys.NON_PLAYER_CORE_STATS.serialize(src.getCoreStats(), jsonObject, context);
-            Keys.CHALLENGE_RATING.serialize(src.getChallengeRating(), jsonObject, context);
-            Keys.ARMOR_CLASS.serialize(src.getArmorClass(), jsonObject, context);
-            Keys.CLIMB_SPEED.serialize(src.getClimbSpeed(), jsonObject, context);
-            Keys.FLY_SPEED.serialize(src.getFlySpeed(), jsonObject, context);
-            Keys.SPEED.serialize(src.getSpeed(), jsonObject, context);
-            Keys.SWIM_SPEED.serialize(src.getClimbSpeed(), jsonObject, context);
-            Keys.XP.serialize(src.getXP(), jsonObject, context);
-            JsonKeyProcessor.<JsonObject, NonPlayerHitPoints>getJsonKey(Keys.HIT_POINTS).ifPresent(jsonKey -> jsonKey.serialize(src.getHealth(), jsonObject, context));
-            Keys.ARMOR_CLASS_NOTE.serialize(src.getArmorClassNote(), jsonObject, context);
-            Keys.ALIGNMENT.serialize(src.getAlignment(), jsonObject, context);
-            Keys.LANGUAGES.serialize(src.getLanguages(), jsonObject, context);
-            Keys.SENSES.serialize(src.getSenses(), jsonObject, context);
-            Keys.SIZE.serialize(src.getSize(), jsonObject, context);
-            Keys.TYPE_RACE.serialize(src.getTypeRace(), jsonObject, context);
+            serialize(jsonObject, context, Keys.DM_OUTPUT_ONLY, src.isDMOutputOnly());
+            serialize(jsonObject, context, Keys.NON_PLAYER_CORE_STATS, src.getCoreStats());
+            serialize(jsonObject, context, Keys.CHALLENGE_RATING, src.getChallengeRating());
+            serialize(jsonObject, context, Keys.ARMOR_CLASS, src.getArmorClass());
+            serialize(jsonObject, context, Keys.CLIMB_SPEED, src.getClimbSpeed());
+            serialize(jsonObject, context, Keys.FLY_SPEED, src.getFlySpeed());
+            serialize(jsonObject, context, Keys.SPEED, src.getSpeed());
+            serialize(jsonObject, context, Keys.SWIM_SPEED, src.getClimbSpeed());
+            serialize(jsonObject, context, Keys.XP, src.getXP());
+            serialize(jsonObject, context, Keys.HIT_POINTS, src.getHealth());
+            serialize(jsonObject, context, Keys.ARMOR_CLASS_NOTE, src.getArmorClassNote());
+            serialize(jsonObject, context, Keys.ALIGNMENT, src.getAlignment());
+            serialize(jsonObject, context, Keys.LANGUAGES, src.getLanguages());
+            serialize(jsonObject, context, Keys.SENSES, src.getSenses());
+            serialize(jsonObject, context, Keys.SIZE, src.getSize());
+            serialize(jsonObject, context, Keys.TYPE_RACE, src.getTypeRace());
             return jsonObject;
         }
     }

@@ -1,21 +1,18 @@
 package io.musician101.mcdndsimple.common.character.nonplayer;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.character.HitPoints;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
-import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.HIT_POINTS, typeAdapter = NonPlayerHitPoints.Serializer.class)
+
 public class NonPlayerHitPoints extends HitPoints {
 
     @Nonnull
@@ -30,26 +27,26 @@ public class NonPlayerHitPoints extends HitPoints {
         this.hitDice = hitDice;
     }
 
-    public static class Serializer implements JsonDeserializer<NonPlayerHitPoints>, JsonSerializer<NonPlayerHitPoints> {
+    public static class Serializer extends BaseSerializer<NonPlayerHitPoints> {
 
         @Override
         public NonPlayerHitPoints deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             NonPlayerHitPoints hitPoints = new NonPlayerHitPoints();
-            Keys.CURRENT.deserializeFromParent(jsonObject, context).ifPresent(hitPoints::setCurrent);
-            Keys.MAXIMUM.deserializeFromParent(jsonObject, context).ifPresent(hitPoints::setMax);
-            Keys.TEMPORARY.deserializeFromParent(jsonObject, context).ifPresent(hitPoints::setTemp);
-            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.HIT_DICE).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(hitPoints::setHitDice));
+            hitPoints.setCurrent(deserialize(jsonObject, context, Keys.CURRENT));
+            hitPoints.setMax(deserialize(jsonObject, context, Keys.MAXIMUM));
+            hitPoints.setTemp(deserialize(jsonObject, context, Keys.TEMPORARY));
+            hitPoints.setHitDice(deserialize(jsonObject, context, Keys.HIT_DICE_NPC));;
             return hitPoints;
         }
 
         @Override
         public JsonElement serialize(NonPlayerHitPoints src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.CURRENT.serialize(src.getCurrent(), jsonObject, context);
-            Keys.MAXIMUM.serialize(src.getMax(), jsonObject, context);
-            Keys.TEMPORARY.serialize(src.getTemp(), jsonObject, context);
-            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.HIT_DICE).ifPresent(jsonKey -> jsonKey.serialize(src.getHitDice(), jsonObject, context));
+            serialize(jsonObject, context, Keys.CURRENT, src.getCurrent());
+            serialize(jsonObject, context, Keys.MAXIMUM, src.getMax());
+            serialize(jsonObject, context, Keys.TEMPORARY, src.getTemp());
+            serialize(jsonObject, context, Keys.HIT_DICE_NPC, src.getHitDice());
             return jsonObject;
         }
     }

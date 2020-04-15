@@ -1,19 +1,15 @@
 package io.musician101.mcdndsimple.common.character.player.clazz;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.GAINED_FROM, typeAdapter = GainedFrom.Serializer.class)
 public enum GainedFrom {
 
     BARBARIAN("Barbarian"),
@@ -43,7 +39,7 @@ public enum GainedFrom {
         return name;
     }
 
-    public static class Serializer implements JsonDeserializer<GainedFrom>, JsonSerializer<GainedFrom> {
+    public static class Serializer extends BaseSerializer<GainedFrom> {
 
         @Override
         public GainedFrom deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {

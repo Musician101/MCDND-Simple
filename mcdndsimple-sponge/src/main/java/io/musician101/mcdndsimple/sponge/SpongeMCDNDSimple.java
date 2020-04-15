@@ -1,15 +1,14 @@
 package io.musician101.mcdndsimple.sponge;
 
 import com.google.inject.Inject;
-import io.musician101.mcdndsimple.common.character.player.PlayerSheet;
-import io.musician101.mcdndsimple.common.reference.Commands;
-import io.musician101.mcdndsimple.sponge.character.SpongeNonPlayerSheetStorage;
-import io.musician101.mcdndsimple.sponge.character.SpongePlayerSheetStorage;
+import io.musician101.mcdndsimple.common.character.player.MCDNDPlayer;
+import io.musician101.mcdndsimple.common.reference.Reference.Commands;
+import io.musician101.mcdndsimple.sponge.character.SpongeNonPlayerStorage;
+import io.musician101.mcdndsimple.sponge.character.SpongePlayerStorage;
 import io.musician101.mcdndsimple.sponge.command.args.CharacterSheetCommandElement;
-import io.musician101.musicianlibrary.java.minecraft.config.AbstractConfig;
+import io.musician101.musicianlibrary.java.minecraft.common.config.AbstractConfig;
 import io.musician101.musicianlibrary.java.minecraft.sponge.plugin.AbstractSpongePlugin;
 import java.io.File;
-import java.util.Optional;
 import javax.annotation.Nonnull;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandResult;
@@ -29,20 +28,20 @@ public class SpongeMCDNDSimple extends AbstractSpongePlugin<AbstractConfig> {
     @ConfigDir(sharedRoot = false)
     @Inject
     private File configDir;
-    private SpongeNonPlayerSheetStorage nonPlayerSheetStorage;
-    private SpongePlayerSheetStorage playerSheetStorage;
+    private SpongeNonPlayerStorage nonPlayerSheetStorage;
+    private SpongePlayerStorage playerSheetStorage;
     @Inject
     private PluginContainer pluginContainer;
 
-    public static Optional<SpongeMCDNDSimple> instance() {
-        return Sponge.getPluginManager().getPlugin("mcdndsimple").flatMap(PluginContainer::getInstance).filter(SpongeMCDNDSimple.class::isInstance).map(SpongeMCDNDSimple.class::cast);
+    public static SpongeMCDNDSimple instance() {
+        return Sponge.getPluginManager().getPlugin("mcdndsimple").flatMap(PluginContainer::getInstance).filter(SpongeMCDNDSimple.class::isInstance).map(SpongeMCDNDSimple.class::cast).orElseThrow(() -> new IllegalStateException("MCDND has not been enabled."));
     }
 
-    public SpongeNonPlayerSheetStorage getNonPlayerSheetStorage() {
+    public SpongeNonPlayerStorage getNonPlayerStorage() {
         return nonPlayerSheetStorage;
     }
 
-    public SpongePlayerSheetStorage getPlayerSheetStorage() {
+    public SpongePlayerStorage getPlayerStorage() {
         return playerSheetStorage;
     }
 
@@ -54,7 +53,7 @@ public class SpongeMCDNDSimple extends AbstractSpongePlugin<AbstractConfig> {
 
     @Listener
     public void init(GameInitializationEvent event) {
-        Sponge.getCommandManager().register(this, CommandSpec.builder().arguments(new CharacterSheetCommandElement()).executor((src, args) -> args.<PlayerSheet>getOne(Commands.NAME).map(playerSheet -> {
+        Sponge.getCommandManager().register(this, CommandSpec.builder().arguments(new CharacterSheetCommandElement()).executor((src, args) -> args.<MCDNDPlayer>getOne(Commands.NAME).map(playerSheet -> {
             //TODO need to fix this along with other things
             //new PlayerSheetGUI((Player) src, playerSheet, null);
             return CommandResult.success();
@@ -63,8 +62,8 @@ public class SpongeMCDNDSimple extends AbstractSpongePlugin<AbstractConfig> {
 
     @Listener
     public void preInit(GamePreInitializationEvent event) {
-        playerSheetStorage = new SpongePlayerSheetStorage(new File(configDir, "character_storage"));
-        nonPlayerSheetStorage = new SpongeNonPlayerSheetStorage(new File(configDir, "character_storage"));
+        playerSheetStorage = new SpongePlayerStorage(new File(configDir, "character_storage"));
+        nonPlayerSheetStorage = new SpongeNonPlayerStorage(new File(configDir, "character_storage"));
     }
 
     @Listener

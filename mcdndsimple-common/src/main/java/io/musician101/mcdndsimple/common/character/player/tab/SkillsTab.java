@@ -1,22 +1,17 @@
 package io.musician101.mcdndsimple.common.character.player.tab;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.character.player.skill.PlayerSkill;
-import io.musician101.mcdndsimple.common.character.player.skill.SkillProficiency;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
-import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.SKILLS_TAB, typeAdapter = SkillsTab.Serializer.class)
+
 public class SkillsTab {
 
     @Nonnull
@@ -188,7 +183,7 @@ public class SkillsTab {
         return unskilledWIS;
     }
 
-    public static class Serializer implements JsonDeserializer<SkillsTab>, JsonSerializer<SkillsTab> {
+    public static class Serializer extends BaseSerializer<SkillsTab> {
 
         @Override
         public SkillsTab deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
@@ -222,8 +217,8 @@ public class SkillsTab {
         }
 
         private void deserializeSkill(JsonObject jsonObject, JsonDeserializationContext context, PlayerSkill skill) {
-            Keys.BONUS.deserializeFromParent(jsonObject, context).ifPresent(skill::setBonus);
-            JsonKeyProcessor.<JsonPrimitive, SkillProficiency>getJsonKey(Keys.SKILL_PROFICIENCY).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(skill::setSkillProficiency));
+            skill.setBonus(deserialize(jsonObject, context, Keys.BONUS));
+            skill.setSkillProficiency(deserialize(jsonObject, context, Keys.SKILL_PROFICIENCY));;
         }
 
         @Override
@@ -257,8 +252,8 @@ public class SkillsTab {
         }
 
         private void serializeSkill(JsonObject jsonObject, JsonSerializationContext context, PlayerSkill skill) {
-            Keys.BONUS.serialize(skill.getBonus(), jsonObject, context);
-            JsonKeyProcessor.<JsonPrimitive, SkillProficiency>getJsonKey(Keys.SKILL_PROFICIENCY).ifPresent(jsonKey -> jsonKey.serialize(skill.getSkillProficiency(), jsonObject, context));
+            serialize(jsonObject, context, Keys.BONUS, skill.getBonus());
+            serialize(jsonObject, context, Keys.SKILL_PROFICIENCY, skill.getSkillProficiency());
         }
     }
 }

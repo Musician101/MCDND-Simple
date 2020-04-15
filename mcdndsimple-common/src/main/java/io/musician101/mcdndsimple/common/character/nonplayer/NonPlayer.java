@@ -1,21 +1,18 @@
 package io.musician101.mcdndsimple.common.character.nonplayer;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.character.AbstractPlayer;
 import io.musician101.mcdndsimple.common.character.nonplayer.skill.NonPlayerSkills;
+import io.musician101.mcdndsimple.common.character.player.tab.Initiative;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
-import io.musician101.musicianlibrary.java.json.adapter.TypeOf;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import javax.annotation.Nonnull;
 
-@TypeOf(NonPlayer.Serializer.class)
 public class NonPlayer extends AbstractPlayer {
 
     @Nonnull
@@ -26,6 +23,21 @@ public class NonPlayer extends AbstractPlayer {
     private NonPlayerSkills nonPlayerSkills = new NonPlayerSkills();
     @Nonnull
     private TraitsBackground traitsBackground = new TraitsBackground();
+    @Nonnull
+    private final Initiative initiative = new Initiative();
+
+    public NonPlayer(@Nonnull String id) {
+        super(id);
+    }
+
+    public NonPlayer(@Nonnull String id, @Nonnull String clazz, @Nonnull String name, @Nonnull String race) {
+        super(id, clazz, name, race);
+    }
+
+    @Nonnull
+    public Initiative getInitiative() {
+        return initiative;
+    }
 
     @Nonnull
     public NonPlayerActions getNonPlayerActions() {
@@ -62,28 +74,30 @@ public class NonPlayer extends AbstractPlayer {
         this.traitsBackground = traitsBackground;
     }
 
-    public static class Serializer implements JsonDeserializer<NonPlayer>, JsonSerializer<NonPlayer> {
+    public static class Serializer extends BaseSerializer<NonPlayer> {
 
         @Override
         public NonPlayer deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
-            NonPlayer nonPlayerSheet = new NonPlayer();
-            Keys.CONTROLLERS.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setControllers);
-            JsonKeyProcessor.<JsonObject, NonPlayerActions>getJsonKey(Keys.NON_PLAYER_ACTIONS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setNonPlayerActions));
-            JsonKeyProcessor.<JsonObject, NonPlayerSheet>getJsonKey(Keys.NON_PLAYER_SHEET).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setNonPlayerSheet));
-            JsonKeyProcessor.<JsonObject, NonPlayerSkills>getJsonKey(Keys.NON_PLAYER_SKILLS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setSkills));
-            JsonKeyProcessor.<JsonObject, TraitsBackground>getJsonKey(Keys.TRAITS_BACKGROUND).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(nonPlayerSheet::setTraitsBackground));
+            NonPlayer nonPlayerSheet = new NonPlayer(jsonObject.get("id").getAsString());
+            nonPlayerSheet.setControllers(deserialize(jsonObject, context, Keys.CONTROLLERS));
+            nonPlayerSheet.setNonPlayerActions(deserialize(jsonObject, context, Keys.NON_PLAYER_ACTIONS));
+            nonPlayerSheet.setNonPlayerSheet(deserialize(jsonObject, context, Keys.NON_PLAYER_SHEET));
+            nonPlayerSheet.setSkills(deserialize(jsonObject, context, Keys.NON_PLAYER_SKILLS));
+            nonPlayerSheet.setTraitsBackground(deserialize(jsonObject, context, Keys.TRAITS_BACKGROUND));
+            nonPlayerSheet.getInitiative().setBonus(deserialize(jsonObject, context, Keys.INITIATIVE_BONUS));
             return nonPlayerSheet;
         }
 
         @Override
         public JsonElement serialize(NonPlayer src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.CONTROLLERS.serialize(src.getControllers(), jsonObject, context);
-            JsonKeyProcessor.<JsonObject, NonPlayerActions>getJsonKey(Keys.NON_PLAYER_ACTIONS).ifPresent(jsonKey -> jsonKey.serialize(src.getNonPlayerActions(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, NonPlayerSheet>getJsonKey(Keys.NON_PLAYER_SHEET).ifPresent(jsonKey -> jsonKey.serialize(src.getNonPlayerSheet(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, NonPlayerSkills>getJsonKey(Keys.NON_PLAYER_SKILLS).ifPresent(jsonKey -> jsonKey.serialize(src.getSkills(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, TraitsBackground>getJsonKey(Keys.TRAITS_BACKGROUND).ifPresent(jsonKey -> jsonKey.serialize(src.getTraitsBackground(), jsonObject, context));
+            serialize(jsonObject, context, Keys.CONTROLLERS, src.getControllers());
+            serialize(jsonObject, context, Keys.NON_PLAYER_ACTIONS, src.getNonPlayerActions());
+            serialize(jsonObject, context, Keys.NON_PLAYER_SHEET, src.getNonPlayerSheet());
+            serialize(jsonObject, context, Keys.NON_PLAYER_SKILLS, src.getSkills());
+            serialize(jsonObject, context, Keys.TRAITS_BACKGROUND, src.getTraitsBackground());
+            serialize(jsonObject, context, Keys.INITIATIVE_BONUS, src.getInitiative().getBonus());
             return jsonObject;
         }
     }

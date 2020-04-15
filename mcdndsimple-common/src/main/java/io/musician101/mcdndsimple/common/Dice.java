@@ -1,25 +1,21 @@
 package io.musician101.mcdndsimple.common;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKeys;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.Random;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-@JsonKeys(keys = {Keys.ABILITIES_AND_SKILLS, Keys.ATTACK, Keys.DAMAGE, Keys.HEAL_AMOUNT, Keys.HIT_DICE, Keys.SAVES}, typeAdapter = Dice.Serializer.class)
 public class Dice {
 
     private final int amount;
@@ -95,30 +91,19 @@ public class Dice {
         return amount + "d" + sides;
     }
 
-    public static class Serializer implements JsonDeserializer<Dice>, JsonSerializer<Dice> {
+    public static class Serializer extends BaseSerializer<Dice> {
 
         @Override
         public Dice deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
-            Optional<Integer> amount = Keys.AMOUNT.deserializeFromParent(jsonObject, context);
-            Optional<Integer> sides = Keys.SIDES.deserializeFromParent(jsonObject, context);
-            String errorStart = "Could not parse dice! ";
-            if (!amount.isPresent()) {
-                throw new JsonParseException(errorStart + "Dice amount missing!");
-            }
-
-            if (!sides.isPresent()) {
-                throw new JsonParseException(errorStart + "Dice sides amount missing!");
-            }
-
-            return new Dice(amount.get(), sides.get());
+            return new Dice(deserialize(jsonObject, context, Keys.AMOUNT), deserialize(jsonObject, context, Keys.SIDES));
         }
 
         @Override
         public JsonElement serialize(Dice src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.AMOUNT.serialize(src.getAmount(), jsonObject, context);
-            Keys.SIDES.serialize(src.getSides(), jsonObject, context);
+            serialize(jsonObject, context, Keys.AMOUNT, src.getAmount());
+            serialize(jsonObject, context, Keys.SIDES, src.getSides());
             return jsonObject;
         }
     }

@@ -1,30 +1,26 @@
 package io.musician101.mcdndsimple.spigot.command;
 
-import io.musician101.mcdndsimple.common.ChestGUIs;
-import io.musician101.mcdndsimple.common.reference.Commands;
 import io.musician101.mcdndsimple.common.reference.Messages;
 import io.musician101.mcdndsimple.common.reference.Permissions;
+import io.musician101.mcdndsimple.common.reference.Reference.Commands;
 import io.musician101.mcdndsimple.spigot.SpigotMCDNDSimple;
-import io.musician101.mcdndsimple.spigot.character.SpigotNonPlayerSheetStorage;
-import io.musician101.mcdndsimple.spigot.character.SpigotPlayerSheetStorage;
-import io.musician101.mcdndsimple.spigot.gui.SpigotChestGUIs;
+import io.musician101.mcdndsimple.spigot.character.SpigotNonPlayerStorage;
+import io.musician101.mcdndsimple.spigot.character.SpigotPlayerStorage;
+import io.musician101.mcdndsimple.spigot.gui.nonplayer.NonPlayerGUI;
+import io.musician101.mcdndsimple.spigot.gui.nonplayer.NonPlayersGUI;
+import io.musician101.mcdndsimple.spigot.gui.player.PlayerSheetGUI;
+import io.musician101.mcdndsimple.spigot.gui.player.PlayerSheetsGUI;
 import io.musician101.musicianlibrary.java.minecraft.spigot.command.SpigotCommand;
 import io.musician101.musicianlibrary.java.minecraft.spigot.command.SpigotCommandArgument;
 import io.musician101.musicianlibrary.java.minecraft.spigot.command.SpigotCommandPermissions;
 import io.musician101.musicianlibrary.java.minecraft.spigot.command.SpigotCommandUsage;
-import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.SpigotChestGUI;
-import io.musician101.musicianlibrary.java.minecraft.spigot.gui.chest.SpigotChestGUIBuilder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 public class MCDNDSimpleCommands {
 
@@ -62,7 +58,7 @@ public class MCDNDSimpleCommands {
             String characterName = args.get(1);
             SpigotMCDNDSimple plugin = SpigotMCDNDSimple.instance();
             if (args.get(0).equalsIgnoreCase(Commands.PC_NAME)) {
-                return plugin.getPlayerSheetStorage().createNewCharacter(player.getUniqueId(), characterName).map(playerSheet -> {
+                return plugin.getPlayerStorage().createNewCharacter(characterName).map(playerSheet -> {
                     player.sendMessage(ChatColor.GREEN + Messages.CHARACTER_CREATED);
                     return true;
                 }).orElseGet(() -> {
@@ -71,7 +67,7 @@ public class MCDNDSimpleCommands {
                 });
             }
             else if (args.get(0).equalsIgnoreCase(Commands.NPC_NAME)) {
-                return plugin.getNonPlayerSheetStorage().createNewCharacter(player.getUniqueId(), characterName).map(npc -> {
+                return plugin.getNonPlayerStorage().createNewCharacter(characterName).map(npc -> {
                     player.sendMessage(ChatColor.GREEN + Messages.CHARACTER_CREATED);
                     return true;
                 }).orElseGet(() -> {
@@ -87,11 +83,10 @@ public class MCDNDSimpleCommands {
     private static SpigotCommand<SpigotMCDNDSimple> nonPlayer() {
         return SpigotCommand.<SpigotMCDNDSimple>builder().name(Commands.NPC_NAME).description(Commands.CHARACTER_DESC).usage(SpigotCommandUsage.of(SpigotCommandArgument.of(Commands.NAME))).permissions(SpigotCommandPermissions.builder().isPlayerOnly(true).permissionNode(Permissions.CHARACTER).noPermissionMessage(ChatColor.RED + Messages.NO_PERMISSION).playerOnlyMessage(ChatColor.RED + Messages.PLAYER_ONLY).build()).function((sender, args) -> {
             Player player = (Player) sender;
-            ChestGUIs<SpigotChestGUIBuilder<SpigotMCDNDSimple>, ClickType, SpigotChestGUI<SpigotMCDNDSimple>, Inventory, SpigotMCDNDSimple, Player, ItemStack, String> guis = SpigotChestGUIs.INSTANCE;
-            SpigotNonPlayerSheetStorage storage = SpigotMCDNDSimple.instance().getNonPlayerSheetStorage();
+            SpigotNonPlayerStorage storage = SpigotMCDNDSimple.instance().getNonPlayerStorage();
             if (!args.isEmpty()) {
-                return storage.getCharacter(player.getUniqueId(), args.get(0)).map(nonPlayer -> {
-                    guis.nonPlayer(player, nonPlayer, null);
+                return storage.getCharacter(args.get(0)).map(nonPlayer -> {
+                    new NonPlayerGUI(nonPlayer, player);
                     return true;
                 }).orElseGet(() -> {
                     player.sendMessage(ChatColor.RED + Messages.CHARACTER_DNE);
@@ -99,7 +94,7 @@ public class MCDNDSimpleCommands {
                 });
             }
 
-            guis.nonPlayers(player, storage.getCharacters().stream().filter(nonPlayer -> nonPlayer.isController(player.getUniqueId()) || player.hasPermission(Permissions.DM)).collect(Collectors.toList()), 1);
+            new NonPlayersGUI(player);
             return true;
         }).build(SpigotMCDNDSimple.instance());
     }
@@ -107,11 +102,10 @@ public class MCDNDSimpleCommands {
     private static SpigotCommand<SpigotMCDNDSimple> player() {
         return SpigotCommand.<SpigotMCDNDSimple>builder().name(Commands.PLAYER_NAME).description(Commands.CHARACTER_DESC).usage(SpigotCommandUsage.of(SpigotCommandArgument.of(Commands.NAME))).permissions(SpigotCommandPermissions.builder().isPlayerOnly(true).permissionNode(Permissions.CHARACTER).noPermissionMessage(ChatColor.RED + Messages.NO_PERMISSION).playerOnlyMessage(ChatColor.RED + Messages.PLAYER_ONLY).build()).function((sender, args) -> {
             Player player = (Player) sender;
-            ChestGUIs<SpigotChestGUIBuilder<SpigotMCDNDSimple>, ClickType, SpigotChestGUI<SpigotMCDNDSimple>, Inventory, SpigotMCDNDSimple, Player, ItemStack, String> guis = SpigotChestGUIs.INSTANCE;
-            SpigotPlayerSheetStorage storage = SpigotMCDNDSimple.instance().getPlayerSheetStorage();
+            SpigotPlayerStorage storage = SpigotMCDNDSimple.instance().getPlayerStorage();
             if (!args.isEmpty()) {
-                return storage.getCharacter(player.getUniqueId(), args.get(0)).map(playerSheet -> {
-                    guis.playerSheet(player, playerSheet, null);
+                return storage.getCharacter(args.get(0)).map(playerSheet -> {
+                    new PlayerSheetGUI(playerSheet, player);
                     return true;
                 }).orElseGet(() -> {
                     player.sendMessage(ChatColor.RED + Messages.CHARACTER_DNE);
@@ -119,7 +113,7 @@ public class MCDNDSimpleCommands {
                 });
             }
 
-            guis.players(player, storage.getCharacters().stream().filter(playerSheet -> playerSheet.isController(player.getUniqueId()) || player.hasPermission(Permissions.DM)).collect(Collectors.toList()), 1);
+            new PlayerSheetsGUI(player);
             return true;
         }).build(SpigotMCDNDSimple.instance());
     }

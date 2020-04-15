@@ -1,20 +1,16 @@
 package io.musician101.mcdndsimple.common.character.player.bonus;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.Dice;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
-import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.RANGED_BONUS, typeAdapter = RangedBonus.Serializer.class)
 public class RangedBonus {
 
     @Nonnull
@@ -40,22 +36,22 @@ public class RangedBonus {
         this.damage = damage;
     }
 
-    public static class Serializer implements JsonDeserializer<RangedBonus>, JsonSerializer<RangedBonus> {
+    public static class Serializer extends BaseSerializer<RangedBonus> {
 
         @Override
         public RangedBonus deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             RangedBonus rangedBonus = new RangedBonus();
-            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.ATTACK).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(rangedBonus::setAttack));
-            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.DAMAGE).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(rangedBonus::setDamage));
+            rangedBonus.setAttack(deserialize(jsonObject, context, Keys.ATTACK));;
+            rangedBonus.setDamage(deserialize(jsonObject, context, Keys.DAMAGE));;
             return rangedBonus;
         }
 
         @Override
         public JsonElement serialize(RangedBonus src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.ATTACK).ifPresent(jsonKey -> jsonKey.serialize(src.getAttack(), jsonObject, context));
-            JsonKeyProcessor.<JsonObject, Dice>getJsonKey(Keys.DAMAGE).ifPresent(jsonKey -> jsonKey.serialize(src.getDamage(), jsonObject, context));
+            serialize(jsonObject, context, Keys.ATTACK, src.getAttack());
+            serialize(jsonObject, context, Keys.DAMAGE, src.getDamage());
             return jsonObject;
         }
     }

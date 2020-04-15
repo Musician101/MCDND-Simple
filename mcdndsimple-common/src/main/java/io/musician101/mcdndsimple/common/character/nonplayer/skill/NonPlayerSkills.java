@@ -1,18 +1,15 @@
 package io.musician101.mcdndsimple.common.character.nonplayer.skill;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import io.musician101.mcdndsimple.common.serialization.Keys;
-import io.musician101.musicianlibrary.java.json.JsonKey;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.NON_PLAYER_SKILLS, typeAdapter = NonPlayerSkills.Serializer.class)
 public class NonPlayerSkills {
 
     @Nonnull
@@ -184,7 +181,7 @@ public class NonPlayerSkills {
         return unskilledWIS;
     }
 
-    public static class Serializer implements JsonDeserializer<NonPlayerSkills>, JsonSerializer<NonPlayerSkills> {
+    public static class Serializer extends BaseSerializer<NonPlayerSkills> {
 
         @Override
         public NonPlayerSkills deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
@@ -218,7 +215,7 @@ public class NonPlayerSkills {
         }
 
         private void deserializeSkill(JsonObject jsonObject, JsonDeserializationContext context, NonPlayerSkill skill) {
-            Keys.BONUS.deserializeFromParent(jsonObject, context).ifPresent(skill::setBonus);
+            skill.setBonus(deserialize(jsonObject, context, Keys.BONUS));;
         }
 
         @Override
@@ -252,7 +249,7 @@ public class NonPlayerSkills {
         }
 
         private void serializeSkill(JsonObject jsonObject, JsonSerializationContext context, NonPlayerSkill skill) {
-            Keys.BONUS.serialize(skill.getBonus(), jsonObject, context);
+            serialize(jsonObject, context, Keys.BONUS, skill.getBonus());
         }
     }
 }

@@ -12,13 +12,13 @@ import io.musician101.mcdndsimple.common.character.player.spell.Spell;
 import io.musician101.mcdndsimple.common.character.player.spell.SpellcasterClass;
 import io.musician101.mcdndsimple.common.serialization.Keys;
 import io.musician101.musicianlibrary.java.json.JsonKey;
-import io.musician101.musicianlibrary.java.json.JsonKeyProcessor;
+import io.musician101.musicianlibrary.java.json.BaseSerializer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-@JsonKey(key = Keys.SPELLBOOK_TAB, typeAdapter = SpellbookTab.Serializer.class)
+
 public class SpellbookTab {
 
     private int sorceryPointsUsed = 0;
@@ -150,26 +150,26 @@ public class SpellbookTab {
         spells.remove(spell);
     }
 
-    public static class Serializer implements JsonDeserializer<SpellbookTab>, JsonSerializer<SpellbookTab> {
+    public static class Serializer extends BaseSerializer<SpellbookTab> {
 
         @Override
         public SpellbookTab deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             SpellbookTab spellBookTab = new SpellbookTab();
-            Keys.SORCERY_POINTS_USED.deserializeFromParent(jsonObject, context).ifPresent(spellBookTab::setSorceryPointsUsed);
-            JsonKeyProcessor.<JsonObject, SpellSlots>getJsonKey(Keys.SPELL_SLOTS).ifPresent(jsonKey -> jsonKey.deserializeFromParent(jsonObject, context).ifPresent(spellBookTab::setSpellSlots));
-            Keys.SPELLS.deserializeFromParent(jsonObject, context).ifPresent(spellBookTab::setSpells);
-            Keys.WARLOCK_SPELL_SLOTS_USED.deserializeFromParent(jsonObject, context).ifPresent(spellBookTab::setWarlockSpellSlotsUsed);
+            spellBookTab.setSorceryPointsUsed(deserialize(jsonObject, context, Keys.SORCERY_POINTS_USED));
+            spellBookTab.setSpellSlots(deserialize(jsonObject, context, Keys.SPELL_SLOTS));;
+            spellBookTab.setSpells(deserialize(jsonObject, context, Keys.SPELLS));
+            spellBookTab.setWarlockSpellSlotsUsed(deserialize(jsonObject, context, Keys.WARLOCK_SPELL_SLOTS_USED));
             return spellBookTab;
         }
 
         @Override
         public JsonElement serialize(SpellbookTab src, Type type, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            Keys.SORCERY_POINTS_USED.serialize(src.getSorceryPointsUsed(), jsonObject, context);
-            JsonKeyProcessor.<JsonObject, SpellSlots>getJsonKey(Keys.SPELL_SLOTS).ifPresent(jsonKey -> jsonKey.serialize(src.getSpellSlots(), jsonObject, context));
-            Keys.SPELLS.serialize(src.getSpells(), jsonObject, context);
-            Keys.WARLOCK_SPELL_SLOTS_USED.serialize(src.getWarlockSpellSlotsUsed(), jsonObject, context);
+            serialize(jsonObject, context, Keys.SORCERY_POINTS_USED, src.getSorceryPointsUsed());
+            serialize(jsonObject, context, Keys.SPELL_SLOTS, src.getSpellSlots());
+            serialize(jsonObject, context, Keys.SPELLS, src.getSpells());
+            serialize(jsonObject, context, Keys.WARLOCK_SPELL_SLOTS_USED, src.getWarlockSpellSlotsUsed());
             return jsonObject;
         }
     }

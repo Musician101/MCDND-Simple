@@ -2,6 +2,7 @@ package io.musician101.mcdndsimple.sponge.util;
 
 import io.musician101.mcdndsimple.common.character.CoreStats;
 import io.musician101.mcdndsimple.common.character.player.Experience;
+import io.musician101.mcdndsimple.common.character.player.PlayerAbilityScore;
 import io.musician101.mcdndsimple.common.character.player.UnarmoredBonus;
 import io.musician101.mcdndsimple.common.character.player.clazz.ClassLevels;
 import io.musician101.mcdndsimple.common.character.player.equipment.armor.Armor;
@@ -49,11 +50,11 @@ public class ItemRepresentation {
         return itemType;
     }
 
-    public static ItemStack meleeWeapon(MeleeWeapon weapon, ClassLevels classLevels, CoreStats coreStats, Experience experience) {
+    public static ItemStack meleeWeapon(MeleeWeapon weapon, ClassLevels classLevels, CoreStats<PlayerAbilityScore> coreStats, Experience experience) {
         return SpongeIconBuilder.builder(ItemTypes.DIAMOND_SWORD).name(of(weapon.getName())).description(of(MenuText.isProficient(weapon)), of(MenuText.attackStat(weapon.getAttackStat())), of(MenuText.magicBonus(weapon)), of(MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience))), of(MenuText.plusStat(weapon)), of(MenuText.damageDice(weapon.getDamage())), of(MenuText.damageBonus(weapon, coreStats)), of(MenuText.damageType(weapon.getDamageType())), of(MenuText.critDamage(weapon)), of(MenuText.critOn(weapon))).build();
     }
 
-    public static ItemStack rangedWeapon(RangedWeapon weapon, ClassLevels classLevels, CoreStats coreStats, Experience experience) {
+    public static ItemStack rangedWeapon(RangedWeapon weapon, ClassLevels classLevels, CoreStats<PlayerAbilityScore> coreStats, Experience experience) {
         return SpongeIconBuilder.builder(ItemTypes.BOW).name(of(weapon.getName())).description(of(MenuText.isProficient(weapon)), of(MenuText.attackStat(weapon.getAttackStat())), of(MenuText.magicBonus(weapon)), of(MenuText.toHit(weapon.getToHit(classLevels, coreStats, experience))), of(MenuText.damageDice(weapon.getDamage())), of(MenuText.damageBonus(weapon, coreStats)), of(MenuText.damageType(weapon.getDamageType())), of(MenuText.critDamage(weapon), MenuText.critOn(weapon))).build();
     }
 
